@@ -1,7 +1,7 @@
 # Preception
 
 [![pipeline status](https://gitlab.com/jinay1991/perception/badges/master/pipeline.svg)](https://gitlab.com/jinay1991/perception/commits/master)
-[![coverage report](https://gitlab.com/jinay1991/perception/badges/master/coverage.svg?job=code-coverage)](https://jinay1991.gitlab.io/perception/index.html)
+[![coverage report](https://gitlab.com/jinay1991/perception/badges/master/coverage.svg?job=code-coverage)](https://jinay1991.gitlab.io/perception/)
 [![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://jinay1991.gitlab.io/perception/doc/html/)
 
 [[Issue Board](https://gitlab.com/jinay1991/perception/-/boards)]

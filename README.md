@@ -6,7 +6,7 @@
 
 [[Issue Board](https://gitlab.com/jinay1991/perception/-/boards)]
 
-**WIP** Autonomous Driving Motion Planning (with conjunction with Udacity Simulator) 
+**WIP** Autonomous Driving Perception (with conjunction with Udacity Simulator) 
 
 ## Build
 

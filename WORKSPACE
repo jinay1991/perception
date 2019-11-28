@@ -34,3 +34,11 @@ new_local_repository(
     build_file = "//bazel:uWebSockets.BUILD",
     path = "/usr/",
 )
+
+http_archive(
+    name = "torch",
+    build_file = "//bazel:torch.BUILD",
+    sha256 = "eda550df98414e4f90a854c2220da354fe50692a8e55a53e999d36dbae4cd506",
+    strip_prefix = "libtorch",
+    url = "https://download.pytorch.org/libtorch/cpu/libtorch-macos-1.3.1.zip",
+)

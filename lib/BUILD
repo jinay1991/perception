@@ -30,6 +30,7 @@ cc_library(
     ],
     deps = [
         "@nholthaus//:units",
+        "@torch//:libtorch",
     ],
 )
 

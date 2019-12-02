@@ -11,19 +11,16 @@ namespace perception
 class Runner
 {
   public:
-    Runner() = default;
+    Runner() {}
     virtual ~Runner() = default;
 
     virtual void SetNetwork(const Net& net);
-    virtual void SetDevice(const torch::Device& device);
 
-    virtual void Train(std::int32_t epochs);
+    virtual void Train();
     virtual void Test();
 
   private:
-    std::int32_t epochs_;
     Net net_;
-    torch::Device device_;
 };
 
 }  // namespace perception

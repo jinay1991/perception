@@ -6,9 +6,14 @@
 namespace perception
 {
 void Runner::SetNetwork(const Net& net) { net_ = net; }
-void Runner::SetDevice(const torch::Device& device) { device_ = device; }
 
-void Runner::Train(std::int32_t epochs) {}
+void Runner::Train()
+{
+    torch::Tensor tensor = torch::eye(3);
+
+    std::cout << tensor << std::endl;
+}
+
 void Runner::Test() {}
 
 }  // namespace perception

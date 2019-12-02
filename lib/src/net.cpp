@@ -1,7 +1,6 @@
 ///
 /// @file
 ///
-#include <iostream>
 
 #include "perception/model/net.h"
 

@@ -9,7 +9,6 @@ cc_library(
         "darwin": glob(["lib/libcaffe2_*.dylib"]),
         "//conditions:default": glob(["lib/libcaffe2_*.so"]),
     }),
-    copts = ["-std=c++11"],
     visibility = ["//visibility:public"],
 )
 
@@ -19,25 +18,15 @@ cc_library(
         "darwin": ["lib/libc10.dylib"],
         "//conditions:default": ["lib/libc10.so"],
     }),
-    copts = ["-std=c++11"],
-    visibility = ["//visibility:public"],
-)
-
-cc_library(
-    name = "libiomp",
-    srcs = select({
-        "darwin": ["lib/libiomp5.dylib"],
-        "//conditions:default": [],
-    }),
-    hdrs = glob(["include/**/*.h"]),
-    copts = ["-std=c++11"],
     visibility = ["//visibility:public"],
 )
 
 cc_library(
     name = "libtorch",
     srcs = select({
-        "darwin": ["lib/libtorch.dylib"],
+        "darwin": [
+            "lib/libtorch.dylib",
+        ],
         "//conditions:default": [
             "lib/libtorch.so",
             "lib/libgomp-753e6e92.so.1",
@@ -56,6 +45,5 @@ cc_library(
     deps = [
         ":libc10",
         ":libcaffe2",
-        ":libiomp",
     ],
 )

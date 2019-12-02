@@ -15,6 +15,6 @@ class ModelSpecFixture : public ::testing::Test
     Runner unit_;
 };
 
-TEST_F(ModelSpecFixture, GivenNeuralNetwork_ExpectTrainedModel) { EXPECT_NO_THROW(unit_.Train()); }
+TEST_F(ModelSpecFixture, GivenNeuralNetwork_ExpectTrainedModel) { unit_.Train(); }
 }  // namespace
 }  // namespace perception

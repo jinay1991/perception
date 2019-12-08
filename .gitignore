@@ -1,4 +1,5 @@
 # Extras
+data/
 .DS_Store
 term3_sim_*
 
@@ -40,3 +41,6 @@ bazel-*
 *.exe
 *.out
 *.app
+
+# Archives
+*.gz

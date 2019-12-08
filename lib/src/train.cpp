@@ -7,7 +7,7 @@ namespace perception
 {
 void Runner::SetNetwork(const Net& net) { net_ = net; }
 
-void Runner::Train()
+void Runner::Train(const std::string& dataset_dir)
 {
     const auto batch_size = 64;
     const auto learning_rate = 0.01;
@@ -15,9 +15,7 @@ void Runner::Train()
     auto net = std::make_shared<Net>();
 
     auto data_loader = torch::data::make_data_loader(
-        torch::data::datasets::MNIST("/Users/jinay/workspace/git-repo/ad-platform/perception/data")
-            .map(torch::data::transforms::Stack<>()),
-        batch_size);
+        torch::data::datasets::MNIST(dataset_dir).map(torch::data::transforms::Stack<>()), batch_size);
 
     torch::optim::SGD optimizer(net->parameters(), learning_rate);
 

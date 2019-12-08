@@ -16,7 +16,7 @@ class Runner
 
     virtual void SetNetwork(const Net& net);
 
-    virtual void Train();
+    virtual void Train(const std::string& dataset_dir);
     virtual void Test();
 
   private:

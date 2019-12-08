@@ -15,6 +15,9 @@ class ModelSpecFixture : public ::testing::Test
     Runner unit_;
 };
 
-TEST_F(ModelSpecFixture, GivenNeuralNetwork_ExpectTrainedModel) { unit_.Train(); }
+TEST_F(ModelSpecFixture, GivenNeuralNetwork_ExpectTrainedModel)
+{
+    unit_.Train("/Users/jinay/workspace/git-repo/ad-platform/perception/data");
+}
 }  // namespace
 }  // namespace perception

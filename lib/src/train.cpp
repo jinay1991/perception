@@ -21,7 +21,7 @@ void Runner::Train()
 
     torch::optim::SGD optimizer(net->parameters(), learning_rate);
 
-    for (size_t epoch = 1; epoch <= 3; ++epoch)
+    for (size_t epoch = 1; epoch <= 1; ++epoch)
     {
         size_t batch_index = 0;
         for (auto& batch : *data_loader)

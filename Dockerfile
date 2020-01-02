@@ -1,14 +1,16 @@
 FROM ubuntu:18.04
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
 
 # Installation of general dependencies
-ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get install -y build-essential gcc g++ lcov make cmake
 RUN apt-get install -y openjdk-11-jdk openjdk-11-jre
 RUN apt-get install -y libtool clang-format-6.0
 RUN apt-get install -y git curl
 RUN apt-get install -y wget
+RUN apt-get install -y libuv1-dev libssl-dev
 
 # Installation of Bazel Package
 RUN echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
@@ -20,17 +22,16 @@ RUN wget https://github.com/bazelbuild/buildtools/releases/download/0.29.0/build
 RUN chmod +x buildifier
 RUN mv buildifier /usr/bin
 
-# Installation of dependencies to uWebSockets (Udacity Simulation Connectivity Protocol)
-RUN apt-get install -y libuv1-dev libssl-dev
-RUN git clone https://github.com/uWebSockets/uWebSockets
-RUN cd uWebSockets && git checkout e94b6e1
-RUN mkdir -p uWebSockets/build
-RUN cd uWebSockets/build && cmake ..
-RUN cd uWebSockets/build && make -j4 && make install
-RUN ln -s /usr/lib64/libuWS.so /usr/lib/libuWS.so
-RUN rm -r uWebSockets
+# # Installation of dependencies to uWebSockets (Udacity Simulation Connectivity Protocol)
+# RUN git clone https://github.com/uWebSockets/uWebSockets
+# RUN cd uWebSockets && git checkout e94b6e1
+# RUN mkdir -p uWebSockets/build
+# RUN cd uWebSockets/build && cmake ..
+# RUN cd uWebSockets/build && make -j4 && make install
+# RUN ln -s /usr/lib64/libuWS.so /usr/lib/libuWS.so
+# RUN rm -r uWebSockets
 
-# Installation of dependencies to OpenCV 
+# # Installation of dependencies to OpenCV 
 # RUN apt-get install -y qt5-default libvtk6-dev zlib1g-dev libjpeg-dev libwebp-dev 
 # RUN apt-get install -y libpng-dev libtiff5-dev libopenexr-dev libgdal-dev libavresample-dev 
 # RUN apt-get install -y libdc1394-22-dev libavcodec-dev libavformat-dev libswscale-dev libtheora-dev 
@@ -42,17 +43,17 @@ RUN rm -r uWebSockets
 # RUN python3 -m pip install -U pip
 # RUN python3 -m pip install -U numpy tensorflow matplotlib pandas scikit-image sklearn
 
-# # # Installation of OpenCV 4.2.0
-# # ENV OPENCV_VERSION="4.2.0"
-# # RUN wget https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip && \
-# #     unzip ${OPENCV_VERSION}.zip && rm -rf ${OPENCV_VERSION}.zip && \
-# #     mkdir -p opencv-${OPENCV_VERSION}/build
-# # RUN cd opencv-${OPENCV_VERSION}/build && \
-# #     cmake -DBUILD_TESTS=OFF -DBUILT_PERF_TESTS=OFF -DBUILD_EXAMPLES=OFF -DWITH_LIBV4L=ON -DWITH_OPENGL=ON .. && \
-# #     make -j8 && \
-# #     make install && \
-# #     cd -
-# # RUN rm -rf opencv-${OPENCV_VERSION}
+# # Installation of OpenCV 4.2.0
+# ENV OPENCV_VERSION="4.2.0"
+# RUN wget https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip && \
+#     unzip ${OPENCV_VERSION}.zip && rm -rf ${OPENCV_VERSION}.zip && \
+#     mkdir -p opencv-${OPENCV_VERSION}/build
+# RUN cd opencv-${OPENCV_VERSION}/build && \
+#     cmake -DBUILD_TESTS=OFF -DBUILT_PERF_TESTS=OFF -DBUILD_EXAMPLES=OFF -DWITH_LIBV4L=ON -DWITH_OPENGL=ON .. && \
+#     make -j8 && \
+#     make install && \
+#     cd -
+# RUN rm -rf opencv-${OPENCV_VERSION}
 
 
 # Installation of dependencies to Doxygen

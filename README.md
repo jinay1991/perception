@@ -8,6 +8,15 @@
 
 **WIP** Autonomous Driving Perception (with conjunction with Udacity Simulator) 
 
+## Simulator
+
+* Download prebuilt binaries
+    * [Linux](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_linux.zip) 
+    * [MacOS](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_mac.zip)
+    * [MacOS Catalina v10.15](https://github.com/jinay1991/motion_planning/releases/download/v1.1/term3_sim_mac_catalina.zip)
+    * [Windows](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_windows.zip)
+
+
 ## Build
 
 * Build project
@@ -17,20 +26,36 @@
 
 ## Test
 
-* Launch Simulator 
+* Launch `Simulator`
 * Run `./bazel-bin/client-app data/test_video.mp4`
-
-![Screenshot](example/screenshot_01.png)
 
 ## Dependencies
 
-* [Bazel](https://docs.bazel.build/versions/1.1.0/getting-started.html) 
+Install all the required dependencies:
+
+```
+sudo apt-get install -y build-essential gcc g++ lcov make cmake
+sudo apt-get install -y openjdk-11-jdk openjdk-11-jre
+sudo apt-get install -y libtool clang-format-6.0
+sudo apt-get install -y git curl
+sudo apt-get install -y wget
+sudo apt-get install -y libuv1-dev libssl-dev
+```
+## Supported OS 
+
+Currently project works (tested) on following Operating Systems:
+
+* macOS Catalina > v10.15
+* Ubuntu 18.04
+* Docker Engine v2.1.0 (stable)
+
+## Third Party
+
+Repository uses some of the third party library as follows, which are being downloaded and linked with Bazel Rules defined in `WORKSPACE` and `bazel/` of this repository.
+
+* [nlohmann/units](https://github.com/nholthaus/units)
+* [nholthaus/json](https://github.com/nlohmann/json)
 * [uWebSockets](https://github.com/uWebSockets/uWebSockets)
-  * Run either `install-mac.sh` or `install-ubuntu.sh`.
-  * If you install from source, checkout to commit `e94b6e1`, i.e.
-    ```
-    git clone https://github.com/uWebSockets/uWebSockets
-    cd uWebSockets
-    git checkout e94b6e1
-    ```
+* [googletest](https://github.com/google/googletest)
+* [eigen](https://bitbucket.org/eigen/eigen)
 

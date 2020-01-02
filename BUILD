@@ -22,7 +22,7 @@ cc_library(
         "//lib:perception",
         "@eigen",
         "@nlohmann//:json",
-        "@uwebsocket//:libuWS",
+        "@uwebsocket",
     ],
 )
 

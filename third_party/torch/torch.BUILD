@@ -3,7 +3,7 @@ package(default_visibility = ["//visibility:public"])
 cc_library(
     name = "caffe2",
     srcs = select({
-        "@perception//bazel/platforms:macos": glob(["lib/libcaffe2_*.dylib"]),
+        "@//bazel/platforms:macos": glob(["lib/libcaffe2_*.dylib"]),
         "//conditions:default": glob(["lib/libcaffe2_*.so"]),
     }),
 )
@@ -11,7 +11,7 @@ cc_library(
 cc_library(
     name = "c10",
     srcs = select({
-        "@perception//bazel/platforms:macos": ["lib/libc10.dylib"],
+        "@//bazel/platforms:macos": ["lib/libc10.dylib"],
         "//conditions:default": ["lib/libc10.so"],
     }),
 )
@@ -19,7 +19,7 @@ cc_library(
 cc_library(
     name = "torch",
     srcs = select({
-        "@perception//bazel/platforms:macos": [
+        "@//bazel/platforms:macos": [
             "lib/libtorch.dylib",
         ],
         "//conditions:default": [

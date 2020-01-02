@@ -5,11 +5,6 @@ config_setting(
     },
 )
 
-config_setting(
-    name = "darwin",
-    constraint_values = ["@bazel_tools//platforms:osx"],
-)
-
 cc_library(
     name = "perception",
     srcs = glob([
@@ -33,10 +28,10 @@ cc_library(
     visibility = [
         "//visibility:public",
     ],
-    deps = ["@nholthaus//:units"] + select({
-        "darwin": ["@torch//:libtorch"],
-        "//conditions:default": ["@torch-linux//:libtorch"],
-    }),
+    deps = [
+        "//third_party/torch",
+        "@nholthaus//:units",
+    ],
 )
 
 cc_test(

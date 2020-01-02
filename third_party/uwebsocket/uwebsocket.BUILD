@@ -1,22 +1,17 @@
 package(default_visibility = ["//visibility:public"])
 
-config_setting(
-    name = "darwin",
-    constraint_values = ["@bazel_tools//platforms:osx"],
-)
-
 cc_library(
     name = "libuv",
     srcs = select({
-        ":darwin": ["local/lib/libuv.dylib"],
+        "@perception//bazel/platforms:macos": ["local/lib/libuv.dylib"],
         "//conditions:default": ["lib/x86_64-linux-gnu/libuv.so"],
     }),
     hdrs = select({
-        ":darwin": glob(["local/include/**/*.h"]),
+        "@perception//bazel/platforms:macos": glob(["local/include/**/*.h"]),
         "//conditions:default": glob(["include/**/*.h"]),
     }),
     includes = select({
-        ":darwin": ["local/include/"],
+        "@perception//bazel/platforms:macos": ["local/include/"],
         "//conditions:default": ["include"],
     }),
 )
@@ -24,15 +19,15 @@ cc_library(
 cc_library(
     name = "libz",
     srcs = select({
-        ":darwin": ["lib/libz.dylib"],
+        "@perception//bazel/platforms:macos": ["lib/libz.dylib"],
         "//conditions:default": ["lib/x86_64-linux-gnu/libz.so"],
     }),
     hdrs = select({
-        ":darwin": glob(["include/**/*.h"]),
+        "@perception//bazel/platforms:macos": glob(["include/**/*.h"]),
         "//conditions:default": glob(["include/*.h"]),
     }),
     includes = select({
-        ":darwin": ["include/"],
+        "@perception//bazel/platforms:macos": ["include/"],
         "//conditions:default": ["include"],
     }),
 )
@@ -40,15 +35,15 @@ cc_library(
 cc_library(
     name = "libssl",
     srcs = select({
-        ":darwin": ["local/opt/openssl/lib/libssl.dylib"],
+        "@perception//bazel/platforms:macos": ["local/opt/openssl/lib/libssl.dylib"],
         "//conditions:default": ["lib/x86_64-linux-gnu/libssl.so"],
     }),
     hdrs = select({
-        ":darwin": glob(["local/opt/openssl/include/**/*.h"]),
+        "@perception//bazel/platforms:macos": glob(["local/opt/openssl/include/**/*.h"]),
         "//conditions:default": glob(["include/openssl/*.h"]),
     }),
     includes = select({
-        ":darwin": ["local/opt/openssl/include"],
+        "@perception//bazel/platforms:macos": ["local/opt/openssl/include"],
         "//conditions:default": ["include"],
     }),
 )
@@ -56,11 +51,11 @@ cc_library(
 cc_library(
     name = "libuWS",
     srcs = select({
-        ":darwin": ["local/lib/libuWS.dylib"],
+        "@perception//bazel/platforms:macos": ["local/lib/libuWS.dylib"],
         "//conditions:default": ["lib/libuWS.so"],
     }),
     includes = select({
-        ":darwin": ["local/include"],
+        "@perception//bazel/platforms:macos": ["local/include"],
         "//conditions:default": ["include"],
     }),
     deps = [

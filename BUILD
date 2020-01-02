@@ -20,9 +20,9 @@ cc_library(
     ],
     deps = [
         "//lib:perception",
-        "@eigen3",
+        "@eigen",
         "@nlohmann//:json",
-        "@uWebSockets//:libuWS",
+        "@uwebsocket//:libuWS",
     ],
 )
 

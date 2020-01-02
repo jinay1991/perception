@@ -1,5 +1,7 @@
+package(default_visibility = ["//visibility:public"])
+
 cc_library(
-    name = "eigen3",
+    name = "eigen",
     hdrs = glob(
         ["Eigen/**"],
         exclude = [

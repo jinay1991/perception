@@ -1,3 +1,5 @@
+package(default_visibility = ["//visibility:public"])
+
 config_setting(
     name = "darwin",
     constraint_values = ["@bazel_tools//platforms:osx"],
@@ -36,15 +38,13 @@ cc_library(
         "googletest/include",
     ],
     linkopts = ["-pthread"],
-    visibility = ["//visibility:public"],
 )
 
 cc_library(
     name = "gtest_main",
     srcs = ["googletest/src/gtest_main.cc"],
     copts = ["-std=c++11"],
-    visibility = ["//visibility:public"],
     deps = [
-        ":gtest",
+        "@googletest//:gtest",
     ],
 )

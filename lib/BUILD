@@ -34,7 +34,7 @@ cc_library(
         "//visibility:public",
     ],
     deps = ["@nholthaus//:units"] + select({
-        "darwin": ["@torch-macos//:libtorch"],
+        "darwin": ["@torch//:libtorch"],
         "//conditions:default": ["@torch-linux//:libtorch"],
     }),
 )

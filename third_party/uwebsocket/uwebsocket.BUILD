@@ -1,4 +1,4 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
+package(default_visibility = ["//visibility:public"])
 
 config_setting(
     name = "darwin",
@@ -19,7 +19,6 @@ cc_library(
         ":darwin": ["local/include/"],
         "//conditions:default": ["include"],
     }),
-    visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -36,7 +35,6 @@ cc_library(
         ":darwin": ["include/"],
         "//conditions:default": ["include"],
     }),
-    visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -53,7 +51,6 @@ cc_library(
         ":darwin": ["local/opt/openssl/include"],
         "//conditions:default": ["include"],
     }),
-    visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -66,7 +63,6 @@ cc_library(
         ":darwin": ["local/include"],
         "//conditions:default": ["include"],
     }),
-    visibility = ["//visibility:public"],
     deps = [
         ":libssl",
         ":libuv",

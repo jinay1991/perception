@@ -29,6 +29,7 @@ cc_library(
         "//visibility:public",
     ],
     deps = [
+        "//third_party/opencv",
         "//third_party/torch",
         "@nholthaus//:units",
     ],

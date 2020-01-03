@@ -9,7 +9,6 @@ image: registry.gitlab.com/jinay1991/perception
 stages:
   - check
   - build
-  - test
   - deploy
 
 # ------------
@@ -74,11 +73,8 @@ bazel-build-and-test:
     name: TestResults
     when: on_success
 
-# -----------
-# Stage: Test
-# -----------
 code-coverage:
-  stage: test
+  stage: build
   script:
     - bazel coverage -s --combined_report=lcov --coverage_report_generator=@bazel_tools//tools/test/CoverageOutputGenerator/java/com/google/devtools/coverageoutputgenerator:Main //...
     - export OUTPUT_DIR=$(bazel info execution_root)
@@ -93,7 +89,7 @@ code-coverage:
     expire_in: 1 day
 
 doxygen:
-  stage: test
+  stage: build
   script:
     - echo "Generating Doxygen Documentation"
     - doxygen Doxyfile

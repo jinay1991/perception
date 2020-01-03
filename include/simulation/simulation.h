@@ -5,13 +5,14 @@
 #define SIMULATION_SIMULATION_H_
 
 #include <string>
+#include "perception/perception.h"
 
 namespace sim
 {
 class Simulation
 {
   public:
-    Simulation(const std::string& video_file);
+    Simulation();
     void Run();
 };
 }  // namespace sim

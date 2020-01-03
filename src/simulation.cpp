@@ -5,8 +5,12 @@
 
 namespace sim
 {
-Simulation::Simulation(const std::string& video_file) {}
+Simulation::Simulation() {}
 
-void Simulation::Run() {}
+void Simulation::Run()
+{
+    perception::Perception perception;
+    perception.Run("data/grace_hopper.jpg");
+}
 
 }  // namespace sim

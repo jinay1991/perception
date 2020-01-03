@@ -18,6 +18,8 @@ class Perception
   public:
     Perception();
 
+    void Run(const std::string& input_path);
+
   private:
     std::unique_ptr<ILaneDetect> lane_detect_;
     std::unique_ptr<IObjectDetect> object_detect_;

@@ -1,5 +1,7 @@
 licenses(["notice"])
 
+package(default_visibility = ["//visibility:public"])
+
 alias(
     name = "opencv",
     actual = select(
@@ -9,5 +11,4 @@ alias(
         },
         no_match_error = "No known platform specified.",
     ),
-    visibility = ["//visibility:public"],
 )

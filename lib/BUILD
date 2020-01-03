@@ -1,10 +1,3 @@
-config_setting(
-    name = "debug_build",
-    values = {
-        "compilation_mode": "dbg",
-    },
-)
-
 cc_library(
     name = "perception",
     srcs = glob([
@@ -19,10 +12,6 @@ cc_library(
         "-Wall",
         "-Werror",
     ],
-    defines = select({
-        ":debug_build": ["NDEBUG"],
-        "//conditions:default": [],
-    }),
     includes = ["include"],
     tags = ["lib"],
     visibility = [

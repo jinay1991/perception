@@ -1,18 +1,17 @@
 package(default_visibility = ["//visibility:public"])
 
 MODULES = [
-    "calib3d",
+    # "calib3d",
     "core",
-    "dnn",
-    "features2d",
-    "flann",
-    "highgui",
+    # "features2d",
+    # "flann",
+    # "highgui",
     "imgcodecs",
     "imgproc",
-    "ml",
-    "objdetect",
-    "video",
-    "videoio",
+    # "ml",
+    # "objdetect",
+    # "video",
+    # "videoio",
 ]
 
 MODULE_DEPS = {
@@ -26,10 +25,6 @@ MODULE_DEPS = {
         "core",
         "imgproc",
         "flann",
-    ],
-    "dnn": [
-        "core",
-        "imgproc",
     ],
     "flann": ["core"],
     "highgui": [
@@ -68,7 +63,7 @@ MODULE_DEPS = {
         cc_library(
             name = module,
             srcs = select({
-                "@//bazel/platforms:macos": glob(["lib/libopencv_{}.dylib*".format(module)]),
+                "@//bazel/platforms:macos": glob(["lib/libopencv_{}.dylib".format(module)]),
                 "@//bazel/platforms:linux": glob(["lib/libopencv_{}.so*".format(module)]),
             }),
             hdrs = ["include/opencv4/opencv2/{}.hpp".format(module)] + glob(["include/opencv4/opencv2/{}/**/*.h*".format(module)]) +

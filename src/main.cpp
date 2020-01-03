@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 {
     try
     {
-        sim::Simulation sim{argv[1]};
+        sim::Simulation sim{};
         sim.Run();
     }
     catch (std::exception& e)

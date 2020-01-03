@@ -1,5 +1,19 @@
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_deb", "pkg_tar")
 
+exports_files(glob([
+    "data/*.bmp",
+    "data/*.jpg",
+    "data/*.txt",
+]))
+
+filegroup(
+    name = "testdata",
+    srcs = [
+        "data/grace_hopper.bmp",
+        "data/grace_hopper.jpg",
+    ],
+)
+
 cc_library(
     name = "simulation",
     srcs = glob(
@@ -33,6 +47,9 @@ cc_binary(
         "-std=c++14",
         "-Wall",
         "-Werror",
+    ],
+    data = [
+        ":testdata",
     ],
     includes = ["include"],
     linkstatic = True,

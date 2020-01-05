@@ -41,6 +41,28 @@ sudo apt-get install -y git curl
 sudo apt-get install -y wget
 sudo apt-get install -y libuv1-dev libssl-dev
 ```
+
+### OpenCV
+
+Install OpenCV v4.x
+
+On `macOS`, run `brew install opencv`.
+
+On `Ubuntu` or other linux systems, run following commands to build OpenCV from source and install.
+
+```
+export OPENCV_VERSION="4.2.0"
+wget https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip && \
+unzip ${OPENCV_VERSION}.zip && rm -rf ${OPENCV_VERSION}.zip && \
+mkdir -p opencv-${OPENCV_VERSION}/build
+cd opencv-${OPENCV_VERSION}/build && \
+cmake -DBUILD_TESTS=OFF -DBUILT_PERF_TESTS=OFF -DBUILD_EXAMPLES=OFF -DWITH_LIBV4L=ON -DWITH_OPENGL=ON .. && \
+make -j8 && \
+make install && \
+cd -
+rm -rf opencv-${OPENCV_VERSION}
+```
+
 ## Supported OS 
 
 Currently project works (tested) on following Operating Systems:
@@ -58,4 +80,7 @@ Repository uses some of the third party library as follows, which are being down
 * [uWebSockets](https://github.com/uWebSockets/uWebSockets)
 * [googletest](https://github.com/google/googletest)
 * [eigen](https://bitbucket.org/eigen/eigen)
+* [tensorflow](https://github.com/tensorflow/tensorflow)
+* [pytorch](https://github.com/pytorch/pytorch)
+* [opencv](https://github.com/opencv/opencv)
 

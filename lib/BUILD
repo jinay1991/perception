@@ -1,23 +1,7 @@
 cc_library(
     name = "perception",
-    srcs = glob(
-        [
-            "src/**/*.cpp",
-        ],
-        exclude = [
-            "src/net.cpp",
-            "src/train.cpp",
-        ],
-    ),
-    hdrs = glob(
-        [
-            "include/**/*.h",
-        ],
-        exclude = [
-            "include/model/net.h",
-            "include/model/train.h",
-        ],
-    ),
+    srcs = glob(["src/**/*.cpp"]),
+    hdrs = glob(["include/**/*.h"]),
     copts = [
         "-std=c++14",
         "-Wall",
@@ -29,7 +13,6 @@ cc_library(
         "//visibility:public",
     ],
     deps = [
-        # "//third_party/torch",
         "@nholthaus//:units",
         "@opencv//:imgcodecs",
     ],

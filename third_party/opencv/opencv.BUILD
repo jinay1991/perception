@@ -1,17 +1,17 @@
 package(default_visibility = ["//visibility:public"])
 
 MODULES = [
-    # "calib3d",
+    "calib3d",
     "core",
-    # "features2d",
-    # "flann",
-    # "highgui",
+    "features2d",
+    "flann",
+    "highgui",
     "imgcodecs",
     "imgproc",
-    # "ml",
-    # "objdetect",
-    # "video",
-    # "videoio",
+    "ml",
+    "objdetect",
+    "video",
+    "videoio",
 ]
 
 MODULE_DEPS = {

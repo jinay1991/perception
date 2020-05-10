@@ -1,8 +1,8 @@
 workspace(name = "perception")
 
-load("@perception//third_party:dependencies.bzl", "third_party_deps")
+load("@perception//third_party:dependencies.bzl", "third_party_dependencies")
 
-third_party_deps()
+third_party_dependencies()
 
 ## Load TensorFlow as Submodule
 load("@org_tensorflow//tensorflow:workspace.bzl", "tf_workspace")

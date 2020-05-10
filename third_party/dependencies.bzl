@@ -10,7 +10,7 @@ load("@//third_party/torch:torch.bzl", "torch")
 load("@//third_party/uwebsocket:uwebsocket.bzl", "uwebsocket")
 load("@//third_party/zlib:zlib.bzl", "zlib")
 
-def third_party_deps():
+def third_party_dependencies():
     """ Load 3rd party dependencies """
     eigen()
     googletest()

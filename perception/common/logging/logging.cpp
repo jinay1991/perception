@@ -1,4 +1,4 @@
-/* Copyright 2018 The TensorFlow Authors. All Rights Reserved.
+/* Copyright 2018 The TensorFlow Authors. MIT License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#include "perception/logging/logging.h"
+#include "perception/common/logging/logging.h"
 
 namespace perception
 {
@@ -25,7 +25,10 @@ LoggingWrapper::LoggingWrapper(const LogSeverity& severity, const bool should_lo
 {
 }
 
-std::stringstream& LoggingWrapper::Stream() { return stream_; }
+std::stringstream& LoggingWrapper::Stream()
+{
+    return stream_;
+}
 
 LoggingWrapper::~LoggingWrapper()
 {
@@ -33,6 +36,7 @@ LoggingWrapper::~LoggingWrapper()
     {
         switch (severity_)
         {
+            case LogSeverity::DEBUG:
             case LogSeverity::INFO:
             case LogSeverity::WARN:
                 std::cout << stream_.str() << std::endl;

@@ -1,4 +1,4 @@
-/* Copyright 2018 The TensorFlow Authors. All Rights Reserved.
+/* Copyright 2018 The TensorFlow Authors. MIT License
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -12,8 +12,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==============================================================================*/
-#ifndef PERCEPTION_LOGGING_LOGGING_H_
-#define PERCEPTION_LOGGING_LOGGING_H_
+#ifndef PERCEPTION_COMMON_LOGGING_LOGGING_H_
+#define PERCEPTION_COMMON_LOGGING_LOGGING_H_
 
 #include <cstdint>
 #include <iostream>
@@ -32,7 +32,8 @@ class LoggingWrapper
         INFO = 0,
         WARN = 1,
         ERROR = 2,
-        FATAL = 3
+        FATAL = 3,
+        DEBUG = 4
     };
 
     /// @brief Constructor
@@ -80,4 +81,4 @@ class LoggingWrapper
 /// @param [in] b - attribute b
 #define ASSERT_CHECK_EQ(a, b) ASSERT_CHECK(a == b)
 
-#endif  /// PERCEPTION_LOGGING_LOGGING_H_
+#endif  /// PERCEPTION_COMMON_LOGGING_LOGGING_H_

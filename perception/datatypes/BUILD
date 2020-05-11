@@ -4,6 +4,7 @@ cc_library(
     name = "datatypes",
     srcs = [],
     hdrs = [
+        "inference_engine_type.h",
         "lane.h",
         "object.h",
         "traffic_light.h",

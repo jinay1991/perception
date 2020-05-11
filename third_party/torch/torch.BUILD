@@ -1,36 +1,66 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
     name = "caffe2",
-    srcs = select({
-        "@//bazel/platforms:macos": glob(["lib/libcaffe2_*.dylib"]),
-        "//conditions:default": glob(["lib/libcaffe2_*.so"]),
-    }),
+    srcs = ["lib/libtorch.so"],
+    includes = [
+        "include",
+        "include/torch/csrc/api/include",
+    ],
+    deps = [
+        "@com_google_protobuf//:protobuf",
+        "@com_google_protobuf//:protobuf_headers",
+    ],
+)
+
+cc_library(
+    name = "gomp",
+    srcs = glob(["lib/libgomp-*"]),
+    includes = [
+        "include",
+        "include/torch/csrc/api/include",
+    ],
+    linkopts = [
+        "-lpthread",
+    ],
 )
 
 cc_library(
     name = "c10",
-    srcs = select({
-        "@//bazel/platforms:macos": ["lib/libc10.dylib"],
-        "//conditions:default": ["lib/libc10.so"],
-    }),
+    srcs = [
+        "lib/libc10.so",
+    ],
+    includes = [
+        "include",
+        "include/torch/csrc/api/include",
+    ],
+    linkopts = [
+        "-ldl",
+        "-lpthread",
+    ],
+    deps = [
+        ":gomp",
+    ],
 )
 
 cc_library(
     name = "torch",
-    srcs = select({
-        "@//bazel/platforms:macos": [
-            "lib/libtorch.dylib",
-        ],
-        "//conditions:default": [
-            "lib/libtorch.so",
-            "lib/libgomp-753e6e92.so.1",
-        ],
-    }),
-    hdrs = glob(["include/**/*.h"]),
+    srcs = [
+        "lib/libXNNPACK.a",
+        "lib/libclog.a",
+        "lib/libcpuinfo.a",
+        "lib/libnnpack.a",
+        "lib/libpytorch_qnnpack.a",
+        "lib/libtorch_cpu.so",
+    ],
+    hdrs = glob([
+        "include/**/*.h",
+        "include/**/*",
+    ]),
     copts = [
-        "-std=c++11",
-        "-D_GLIBCXX_USE_CXX11_ABI=0",
+        "-std=c++14",
     ],
     includes = [
         "include",

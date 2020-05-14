@@ -3,71 +3,111 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
-    name = "caffe2",
-    srcs = ["lib/libtorch.so"],
-    includes = [
-        "include",
-        "include/torch/csrc/api/include",
+    name = "gomp-75eea7e8",
+    srcs = ["lib/libgomp-75eea7e8.so.1"],
+    linkopts = [
+        "-lpthread",
+        "-ldl",
+    ],
+    alwayslink = True,
+)
+
+cc_library(
+    name = "torch_cpu",
+    srcs = ["lib/libtorch_cpu.so"],
+    linkopts = [
+        "-lpthread",
+        "-ldl",
     ],
     deps = [
-        "@com_google_protobuf//:protobuf",
-        "@com_google_protobuf//:protobuf_headers",
+        ":gomp-75eea7e8",
     ],
 )
 
 cc_library(
-    name = "gomp",
-    srcs = glob(["lib/libgomp-*"]),
-    includes = [
-        "include",
-        "include/torch/csrc/api/include",
+    name = "nnpack",
+    srcs = ["lib/libnnpack.a"],
+)
+
+cc_library(
+    name = "pytorch_qnnpack",
+    srcs = ["lib/libpytorch_qnnpack.a"],
+)
+
+cc_library(
+    name = "XNNPACK",
+    srcs = ["lib/libXNNPACK.a"],
+)
+
+cc_library(
+    name = "cpuinfo",
+    srcs = [
+        "lib/libcpuinfo.a",
+        "lib/libcpuinfo_internals.a",
     ],
+)
+
+cc_library(
+    name = "clog",
+    srcs = ["lib/libclog.a"],
+)
+
+cc_library(
+    name = "caffe2",
+    srcs = glob([
+        "lib/libcaffe2_*",
+    ]),
     linkopts = [
         "-lpthread",
+        "-lm",
+        "-ldl",
+    ],
+    deps = [
+        ":c10",
+        ":gomp-75eea7e8",
+        ":torch",
+        ":torch_cpu",
     ],
 )
 
 cc_library(
     name = "c10",
-    srcs = [
-        "lib/libc10.so",
-    ],
-    includes = [
-        "include",
-        "include/torch/csrc/api/include",
-    ],
+    srcs = ["lib/libc10.so"],
     linkopts = [
-        "-ldl",
         "-lpthread",
+        "-lm",
+        "-ldl",
     ],
     deps = [
-        ":gomp",
+        ":gomp-75eea7e8",
     ],
 )
 
 cc_library(
     name = "torch",
-    srcs = [
-        "lib/libXNNPACK.a",
-        "lib/libclog.a",
-        "lib/libcpuinfo.a",
-        "lib/libnnpack.a",
-        "lib/libpytorch_qnnpack.a",
-        "lib/libtorch_cpu.so",
-    ],
+    srcs = ["lib/libtorch.so"],
     hdrs = glob([
         "include/**/*.h",
         "include/**/*",
     ]),
-    copts = [
-        "-std=c++14",
-    ],
     includes = [
         "include",
         "include/torch/csrc/api/include",
     ],
+    linkopts = [
+        "-lpthread",
+        "-lm",
+        "-ldl",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
+        ":XNNPACK",
         ":c10",
-        ":caffe2",
+        ":clog",
+        ":cpuinfo",
+        ":gomp-75eea7e8",
+        ":nnpack",
+        ":pytorch_qnnpack",
+        ":torch_cpu",
     ],
 )

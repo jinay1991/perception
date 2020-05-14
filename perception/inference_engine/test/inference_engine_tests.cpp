@@ -50,7 +50,7 @@ TYPED_TEST_P(InferenceEngineTest, Sanity)
 
 REGISTER_TYPED_TEST_SUITE_P(InferenceEngineTest, Sanity);
 
-typedef ::testing::Types<TFInferenceEngine, /*TFLiteInferenceEngine,*/ TorchInferenceEngine> InferenceEngineTestTypes;
+typedef ::testing::Types<TFInferenceEngine /*, TFLiteInferenceEngine */, TorchInferenceEngine> InferenceEngineTestTypes;
 INSTANTIATE_TYPED_TEST_SUITE_P(TypeTests, InferenceEngineTest, InferenceEngineTestTypes);
 
 class InferenceEngineStrategyTest : public ::testing::TestWithParam<InferenceEngineType>

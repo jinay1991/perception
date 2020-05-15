@@ -3,7 +3,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
-    name = "gomp-75eea7e8",
+    name = "gomp",
     srcs = ["lib/libgomp-75eea7e8.so.1"],
     linkopts = [
         "-lpthread",
@@ -20,7 +20,7 @@ cc_library(
         "-ldl",
     ],
     deps = [
-        ":gomp-75eea7e8",
+        ":gomp",
     ],
 )
 
@@ -64,7 +64,7 @@ cc_library(
     ],
     deps = [
         ":c10",
-        ":gomp-75eea7e8",
+        ":gomp",
         ":torch",
         ":torch_cpu",
     ],
@@ -79,7 +79,7 @@ cc_library(
         "-ldl",
     ],
     deps = [
-        ":gomp-75eea7e8",
+        ":gomp",
     ],
 )
 
@@ -105,7 +105,7 @@ cc_library(
         ":c10",
         ":clog",
         ":cpuinfo",
-        ":gomp-75eea7e8",
+        ":gomp",
         ":nnpack",
         ":pytorch_qnnpack",
         ":torch_cpu",

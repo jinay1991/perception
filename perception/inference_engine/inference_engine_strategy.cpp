@@ -28,7 +28,7 @@ void InferenceEngineStrategy::SelectInferenceEngine(const InferenceEngineType& i
             break;
         default:
         case InferenceEngineType::kInvalid:
-            LOG(FATAL) << "Received " << inference_engine_type << " (invalid) InferenceEngineType.";
+            LOG(FATAL) << "Received " << inference_engine_type;
             break;
     }
 }

@@ -30,9 +30,9 @@ inline const char* to_string(const InferenceEngineType& inference_engine_type)
         case InferenceEngineType::kTorch:
             return "kTorch";
         default:
-            return "ERROR: Invalid type provided";
+            return "ERROR: Unknown InferenceEngineType.";
     }
-    return "ERROR: Invalid type provided";
+    return "ERROR: Unknown InferenceEngineType.";
 }
 
 inline std::ostream& operator<<(std::ostream& stream, const InferenceEngineType& inference_engine_type)

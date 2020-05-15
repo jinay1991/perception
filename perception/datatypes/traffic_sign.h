@@ -5,10 +5,12 @@
 #ifndef PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H_
 #define PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H_
 
+#include "perception/common/event_data_qualifier/event_data_qualifier.h"
 #include "perception/datatypes/lane.h"
 
 #include <units.h>
 
+#include <array>
 #include <cstdint>
 
 namespace perception

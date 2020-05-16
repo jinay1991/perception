@@ -78,24 +78,9 @@ TEST_F(CameraTest, GivenTypicalSourceVideo_ExpectValidVideoFrame)
     ASSERT_EQ(expected.size(), actual.size());
 }
 
-TEST_F(CameraTest, GivenNoSource_ExpectValidCameraFrame)
-{
-    RunOnce();
-
-    const auto actual = unit_.GetImage();
-    ASSERT_FALSE(actual.empty());
-}
-
 TEST_F(CameraTest, GivenInvalidSource_ExpectException)
 {
-    unit_.SetSource(test_invalid_source_);
-
-    RunOnce();
-
-    const auto expected = GetTestVideoImage();
-    const auto actual = unit_.GetImage();
-    ASSERT_FALSE(actual.empty());
-    ASSERT_EQ(expected.size(), actual.size());
+    EXPECT_EXIT(unit_.SetSource(test_invalid_source_), ::testing::KilledBySignal(SIGABRT), "");
 }
 }  // namespace
 }  // namespace perception

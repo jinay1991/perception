@@ -48,7 +48,7 @@ cc_library(
     deps = [
         "//perception/common/logging",
         "//perception/datatypes",
-        "@torch",
+        # "@torch",
     ],
 )
 

@@ -1,9 +1,9 @@
 ---
-Checks:          '-*,clang-diagnostic-*,clang-analyzer-*,clang-analyzer-cplusplus*,cppcoreguidelines-*,google-build-using-namespace,modernize-*,readability-*,-readability-avoid-const-params-in-decls'
+Checks:          '-*,clang-diagnostic-*,clang-analyzer-*,clang-analyzer-cplusplus*,cppcoreguidelines-*,google-build-using-namespace,readability-*,-readability-avoid-const-params-in-decls'
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
 AnalyzeTemporaryDtors: false
-CheckOptions:    
+CheckOptions:
   - key:             cppcoreguidelines-no-malloc.Allocations
     value:           '::malloc;::calloc'
   - key:             cppcoreguidelines-no-malloc.Deallocations
@@ -115,4 +115,3 @@ CheckOptions:
   - key:             readability-static-accessed-through-instance.NameSpecifierNestingThreshold
     value:           '3'
 ...
-

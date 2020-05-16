@@ -20,7 +20,7 @@ cc_library(
         "-ldl",
     ],
     deps = [
-        ":gomp",
+        # ":gomp",
     ],
 )
 
@@ -64,7 +64,7 @@ cc_library(
     ],
     deps = [
         ":c10",
-        ":gomp",
+        # ":gomp",
         ":torch",
         ":torch_cpu",
     ],
@@ -79,7 +79,7 @@ cc_library(
         "-ldl",
     ],
     deps = [
-        ":gomp",
+        # ":gomp",
     ],
 )
 
@@ -105,7 +105,7 @@ cc_library(
         ":c10",
         ":clog",
         ":cpuinfo",
-        ":gomp",
+        # ":gomp",
         ":nnpack",
         ":pytorch_qnnpack",
         ":torch_cpu",

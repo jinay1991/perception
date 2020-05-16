@@ -6,7 +6,7 @@
 
 #include "perception/common/logging/logging.h"
 
-#include <torch/torch.h>
+// #include <torch/torch.h>
 
 namespace perception
 {
@@ -14,8 +14,8 @@ TorchInferenceEngine::TorchInferenceEngine() {}
 
 void TorchInferenceEngine::Init()
 {
-    torch::Tensor tensor = torch::eye(3);
-    LOG(INFO) << "Successfully created tensor: " << tensor;
+    // torch::Tensor tensor = torch::eye(3);
+    // LOG(INFO) << "Successfully created tensor: " << tensor;
 }
 
 void TorchInferenceEngine::Execute() {}

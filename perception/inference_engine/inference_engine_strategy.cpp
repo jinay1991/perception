@@ -4,6 +4,7 @@
 ///
 #include "perception/inference_engine/inference_engine_strategy.h"
 
+#include "perception/common/logging/logging.h"
 #include "perception/inference_engine/tf_inference_engine.h"
 #include "perception/inference_engine/tflite_inference_engine.h"
 #include "perception/inference_engine/torch_inference_engine.h"

@@ -1,7 +1,8 @@
 ---
-Checks:          '-*,clang-diagnostic-*,clang-analyzer-*,clang-analyzer-cplusplus*,cppcoreguidelines-*,google-build-using-namespace,readability-*,-readability-avoid-const-params-in-decls'
+Checks:          '-*,clang-analyzer-*,clang-analyzer-cplusplus*,cppcoreguidelines-*,google-build-using-namespace,readability-*,-readability-avoid-const-params-in-decls'
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
+FormatStyle: file
 AnalyzeTemporaryDtors: false
 CheckOptions:
   - key:             cppcoreguidelines-no-malloc.Allocations

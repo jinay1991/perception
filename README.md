@@ -6,16 +6,15 @@
 
 [[Issue Board](https://gitlab.com/jinay1991/perception/-/boards)]
 
-**WIP** Autonomous Driving Perception (with conjunction with Udacity Simulator) 
+**WIP** Autonomous Driving Perception (with conjunction with Udacity Simulator)
 
 ## Simulator
 
 * Download prebuilt binaries
-    * [Linux](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_linux.zip) 
+    * [Linux](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_linux.zip)
     * [MacOS](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_mac.zip)
     * [MacOS Catalina v10.15](https://github.com/jinay1991/motion_planning/releases/download/v1.1/term3_sim_mac_catalina.zip)
     * [Windows](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_windows.zip)
-
 
 ## Build
 
@@ -23,11 +22,6 @@
     * Release `bazel build //...`
     * Debug `bazel build -c dbg //...`
 * Run Unit Tests `bazel test //... --test_output=all`
-
-## Test
-
-* Launch `Simulator`
-* Run `./bazel-bin/client-app data/test_video.mp4`
 
 ## Dependencies
 
@@ -63,7 +57,7 @@ cd -
 rm -rf opencv-${OPENCV_VERSION}
 ```
 
-## Supported OS 
+## Supported OS
 
 Currently project works (tested) on following Operating Systems:
 
@@ -83,4 +77,3 @@ Repository uses some of the third party library as follows, which are being down
 * [tensorflow](https://github.com/tensorflow/tensorflow)
 * [pytorch](https://github.com/pytorch/pytorch)
 * [opencv](https://github.com/opencv/opencv)
-

@@ -16,7 +16,7 @@ RUN apt-get install -y libuv1-dev libssl-dev
 RUN apt-get install -y doxygen graphviz plantuml
 
 # Installation of static code analysis
-RUN apt-get install -y cppcheck python python-pygments
+RUN apt-get install -y cppcheck python python-pygments clang-tidy-6.0
 
 # Installation of Bazel Package
 RUN echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
@@ -28,12 +28,12 @@ RUN wget https://github.com/bazelbuild/buildtools/releases/download/0.29.0/build
 RUN chmod +x buildifier
 RUN mv buildifier /usr/bin
 
-# Installation of dependencies to OpenCV 
-RUN apt-get install -y qt5-default libvtk6-dev zlib1g-dev libjpeg-dev libwebp-dev 
-RUN apt-get install -y libpng-dev libtiff5-dev libopenexr-dev libgdal-dev libavresample-dev 
-RUN apt-get install -y libdc1394-22-dev libavcodec-dev libavformat-dev libswscale-dev libtheora-dev 
-RUN apt-get install -y libvorbis-dev libxvidcore-dev libx264-dev yasm libopencore-amrnb-dev 
-RUN apt-get install -y libopencore-amrwb-dev libv4l-dev libxine2-dev libtbb-dev libeigen3-dev 
+# Installation of dependencies to OpenCV
+RUN apt-get install -y qt5-default libvtk6-dev zlib1g-dev libjpeg-dev libwebp-dev
+RUN apt-get install -y libpng-dev libtiff5-dev libopenexr-dev libgdal-dev libavresample-dev
+RUN apt-get install -y libdc1394-22-dev libavcodec-dev libavformat-dev libswscale-dev libtheora-dev
+RUN apt-get install -y libvorbis-dev libxvidcore-dev libx264-dev yasm libopencore-amrnb-dev
+RUN apt-get install -y libopencore-amrwb-dev libv4l-dev libxine2-dev libtbb-dev libeigen3-dev
 RUN apt-get install -y python3-dev python3-tk python3-numpy python3-pip
 RUN apt-get install -y ant default-jdk doxygen
 

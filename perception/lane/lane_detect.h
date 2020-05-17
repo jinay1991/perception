@@ -17,6 +17,9 @@ class LaneDetect
     virtual void Init();
     virtual void Execute();
     virtual void Shutdown();
+
+  private:
+    Camera camera_;
 };
 }  // namespace perception
 

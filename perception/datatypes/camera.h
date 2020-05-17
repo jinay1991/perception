@@ -6,6 +6,7 @@
 #define PERCEPTION_DATATYPES_CAMERA_H_
 
 #include <opencv4/opencv2/core.hpp>
+#include <opencv4/opencv2/core/base.hpp>
 
 namespace perception
 {

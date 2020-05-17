@@ -17,12 +17,6 @@
 
 namespace perception
 {
-namespace sensor
-{
-namespace camera
-{
-
-Calibration::Calibration() : Calibration{"data/camera_calibration", 9, 6} {}
 
 Calibration::Calibration(const std::string dirname, const std::int32_t nx, const std::int32_t ny)
     : filelist_{},
@@ -45,10 +39,11 @@ void Calibration::Init()
     {
         for (std::int32_t h = 0; h < pattern_size_.height; ++h)
         {
-            pattern_points.push_back(cv::Point3f(h, w, 0));
+            pattern_points.push_back(cv::Point3f(w, h, 0));
         }
     }
 
+    /// @todo Use threads to improve performance.
     for (const auto& filename : filelist_)
     {
         const cv::Mat image = cv::imread(filename, cv::IMREAD_GRAYSCALE);
@@ -83,18 +78,20 @@ cv::Mat Calibration::GetCameraMatrix() const
 {
     return camera_matrix_;
 }
+
 cv::Mat Calibration::GetDistanceCoeffs() const
 {
     return dist_coeffs_;
 }
+
 cv::Mat Calibration::GetRotationMatrix() const
 {
     return rotation_;
 }
+
 cv::Mat Calibration::GetTranslationMatrix() const
 {
     return translation_;
 }
-}  // namespace camera
-}  // namespace sensor
+
 }  // namespace perception

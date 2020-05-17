@@ -8,7 +8,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
 RUN apt-get install -y build-essential gcc g++ lcov make cmake
 RUN apt-get install -y openjdk-11-jdk openjdk-11-jre
 RUN apt-get install -y libtool clang-format-6.0
-RUN apt-get install -y git curl
+RUN apt-get install -y git git-lfs curl
 RUN apt-get install -y wget
 RUN apt-get install -y libuv1-dev libssl-dev
 
@@ -35,13 +35,14 @@ RUN apt-get install -y libdc1394-22-dev libavcodec-dev libavformat-dev libswscal
 RUN apt-get install -y libvorbis-dev libxvidcore-dev libx264-dev yasm libopencore-amrnb-dev
 RUN apt-get install -y libopencore-amrwb-dev libv4l-dev libxine2-dev libtbb-dev libeigen3-dev
 RUN apt-get install -y python3-dev python3-tk python3-numpy python3-pip
-RUN apt-get install -y ant default-jdk doxygen
+RUN apt-get install -y ant default-jdk
 
 RUN python3 -m pip install -U pip
 RUN python3 -m pip install -U numpy tensorflow matplotlib pandas scikit-image sklearn
 
 # Installation of OpenCV 4.2.0
 ENV OPENCV_VERSION="4.2.0"
+
 RUN wget https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip && \
     unzip ${OPENCV_VERSION}.zip && rm -rf ${OPENCV_VERSION}.zip && \
     mkdir -p opencv-${OPENCV_VERSION}/build

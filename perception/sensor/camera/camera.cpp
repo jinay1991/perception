@@ -13,6 +13,7 @@ namespace perception
 Camera::Camera() : capture_device_{0}, source_{}, calibration_params_{}, image_{} {}
 
 void Camera::Init() {}
+
 void Camera::Execute()
 {
     capture_device_ >> image_;

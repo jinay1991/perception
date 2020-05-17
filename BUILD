@@ -1,13 +1,11 @@
 exports_files(glob([
-    "data/*.jpg",
-    "data/*.avi",
+    "data/**/*.*",
 ]))
 
 filegroup(
     name = "testdata",
-    srcs = [
-        "data/Megamind.avi",
-        "data/grace_hopper.jpg",
-    ],
+    srcs = glob([
+        "data/**/*.*",
+    ]),
     visibility = ["//visibility:public"],
 )

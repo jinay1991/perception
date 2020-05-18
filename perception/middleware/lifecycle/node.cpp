@@ -7,6 +7,7 @@
 namespace perception
 {
 Node::Node(const std::string name, IPubSubFactory& factory) : name_{name}, factory_{&factory} {}
+
 std::string Node::GetName() const
 {
     return name_;

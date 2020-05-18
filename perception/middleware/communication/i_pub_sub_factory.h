@@ -5,20 +5,22 @@
 #ifndef PERCEPTION_MIDDLEWARE_COMMUNICATION_I_PUB_SUB_FACTORY_H_
 #define PERCEPTION_MIDDLEWARE_COMMUNICATION_I_PUB_SUB_FACTORY_H_
 
+#include "perception/middleware/communication/i_publisher.h"
+#include "perception/middleware/communication/i_subscriber.h"
+
+#include <memory>
+
 namespace perception
 {
+using TopicId = std::int32_t;
 
 class IPubSubFactory
 {
   public:
     virtual ~IPubSubFactory() = default;
 
-    virtual void Init() = 0;
-    virtual void Execute() = 0;
-    virtual void Shutdown() = 0;
-
-    virtual void CreatePublisher() = 0;
-    virtual void CreateSubscriber() = 0;
+    virtual PublisherPtr CreatePublisher(const TopicId topic, const MessagePtr message) = 0;
+    virtual SubscriberPtr CreateSubscriber(const TopicId topic, const MessagePtr message) = 0;
 };
 
 }  // namespace perception

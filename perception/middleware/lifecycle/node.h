@@ -6,13 +6,9 @@
 #define PERCEPTION_MIDDLEWARE_LIFECYCLE_NODE_H_
 
 #include "perception/middleware/communication/i_pub_sub_factory.h"
-#include "perception/middleware/communication/publisher_proxy.h"
-#include "perception/middleware/communication/subscriber_proxy.h"
 #include "perception/middleware/lifecycle/i_node.h"
-#include "perception/middleware/lifecycle/i_topic.h"
 
 #include <string>
-#include <type_traits>
 
 namespace perception
 {

@@ -6,6 +6,6 @@ cc_library(
     hdrs = glob(["*.h"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//perception/sensor/camera"
+        "//perception/sensor/camera",
     ],
 )

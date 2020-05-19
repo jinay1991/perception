@@ -11,7 +11,10 @@
 
 namespace perception
 {
-Camera::Camera() : capture_device_{0}, source_{}, image_{}, calibration_{"data/camera_calibration", 9, 6} {}
+Camera::Camera()
+    : source_{"data/Megamind.avi"}, capture_device_{source_}, image_{}, calibration_{"data/camera_calibration", 9, 6}
+{
+}
 
 void Camera::Init()
 {

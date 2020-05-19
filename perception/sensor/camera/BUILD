@@ -18,7 +18,7 @@ cc_library(
     srcs = ["camera.cpp"],
     hdrs = ["camera.h"],
     data = [
-        "//:testdata",
+        "//:calibration_data",
     ],
     deps = [
         ":calibration",

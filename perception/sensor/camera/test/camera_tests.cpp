@@ -101,7 +101,7 @@ TEST_F(CameraTest, GivenTypicalSourceVideo_ExpectValidVideoFrame)
 
 TEST_F(CameraTest, GivenInvalidSource_ExpectException)
 {
-    EXPECT_EXIT(unit_.SetSource(test_invalid_source_), ::testing::KilledBySignal(SIGABRT), "");
+    EXPECT_EXIT(Camera().SetSource(test_invalid_source_), ::testing::KilledBySignal(SIGABRT), "");
 }
 
 TEST_F(CameraTest, GivenTypicalSourceImage_ExpectUndistortImage)

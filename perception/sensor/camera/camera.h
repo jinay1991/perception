@@ -43,13 +43,13 @@ class Camera
     virtual Image GetUndistortedImage() const;
 
   private:
-    /// @brief Capture Device
-    cv::VideoCapture capture_device_;
-
     /// @brief Camera Source
     /// @note Provide {} (i.e. empty string) to use camera inputs or
     /// provide video path to use video as input
     std::string source_;
+
+    /// @brief Capture Device
+    cv::VideoCapture capture_device_;
 
     /// @brief Last updated frame (i.e. image) from the Video/Sensor
     Image image_;

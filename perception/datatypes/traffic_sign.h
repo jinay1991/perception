@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H_
-#define PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H_
+#ifndef PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H
+#define PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H
 
 #include "perception/common/event_data_qualifier/event_data_qualifier.h"
 #include "perception/datatypes/lane.h"
@@ -74,4 +74,4 @@ inline std::ostream& operator<<(std::ostream& stream, const TrafficSignId& id)
 }
 }  // namespace perception
 
-#endif  /// PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H_
+#endif  /// PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H

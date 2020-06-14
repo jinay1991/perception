@@ -4,7 +4,7 @@
 default:
   image:
     name: registry.gitlab.com/ad_platform/perception
-    entrypoint: ["/bin/bash"]
+    entrypoint: [""]
   before_script:
     - echo "build --disk_cache=$CI_PROJECT_DIR/.cache" >> .bazelrc
 

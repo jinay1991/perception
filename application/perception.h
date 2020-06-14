@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef APPLICATION_PERCEPTION_H_
-#define APPLICATION_PERCEPTION_H_
+#ifndef APPLICATION_PERCEPTION_H
+#define APPLICATION_PERCEPTION_H
 
 namespace perception
 {
@@ -14,4 +14,4 @@ class Perception
 };
 }  // namespace perception
 
-#endif  /// APPLICATION_PERCEPTION_H_
+#endif  /// APPLICATION_PERCEPTION_H

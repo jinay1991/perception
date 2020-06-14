@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_INFERENCE_ENGINE_INFERENCE_ENGINE_STRATEGY_H_
-#define PERCEPTION_INFERENCE_ENGINE_INFERENCE_ENGINE_STRATEGY_H_
+#ifndef PERCEPTION_INFERENCE_ENGINE_INFERENCE_ENGINE_STRATEGY_H
+#define PERCEPTION_INFERENCE_ENGINE_INFERENCE_ENGINE_STRATEGY_H
 
 #include "perception/datatypes/inference_engine_type.h"
 #include "perception/inference_engine/i_inference_engine.h"
@@ -47,4 +47,4 @@ class InferenceEngineStrategy
     InferenceEngineType inference_engine_type_;
 };
 }  // namespace perception
-#endif  /// PERCEPTION_INFERENCE_ENGINE_INFERENCE_ENGINE_STRATEGY_H_
+#endif  /// PERCEPTION_INFERENCE_ENGINE_INFERENCE_ENGINE_STRATEGY_H

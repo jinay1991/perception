@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_SENSOR_CAMERA_CALIBRATION_H_
-#define PERCEPTION_SENSOR_CAMERA_CALIBRATION_H_
+#ifndef PERCEPTION_SENSOR_CAMERA_CALIBRATION_H
+#define PERCEPTION_SENSOR_CAMERA_CALIBRATION_H
 
 #include <opencv4/opencv2/core.hpp>
 
@@ -74,4 +74,4 @@ class Calibration
 };
 }  // namespace perception
 
-#endif  /// PERCEPTION_SENSOR_CAMERA_CALIBRATION_H_
+#endif  /// PERCEPTION_SENSOR_CAMERA_CALIBRATION_H

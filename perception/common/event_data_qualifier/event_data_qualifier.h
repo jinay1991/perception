@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_COMMON_EVENT_DATA_QUALIFIER_EVENT_DATA_QUALIFIER_H_
-#define PERCEPTION_COMMON_EVENT_DATA_QUALIFIER_EVENT_DATA_QUALIFIER_H_
+#ifndef PERCEPTION_COMMON_EVENT_DATA_QUALIFIER_EVENT_DATA_QUALIFIER_H
+#define PERCEPTION_COMMON_EVENT_DATA_QUALIFIER_EVENT_DATA_QUALIFIER_H
 
 #include <cstdint>
 #include <ostream>
@@ -42,4 +42,4 @@ inline std::ostream& operator<<(std::ostream& stream, const EventDataQualifier& 
 
 }  // namespace perception
 
-#endif  /// PERCEPTION_COMMON_EVENT_DATA_QUALIFIER_EVENT_DATA_QUALIFIER_H_
+#endif  /// PERCEPTION_COMMON_EVENT_DATA_QUALIFIER_EVENT_DATA_QUALIFIER_H

@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. All Right Reserved.
 ///
-#ifndef PERCEPTION_CAMERA_DATATYPES_OBJECT_H_
-#define PERCEPTION_CAMERA_DATATYPES_OBJECT_H_
+#ifndef PERCEPTION_CAMERA_DATATYPES_OBJECT_H
+#define PERCEPTION_CAMERA_DATATYPES_OBJECT_H
 
 #include "perception/common/event_data_qualifier/event_data_qualifier.h"
 #include "perception/datatypes/lane.h"
@@ -95,4 +95,4 @@ inline std::ostream& operator<<(std::ostream& stream, const ObjectId& id)
 
 }  // namespace perception
 
-#endif  /// PERCEPTION_CAMERA_DATATYPES_OBJECT_H_
+#endif  /// PERCEPTION_CAMERA_DATATYPES_OBJECT_H

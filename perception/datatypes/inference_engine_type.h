@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_COMMON_DATATYPE_INFERENCE_ENGINE_TYPE_H_
-#define PERCEPTION_COMMON_DATATYPE_INFERENCE_ENGINE_TYPE_H_
+#ifndef PERCEPTION_COMMON_DATATYPE_INFERENCE_ENGINE_TYPE_H
+#define PERCEPTION_COMMON_DATATYPE_INFERENCE_ENGINE_TYPE_H
 
 #include <ostream>
 #include <string>
@@ -43,4 +43,4 @@ inline std::ostream& operator<<(std::ostream& stream, const InferenceEngineType&
 }
 
 }  // namespace perception
-#endif  /// PERCEPTION_COMMON_DATATYPE_INFERENCE_ENGINE_H_
+#endif  /// PERCEPTION_COMMON_DATATYPE_INFERENCE_ENGINE_H

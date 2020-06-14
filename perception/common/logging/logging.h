@@ -12,8 +12,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==============================================================================*/
-#ifndef PERCEPTION_COMMON_LOGGING_LOGGING_H_
-#define PERCEPTION_COMMON_LOGGING_LOGGING_H_
+#ifndef PERCEPTION_COMMON_LOGGING_LOGGING_H
+#define PERCEPTION_COMMON_LOGGING_LOGGING_H
 
 #include <cstdint>
 #include <iostream>
@@ -81,4 +81,4 @@ class LoggingWrapper
 /// @param [in] b - attribute b
 #define ASSERT_CHECK_EQ(a, b) ASSERT_CHECK(a == b)
 
-#endif  /// PERCEPTION_COMMON_LOGGING_LOGGING_H_
+#endif  /// PERCEPTION_COMMON_LOGGING_LOGGING_H

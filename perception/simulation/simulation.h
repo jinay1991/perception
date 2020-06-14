@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_SIMULATION_SIMULATION_H_
-#define PERCEPTION_SIMULATION_SIMULATION_H_
+#ifndef PERCEPTION_SIMULATION_SIMULATION_H
+#define PERCEPTION_SIMULATION_SIMULATION_H
 
 #include <string>
 
@@ -22,4 +22,4 @@ class Simulation
     std::string configuration_;
 };
 }  // namespace perception
-#endif  /// PERCEPTION_SIMULATION_SIMULATION_H_
+#endif  /// PERCEPTION_SIMULATION_SIMULATION_H

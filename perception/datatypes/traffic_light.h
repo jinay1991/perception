@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_CAMERA_DATATYPE_TRAFFIC_LIGHT_H_
-#define PERCEPTION_CAMERA_DATATYPE_TRAFFIC_LIGHT_H_
+#ifndef PERCEPTION_CAMERA_DATATYPE_TRAFFIC_LIGHT_H
+#define PERCEPTION_CAMERA_DATATYPE_TRAFFIC_LIGHT_H
 
 #include "perception/common/event_data_qualifier/event_data_qualifier.h"
 
@@ -64,4 +64,4 @@ inline std::ostream& operator<<(std::ostream& stream, const TrafficLightId& id)
 }
 }  // namespace perception
 
-#endif  /// PERCEPTION_CAMERA_DATATYPE_TRAFFIC_LIGHT_H_
+#endif  /// PERCEPTION_CAMERA_DATATYPE_TRAFFIC_LIGHT_H

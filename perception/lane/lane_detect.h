@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_LANE_LANE_DETECT_H_
-#define PERCEPTION_LANE_LANE_DETECT_H_
+#ifndef PERCEPTION_LANE_LANE_DETECT_H
+#define PERCEPTION_LANE_LANE_DETECT_H
 
 #include "perception/sensor/camera/camera.h"
 
@@ -23,4 +23,4 @@ class LaneDetect
 };
 }  // namespace perception
 
-#endif  /// PERCEPTION_LANE_LANE_DETECT_H_
+#endif  /// PERCEPTION_LANE_LANE_DETECT_H

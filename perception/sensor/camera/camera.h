@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_SENSOR_CAMERA_CAMERA_H_
-#define PERCEPTION_SENSOR_CAMERA_CAMERA_H_
+#ifndef PERCEPTION_SENSOR_CAMERA_CAMERA_H
+#define PERCEPTION_SENSOR_CAMERA_CAMERA_H
 
 #include "perception/datatypes/camera.h"
 #include "perception/sensor/camera/calibration.h"
@@ -59,4 +59,4 @@ class Camera
 };
 }  // namespace perception
 
-#endif  /// PERCEPTION_SENSOR_CAMERA_CAMERA_H_
+#endif  /// PERCEPTION_SENSOR_CAMERA_CAMERA_H

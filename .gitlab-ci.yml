@@ -27,7 +27,7 @@ stages:
 clang-format:
   stage: check
   script:
-    - find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec cat {} \; | diff -u <(find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec clang-format-6.0 -style=file {} -verbose \;) -
+    - find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec cat {} \; | diff -u <(find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec clang-format -style=file {} -verbose \;) -
 
 buildifier:
   stage: check

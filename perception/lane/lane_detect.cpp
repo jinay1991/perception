@@ -6,18 +6,9 @@
 
 namespace perception
 {
-LaneDetect::LaneDetect() : camera_{} {}
+LaneDetect::LaneDetect(middleware::IPubSubFactory& factory) : Node{"lane_detection_node", factory} {}
 
-void LaneDetect::Init()
-{
-    camera_.Init();
-}
-void LaneDetect::Execute()
-{
-    camera_.Execute();
-}
-void LaneDetect::Shutdown()
-{
-    camera_.Shutdown();
-}
+void LaneDetect::Init() {}
+void LaneDetect::ExecuteStep() {}
+void LaneDetect::Shutdown() {}
 }  // namespace perception

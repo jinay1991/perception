@@ -2,9 +2,11 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_SENSOR_CAMERA_CAMERA_H
-#define PERCEPTION_SENSOR_CAMERA_CAMERA_H
+#ifndef PERCEPTION_SENSOR_CAMERA_CAMERA_NODE_H
+#define PERCEPTION_SENSOR_CAMERA_CAMERA_NODE_H
 
+#include "middleware/communication/i_pub_sub_factory.h"
+#include "middleware/lifecycle/node.h"
 #include "perception/datatypes/camera.h"
 #include "perception/sensor/camera/calibration.h"
 
@@ -17,32 +19,32 @@
 namespace perception
 {
 /// @brief Camera Sensor Model/Interface
-class Camera
+class CameraNode : public middleware::Node
 {
   public:
     /// @brief Constructor.
-    Camera();
+    explicit CameraNode(middleware::IPubSubFactory& factory);
+
+    /// @brief Destructor.
+    ~CameraNode() = default;
 
     /// @brief Initialize Camera
-    virtual void Init();
+    void Init() override;
 
     /// @brief Execute Camera to collect frame/image
-    virtual void Execute();
+    void ExecuteStep() override;
 
     /// @brief Release resources used for Camera
-    virtual void Shutdown();
+    void Shutdown() override;
 
     /// @brief Set Camera Source (Physical Camera/Video/Image Inputs)
     /// @param source [in] - Camera Source (video/image path)
     virtual void SetSource(const std::string source);
 
-    /// @brief Provides last updated frame/image
-    virtual Image GetImage() const;
-
-    /// @brief Provides last updated undistorted frame/image
-    virtual Image GetUndistortedImage() const;
-
   private:
+    /// @brief Calibrates based on the provided calibration data
+    void Calibrate();
+
     /// @brief Camera Source
     /// @note Provide {} (i.e. empty string) to use camera inputs or
     /// provide video path to use video as input
@@ -51,12 +53,12 @@ class Camera
     /// @brief Capture Device
     cv::VideoCapture capture_device_;
 
-    /// @brief Last updated frame (i.e. image) from the Video/Sensor
-    Image image_;
+    /// @brief Camera Message containing Image and Calibration Parameters
+    CameraMessage camera_message_;
 
     /// @brief Provides self-calibration
     Calibration calibration_;
 };
 }  // namespace perception
 
-#endif  /// PERCEPTION_SENSOR_CAMERA_CAMERA_H
+#endif  /// PERCEPTION_SENSOR_CAMERA_CAMERA_NODE_H

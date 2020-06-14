@@ -19,6 +19,14 @@ struct CalibrationParams
 
 using Image = cv::Mat;
 
+struct CameraMessage
+{
+    Image image;
+    Image undistorted_image;
+
+    CalibrationParams calibration_params;
+};
+
 }  // namespace perception
 
 #endif  /// PERCEPTION_DATATYPES_CAMERA_H

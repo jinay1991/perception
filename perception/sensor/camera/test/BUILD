@@ -11,7 +11,9 @@ cc_test(
     ],
     deps = [
         "//perception/common/logging",
+        "//perception/communication:topics",
         "//perception/sensor/camera",
         "@googletest//:gtest_main",
+        "@middleware//middleware/lifecycle/test:test_support",
     ],
 )

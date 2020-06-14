@@ -5,21 +5,19 @@
 #ifndef PERCEPTION_LANE_LANE_DETECT_H
 #define PERCEPTION_LANE_LANE_DETECT_H
 
-#include "perception/sensor/camera/camera.h"
+#include "middleware/communication/i_pub_sub_factory.h"
+#include "middleware/lifecycle/node.h"
 
 namespace perception
 {
-class LaneDetect
+class LaneDetect : public middleware::Node
 {
   public:
-    LaneDetect();
+    explicit LaneDetect(middleware::IPubSubFactory& factory);
 
-    virtual void Init();
-    virtual void Execute();
-    virtual void Shutdown();
-
-  private:
-    Camera camera_;
+    void Init() override;
+    void ExecuteStep() override;
+    void Shutdown() override;
 };
 }  // namespace perception
 

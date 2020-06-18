@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
 
 # Installation of general dependencies
-RUN apt-get install -y build-essential gcc g++ lcov make cmake
+RUN apt-get install -y build-essential gcc g++ gdb lcov make cmake
 RUN apt-get install -y libtool clang-format clang-tidy
 RUN apt-get install -y git git-lfs
 RUN apt-get install -y wget curl vim

@@ -8,6 +8,7 @@ cc_library(
     deps = [
         "//perception/communication:topics",
         "//perception/datatypes",
+        "//perception/object",
         "@middleware//middleware/communication",
         "@middleware//middleware/lifecycle",
     ],

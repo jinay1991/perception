@@ -9,11 +9,13 @@
 
 #include <units.h>
 
+#include <algorithm>
 #include <array>
 #include <cstdint>
 
 namespace perception
 {
+constexpr std::int32_t kMaxNumberofObjects{100U};
 
 enum class ObjectId : std::uint8_t
 {
@@ -35,7 +37,7 @@ struct BoundingBox
     double height;
 };
 
-struct Object
+struct ObjectMessage
 {
     units::length::meter_t distance;
     units::length::meter_t longitudinal_distance;
@@ -55,7 +57,31 @@ struct Object
     LaneId lane_id;
 };
 
-using ObjectMessage = std::array<Object, 100U>;
+using ObjectListMessage = std::array<ObjectMessage, kMaxNumberofObjects>;
+
+inline bool operator==(const BoundingBox& lhs, const BoundingBox& rhs) noexcept
+{
+    return ((lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.width == rhs.width) && (lhs.height == rhs.height));
+}
+
+inline bool operator!=(const BoundingBox& lhs, const BoundingBox& rhs) noexcept
+{
+    return (!(lhs == rhs));
+}
+
+inline bool operator==(const ObjectMessage& lhs, const ObjectMessage& rhs) noexcept
+{
+    return ((lhs.distance == rhs.distance) && (lhs.longitudinal_distance == rhs.longitudinal_distance) &&
+            (lhs.latitudinal_distance == rhs.latitudinal_distance) &&
+            (lhs.relative_velocity == rhs.relative_velocity) && (lhs.velocity == rhs.velocity) &&
+            (lhs.time_to_collision == rhs.time_to_collision) && (lhs.yaw == rhs.yaw) && (lhs.pitch == rhs.pitch) &&
+            (lhs.bounding_box == rhs.bounding_box) && (lhs.id == rhs.id) && (lhs.lane_id == rhs.lane_id));
+}
+
+inline bool operator!=(const ObjectMessage& lhs, const ObjectMessage& rhs) noexcept
+{
+    return (!(lhs == rhs));
+}
 
 inline const char* to_string(const ObjectId& id)
 {

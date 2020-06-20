@@ -19,7 +19,7 @@ class CameraTopic : public middleware::Topic<CameraMessage>
 class LaneTopic : public middleware::Topic<LaneMessage>
 {
 };
-class ObjectTopic : public middleware::Topic<ObjectMessage>
+class ObjectListTopic : public middleware::Topic<ObjectListMessage>
 {
 };
 

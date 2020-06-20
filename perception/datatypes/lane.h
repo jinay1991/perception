@@ -38,8 +38,8 @@ struct LanePoint
 
 struct LaneLine
 {
-    std::array<LanePoint, 5> left;
-    std::array<LanePoint, 5> right;
+    std::array<LanePoint, 5U> left;
+    std::array<LanePoint, 5U> right;
 };
 
 struct LaneMessage

@@ -8,19 +8,24 @@
 
 namespace perception
 {
-ObjectNode::ObjectNode(middleware::IPubSubFactory& factory)
-    : Node{"object_node", factory}, object_message_{}, camera_message_{}
-{
-}
+ObjectNode::ObjectNode(middleware::IPubSubFactory& factory) : Node{"object_node", factory}, object_{} {}
 
 void ObjectNode::Init()
 {
-    AddSubscriber<CameraTopic>([this](const auto& data) { camera_message_ = data; });
-    AddPublisher<ObjectTopic>([this]() { return object_message_; });
+    object_.Init();
+
+    AddSubscriber<CameraTopic>([this](const auto& data) { object_.SetCameraMessage(data); });
+    AddPublisher<ObjectListTopic>([this]() { return object_.GetObjectListMessage(); });
 }
 
-void ObjectNode::ExecuteStep() {}
+void ObjectNode::ExecuteStep()
+{
+    object_.Step();
+}
 
-void ObjectNode::Shutdown() {}
+void ObjectNode::Shutdown()
+{
+    object_.Shutdown();
+}
 
 }  // namespace perception

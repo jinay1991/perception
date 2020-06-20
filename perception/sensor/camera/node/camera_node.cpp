@@ -15,13 +15,15 @@ CameraNode::CameraNode(middleware::IPubSubFactory& factory)
 
 void CameraNode::Init()
 {
-    InitPublisher();
     camera_->Init();
+    InitPublisher();
 }
+
 void CameraNode::InitPublisher()
 {
     AddPublisher<CameraTopic>([this]() { return camera_->GetCameraMessage(); });
 }
+
 void CameraNode::ExecuteStep()
 {
     camera_->Step();

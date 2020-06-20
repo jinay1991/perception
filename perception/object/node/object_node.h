@@ -7,8 +7,7 @@
 
 #include "middleware/communication/i_pub_sub_factory.h"
 #include "middleware/lifecycle/node.h"
-#include "perception/datatypes/camera.h"
-#include "perception/datatypes/object.h"
+#include "perception/object/object.h"
 
 namespace perception
 {
@@ -22,8 +21,7 @@ class ObjectNode : public middleware::Node
     void Shutdown() override;
 
   private:
-    ObjectMessage object_message_;
-    CameraMessage camera_message_;
+    Object object_;
 };
 }  // namespace perception
 

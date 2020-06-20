@@ -1,17 +1,7 @@
 # ------------
 # Docker Image
 # ------------
-default:
-  image:
-    name: registry.gitlab.com/ad_platform/perception
-    entrypoint: [""]
-  before_script:
-    - echo "build --disk_cache=$CI_PROJECT_DIR/.cache" >> .bazelrc
-
-cache:
-  key: bazel_cache
-  paths:
-    - .cache/
+image: registry.gitlab.com/ad_platform/perception
 
 include:
   - template: Code-Quality.gitlab-ci.yml

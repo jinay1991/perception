@@ -2,44 +2,45 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_SENSOR_CAMERA_CAMERA_NODE_H
-#define PERCEPTION_SENSOR_CAMERA_CAMERA_NODE_H
+#ifndef PERCEPTION_SENSOR_CAMERA_CAMERA_H
+#define PERCEPTION_SENSOR_CAMERA_CAMERA_H
 
-#include "middleware/communication/i_pub_sub_factory.h"
-#include "middleware/lifecycle/node.h"
 #include "perception/datatypes/camera.h"
 #include "perception/sensor/camera/calibration.h"
 
 #include <opencv4/opencv2/core.hpp>
 #include <opencv4/opencv2/videoio.hpp>
 
-#include <cstdint>
 #include <string>
 
 namespace perception
 {
 /// @brief Camera Sensor Model/Interface
-class CameraNode : public middleware::Node
+class Camera
 {
   public:
     /// @brief Constructor.
-    explicit CameraNode(middleware::IPubSubFactory& factory);
+    /// @param source [in] - Camera Source (Image/Video Path or 0 for Live Camera)
+    explicit Camera(const std::string& source);
 
     /// @brief Destructor.
-    ~CameraNode() = default;
+    ~Camera() = default;
 
     /// @brief Initialize Camera
-    void Init() override;
+    virtual void Init();
 
-    /// @brief Execute Camera to collect frame/image
-    void ExecuteStep() override;
+    /// @brief Execute single step (performs capture frame and updated camera message buffer)
+    virtual void Step();
 
     /// @brief Release resources used for Camera
-    void Shutdown() override;
+    virtual void Shutdown();
 
     /// @brief Set Camera Source (Physical Camera/Video/Image Inputs)
     /// @param source [in] - Camera Source (video/image path)
     virtual void SetSource(const std::string source);
+
+    /// @brief Provide last updated Camera Message based on the captured frame
+    virtual CameraMessage GetCameraMessage() const;
 
   private:
     /// @brief Calibrates based on the provided calibration data
@@ -53,7 +54,7 @@ class CameraNode : public middleware::Node
     /// @brief Capture Device
     cv::VideoCapture capture_device_;
 
-    /// @brief Camera Message containing Image and Calibration Parameters
+    /// @brief Camera Message
     CameraMessage camera_message_;
 
     /// @brief Provides self-calibration
@@ -61,4 +62,4 @@ class CameraNode : public middleware::Node
 };
 }  // namespace perception
 
-#endif  /// PERCEPTION_SENSOR_CAMERA_CAMERA_NODE_H
+#endif  /// PERCEPTION_SENSOR_CAMERA_CAMERA_H

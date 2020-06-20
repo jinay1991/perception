@@ -13,6 +13,7 @@ cc_test(
         "//perception/common/logging",
         "//perception/communication:topics",
         "//perception/sensor/camera",
+        "//perception/sensor/camera/node",
         "@googletest//:gtest_main",
         "@middleware//middleware/lifecycle/test:test_support",
     ],

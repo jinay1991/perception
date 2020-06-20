@@ -15,15 +15,14 @@ cc_library(
 
 cc_library(
     name = "camera",
-    srcs = ["camera_node.cpp"],
-    hdrs = ["camera_node.h"],
+    srcs = ["camera.cpp"],
+    hdrs = ["camera.h"],
     data = [
         "//:calibration_data",
     ],
     deps = [
         ":calibration",
         "//perception/common/logging",
-        "//perception/communication:topics",
         "//perception/datatypes",
         "@middleware//middleware/lifecycle",
         "@opencv",

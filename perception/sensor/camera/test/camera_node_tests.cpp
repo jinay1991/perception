@@ -7,7 +7,7 @@
 #include "perception/common/logging/logging.h"
 #include "perception/communication/topics.h"
 #include "perception/sensor/camera/calibration.h"
-#include "perception/sensor/camera/camera_node.h"
+#include "perception/sensor/camera/node/camera_node.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

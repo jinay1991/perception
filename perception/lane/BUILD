@@ -5,9 +5,4 @@ cc_library(
     srcs = glob(["*.cpp"]),
     hdrs = glob(["*.h"]),
     visibility = ["//visibility:public"],
-    deps = [
-        "//perception/sensor/camera",
-        "@middleware//middleware/communication",
-        "@middleware//middleware/lifecycle",
-    ],
 )

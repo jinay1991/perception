@@ -23,10 +23,7 @@ CameraNode::CameraNode(middleware::IPubSubFactory& factory)
 void CameraNode::Init()
 {
     Calibrate();
-    AddPublisher<CameraTopic>([this]() {
-        LOG(INFO) << "Updated camera_message_  \n";
-        return camera_message_;
-    });
+    AddPublisher<CameraTopic>([this]() { return camera_message_; });
 }
 
 void CameraNode::Calibrate()
@@ -42,9 +39,9 @@ void CameraNode::ExecuteStep()
 
     Image undistorted_image{};
     cv::undistort(image, undistorted_image, calibration_.GetCameraMatrix(), calibration_.GetDistanceCoeffs());
-    LOG(INFO) << "undistort: " << undistorted_image.size() << std::endl;
-    camera_message_.calibration_params.extrinsic = calibration_.GetCameraMatrix();
-    camera_message_.calibration_params.intrinsic = calibration_.GetDistanceCoeffs();
+
+    camera_message_.calibration_params.intrinsic = calibration_.GetCameraMatrix();
+    camera_message_.calibration_params.extrinsic = calibration_.GetDistanceCoeffs();
     camera_message_.image = image;
     camera_message_.undistorted_image = undistorted_image;
 }
@@ -60,7 +57,7 @@ void CameraNode::SetSource(const std::string source)
     capture_device_.open(source);
     ASSERT_CHECK(capture_device_.isOpened());
 
-    LOG(INFO) << "Reading " << source << " source (camera).";
+    LOG(INFO) << "Reading " << source << " source.";
 }
 
 }  // namespace perception

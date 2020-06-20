@@ -5,8 +5,6 @@
 #ifndef PERCEPTION_CAMERA_DATATYPE_TRAFFIC_LIGHT_H
 #define PERCEPTION_CAMERA_DATATYPE_TRAFFIC_LIGHT_H
 
-#include "perception/common/event_data_qualifier/event_data_qualifier.h"
-
 #include <units.h>
 
 #include <array>
@@ -26,9 +24,7 @@ enum class TrafficLightId : std::uint8_t
 
 struct TrafficLight
 {
-    EventDataQualifier event_data_qualifer;
-
-    units::length::meters_t distance;
+    units::length::meter_t distance;
 
     TrafficLightId id;
     LaneId lane_id;

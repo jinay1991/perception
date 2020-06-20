@@ -43,7 +43,7 @@ class CameraNode : public middleware::Node
 
   private:
     /// @brief Calibrates based on the provided calibration data
-    void Calibrate();
+    virtual void Calibrate();
 
     /// @brief Camera Source
     /// @note Provide {} (i.e. empty string) to use camera inputs or

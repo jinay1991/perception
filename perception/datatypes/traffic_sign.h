@@ -5,7 +5,6 @@
 #ifndef PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H
 #define PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H
 
-#include "perception/common/event_data_qualifier/event_data_qualifier.h"
 #include "perception/datatypes/lane.h"
 
 #include <units.h>
@@ -29,9 +28,7 @@ enum class TrafficSignId : std::int32_t
 
 struct TrafficSign
 {
-    EventDataQualifier event_data_qualifier;
-
-    units::length::meters_t distance;
+    units::length::meter_t distance;
 
     /// @brief Special Case: If SignId is kSpeedLimit then only this will be set.
     units::velocity::meters_per_second_t speed_limit;

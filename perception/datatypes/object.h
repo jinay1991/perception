@@ -5,7 +5,6 @@
 #ifndef PERCEPTION_CAMERA_DATATYPES_OBJECT_H
 #define PERCEPTION_CAMERA_DATATYPES_OBJECT_H
 
-#include "perception/common/event_data_qualifier/event_data_qualifier.h"
 #include "perception/datatypes/lane.h"
 
 #include <units.h>
@@ -38,16 +37,14 @@ struct BoundingBox
 
 struct Object
 {
-    EventDataQualifier event_data_qualifier;
-
-    units::length::meters_t distance;
-    units::length::meters_t longitudinal_distance;
-    units::length::meters_t latitudinal_distance;
+    units::length::meter_t distance;
+    units::length::meter_t longitudinal_distance;
+    units::length::meter_t latitudinal_distance;
 
     units::velocity::meters_per_second_t relative_velocity;
     units::velocity::meters_per_second_t velocity;
 
-    units::time::milliseconds_t time_to_collision;
+    units::time::microsecond_t time_to_collision;
 
     units::angle::radian_t yaw;
     units::angle::radian_t pitch;
@@ -58,7 +55,7 @@ struct Object
     LaneId lane_id;
 };
 
-using Objects = std::array<Object, 100U>;
+using ObjectMessage = std::array<Object, 100U>;
 
 inline const char* to_string(const ObjectId& id)
 {

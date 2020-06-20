@@ -63,7 +63,7 @@ class CameraNodeTest : public ::testing::Test
     {
         test_capture_ >> test_video_frame_;
         unit_.Step();
-        test_subscriber_.ExecuteStep();
+        test_subscriber_.Step();
     }
 
     void TearDown() override
@@ -117,9 +117,10 @@ TEST_F(CameraNodeTest, GivenTypicalSourceVideo_ExpectValidVideoFrame)
     RunOnce();
 
     const auto expected = GetTestVideoImage();
-    const auto actual = test_subscriber_.GetSample().image;
-    ASSERT_FALSE(actual.empty());
-    ASSERT_EQ(expected.size(), actual.size());
+    const auto actual = test_subscriber_.GetSample();
+    ASSERT_FALSE(actual.image.empty());
+    ASSERT_FALSE(expected.empty());
+    ASSERT_EQ(expected.size(), actual.image.size());
 }
 
 TEST_F(CameraNodeTest, GivenInvalidSource_ExpectException)

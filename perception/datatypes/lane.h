@@ -5,8 +5,6 @@
 #ifndef PERCEPTION_CAMERA_DATATYPES_LANE_H
 #define PERCEPTION_CAMERA_DATATYPES_LANE_H
 
-#include "perception/common/event_data_qualifier/event_data_qualifier.h"
-
 #include <array>
 #include <cstdint>
 #include <ostream>
@@ -44,10 +42,8 @@ struct LaneLine
     std::array<LanePoint, 5> right;
 };
 
-struct Lane
+struct LaneMessage
 {
-    EventDataQualifier event_data_qualifier;
-
     LaneId id;
     LaneType type;
     LaneLine line;

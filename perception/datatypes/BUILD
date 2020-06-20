@@ -13,7 +13,6 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//perception/common/event_data_qualifier",
         "@nholthaus//:units",
         "@opencv//:core",
     ],

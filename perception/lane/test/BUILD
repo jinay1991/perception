@@ -9,6 +9,7 @@ cc_test(
     visibility = ["//visibility:public"],
     deps = [
         "//perception/lane",
+        "//perception/lane/node",
         "@googletest//:gtest_main",
     ],
 )

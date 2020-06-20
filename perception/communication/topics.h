@@ -7,11 +7,19 @@
 
 #include "middleware/communication/topic.h"
 #include "perception/datatypes/camera.h"
+#include "perception/datatypes/lane.h"
+#include "perception/datatypes/object.h"
 
 namespace perception
 {
 
 class CameraTopic : public middleware::Topic<CameraMessage>
+{
+};
+class LaneTopic : public middleware::Topic<LaneMessage>
+{
+};
+class ObjectTopic : public middleware::Topic<ObjectMessage>
 {
 };
 

@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_CAMERA_DATATYPES_LANE_H
-#define PERCEPTION_CAMERA_DATATYPES_LANE_H
+#ifndef PERCEPTION_DATATYPES_LANE_H
+#define PERCEPTION_DATATYPES_LANE_H
 
 #include <array>
 #include <cstdint>
@@ -102,4 +102,4 @@ inline std::ostream& operator<<(std::ostream& stream, const LaneType& type)
 }
 }  // namespace perception
 
-#endif  // PERCEPTION_CAMERA_DATATYPES_LANE_H
+#endif  // PERCEPTION_DATATYPES_LANE_H

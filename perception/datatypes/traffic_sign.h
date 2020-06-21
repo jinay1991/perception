@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H
-#define PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H
+#ifndef PERCEPTION_DATATYPE_TRAFFIC_SIGN_H
+#define PERCEPTION_DATATYPE_TRAFFIC_SIGN_H
 
 #include "perception/datatypes/lane.h"
 
@@ -14,6 +14,7 @@
 
 namespace perception
 {
+constexpr std::int32_t kMaxNumberOfTrafficSigns{10U};
 
 enum class TrafficSignId : std::int32_t
 {
@@ -26,18 +27,15 @@ enum class TrafficSignId : std::int32_t
     kInvalid = 255U,
 };
 
-struct TrafficSign
+struct TrafficSignMessage
 {
     units::length::meter_t distance;
-
-    /// @brief Special Case: If SignId is kSpeedLimit then only this will be set.
-    units::velocity::meters_per_second_t speed_limit;
 
     TrafficSignId id;
     LaneId lane_id;
 };
 
-using TrafficSignList = std::array<TrafficSign, 10U>;
+using TrafficSignListMessage = std::array<TrafficSignMessage, kMaxNumberOfTrafficSigns>;
 
 inline const char* to_string(const TrafficSignId& id)
 {
@@ -71,4 +69,4 @@ inline std::ostream& operator<<(std::ostream& stream, const TrafficSignId& id)
 }
 }  // namespace perception
 
-#endif  /// PERCEPTION_CAMERA_DATATYPE_TRAFFIC_SIGN_H
+#endif  /// PERCEPTION_DATATYPE_TRAFFIC_SIGN_H

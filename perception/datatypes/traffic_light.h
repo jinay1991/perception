@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_CAMERA_DATATYPE_TRAFFIC_LIGHT_H
-#define PERCEPTION_CAMERA_DATATYPE_TRAFFIC_LIGHT_H
+#ifndef PERCEPTION_DATATYPE_TRAFFIC_LIGHT_H
+#define PERCEPTION_DATATYPE_TRAFFIC_LIGHT_H
 
 #include <units.h>
 
@@ -22,7 +22,7 @@ enum class TrafficLightId : std::uint8_t
     kInvalid = 255U,
 };
 
-struct TrafficLight
+struct TrafficLightMessage
 {
     units::length::meter_t distance;
 
@@ -30,7 +30,7 @@ struct TrafficLight
     LaneId lane_id;
 };
 
-using TrafficLightList = std::array<TrafficLight, 10U>;
+using TrafficLightListMessage = std::array<TrafficLightMessage, 10U>;
 
 inline const char* to_string(const TrafficLightId& id)
 {
@@ -60,4 +60,4 @@ inline std::ostream& operator<<(std::ostream& stream, const TrafficLightId& id)
 }
 }  // namespace perception
 
-#endif  /// PERCEPTION_CAMERA_DATATYPE_TRAFFIC_LIGHT_H
+#endif  /// PERCEPTION_DATATYPE_TRAFFIC_LIGHT_H

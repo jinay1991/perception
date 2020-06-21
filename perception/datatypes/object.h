@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. All Right Reserved.
 ///
-#ifndef PERCEPTION_CAMERA_DATATYPES_OBJECT_H
-#define PERCEPTION_CAMERA_DATATYPES_OBJECT_H
+#ifndef PERCEPTION_DATATYPES_OBJECT_H
+#define PERCEPTION_DATATYPES_OBJECT_H
 
 #include "perception/datatypes/lane.h"
 
@@ -15,7 +15,7 @@
 
 namespace perception
 {
-constexpr std::int32_t kMaxNumberofObjects{100U};
+constexpr std::int32_t kMaxNumberOfObjects{100U};
 
 enum class ObjectId : std::uint8_t
 {
@@ -57,7 +57,7 @@ struct ObjectMessage
     LaneId lane_id;
 };
 
-using ObjectListMessage = std::array<ObjectMessage, kMaxNumberofObjects>;
+using ObjectListMessage = std::array<ObjectMessage, kMaxNumberOfObjects>;
 
 inline bool operator==(const BoundingBox& lhs, const BoundingBox& rhs) noexcept
 {
@@ -118,4 +118,4 @@ inline std::ostream& operator<<(std::ostream& stream, const ObjectId& id)
 
 }  // namespace perception
 
-#endif  /// PERCEPTION_CAMERA_DATATYPES_OBJECT_H
+#endif  /// PERCEPTION_DATATYPES_OBJECT_H

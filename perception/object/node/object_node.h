@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License.
 ///
-#ifndef PERCEPTION_OBJECT_OBJECT_NODE_H
-#define PERCEPTION_OBJECT_OBJECT_NODE_H
+#ifndef PERCEPTION_OBJECT_NODE_OBJECT_NODE_H
+#define PERCEPTION_OBJECT_NODE_OBJECT_NODE_H
 
 #include "middleware/communication/i_pub_sub_factory.h"
 #include "middleware/lifecycle/node.h"
@@ -25,4 +25,4 @@ class ObjectNode : public middleware::Node
 };
 }  // namespace perception
 
-#endif  /// PERCEPTION_OBJECT_OBJECT_NODE_H
+#endif  /// PERCEPTION_OBJECT_NODE_OBJECT_NODE_H

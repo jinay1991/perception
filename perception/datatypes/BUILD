@@ -5,6 +5,7 @@ cc_library(
     srcs = [],
     hdrs = [
         "camera.h",
+        "driver.h",
         "inference_engine_type.h",
         "lane.h",
         "object.h",

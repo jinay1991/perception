@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License.
 ///
-#include "perception/driver/driver.h"
 #include "middleware/lifecycle/node.h"
+#include "perception/driver/driver.h"
 
 namespace perception
 {

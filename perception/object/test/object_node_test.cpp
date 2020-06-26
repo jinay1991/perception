@@ -50,7 +50,7 @@ class ObjectNodeTest : public ::testing::Test
     middleware::SingleTopicSubscriber<ObjectListTopic> test_subscriber_;
 };
 
-TEST_F(ObjectNodeTest, ObjectNode_GivenTypicalInputs_ExpectDetectedObjects)
+TEST_F(ObjectNodeTest, GivenTypicalInputs_ExpectDetectedObjects)
 {
     // When
     RunOnce();

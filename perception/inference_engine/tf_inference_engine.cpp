@@ -34,29 +34,15 @@ void TFInferenceEngine::Init()
     ASSERT_CHECK(ret.ok()) << "Failed to load saved model";
 }
 
-void TFInferenceEngine::Execute()
+void TFInferenceEngine::Execute(const Image& image)
 {
-    auto inputs = std::vector<std::pair<std::string, tensorflow::Tensor>>{{"Placeholder", input_tensor_}};
-    auto target_node_names = std::vector<std::string>{};
-    auto outputs = std::vector<tensorflow::Tensor>{};
+    std::vector<std::pair<std::string, tensorflow::Tensor>> inputs{{"Placeholder", input_tensor_}};
+    std::vector<std::string> target_node_names{};
+    std::vector<tensorflow::Tensor> outputs{};
     auto status = bundle_->GetSession()->Run(inputs, output_tensor_names_, target_node_names, &outputs);
     ASSERT_CHECK(status.ok()) << "Unable to run Session, (Returned: " << status.ok() << ")";
 
     LOG(INFO) << "Successfully received split " << outputs.size() << " waves.";
-
-    /// Extract results
-    // auto waveforms = Waveforms{};
-    // std::transform(
-    //     outputs.begin(), outputs.end(), std::back_inserter(waveforms), [&](const tensorflow::Tensor& tensor) {
-    //         auto waveform = Waveform{};
-    //         waveform.resize(input_tensor_.dim_size(0) * input_tensor_.dim_size(1));
-
-    //         auto tensor_dataptr = tensor.matrix<float>().data();
-    //         std::copy(tensor_dataptr, tensor_dataptr + waveform.size(), waveform.begin());
-    //         return waveform;
-    //     });
-
-    // results_ = waveforms;
 }
 
 void TFInferenceEngine::Shutdown() {}

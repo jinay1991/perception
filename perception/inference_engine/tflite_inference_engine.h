@@ -31,7 +31,7 @@ class TFLiteInferenceEngine : public IInferenceEngine
     void Init() override;
 
     /// @brief Execute Inference with TFLite Inference Engine
-    void Execute() override;
+    void Execute(const Image& image) override;
 
     /// @brief Release TFLite Inference Engine
     void Shutdown() override;

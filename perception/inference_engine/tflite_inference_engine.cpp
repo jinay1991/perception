@@ -35,7 +35,7 @@ void TFLiteInferenceEngine::Init()
     PrintInterpreterState(interpreter_.get());
 }
 
-void TFLiteInferenceEngine::Execute()
+void TFLiteInferenceEngine::Execute(const Image& image)
 {
     interpreter_->Invoke();
 }

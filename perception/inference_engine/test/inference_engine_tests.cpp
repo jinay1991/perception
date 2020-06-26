@@ -10,6 +10,9 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <opencv4/opencv2/core.hpp>
+#include <opencv4/opencv2/imgcodecs.hpp>
+#include <opencv4/opencv2/videoio.hpp>
 
 #include <cstdint>
 #include <memory>
@@ -23,7 +26,10 @@ template <typename T>
 class InferenceEngineTest : public ::testing::Test
 {
   public:
-    InferenceEngineTest() : test_input_{"external/audio_example/file/audio_example.wav"} {}
+    InferenceEngineTest()
+        : test_image_path_{"data/grace_hopper.jpg"}, test_image_{cv::imread(test_image_path_, cv::IMREAD_UNCHANGED)}
+    {
+    }
 
   protected:
     void SetUp() override
@@ -34,15 +40,16 @@ class InferenceEngineTest : public ::testing::Test
 
     void TearDown() override { unit_->Shutdown(); }
 
-    const std::string test_input_;
+    const std::string test_image_path_;
+    Image test_image_;
 
-    std::unique_ptr<IInferenceEngine> unit_;
+    InferenceEnginePtr unit_;
 };
 TYPED_TEST_SUITE_P(InferenceEngineTest);
 
 TYPED_TEST_P(InferenceEngineTest, Sanity)
 {
-    this->unit_->Execute();
+    this->unit_->Execute(this->test_image_);
 
     // auto actual = this->unit_->GetResults();
     // EXPECT_EQ(5U, actual.size());

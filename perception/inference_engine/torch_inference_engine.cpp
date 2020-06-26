@@ -18,7 +18,7 @@ void TorchInferenceEngine::Init()
     // LOG(INFO) << "Successfully created tensor: " << tensor;
 }
 
-void TorchInferenceEngine::Execute() {}
+void TorchInferenceEngine::Execute(const Image& image) {}
 
 void TorchInferenceEngine::Shutdown() {}
 

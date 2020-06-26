@@ -28,7 +28,7 @@ class TorchInferenceEngine : public IInferenceEngine
     void Init() override;
 
     /// @brief Execute Inference with Inference Engine
-    void Execute() override;
+    void Execute(const Image& image) override;
 
     /// @brief Release Inference Engine
     void Shutdown() override;

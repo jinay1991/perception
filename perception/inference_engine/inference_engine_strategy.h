@@ -26,14 +26,14 @@ class InferenceEngineStrategy
     void Init();
 
     /// @brief Execute Inference with Inference Engine
-    void Execute();
+    void Execute(const Image& image);
 
     /// @brief Release Inference Engine
     void Shutdown();
 
     /// @brief Select Inference Engine
-    /// @param inference_engine [in] - Inference Engine type (TF, TFLite)
-    void SelectInferenceEngine(const InferenceEngineType& inference_engine);
+    /// @param inference_engine_type [in] - Inference Engine type (TF, TFLite)
+    void SelectInferenceEngine(const InferenceEngineType& inference_engine_type);
 
     /// @brief Provide selected inference engine type
     /// @return InferenceEngineType

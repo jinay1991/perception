@@ -5,6 +5,8 @@
 #ifndef PERCEPTION_COMMON_DATATYPE_INFERENCE_ENGINE_TYPE_H
 #define PERCEPTION_COMMON_DATATYPE_INFERENCE_ENGINE_TYPE_H
 
+#include <opencv4/opencv2/core.hpp>
+
 #include <ostream>
 #include <string>
 

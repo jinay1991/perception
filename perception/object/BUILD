@@ -7,5 +7,6 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//perception/datatypes",
+        "//perception/inference_engine",
     ],
 )

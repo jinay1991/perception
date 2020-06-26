@@ -11,6 +11,7 @@
 
 namespace perception
 {
+
 InferenceEngineStrategy::InferenceEngineStrategy() : inference_engine_type_{InferenceEngineType::kInvalid} {}
 
 void InferenceEngineStrategy::SelectInferenceEngine(const InferenceEngineType& inference_engine_type)
@@ -39,9 +40,9 @@ void InferenceEngineStrategy::Init()
     inference_engine_->Init();
 }
 
-void InferenceEngineStrategy::Execute()
+void InferenceEngineStrategy::Execute(const Image& image)
 {
-    inference_engine_->Execute();
+    inference_engine_->Execute(image);
 }
 
 void InferenceEngineStrategy::Shutdown()

@@ -7,6 +7,7 @@
 
 #include "perception/datatypes/camera.h"
 #include "perception/datatypes/object.h"
+#include "perception/inference_engine/inference_engine_strategy.h"
 
 namespace perception
 {
@@ -26,6 +27,8 @@ class Object
   private:
     CameraMessage camera_message_;
     ObjectListMessage object_list_message_;
+
+    InferenceEngineStrategy inference_engine_;
 };
 }  // namespace perception
 

@@ -31,7 +31,7 @@ class TFInferenceEngine : public IInferenceEngine
     void Init() override;
 
     /// @brief Execute Inference with TensorFlow Inference Engine
-    void Execute() override;
+    void Execute(const Image& image) override;
 
     /// @brief Release TensorFlow Inference Engine
     void Shutdown() override;

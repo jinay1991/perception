@@ -9,5 +9,6 @@ cc_test(
         "//perception/common/logging",
         "//perception/inference_engine",
         "@googletest//:gtest_main",
+        "@opencv",
     ],
 )

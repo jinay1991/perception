@@ -5,10 +5,7 @@ package(default_visibility = ["//visibility:public"])
 cc_test(
     name = "unit_test",
     srcs = glob(["*.cpp"]),
-    data = [
-        "//:calibration_data",
-        "//:testdata",
-    ],
+  
     deps = [
         "//perception/common/logging",
         "//perception/communication:topics",

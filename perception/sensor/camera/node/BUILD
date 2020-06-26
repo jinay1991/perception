@@ -4,6 +4,9 @@ cc_library(
     name = "node",
     srcs = glob(["*.cpp"]),
     hdrs = glob(["*.h"]),
+    data = [
+        "//:testdata",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/communication:topics",

@@ -22,4 +22,4 @@ ObjectListMessage Object::GetObjectListMessage() const
     return object_list_message_;
 }
 
-}  // namespace perception`
+}  // namespace perception

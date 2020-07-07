@@ -4,6 +4,9 @@ cc_library(
     name = "object",
     srcs = glob(["*.cpp"]),
     hdrs = glob(["*.h"]),
+    data = [
+        "@ssd_mobilenet_v2_coco//:saved_model",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/datatypes",

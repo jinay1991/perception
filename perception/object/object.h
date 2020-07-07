@@ -9,6 +9,9 @@
 #include "perception/datatypes/object.h"
 #include "perception/inference_engine/inference_engine_strategy.h"
 
+#include <string>
+#include <vector>
+
 namespace perception
 {
 class Object
@@ -25,10 +28,15 @@ class Object
     virtual ObjectListMessage GetObjectListMessage() const;
 
   private:
-    CameraMessage camera_message_;
-    ObjectListMessage object_list_message_;
+    const std::string model_input_;
+    const std::vector<std::string> model_outputs_;
+    const std::string model_path_;
+    const InferenceEngineParameters inference_engine_params_;
 
     InferenceEngineStrategy inference_engine_;
+
+    CameraMessage camera_message_;
+    ObjectListMessage object_list_message_;
 };
 }  // namespace perception
 

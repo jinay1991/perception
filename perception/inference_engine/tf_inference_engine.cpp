@@ -6,21 +6,18 @@
 
 #include "perception/common/logging/logging.h"
 
-#include <cstdint>
-#include <memory>
-#include <string>
 #include <unordered_set>
-#include <vector>
 
 namespace perception
 {
 
-TFInferenceEngine::TFInferenceEngine()
+TFInferenceEngine::TFInferenceEngine(const InferenceEngineParameters& params)
     : bundle_{std::make_shared<tensorflow::SavedModelBundle>()},
       input_tensor_{},
+      input_tensor_name_{params.input_tensor_name},
       output_tensors_{},
-      output_tensor_names_{"strided_slice_18", "strided_slice_38"},
-      model_dir_{"external/models/"}
+      output_tensor_names_{params.output_tensor_names},
+      model_dir_{params.model_path}
 {
 }
 
@@ -31,20 +28,50 @@ void TFInferenceEngine::Init()
     std::unordered_set<std::string> tags{"serve"};
 
     const auto ret = tensorflow::LoadSavedModel(session_options, run_options, model_dir_, tags, bundle_.get());
-    ASSERT_CHECK(ret.ok()) << "Failed to load saved model";
+    ASSERT_CHECK(ret.ok()) << "Failed to load saved model '" << model_dir_ << "', (Message: " << ret.error_message()
+                           << ")";
+
+    LOG(INFO) << "Successfully loaded saved model from '" << model_dir_ << "'.";
 }
 
 void TFInferenceEngine::Execute(const Image& image)
 {
-    std::vector<std::pair<std::string, tensorflow::Tensor>> inputs{{"Placeholder", input_tensor_}};
-    std::vector<std::string> target_node_names{};
-    std::vector<tensorflow::Tensor> outputs{};
-    auto status = bundle_->GetSession()->Run(inputs, output_tensor_names_, target_node_names, &outputs);
-    ASSERT_CHECK(status.ok()) << "Unable to run Session, (Returned: " << status.ok() << ")";
+    UpdateInput(image);
 
-    LOG(INFO) << "Successfully received split " << outputs.size() << " waves.";
+    std::vector<std::pair<std::string, tensorflow::Tensor>> inputs{{input_tensor_name_, input_tensor_}};
+    std::vector<std::string> target_node_names{};
+    auto status = bundle_->GetSession()->Run(inputs, output_tensor_names_, target_node_names, &output_tensors_);
+    ASSERT_CHECK(status.ok()) << "Unable to run Session, (Message: " << status.error_message() << ")";
+
+    LOG(INFO) << "Successfully received results " << output_tensors_.size() << " outputs.";
+    LOG(INFO) << "output_tensors_.at(0): " << output_tensors_.at(0U).DebugString() << std::endl;
+
+    UpdateOutputs();
 }
 
 void TFInferenceEngine::Shutdown() {}
+
+cv::Mat TFInferenceEngine::GetResults() const
+{
+    return results_;
+}
+
+void TFInferenceEngine::UpdateInput(const Image& image)
+{
+    input_tensor_ =
+        tensorflow::Tensor{tensorflow::DT_UINT8, tensorflow::TensorShape{1, image.rows, image.cols, image.channels()}};
+    auto input_tensor_ptr = input_tensor_.flat<tensorflow::uint8>().data();
+    Image tensor_image{image.rows, image.cols, CV_8UC3, input_tensor_ptr};
+    image.convertTo(tensor_image, CV_8UC3);
+}
+
+void TFInferenceEngine::UpdateOutputs()
+{
+    std::vector<Image> tensor_images{output_tensors_.size()};
+    // for (auto idx = 0; idx < tensor_images.size(); ++idx)
+    // {
+    //     auto output_tensor_ptr = output_tensors_.at(idx).flat<tensorflow::uint8>().data();
+    // }
+}
 
 }  // namespace perception

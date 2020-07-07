@@ -14,24 +14,33 @@ namespace perception
 
 InferenceEngineStrategy::InferenceEngineStrategy() : inference_engine_type_{InferenceEngineType::kInvalid} {}
 
-void InferenceEngineStrategy::SelectInferenceEngine(const InferenceEngineType& inference_engine_type)
+void InferenceEngineStrategy::SelectInferenceEngine(const InferenceEngineType& inference_engine_type,
+                                                    const InferenceEngineParameters& inference_engine_parameters)
 {
     inference_engine_type_ = inference_engine_type;
     switch (inference_engine_type)
     {
         case InferenceEngineType::kTensorFlow:
-            inference_engine_ = std::make_unique<TFInferenceEngine>();
+        {
+            inference_engine_ = std::make_unique<TFInferenceEngine>(inference_engine_parameters);
             break;
+        }
         case InferenceEngineType::kTensorFlowLite:
+        {
             inference_engine_ = std::make_unique<TFLiteInferenceEngine>();
             break;
+        }
         case InferenceEngineType::kTorch:
+        {
             inference_engine_ = std::make_unique<TorchInferenceEngine>();
             break;
-        default:
+        }
         case InferenceEngineType::kInvalid:
+        default:
+        {
             LOG(FATAL) << "Received " << inference_engine_type;
             break;
+        }
     }
 }
 

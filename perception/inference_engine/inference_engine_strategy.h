@@ -33,7 +33,8 @@ class InferenceEngineStrategy
 
     /// @brief Select Inference Engine
     /// @param inference_engine_type [in] - Inference Engine type (TF, TFLite)
-    void SelectInferenceEngine(const InferenceEngineType& inference_engine_type);
+    void SelectInferenceEngine(const InferenceEngineType& inference_engine_type,
+                               const InferenceEngineParameters& inference_engine_parameters);
 
     /// @brief Provide selected inference engine type
     /// @return InferenceEngineType

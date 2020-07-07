@@ -27,21 +27,28 @@ class InferenceEngineTest : public ::testing::Test
 {
   public:
     InferenceEngineTest()
-        : test_image_path_{"data/grace_hopper.jpg"}, test_image_{cv::imread(test_image_path_, cv::IMREAD_UNCHANGED)}
+        : test_image_path_{"data/grace_hopper.jpg"},
+          test_image_{cv::imread(test_image_path_, cv::IMREAD_UNCHANGED)},
+          inference_engine_parameters_{"external/ssd_mobilenet_v2_coco/saved_model",
+                                       "image_tensor",
+                                       {"detection_classes", "detection_scores", "detection_boxes"}}
     {
     }
 
   protected:
     void SetUp() override
     {
-        this->unit_ = std::make_unique<T>();
-        this->unit_->Init();
+        unit_ = std::make_unique<T>(inference_engine_parameters_);
+        unit_->Init();
     }
+
+    void RunOnce() { unit_->Execute(test_image_); }
 
     void TearDown() override { unit_->Shutdown(); }
 
     const std::string test_image_path_;
-    Image test_image_;
+    const Image test_image_;
+    const InferenceEngineParameters inference_engine_parameters_;
 
     InferenceEnginePtr unit_;
 };
@@ -49,7 +56,7 @@ TYPED_TEST_SUITE_P(InferenceEngineTest);
 
 TYPED_TEST_P(InferenceEngineTest, Sanity)
 {
-    this->unit_->Execute(this->test_image_);
+    this->RunOnce();
 
     // auto actual = this->unit_->GetResults();
     // EXPECT_EQ(5U, actual.size());
@@ -57,20 +64,23 @@ TYPED_TEST_P(InferenceEngineTest, Sanity)
 
 REGISTER_TYPED_TEST_SUITE_P(InferenceEngineTest, Sanity);
 
-typedef ::testing::Types</*TFInferenceEngine , TFLiteInferenceEngine ,*/ TorchInferenceEngine> InferenceEngineTestTypes;
+typedef ::testing::Types<TFInferenceEngine /*,  TFLiteInferenceEngine , TorchInferenceEngine*/>
+    InferenceEngineTestTypes;
 INSTANTIATE_TYPED_TEST_SUITE_P(TypeTests, InferenceEngineTest, InferenceEngineTestTypes);
 
 class InferenceEngineStrategyTest : public ::testing::TestWithParam<InferenceEngineType>
 {
   public:
-    InferenceEngineStrategyTest() : unit_{} {}
+    InferenceEngineStrategyTest() : inference_engine_params_{}, unit_{} {}
 
   protected:
+    InferenceEngineParameters inference_engine_params_;
     InferenceEngineStrategy unit_;
 };
 TEST_P(InferenceEngineStrategyTest, GivenInferenceEngine_ExpectSelectedEngine)
 {
-    unit_.SelectInferenceEngine(GetParam());
+
+    unit_.SelectInferenceEngine(GetParam(), inference_engine_params_);
 
     EXPECT_EQ(GetParam(), unit_.GetInferenceEngineType());
 }

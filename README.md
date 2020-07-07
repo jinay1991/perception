@@ -1,10 +1,10 @@
 # Preception
 
-[![pipeline status](https://gitlab.com/jinay1991/perception/badges/master/pipeline.svg)](https://gitlab.com/jinay1991/perception/commits/master)
-[![coverage report](https://gitlab.com/jinay1991/perception/badges/master/coverage.svg?job=code-coverage)](https://jinay1991.gitlab.io/perception/)
-[![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://jinay1991.gitlab.io/perception/doc/html/)
-
-[[Issue Board](https://gitlab.com/jinay1991/perception/-/boards)]
+[![pipeline status](https://gitlab.com/jinay1991/perception/badges/master/pipeline.svg)](https://gitlab.com/ad_platform/perception/commits/master)
+[![coverage report](https://gitlab.com/jinay1991/perception/badges/master/coverage.svg?job=code-coverage)](https://ad_platform.gitlab.io/perception/)
+[![documentation](https://img.shields.io/badge/doc-doxygen-blue.svg)](https://ad_platform.gitlab.io/perception/doc/html/)
+[![static code analysis](https://img.shields.io/badge/quality-cppcheck-green.svg)](https://ad_platform.gitlab.io/perception/static_code_analysis_report/)
+[![Issue Board](https://img.shields.io/badge/issue-tracker-green.svg)](https://gitlab.com/ad_platform/perception/-/boards)
 
 **WIP** Autonomous Driving Perception (with conjunction with Udacity Simulator)
 

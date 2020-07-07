@@ -6,6 +6,8 @@
 
 #include "perception/common/logging/logging.h"
 
+#include <opencv4/opencv2/core/hal/interface.h>
+
 #include <unordered_set>
 
 namespace perception
@@ -17,7 +19,7 @@ TFInferenceEngine::TFInferenceEngine(const InferenceEngineParameters& params)
       input_tensor_name_{params.input_tensor_name},
       output_tensors_{},
       output_tensor_names_{params.output_tensor_names},
-      model_dir_{params.model_path}
+      model_path_{params.model_path}
 {
 }
 
@@ -27,11 +29,11 @@ void TFInferenceEngine::Init()
     tensorflow::RunOptions run_options{};
     std::unordered_set<std::string> tags{"serve"};
 
-    const auto ret = tensorflow::LoadSavedModel(session_options, run_options, model_dir_, tags, bundle_.get());
-    ASSERT_CHECK(ret.ok()) << "Failed to load saved model '" << model_dir_ << "', (Message: " << ret.error_message()
+    const auto ret = tensorflow::LoadSavedModel(session_options, run_options, model_path_, tags, bundle_.get());
+    ASSERT_CHECK(ret.ok()) << "Failed to load saved model '" << model_path_ << "', (Message: " << ret.error_message()
                            << ")";
 
-    LOG(INFO) << "Successfully loaded saved model from '" << model_dir_ << "'.";
+    LOG(INFO) << "Successfully loaded saved model from '" << model_path_ << "'.";
 }
 
 void TFInferenceEngine::Execute(const Image& image)
@@ -44,7 +46,6 @@ void TFInferenceEngine::Execute(const Image& image)
     ASSERT_CHECK(status.ok()) << "Unable to run Session, (Message: " << status.error_message() << ")";
 
     LOG(INFO) << "Successfully received results " << output_tensors_.size() << " outputs.";
-    LOG(INFO) << "output_tensors_.at(0): " << output_tensors_.at(0U).DebugString() << std::endl;
 
     UpdateOutputs();
 }
@@ -67,11 +68,18 @@ void TFInferenceEngine::UpdateInput(const Image& image)
 
 void TFInferenceEngine::UpdateOutputs()
 {
-    std::vector<Image> tensor_images{output_tensors_.size()};
-    // for (auto idx = 0; idx < tensor_images.size(); ++idx)
-    // {
-    //     auto output_tensor_ptr = output_tensors_.at(idx).flat<tensorflow::uint8>().data();
-    // }
+    std::vector<cv::Mat> tensor_matrices{output_tensors_.size()};
+    for (auto idx = 0; idx < output_tensors_.size(); ++idx)
+    {
+        auto tensor = output_tensors_.at(idx);
+        const auto cols = static_cast<std::int32_t>(tensor.dim_size(0));
+        const auto rows = static_cast<std::int32_t>(tensor.dim_size(1));
+        const auto channels = tensor.dims() > 2 ? static_cast<std::int32_t>(tensor.dim_size(2)) : 1;
+        const auto tensor_ptr = tensor.flat<float>().data();
+        cv::Mat tensor_matrix{rows, cols, CV_32FC(channels), tensor_ptr};
+
+        tensor_matrices.push_back(tensor_matrix);
+    }
 }
 
 }  // namespace perception

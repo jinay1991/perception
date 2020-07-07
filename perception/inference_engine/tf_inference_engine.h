@@ -62,7 +62,7 @@ class TFInferenceEngine : public IInferenceEngine
     const std::vector<std::string> output_tensor_names_;
 
     /// @brief Model root directory
-    const std::string model_dir_;
+    const std::string model_path_;
 
     /// @brief Output Tensors saved as cv::Mat
     cv::Mat results_;

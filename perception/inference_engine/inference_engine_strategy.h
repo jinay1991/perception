@@ -36,6 +36,9 @@ class InferenceEngineStrategy
     void SelectInferenceEngine(const InferenceEngineType& inference_engine_type,
                                const InferenceEngineParameters& inference_engine_parameters);
 
+    /// @brief Provide results from Inference Engine
+    std::vector<cv::Mat> GetResults() const;
+
     /// @brief Provide selected inference engine type
     /// @return InferenceEngineType
     InferenceEngineType GetInferenceEngineType() const;

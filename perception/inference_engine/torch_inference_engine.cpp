@@ -10,7 +10,7 @@
 
 namespace perception
 {
-TorchInferenceEngine::TorchInferenceEngine() {}
+TorchInferenceEngine::TorchInferenceEngine() : results_{} {}
 
 void TorchInferenceEngine::Init()
 {
@@ -21,5 +21,10 @@ void TorchInferenceEngine::Init()
 void TorchInferenceEngine::Execute(const Image& image) {}
 
 void TorchInferenceEngine::Shutdown() {}
+
+std::vector<cv::Mat> TorchInferenceEngine::GetResults() const
+{
+    return results_;
+}
 
 }  // namespace perception

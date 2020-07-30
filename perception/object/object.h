@@ -28,9 +28,8 @@ class Object
     virtual ObjectListMessage GetObjectListMessage() const;
 
   private:
-    const std::string model_input_;
-    const std::vector<std::string> model_outputs_;
-    const std::string model_path_;
+    void UpdateOutputs();
+
     const InferenceEngineParameters inference_engine_params_;
 
     InferenceEngineStrategy inference_engine_;

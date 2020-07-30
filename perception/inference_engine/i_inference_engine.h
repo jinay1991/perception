@@ -33,6 +33,9 @@ class IInferenceEngine
 
     /// @brief Release Inference Engine
     virtual void Shutdown() = 0;
+
+    /// @brief Provide results in terms of Matrix
+    virtual std::vector<cv::Mat> GetResults() const = 0;
 };
 
 using InferenceEnginePtr = std::unique_ptr<IInferenceEngine>;

@@ -19,7 +19,7 @@
 namespace perception
 {
 /// @brief TensorFlow Inference Engine class
-class TFInferenceEngine : public IInferenceEngine
+class TFInferenceEngine final : public IInferenceEngine
 {
   public:
     /// @brief Constructor
@@ -37,7 +37,8 @@ class TFInferenceEngine : public IInferenceEngine
     /// @brief Release TensorFlow Inference Engine
     void Shutdown() override;
 
-    cv::Mat GetResults() const;
+    /// @brief Provide results in terms of Matrix
+    std::vector<cv::Mat> GetResults() const override;
 
   private:
     /// @brief Updates Input Tensor by copying image to input_tensor_
@@ -65,7 +66,7 @@ class TFInferenceEngine : public IInferenceEngine
     const std::string model_path_;
 
     /// @brief Output Tensors saved as cv::Mat
-    cv::Mat results_;
+    std::vector<cv::Mat> results_;
 };
 
 }  // namespace perception

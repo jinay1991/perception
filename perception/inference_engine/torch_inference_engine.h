@@ -15,7 +15,7 @@
 
 namespace perception
 {
-class TorchInferenceEngine : public IInferenceEngine
+class TorchInferenceEngine final : public IInferenceEngine
 {
   public:
     /// @brief Default Constructor
@@ -32,6 +32,13 @@ class TorchInferenceEngine : public IInferenceEngine
 
     /// @brief Release Inference Engine
     void Shutdown() override;
+
+    /// @brief Provide results in terms of Matrix
+    std::vector<cv::Mat> GetResults() const override;
+
+  private:
+    /// @brief Output Tensors saved as cv::Mat
+    std::vector<cv::Mat> results_;
 };
 }  // namespace perception
 

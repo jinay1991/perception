@@ -16,6 +16,10 @@ cc_test(
 cc_test(
     name = "unit_test",
     srcs = ["object_test.cpp"],
+    data = [
+        "//:calibration_data",  # TODO: Remove
+        "//:testdata",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/object",

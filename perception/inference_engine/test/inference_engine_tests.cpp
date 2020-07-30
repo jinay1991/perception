@@ -31,19 +31,14 @@ class InferenceEngineTest : public ::testing::Test
           test_image_{cv::imread(test_image_path_, cv::IMREAD_UNCHANGED)},
           inference_engine_parameters_{"external/ssd_mobilenet_v2_coco/saved_model",
                                        "image_tensor",
-                                       {"detection_classes", "detection_scores", "detection_boxes"}}
+                                       {"detection_classes", "detection_scores", "detection_boxes"}},
+          unit_{std::make_unique<T>(inference_engine_parameters_)}
     {
     }
 
   protected:
-    void SetUp() override
-    {
-        unit_ = std::make_unique<T>(inference_engine_parameters_);
-        unit_->Init();
-    }
-
+    void SetUp() override { unit_->Init(); }
     void RunOnce() { unit_->Execute(test_image_); }
-
     void TearDown() override { unit_->Shutdown(); }
 
     const std::string test_image_path_;
@@ -58,15 +53,15 @@ TYPED_TEST_P(InferenceEngineTest, Sanity)
 {
     this->RunOnce();
 
-    // auto actual = this->unit_->GetResults();
-    // EXPECT_EQ(5U, actual.size());
+    const auto actual = this->unit_->GetResults();
+    EXPECT_EQ(this->inference_engine_parameters_.output_tensor_names.size(), actual.size());
 }
 
 REGISTER_TYPED_TEST_SUITE_P(InferenceEngineTest, Sanity);
 
-typedef ::testing::Types<TFInferenceEngine /*,  TFLiteInferenceEngine , TorchInferenceEngine*/>
+typedef ::testing::Types<TFInferenceEngine /* , TFLiteInferenceEngine , TorchInferenceEngine*/>
     InferenceEngineTestTypes;
-INSTANTIATE_TYPED_TEST_SUITE_P(TypeTests, InferenceEngineTest, InferenceEngineTestTypes);
+INSTANTIATE_TYPED_TEST_SUITE_P(InferenceEngine, InferenceEngineTest, InferenceEngineTestTypes);
 
 class InferenceEngineStrategyTest : public ::testing::TestWithParam<InferenceEngineType>
 {
@@ -84,7 +79,7 @@ TEST_P(InferenceEngineStrategyTest, GivenInferenceEngine_ExpectSelectedEngine)
 
     EXPECT_EQ(GetParam(), unit_.GetInferenceEngineType());
 }
-INSTANTIATE_TEST_CASE_P(TypeTests,
+INSTANTIATE_TEST_CASE_P(InferenceEngine,
                         InferenceEngineStrategyTest,
                         ::testing::Values(InferenceEngineType::kTensorFlow,
                                           InferenceEngineType::kTensorFlowLite,

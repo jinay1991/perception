@@ -8,21 +8,18 @@
 #include "tensorflow/lite/kernels/register.h"
 #include "tensorflow/lite/optional_debug_tools.h"
 
-#include <sys/time.h>
-
-#include <algorithm>
-#include <string>
-
 namespace perception
 {
 
-TFLiteInferenceEngine::TFLiteInferenceEngine() {}
+TFLiteInferenceEngine::TFLiteInferenceEngine(const InferenceEngineParameters& params)
+    : model_path_{params.model_path}, results_{}
+{
+}
 
 void TFLiteInferenceEngine::Init()
 {
-    const std::string model_path{};
-    model_ = tflite::FlatBufferModel::BuildFromFile(model_path.c_str());
-    ASSERT_CHECK(model_) << "Failed to mmap model " << model_path;
+    model_ = tflite::FlatBufferModel::BuildFromFile(model_path_.c_str());
+    ASSERT_CHECK(model_) << "Failed to read model " << model_path_;
     model_->error_reporter();
 
     tflite::ops::builtin::BuiltinOpResolver resolver;
@@ -41,5 +38,10 @@ void TFLiteInferenceEngine::Execute(const Image& image)
 }
 
 void TFLiteInferenceEngine::Shutdown() {}
+
+std::vector<cv::Mat> TFLiteInferenceEngine::GetResults() const
+{
+    return results_;
+}
 
 }  // namespace perception

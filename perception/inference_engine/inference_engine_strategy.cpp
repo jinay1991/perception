@@ -27,7 +27,7 @@ void InferenceEngineStrategy::SelectInferenceEngine(const InferenceEngineType& i
         }
         case InferenceEngineType::kTensorFlowLite:
         {
-            inference_engine_ = std::make_unique<TFLiteInferenceEngine>();
+            inference_engine_ = std::make_unique<TFLiteInferenceEngine>(inference_engine_parameters);
             break;
         }
         case InferenceEngineType::kTorch:
@@ -57,6 +57,11 @@ void InferenceEngineStrategy::Execute(const Image& image)
 void InferenceEngineStrategy::Shutdown()
 {
     inference_engine_->Shutdown();
+}
+
+std::vector<cv::Mat> InferenceEngineStrategy::GetResults() const
+{
+    return inference_engine_->GetResults();
 }
 
 InferenceEngineType InferenceEngineStrategy::GetInferenceEngineType() const

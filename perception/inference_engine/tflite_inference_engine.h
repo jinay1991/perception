@@ -10,7 +10,6 @@
 #include "tensorflow/lite/interpreter.h"
 #include "tensorflow/lite/model.h"
 
-
 #include <cstdint>
 #include <memory>
 #include <string>

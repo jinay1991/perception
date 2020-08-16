@@ -22,7 +22,7 @@ namespace
 class ObjectTest : public ::testing::Test
 {
   public:
-    ObjectTest() : test_image_path_{"data/grace_hopper.jpg"}, unit_{}, camera_message_{}
+    ObjectTest() : test_image_path_{"data/messi5.jpg"}, unit_{}, camera_message_{}
     {
         camera_message_.image = cv::imread(test_image_path_, cv::IMREAD_UNCHANGED);
         cv::undistort(camera_message_.image,

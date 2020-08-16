@@ -12,6 +12,9 @@
 
 namespace perception
 {
+/// @todo Instead of Strategy Pattern, Factory Pattern would make it much nicers as this Factory of all Inference
+/// Engines
+
 /// @brief Inference Engine Strategy
 class InferenceEngineStrategy
 {

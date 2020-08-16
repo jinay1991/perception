@@ -14,24 +14,9 @@ cc_test(
 )
 
 cc_test(
-    name = "component_tests",
-    srcs = ["object_test.cpp"],
-    data = [
-        "//:calibration_data",  # TODO: Remove
-        "//:testdata",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//perception/object",
-        "@googletest//:gtest_main",
-    ],
-)
-
-cc_test(
     name = "unit_tests",
     srcs = ["object_test.cpp"],
     data = [
-        "//:calibration_data",  # TODO: Remove
         "//:testdata",
     ],
     visibility = ["//visibility:public"],

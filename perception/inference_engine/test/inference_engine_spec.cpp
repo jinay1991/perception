@@ -59,7 +59,7 @@ TYPED_TEST_P(InferenceEngineFixture_WithInferenceEngineType, InferenceEngine_Giv
 
     // Then
     const auto actual = this->GetInferenceResults();
-    EXPECT_EQ(this->inference_engine_parameters_.output_tensor_names.size(), actual.size());
+    EXPECT_EQ(this->GetInferenceParameters().output_tensor_names.size(), actual.size());
 }
 
 REGISTER_TYPED_TEST_SUITE_P(InferenceEngineFixture_WithInferenceEngineType,

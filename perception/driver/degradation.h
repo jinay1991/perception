@@ -5,8 +5,9 @@
 #ifndef PERCEPTION_DRIVER_DEGRADATION_H
 #define PERCEPTION_DRIVER_DEGRADATION_H
 
-#include "perception/driver/data_source.h"
 #include "perception/driver/i_parameters.h"
+#include "perception/driver/input_service.h"
+#include "perception/driver/output_service.h"
 
 namespace perception
 {

@@ -5,7 +5,7 @@
 #ifndef PERCEPTION_DRIVER_COMMON_PARAMETERS_H
 #define PERCEPTION_DRIVER_COMMON_PARAMETERS_H
 
-#include "perception/driver/common/i_parameters.h"
+#include "perception/driver/i_parameters.h"
 
 #include <units.h>
 

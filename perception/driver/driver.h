@@ -6,10 +6,10 @@
 #define PERCEPTION_DRIVER_DRIVER_H
 
 #include "perception/datatypes/driver.h"
-#include "perception/driver/common/parameters.h"
-#include "perception/driver/degradation/degradation.h"
-#include "perception/driver/fatigue/fatigue.h"
-#include "perception/driver/visual_attention/visual_attention.h"
+#include "perception/driver/degradation.h"
+#include "perception/driver/fatigue.h"
+#include "perception/driver/parameters.h"
+#include "perception/driver/visual_attention.h"
 
 namespace perception
 {

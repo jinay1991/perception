@@ -2,7 +2,7 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License.
 ///
-#include "perception/driver/common/parameters.h"
+#include "perception/driver/parameters.h"
 
 namespace perception
 {

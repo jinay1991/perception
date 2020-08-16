@@ -31,9 +31,7 @@ class Object
     void UpdateOutputs();
 
     const InferenceEngineParameters inference_engine_params_;
-
     InferenceEngineStrategy inference_engine_;
-
     CameraMessage camera_message_;
     ObjectListMessage object_list_message_;
 };

@@ -6,8 +6,6 @@
 
 #include "perception/common/logging/logging.h"
 
-#include <opencv4/opencv2/core/hal/interface.h>
-
 #include <unordered_set>
 
 namespace perception

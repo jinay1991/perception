@@ -5,9 +5,9 @@
 #ifndef PERCEPTION_DRIVER_VISUAL_ATTENTION_H
 #define PERCEPTION_DRIVER_VISUAL_ATTENTION_H
 
-#include "perception/driver/common/i_parameters.h"
-#include "perception/driver/input_service/i_input_service.h"
-#include "perception/driver/output_service/output_service.h"
+#include "perception/driver/i_parameters.h"
+#include "perception/driver/input_service.h"
+#include "perception/driver/output_service.h"
 
 namespace perception
 {
@@ -15,7 +15,7 @@ class VisualAttention
 {
   public:
     explicit VisualAttention(const IParameters& parameters,
-                             const IInputService& input_service,
+                             const InputService& input_service,
                              OutputService& output_service)
         : parameters_{parameters},
           input_service_{input_service},
@@ -38,7 +38,7 @@ class VisualAttention
 
   private:
     const IParameters& parameters_;
-    const IInputService& input_service_;
+    const InputService& input_service_;
     OutputService& output_service_;
 
     VisualAttentionMessage visual_attention_message_;

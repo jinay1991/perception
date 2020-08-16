@@ -7,11 +7,5 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//perception/datatypes",
-        "//perception/driver/common:parameters",
-        "//perception/driver/degradation",
-        "//perception/driver/fatigue",
-        "//perception/driver/input_service",
-        "//perception/driver/output_service",
-        "//perception/driver/visual_attention",
     ],
 )

@@ -23,29 +23,37 @@ class TFInferenceEngine final : public IInferenceEngine
 {
   public:
     /// @brief Constructor
+    /// @param params[in] - Inference Engine Parameters such as model input/output node names
     explicit TFInferenceEngine(const InferenceEngineParameters& params);
 
     /// @brief Destructor
-    ~TFInferenceEngine() = default;
+    virtual ~TFInferenceEngine() = default;
 
     /// @brief Initialise TensorFlow Inference Engine
     void Init() override;
 
     /// @brief Execute Inference with TensorFlow Inference Engine
+    /// @param image[in] - Image to be fed as input to Inference Engine
     void Execute(const Image& image) override;
 
     /// @brief Release TensorFlow Inference Engine
     void Shutdown() override;
 
     /// @brief Provide results in terms of Matrix
+    /// @return List of results (aka cv::Mat) for requested outputs (will be in same order as output_node_names provided
+    ///         in InferenceEngineParameters)
     std::vector<cv::Mat> GetResults() const override;
 
   private:
-    /// @brief Updates Input Tensor by copying image to input_tensor_
-    void UpdateInput(const Image& image);
+    /// @brief Updates Input Tensor by copying image to input_tensor
+    /// @param image[in] - Input image to be fed to Inference Engine
+    virtual void UpdateInput(const Image& image);
+
+    /// @brief Updates Output Tensors by running the tensorflow session
+    virtual void UpdateTensors();
 
     /// @brief Converts output_tensors to cv::Mat results
-    void UpdateOutputs();
+    virtual void UpdateOutputs();
 
     /// @brief Saved Model bundle
     std::shared_ptr<tensorflow::SavedModelBundle> bundle_;

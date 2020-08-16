@@ -23,10 +23,10 @@ namespace perception
 namespace
 {
 template <typename T>
-class InferenceEngineTest : public ::testing::Test
+class InferenceEngineFixture_WithInferenceEngineType : public ::testing::Test
 {
   public:
-    InferenceEngineTest()
+    InferenceEngineFixture_WithInferenceEngineType()
         : test_image_path_{"data/grace_hopper.jpg"},
           test_image_{cv::imread(test_image_path_, cv::IMREAD_UNCHANGED)},
           inference_engine_parameters_{"external/ssd_mobilenet_v2_coco/saved_model",
@@ -41,27 +41,37 @@ class InferenceEngineTest : public ::testing::Test
     void RunOnce() { unit_->Execute(test_image_); }
     void TearDown() override { unit_->Shutdown(); }
 
+    std::vector<cv::Mat> GetInferenceResults() const { return unit_->GetResults(); }
+    InferenceEngineParameters GetInferenceParameters() const { return inference_engine_parameters_; }
+
+  private:
     const std::string test_image_path_;
     const Image test_image_;
     const InferenceEngineParameters inference_engine_parameters_;
-
     InferenceEnginePtr unit_;
 };
-TYPED_TEST_SUITE_P(InferenceEngineTest);
+TYPED_TEST_SUITE_P(InferenceEngineFixture_WithInferenceEngineType);
 
-TYPED_TEST_P(InferenceEngineTest, Sanity)
+TYPED_TEST_P(InferenceEngineFixture_WithInferenceEngineType, InferenceEngine_GivenTypicalInputs_ExpectInferenceResults)
 {
+    // When
     this->RunOnce();
 
-    const auto actual = this->unit_->GetResults();
+    // Then
+    const auto actual = this->GetInferenceResults();
     EXPECT_EQ(this->inference_engine_parameters_.output_tensor_names.size(), actual.size());
 }
 
-REGISTER_TYPED_TEST_SUITE_P(InferenceEngineTest, Sanity);
+REGISTER_TYPED_TEST_SUITE_P(InferenceEngineFixture_WithInferenceEngineType,
+                            InferenceEngine_GivenTypicalInputs_ExpectInferenceResults);
 
 typedef ::testing::Types<TFInferenceEngine /* , TFLiteInferenceEngine , TorchInferenceEngine*/>
     InferenceEngineTestTypes;
-INSTANTIATE_TYPED_TEST_SUITE_P(InferenceEngine, InferenceEngineTest, InferenceEngineTestTypes);
+INSTANTIATE_TYPED_TEST_SUITE_P(InferenceEngine,
+                               InferenceEngineFixture_WithInferenceEngineType,
+                               InferenceEngineTestTypes);
+
+//////////////////////
 
 class InferenceEngineStrategyTest : public ::testing::TestWithParam<InferenceEngineType>
 {

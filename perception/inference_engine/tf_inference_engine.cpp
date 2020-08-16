@@ -14,16 +14,17 @@ namespace
 {
 /// @brief Converts tensorflow::Tensor to Image (aka cv::Mat)
 ///
-/// @param tensor[in] - tensorflow::Tensor
+/// @param tensor[in] - tensorflow::Tensor in [NxHxWxC form]
 ///
 /// @return Equivalent image (aka cv::Mat) for given tensorflow::Tensor by copying contents.
 cv::Mat ConvertToMatrix(const tensorflow::Tensor& tensor)
 {
-    const auto cols = static_cast<std::int32_t>(tensor.dim_size(0));
-    const auto rows = tensor.dims() > 1 ? static_cast<std::int32_t>(tensor.dim_size(1)) : 1;
-    const auto channels = tensor.dims() > 2 ? static_cast<std::int32_t>(tensor.dim_size(2)) : 1;
-    const auto* tensor_ptr = tensor.flat<float>().data();
-    cv::Mat matrix{rows, cols, CV_32FC(channels), &tensor_ptr};
+    tensorflow::Tensor tensor_matrix = tensor;
+    const auto rows = tensor_matrix.dims() > 1 ? static_cast<std::int32_t>(tensor_matrix.dim_size(1)) : 1;
+    const auto cols = tensor_matrix.dims() > 2 ? static_cast<std::int32_t>(tensor_matrix.dim_size(2)) : 1;
+    const auto channels = tensor_matrix.dims() > 3 ? static_cast<std::int32_t>(tensor_matrix.dim_size(3)) : 1;
+    auto* tensor_ptr = tensor_matrix.flat<float>().data();
+    cv::Mat matrix{rows, cols, CV_32FC(channels), tensor_ptr};
     return matrix;
 }
 

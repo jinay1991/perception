@@ -13,6 +13,78 @@
 
 namespace perception
 {
+namespace
+{
+
+constexpr float kMinObjectDetectionScore = 0.50F;
+
+constexpr ObjectId GetObjectId(const LabelId& label_id)
+{
+    ObjectId object_id{ObjectId::kInvalid};
+
+    switch (label_id)
+    {
+        case LabelId::kPerson:
+        {
+            object_id = ObjectId::kPedestrian;
+            break;
+        }
+        case LabelId::kBicycle:
+        {
+            object_id = ObjectId::kBicycle;
+            break;
+        }
+        case LabelId::kCar:
+        {
+            object_id = ObjectId::kCar;
+            break;
+        }
+        case LabelId::kMotorcycle:
+        {
+            object_id = ObjectId::kMotorBike;
+            break;
+        }
+        case LabelId::kBus:
+        case LabelId::kTruck:
+        {
+            object_id = ObjectId::kTruck;
+            break;
+        }
+        case LabelId::kTrafficLight:
+        {
+            object_id = ObjectId::kTrafficLight;
+            break;
+        }
+        case LabelId::kStopSign:
+        {
+            object_id = ObjectId::kTrafficSign_Stop;
+            break;
+        }
+        case LabelId::kBird:
+        case LabelId::kCat:
+        case LabelId::kDog:
+        case LabelId::kHorse:
+        case LabelId::kSheep:
+        case LabelId::kCow:
+        case LabelId::kElephant:
+        case LabelId::kBear:
+        case LabelId::kZebra:
+        case LabelId::kGiraffe:
+        {
+            object_id = ObjectId::kAnimal;
+            break;
+        }
+        default:
+        {
+            object_id = ObjectId::kUnknown;
+            break;
+        }
+    }
+
+    return object_id;
+}
+}  // namespace
+
 Object::Object()
     : inference_engine_params_{"external/ssd_mobilenet_v2_coco/saved_model",
                                "image_tensor",
@@ -60,21 +132,29 @@ void Object::UpdateOutputs()
     const cv::Mat num_detections = results.at(3);
 
     ASSERT_CHECK(!num_detections.empty()) << "No detections received!!";
+
+    object_list_message_.number_of_valid_objects = 0;
     for (auto idx = 0; idx < static_cast<std::int32_t>(num_detections.at<float>(0, 0)); ++idx)
     {
         const auto score = detection_scores.at<float>(idx, 0);
-        const auto label = detection_classes.at<float>(idx, 0);
+        const auto label = static_cast<std::int32_t>(detection_classes.at<float>(idx, 0));
         const auto ymin = detection_boxes.at<float>(idx, 0);
         const auto xmin = detection_boxes.at<float>(idx, 1);
         const auto ymax = detection_boxes.at<float>(idx, 2);
         const auto xmax = detection_boxes.at<float>(idx, 3);
+
         const auto bounding_box = BoundingBox{xmin * static_cast<float>(camera_message_.image.cols),
                                               ymin * static_cast<float>(camera_message_.image.rows),
                                               (xmax - xmin) * static_cast<float>(camera_message_.image.cols),
                                               (ymax - ymin) * static_cast<float>(camera_message_.image.rows)};
-
-        object_list_message_.at(idx).bounding_box = bounding_box;
-        object_list_message_.at(idx).id = ObjectId::kPedestrian;
+        if (score > kMinObjectDetectionScore)
+        {
+            object_list_message_.number_of_valid_objects++;
+            object_list_message_.objects.at(idx).bounding_box = bounding_box;
+            object_list_message_.objects.at(idx).id = GetObjectId(static_cast<LabelId>(label));
+        }
     }
+
+    LOG(INFO) << "Observed {" << object_list_message_.number_of_valid_objects << "} detected valid objects!";
 }
 }  // namespace perception

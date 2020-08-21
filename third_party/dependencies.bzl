@@ -1,3 +1,4 @@
+load("@//third_party/compile_commands:compile_commands.bzl", "compile_commands")
 load("@//third_party/eigen:eigen.bzl", "eigen")
 load("@//third_party/googletest:googletest.bzl", "googletest")
 load("@//third_party/libuv:libuv.bzl", "libuv")
@@ -8,12 +9,14 @@ load("@//third_party/nlohmann:nlohmann.bzl", "nlohmann")
 load("@//third_party/opencv:opencv.bzl", "opencv")
 load("@//third_party/openssl:openssl.bzl", "openssl")
 load("@//third_party/tensorflow:tensorflow.bzl", "tensorflow")
+load("@//third_party/toolchain:toolchain.bzl", "toolchain")
 load("@//third_party/torch:torch.bzl", "torch")
 load("@//third_party/uwebsocket:uwebsocket.bzl", "uwebsocket")
 load("@//third_party/zlib:zlib.bzl", "zlib")
 
 def third_party_dependencies():
     """ Load 3rd party dependencies """
+    compile_commands()
     eigen()
     googletest()
     libuv()
@@ -24,6 +27,7 @@ def third_party_dependencies():
     opencv()
     openssl()
     tensorflow()
+    toolchain()
     torch()
     uwebsocket()
     zlib()

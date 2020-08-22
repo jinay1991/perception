@@ -66,19 +66,33 @@ struct BoundingBox
     double height;
 };
 
+struct Position
+{
+    units::length::meter_t x;
+    units::length::meter_t y;
+    units::length::meter_t z;
+};
+
+struct Pose
+{
+    units::angle::radian_t yaw;
+    units::angle::radian_t pitch;
+    units::angle::radian_t roll;
+};
+
 struct ObjectMessage
 {
     units::length::meter_t distance;
     units::length::meter_t longitudinal_distance;
-    units::length::meter_t latitudinal_distance;
+    units::length::meter_t lateral_distance;
 
     units::velocity::meters_per_second_t relative_velocity;
     units::velocity::meters_per_second_t velocity;
 
     units::time::microsecond_t time_to_collision;
 
-    units::angle::radian_t yaw;
-    units::angle::radian_t pitch;
+    Position position;
+    Pose pose;
 
     BoundingBox bounding_box;
     ObjectId id;
@@ -102,16 +116,46 @@ inline bool operator!=(const BoundingBox& lhs, const BoundingBox& rhs) noexcept
     return (!(lhs == rhs));
 }
 
+inline bool operator==(const Position& lhs, const Position& rhs) noexcept
+{
+    return ((lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z));
+}
+
+inline bool operator!=(const Position& lhs, const Position& rhs) noexcept
+{
+    return (!(lhs == rhs));
+}
+
+inline bool operator==(const Pose& lhs, const Pose& rhs) noexcept
+{
+    return ((lhs.yaw == rhs.yaw) && (lhs.pitch == rhs.pitch) && (lhs.roll == rhs.roll));
+}
+
+inline bool operator!=(const Pose& lhs, const Pose& rhs) noexcept
+{
+    return (!(lhs == rhs));
+}
+
 inline bool operator==(const ObjectMessage& lhs, const ObjectMessage& rhs) noexcept
 {
     return ((lhs.distance == rhs.distance) && (lhs.longitudinal_distance == rhs.longitudinal_distance) &&
-            (lhs.latitudinal_distance == rhs.latitudinal_distance) &&
-            (lhs.relative_velocity == rhs.relative_velocity) && (lhs.velocity == rhs.velocity) &&
-            (lhs.time_to_collision == rhs.time_to_collision) && (lhs.yaw == rhs.yaw) && (lhs.pitch == rhs.pitch) &&
-            (lhs.bounding_box == rhs.bounding_box) && (lhs.id == rhs.id) && (lhs.lane_id == rhs.lane_id));
+            (lhs.lateral_distance == rhs.lateral_distance) && (lhs.relative_velocity == rhs.relative_velocity) &&
+            (lhs.velocity == rhs.velocity) && (lhs.time_to_collision == rhs.time_to_collision) &&
+            (lhs.position == rhs.position) && (lhs.pose == rhs.pose) && (lhs.bounding_box == rhs.bounding_box) &&
+            (lhs.id == rhs.id) && (lhs.lane_id == rhs.lane_id));
 }
 
 inline bool operator!=(const ObjectMessage& lhs, const ObjectMessage& rhs) noexcept
+{
+    return (!(lhs == rhs));
+}
+
+inline bool operator==(const ObjectListMessage& lhs, const ObjectListMessage& rhs) noexcept
+{
+    return ((lhs.number_of_valid_objects == rhs.number_of_valid_objects) && (lhs.objects == rhs.objects));
+}
+
+inline bool operator!=(const ObjectListMessage& lhs, const ObjectListMessage& rhs) noexcept
 {
     return (!(lhs == rhs));
 }
@@ -155,11 +199,32 @@ inline std::ostream& operator<<(std::ostream& stream, const ObjectId& id)
     return stream;
 }
 
+inline std::ostream& operator<<(std::ostream& stream, const Position& position)
+{
+    stream << "Position {x: " << position.x << ", y: " << position.y << ", z: " << position.z << "}";
+    return stream;
+}
+
+inline std::ostream& operator<<(std::ostream& stream, const Pose& pose)
+{
+    stream << "Pose {yaw: " << pose.yaw << ", pitch: " << pose.pitch << ", roll: " << pose.roll << "}";
+    return stream;
+}
+
+inline std::ostream& operator<<(std::ostream& stream, const BoundingBox& bounding_box)
+{
+    stream << "BoundingBox {x: " << bounding_box.x << ", y: " << bounding_box.y << ", w: " << bounding_box.width
+           << ", h: " << bounding_box.height << "}";
+    return stream;
+}
+
 inline std::ostream& operator<<(std::ostream& stream, const ObjectMessage& object)
 {
-    stream << "Object {Id: " << object.id << ", {x: " << object.bounding_box.x << ", y: " << object.bounding_box.y
-           << ", w: " << object.bounding_box.width << ", h: " << object.bounding_box.height
-           << "}, distance: " << object.distance << ", velocity: " << object.velocity << "}";
+    stream << "Object {Id: " << object.id << ", " << object.bounding_box << ", distance: " << object.distance
+           << ", longitudinal_distance: " << object.longitudinal_distance
+           << ", lateral_distance: " << object.lateral_distance << ", velocity: " << object.velocity
+           << ", relative_velocity: " << object.relative_velocity << ", ttc: " << object.time_to_collision
+           << ", lane_id: " << object.lane_id << ", " << object.position << ", " << object.pose << "}";
     return stream;
 }
 

@@ -5,6 +5,8 @@
 #ifndef PERCEPTION_DATATYPES_LANE_H
 #define PERCEPTION_DATATYPES_LANE_H
 
+#include <units.h>
+
 #include <array>
 #include <cstdint>
 #include <ostream>
@@ -12,6 +14,8 @@
 
 namespace perception
 {
+
+constexpr units::length::meter_t kMaxLaneWidth{3.75};
 
 enum class LaneId : std::int32_t
 {

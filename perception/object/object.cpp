@@ -6,6 +6,8 @@
 
 #include "perception/common/logging/logging.h"
 
+#include <opencv2/calib3d/calib3d.hpp>
+#include <opencv2/core/matx.hpp>
 #include <opencv4/opencv2/core.hpp>
 #include <opencv4/opencv2/imgcodecs.hpp>
 #include <opencv4/opencv2/imgproc.hpp>
@@ -13,10 +15,11 @@
 
 namespace perception
 {
+using namespace units::literals;
+
 namespace
 {
-
-constexpr float kMinObjectDetectionScore = 0.50F;
+constexpr float kMinObjectDetectionScore{0.50F};
 
 constexpr ObjectId GetObjectId(const LabelId& label_id)
 {
@@ -83,6 +86,63 @@ constexpr ObjectId GetObjectId(const LabelId& label_id)
 
     return object_id;
 }
+
+cv::Mat GetTransformation(const cv::Mat& rotational, const cv::Mat& translation)
+{
+    cv::Mat res{};
+    cv::Rodrigues(rotational, res);
+
+    // clang-format off
+    const cv::Mat transformation{cv::Matx44d{res.at<double>(0, 0), res.at<double>(0, 1), res.at<double>(0, 2), translation.at<double>(0),
+                                             res.at<double>(1, 0), res.at<double>(1, 1), res.at<double>(1, 2), translation.at<double>(1),
+                                             res.at<double>(2, 0), res.at<double>(2, 1), res.at<double>(2, 2), translation.at<double>(2),
+                                             0.0, 0.0, 0.0, 1.0}};
+    // clang-format on
+    return transformation;
+}
+
+cv::Point3d TransformTo3D(const cv::Point2d& point, const cv::Mat& rotational, const cv::Mat& translation)
+{
+    const cv::Mat transformation = GetTransformation(rotational, translation);
+    const cv::Mat homogeneous_point{cv::Matx41d{point.x, point.y, 1.0, 1.0}};
+    const cv::Mat transformed_point = transformation * homogeneous_point;
+
+    const cv::Point3d object_point_3d{
+        transformed_point.at<double>(0), transformed_point.at<double>(1), transformed_point.at<double>(2)};
+    return object_point_3d;
+}
+
+units::length::meter_t GetEuclideanDistance(const Position& position)
+{
+    return units::math::sqrt(units::math::pow<2>(position.x) + units::math::pow<2>(position.y) +
+                             units::math::pow<2>(position.z));
+}
+
+Pose GetObjectPose(const cv::Mat& rotational)
+{
+    cv::Mat res{};
+    cv::Rodrigues(rotational, res);
+    const auto pitch = std::atan2(-res.at<double>(2, 0),
+                                  std::sqrt(std::pow(res.at<double>(0, 0), 2) + std::pow(res.at<double>(1, 0), 2)));
+    const auto yaw = std::atan2(res.at<double>(1, 0) / std::cos(pitch), res.at<double>(0, 0) / std::cos(pitch));
+    const auto roll = std::atan2(res.at<double>(2, 1) / std::cos(pitch), res.at<double>(2, 2) / std::cos(pitch));
+    const Pose pose{units::angle::radian_t{yaw}, units::angle::radian_t{pitch}, units::angle::radian_t{roll}};
+    return pose;
+}
+
+constexpr LaneId GetLaneId(const Position& position)
+{
+    LaneId lane_id{LaneId::kEgo};
+    if (position.y > (kMaxLaneWidth / 2))
+    {
+        lane_id = LaneId::kRight;
+    }
+    else if (position.y < -(kMaxLaneWidth / 2))
+    {
+        lane_id = LaneId::kLeft;
+    }
+    return lane_id;
+}
 }  // namespace
 
 Object::Object()
@@ -91,6 +151,7 @@ Object::Object()
                                {"detection_classes", "detection_scores", "detection_boxes", "num_detections"}},
       inference_engine_{},
       camera_message_{},
+      ego_velocity_{},
       object_list_message_{}
 {
 }
@@ -116,6 +177,10 @@ void Object::Shutdown()
 void Object::SetCameraMessage(const CameraMessage& camera_message)
 {
     camera_message_ = camera_message;
+}
+void Object::SetEgoVelocity(const units::velocity::meters_per_second_t& ego_velocity)
+{
+    ego_velocity_ = ego_velocity;
 }
 
 ObjectListMessage Object::GetObjectListMessage() const
@@ -149,12 +214,70 @@ void Object::UpdateOutputs()
                                               (ymax - ymin) * static_cast<float>(camera_message_.image.rows)};
         if (score > kMinObjectDetectionScore)
         {
-            object_list_message_.number_of_valid_objects++;
-            object_list_message_.objects.at(idx).bounding_box = bounding_box;
-            object_list_message_.objects.at(idx).id = GetObjectId(static_cast<LabelId>(label));
+            ++object_list_message_.number_of_valid_objects;
+            object_list_message_.objects.at(idx) = GenerateObjectMessage(bounding_box, static_cast<LabelId>(label));
         }
     }
 
     LOG(INFO) << "Observed {" << object_list_message_.number_of_valid_objects << "} detected valid objects!";
+    LOG(DEBUG) << object_list_message_;
 }
+
+ObjectMessage Object::GenerateObjectMessage(const BoundingBox& bounding_box, const LabelId& label_id)
+{
+    ObjectMessage object{};
+    cv::Mat rotational{};
+    cv::Mat translation{};
+    UpdateSpatialMatrix(bounding_box, camera_message_.image.rows, camera_message_.image.cols, rotational, translation);
+    const cv::Point2d bottom_center{(bounding_box.x + bounding_box.width) / 2.0, bounding_box.height};
+    const cv::Point3d bottom_center_3d = TransformTo3D(bottom_center, rotational, translation);
+    const Position position{units::length::millimeter_t{bottom_center_3d.x},
+                            units::length::millimeter_t{bottom_center_3d.y},
+                            units::length::millimeter_t{bottom_center_3d.z}};
+
+    const auto distance = GetEuclideanDistance(position);
+    object.distance = distance;
+
+    // x axis pointing in the right side from the camera, y axis pointing down, and z axis pointing in the direction
+    // camera is faced.
+    object.longitudinal_distance = position.z;
+    object.lateral_distance = position.x;
+
+    object.bounding_box = bounding_box;
+    object.id = GetObjectId(label_id);
+    object.position = position;
+    object.pose = GetObjectPose(rotational);
+    object.time_to_collision = distance / ego_velocity_;
+    object.lane_id = GetLaneId(position);
+
+    /// @todo Add velocity/relative velocity properties
+    object.velocity = 0.0_mps;
+    object.relative_velocity = 0.0_mps;
+    return object;
+}
+
+void Object::UpdateSpatialMatrix(const BoundingBox& bounding_box,
+                                 const std::int32_t rows,
+                                 const std::int32_t cols,
+                                 cv::Mat& rotational,
+                                 cv::Mat& translation) const
+{
+    const std::vector<cv::Point3d> camera_point_3d{
+        cv::Point3d(0, 0, 1), cv::Point3d(cols, 0, 1), cv::Point3d(cols, rows, 1), cv::Point3d(0, rows, 1)};
+
+    const std::vector<cv::Point2d> object_points_2d{
+        cv::Point2d(bounding_box.x, bounding_box.y),
+        cv::Point2d(bounding_box.x + bounding_box.width, bounding_box.y),
+        cv::Point2d(bounding_box.x + bounding_box.width, bounding_box.y + bounding_box.height),
+        cv::Point2d(bounding_box.x, bounding_box.y + bounding_box.height)};
+
+    // compute camera pose
+    cv::solvePnP(camera_point_3d,
+                 object_points_2d,
+                 camera_message_.calibration_params.intrinsic,
+                 camera_message_.calibration_params.extrinsic,
+                 rotational,
+                 translation);
+}
+
 }  // namespace perception

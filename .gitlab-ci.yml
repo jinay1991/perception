@@ -30,6 +30,8 @@ buildifier:
   stage: check
   image: ubuntu:20.04
   before_script:
+    - apt-get update -y
+    - apt-get install -y wget curl
     - wget https://github.com/bazelbuild/buildtools/releases/download/3.4.0/buildifier
     - chmod +x buildifier
     - mv buildifier /usr/bin

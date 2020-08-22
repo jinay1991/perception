@@ -15,8 +15,10 @@
 
 namespace perception
 {
+/// @brief Maximum number of Objects to save
 constexpr std::int32_t kMaxNumberOfObjects{100U};
 
+/// @brief Label Id (direct mapping for important classes of COCO)
 enum class LabelId : std::uint8_t
 {
     kPerson = 0U,
@@ -43,6 +45,7 @@ enum class LabelId : std::uint8_t
     kInvalid = 255U
 };
 
+/// @brief Object Id (classification label)
 enum class ObjectId : std::uint8_t
 {
     kUnknown = 0U,
@@ -58,51 +61,95 @@ enum class ObjectId : std::uint8_t
     kInvalid = 255U
 };
 
+/// @brief Object Detection Bounding Box - Image (2D) space
 struct BoundingBox
 {
+    /// @brief Top Left point x-coordinate
     double x;
+
+    /// @brief Top Left point y-coordinate
     double y;
+
+    /// @brief Bounding Box width
     double width;
+
+    /// @brief Bounding Box height
     double height;
 };
 
+/// @brief Position - XYZ (3D space)
+/// @note For 3D Point, x axis pointing in the right side from the camera, y axis pointing down, and z axis pointing in
+/// the direction camera is faced.
 struct Position
 {
+    /// @brief distance in X axis
     units::length::meter_t x;
+
+    /// @brief distance in Y axis
     units::length::meter_t y;
+
+    /// @brief distance in Z axis
     units::length::meter_t z;
 };
 
+/// @brief Pose - Euler Angles
 struct Pose
 {
+    /// @brief Yaw Angle (radian)
     units::angle::radian_t yaw;
+
+    /// @brief Pitch Angle (radian)
     units::angle::radian_t pitch;
+
+    /// @brief Roll Angle (radian)
     units::angle::radian_t roll;
 };
 
+/// @brief Object Properties
 struct ObjectMessage
 {
+    /// @brief Distance from Camera (3D space)
     units::length::meter_t distance;
+
+    /// @brief Longitudinal distance (3D space)
     units::length::meter_t longitudinal_distance;
+
+    /// @brief Lateral distance (3D space)
     units::length::meter_t lateral_distance;
 
+    /// @brief Object (relative) velocity
     units::velocity::meters_per_second_t relative_velocity;
+
+    /// @brief Object (absolute) velocity
     units::velocity::meters_per_second_t velocity;
 
+    /// @brief Time to collision to the Object
     units::time::microsecond_t time_to_collision;
 
+    /// @brief Object Position (3D)
     Position position;
+
+    /// @brief Object Pose
     Pose pose;
 
+    /// @brief Object detection bounding box (2D space)
     BoundingBox bounding_box;
+
+    /// @brief Object Id (classification label)
     ObjectId id;
 
+    /// @brief Object's associated LaneId
     LaneId lane_id;
 };
 
+/// @brief Object List Message (list of objects)
 struct ObjectListMessage
 {
+    /// @brief Number of valid Objects detected
+    /// @note Here, valid is considered based on the detection confidence (threshold is default to 50%)
     std::int32_t number_of_valid_objects;
+
+    /// @brief List of Valid Objects
     std::array<ObjectMessage, kMaxNumberOfObjects> objects;
 };
 

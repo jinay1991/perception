@@ -87,6 +87,12 @@ constexpr ObjectId GetObjectId(const LabelId& label_id)
     return object_id;
 }
 
+/// @brief Provide Transformation Matrix based on the given rotational and translation matrices
+///
+/// @param rotational[in] - Rotation Matrix
+/// @param translation[in] - Translation Matrix
+///
+/// @return Transformation matrix
 cv::Mat GetTransformation(const cv::Mat& rotational, const cv::Mat& translation)
 {
     cv::Mat res{};
@@ -101,6 +107,13 @@ cv::Mat GetTransformation(const cv::Mat& rotational, const cv::Mat& translation)
     return transformation;
 }
 
+/// @brief Transforms given 2D Point to 3D
+///
+/// @param point[in] - 2D Point
+/// @param rotational[in] - Rotation Matrix
+/// @param translation[in] - Translation Matrix
+///
+/// @return Point in 3D Space
 cv::Point3d TransformTo3D(const cv::Point2d& point, const cv::Mat& rotational, const cv::Mat& translation)
 {
     const cv::Mat transformation = GetTransformation(rotational, translation);
@@ -112,12 +125,24 @@ cv::Point3d TransformTo3D(const cv::Point2d& point, const cv::Mat& rotational, c
     return object_point_3d;
 }
 
+/// @brief Calculates Euclidean Distance from Origin (0, 0, 0) in 3D Space
+///
+/// @param position[in] - Position (aka 3D Point)
+///
+/// @return Euclidean distance of given point from origin
 units::length::meter_t GetEuclideanDistance(const Position& position)
 {
     return units::math::sqrt(units::math::pow<2>(position.x) + units::math::pow<2>(position.y) +
                              units::math::pow<2>(position.z));
 }
 
+/// @brief Calculate Pose for the given rotational matrix
+///
+/// @ref   https://stackoverflow.com/questions/23009549/roll-pitch-yaw-calculation/23010193#23010193
+///
+/// @param rotational[in] - Rotation Matrix
+///
+/// @return Euler angles (pose) - Yaw, Pitch and Roll for the given rotation matrix
 Pose GetObjectPose(const cv::Mat& rotational)
 {
     cv::Mat res{};
@@ -130,6 +155,13 @@ Pose GetObjectPose(const cv::Mat& rotational)
     return pose;
 }
 
+/// @brief Provide associated LaneId for given Position (aka 3D point)
+/// @note For 3D Point, x axis pointing in the right side from the camera, y axis pointing down, and z axis pointing in
+/// the direction camera is faced.
+///
+/// @param position[in] - Position (aka 3D Point)
+///
+/// @return LaneId
 constexpr LaneId GetLaneId(const Position& position)
 {
     LaneId lane_id{LaneId::kEgo};

@@ -6,6 +6,7 @@ cc_test(
     data = [
         "//:testdata",
     ],
+    tags = ["unit"],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/lane",

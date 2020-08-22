@@ -9,6 +9,7 @@ cc_library(
         "//:calibration_data",
         "//:testdata",
     ],
+    tags = ["unit"],
     visibility = ["//visibility:public"],
     deps = ["//perception/datatypes"],
 )

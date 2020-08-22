@@ -8,6 +8,7 @@ cc_test(
         "@ssd_mobilenet_v2_coco//:saved_model",
     ],
     linkstatic = True,
+    tags = ["unit"],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/common/logging",

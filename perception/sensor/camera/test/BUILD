@@ -9,6 +9,7 @@ cc_test(
         "//:calibration_data",
         "//:testdata",
     ],
+    tags = ["unit"],
     deps = [
         "//perception/common/logging",
         "//perception/communication:topics",

@@ -19,8 +19,14 @@ using namespace units::literals;
 
 namespace
 {
+/// @brief Minimum Detection Score required to consider Valid Object and report to ObjectList
 constexpr float kMinObjectDetectionScore{0.50F};
 
+/// @brief Provide Object Id (classification) based on Label Id (COCO Label Map)
+///
+/// @param label_id[in] - Label Id (COCO Label Map)
+///
+/// @return Object Id (classification label)
 constexpr ObjectId GetObjectId(const LabelId& label_id)
 {
     ObjectId object_id{ObjectId::kInvalid};
@@ -210,6 +216,7 @@ void Object::SetCameraMessage(const CameraMessage& camera_message)
 {
     camera_message_ = camera_message;
 }
+
 void Object::SetEgoVelocity(const units::velocity::meters_per_second_t& ego_velocity)
 {
     ego_velocity_ = ego_velocity;
@@ -228,10 +235,11 @@ void Object::UpdateOutputs()
     const cv::Mat detection_boxes = results.at(2);
     const cv::Mat num_detections = results.at(3);
 
-    ASSERT_CHECK(!num_detections.empty()) << "No detections received!!";
-
     object_list_message_.number_of_valid_objects = 0;
-    for (auto idx = 0; idx < static_cast<std::int32_t>(num_detections.at<float>(0, 0)); ++idx)
+    object_list_message_.objects.fill(ObjectMessage{});
+
+    for (auto idx = 0; !num_detections.empty() && idx < static_cast<std::int32_t>(num_detections.at<float>(0, 0));
+         ++idx)
     {
         const auto score = detection_scores.at<float>(idx, 0);
         const auto label = static_cast<std::int32_t>(detection_classes.at<float>(idx, 0));

@@ -1,5 +1,3 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
 def opencv():
     if "opencv" not in native.existing_rules():
         native.new_local_repository(

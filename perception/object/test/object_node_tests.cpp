@@ -2,12 +2,11 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License.
 ///
-#include "perception/object/node/object_node.h"
-
 #include "middleware/communication/intra_process_pub_sub_factory.h"
 #include "middleware/lifecycle/test/single_topic_publisher.h"
 #include "middleware/lifecycle/test/single_topic_subscriber.h"
 #include "perception/communication/topics.h"
+#include "perception/object/node/object_node.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

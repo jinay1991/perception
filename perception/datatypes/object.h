@@ -11,6 +11,7 @@
 
 #include <algorithm>
 #include <array>
+#include <chrono>
 #include <cstdint>
 
 namespace perception
@@ -145,6 +146,9 @@ struct ObjectMessage
 /// @brief Object List Message (list of objects)
 struct ObjectListMessage
 {
+    /// @brief Time Point for captured data
+    std::chrono::system_clock::time_point time_point;
+
     /// @brief Number of valid Objects detected
     /// @note Here, valid is considered based on the detection confidence (threshold is default to 50%)
     std::int32_t number_of_valid_objects;
@@ -199,7 +203,8 @@ inline bool operator!=(const ObjectMessage& lhs, const ObjectMessage& rhs) noexc
 
 inline bool operator==(const ObjectListMessage& lhs, const ObjectListMessage& rhs) noexcept
 {
-    return ((lhs.number_of_valid_objects == rhs.number_of_valid_objects) && (lhs.objects == rhs.objects));
+    return ((lhs.number_of_valid_objects == rhs.number_of_valid_objects) && (lhs.time_point == rhs.time_point) &&
+            (lhs.objects == rhs.objects));
 }
 
 inline bool operator!=(const ObjectListMessage& lhs, const ObjectListMessage& rhs) noexcept
@@ -277,9 +282,12 @@ inline std::ostream& operator<<(std::ostream& stream, const ObjectMessage& objec
 
 inline std::ostream& operator<<(std::ostream& stream, const ObjectListMessage& object_list)
 {
+    stream << "ObjectList {n: " << object_list.number_of_valid_objects << ", time_point: "
+           << std::chrono::time_point_cast<std::chrono::milliseconds>(object_list.time_point).time_since_epoch().count()
+           << "ms}" << std::endl;
     for (auto idx = 0; idx < object_list.number_of_valid_objects; ++idx)
     {
-        stream << "(+) " << object_list.objects.at(idx) << std::endl;
+        stream << " (+) " << object_list.objects.at(idx) << std::endl;
     }
     return stream;
 }

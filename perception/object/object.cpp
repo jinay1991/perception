@@ -95,10 +95,10 @@ constexpr ObjectId GetObjectId(const LabelId& label_id)
 
 /// @brief Provide Transformation Matrix based on the given rotational and translation matrices
 ///
-/// @param rotational[in] - Rotation Matrix
-/// @param translation[in] - Translation Matrix
+/// @param rotational[in] - Rotation Matrix [3x3]
+/// @param translation[in] - Translation Matrix [3x1]
 ///
-/// @return Transformation matrix
+/// @return Transformation matrix (4x4)
 cv::Mat GetTransformation(const cv::Mat& rotational, const cv::Mat& translation)
 {
     cv::Mat res{};
@@ -116,8 +116,8 @@ cv::Mat GetTransformation(const cv::Mat& rotational, const cv::Mat& translation)
 /// @brief Transforms given 2D Point to 3D
 ///
 /// @param point[in] - 2D Point
-/// @param rotational[in] - Rotation Matrix
-/// @param translation[in] - Translation Matrix
+/// @param rotational[in] - Rotation Matrix [3x3]
+/// @param translation[in] - Translation Matrix [3x1]
 ///
 /// @return Point in 3D Space
 cv::Point3d TransformTo3D(const cv::Point2d& point, const cv::Mat& rotational, const cv::Mat& translation)
@@ -146,7 +146,7 @@ units::length::meter_t GetEuclideanDistance(const Position& position)
 ///
 /// @ref   https://stackoverflow.com/questions/23009549/roll-pitch-yaw-calculation/23010193#23010193
 ///
-/// @param rotational[in] - Rotation Matrix
+/// @param rotational[in] - Rotation Matrix [3x3]
 ///
 /// @return Euler angles (pose) - Yaw, Pitch and Roll for the given rotation matrix
 Pose GetObjectPose(const cv::Mat& rotational)
@@ -236,6 +236,7 @@ void Object::UpdateOutputs()
     const cv::Mat num_detections = results.at(3);
 
     object_list_message_.number_of_valid_objects = 0;
+    object_list_message_.time_point = camera_message_.time_point;
     object_list_message_.objects.fill(ObjectMessage{});
 
     for (auto idx = 0; !num_detections.empty() && idx < static_cast<std::int32_t>(num_detections.at<float>(0, 0));

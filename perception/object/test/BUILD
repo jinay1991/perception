@@ -2,7 +2,7 @@ load("@rules_cc//cc:defs.bzl", "cc_test")
 
 cc_test(
     name = "node_tests",
-    srcs = ["object_node_test.cpp"],
+    srcs = ["object_node_tests.cpp"],
     tags = ["unit"],
     visibility = ["//visibility:public"],
     deps = [
@@ -16,7 +16,7 @@ cc_test(
 
 cc_test(
     name = "unit_tests",
-    srcs = ["object_test.cpp"],
+    srcs = ["object_tests.cpp"],
     data = [
         "//:testdata",
     ],

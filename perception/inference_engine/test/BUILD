@@ -2,7 +2,7 @@ load("@rules_cc//cc:defs.bzl", "cc_test")
 
 cc_test(
     name = "unit_tests",
-    srcs = ["inference_engine_spec.cpp"],
+    srcs = ["inference_engine_tests.cpp"],
     data = [
         "//:testdata",
         "@ssd_mobilenet_v2_coco//:saved_model",

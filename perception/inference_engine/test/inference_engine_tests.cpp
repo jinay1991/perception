@@ -65,8 +65,7 @@ TYPED_TEST_P(InferenceEngineFixture_WithInferenceEngineType, InferenceEngine_Giv
 REGISTER_TYPED_TEST_SUITE_P(InferenceEngineFixture_WithInferenceEngineType,
                             InferenceEngine_GivenTypicalInputs_ExpectInferenceResults);
 
-typedef ::testing::Types<TFInferenceEngine /* , TFLiteInferenceEngine , TorchInferenceEngine*/>
-    InferenceEngineTestTypes;
+typedef ::testing::Types<TFInferenceEngine /*, TFLiteInferenceEngine , TorchInferenceEngine*/> InferenceEngineTestTypes;
 INSTANTIATE_TYPED_TEST_SUITE_P(InferenceEngine,
                                InferenceEngineFixture_WithInferenceEngineType,
                                InferenceEngineTestTypes);

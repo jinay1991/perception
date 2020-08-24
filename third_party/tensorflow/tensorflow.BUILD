@@ -4,14 +4,14 @@ package(default_visibility = ["//visibility:public"])
 
 cc_library(
     name = "tensorflow",
-    srcs = glob(["lib/libtensorflow_cc.so*"]),
+    srcs = glob(
+        ["lib/libtensorflow_cc.*"],
+        exclude = ["lib/*.params"],
+    ),
     hdrs = glob([
         "include/**/*.h",
         "include/**/*",
     ]),
-    copts = [
-        "-std=c++14",
-    ],
     includes = [
         "include",
         "include/third_party/eigen3",

@@ -2,7 +2,10 @@ load("@//third_party:dependencies.bzl", "third_party_dependencies")
 
 third_party_dependencies()
 
-## Load TensorFlow as Submodule
-load("@org_tensorflow//tensorflow:workspace.bzl", "tf_workspace")
+load("@tensorflowlite//third_party:dependencies.bzl", "tensorflowlite_dependencies")
 
-tf_workspace(tf_repo_name = "org_tensorflow")
+tensorflowlite_dependencies()
+
+load("@tensorflow//third_party:dependencies.bzl", "tensorflow_dependencies")
+
+tensorflow_dependencies()

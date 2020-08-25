@@ -8,6 +8,8 @@
 
 #include <opencv4/opencv2/calib3d.hpp>
 
+#include <chrono>
+
 namespace perception
 {
 Camera::Camera(const std::string& source)
@@ -28,6 +30,7 @@ void Camera::Step()
     Image undistorted_image{};
     cv::undistort(image, undistorted_image, calibration_.GetCameraMatrix(), calibration_.GetDistanceCoeffs());
 
+    camera_message_.time_point = std::chrono::system_clock::now();
     camera_message_.calibration_params.intrinsic = calibration_.GetCameraMatrix();
     camera_message_.calibration_params.extrinsic = calibration_.GetDistanceCoeffs();
     camera_message_.image = image;

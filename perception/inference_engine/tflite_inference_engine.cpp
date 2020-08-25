@@ -22,14 +22,12 @@ void TFLiteInferenceEngine::Init()
     ASSERT_CHECK(model_) << "Failed to read model " << model_path_;
     model_->error_reporter();
 
-    tflite::ops::builtin::BuiltinOpResolver resolver;
+    tflite::ops::builtin::BuiltinOpResolver resolver{};
 
     tflite::InterpreterBuilder(*model_, resolver)(&interpreter_);
     ASSERT_CHECK(interpreter_) << "Failed to construct interpreter";
 
     ASSERT_CHECK_EQ(interpreter_->AllocateTensors(), TfLiteStatus::kTfLiteOk) << "Failed to allocate tensors!";
-
-    PrintInterpreterState(interpreter_.get());
 }
 
 void TFLiteInferenceEngine::Execute(const Image& image)

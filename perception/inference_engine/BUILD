@@ -15,8 +15,7 @@ cc_library(
     deps = [
         "//perception/common/logging",
         "//perception/datatypes",
-        "@org_tensorflow//tensorflow/lite:framework",
-        "@org_tensorflow//tensorflow/lite/kernels:builtin_ops",
+        "@tensorflowlite",
     ],
 )
 

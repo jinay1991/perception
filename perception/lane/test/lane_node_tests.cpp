@@ -2,9 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#include "perception/lane/node/lane_node.h"
-
 #include "middleware/communication/intra_process_pub_sub_factory.h"
+#include "perception/lane/node/lane_node.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

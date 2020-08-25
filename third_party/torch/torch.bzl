@@ -6,7 +6,7 @@ def torch():
         http_archive(
             name = "torch",
             build_file = "//third_party/torch:torch.BUILD",
-            sha256 = "3e438237a08099a4bf014335cd0da88708da3a1678aec12a46c67305792b5fa4",
-            url = "https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-1.5.0%2Bcpu.zip",
+            sha256 = "c6c0d3a87039338f7812a1ae343b9e48198536f20d1415b0e5a9a15ba7b90b3f",
+            url = "https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-1.6.0%2Bcpu.zip",
             strip_prefix = "libtorch",
         )

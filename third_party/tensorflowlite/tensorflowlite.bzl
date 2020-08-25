@@ -7,5 +7,5 @@ def tensorflowlite():
             name = "tensorflowlite",
             sha256 = "b8a86faa7c752064a75577f3cfe3f594dd4c44ce863cb3b0ec3bfac096c9e0bf",
             strip_prefix = "libtensorflowlite_cc-2.3.0-multios",
-            url = "https://github.com/jinay1991/perception/releases/download/v0.1/libtensorflowlite_cc-2.3.0-multios.tar.gz",
+            url = "https://github.com/jinay1991/perception/releases/download/v0.5/libtensorflowlite_cc-2.3.0-multios.tar.gz",
         )

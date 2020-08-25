@@ -7,5 +7,5 @@ def tensorflow():
             name = "tensorflow",
             sha256 = "a8902992b68c19e183279c7a9685b7bc843bf62385f6204d7fffba0967fd75ef",
             strip_prefix = "libtensorflow_cc-2.3.0-multios",
-            url = "https://github.com/jinay1991/perception/releases/download/v0.1/libtensorflow_cc-2.3.0-multios.tar.gz",
+            url = "https://github.com/jinay1991/perception/releases/download/v0.5/libtensorflow_cc-2.3.0-multios.tar.gz",
         )

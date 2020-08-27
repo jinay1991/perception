@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License
 ///
-#ifndef PERCEPTION_SENSOR_CAMERA_CAMERA_NODE_H
-#define PERCEPTION_SENSOR_CAMERA_CAMERA_NODE_H
+#ifndef PERCEPTION_SENSOR_CAMERA_NODE_CAMERA_NODE_H
+#define PERCEPTION_SENSOR_CAMERA_NODE_CAMERA_NODE_H
 
 #include "middleware/communication/i_pub_sub_factory.h"
 #include "middleware/lifecycle/node.h"
@@ -49,4 +49,4 @@ class CameraNode final : public middleware::Node
 };
 }  // namespace perception
 
-#endif  /// PERCEPTION_SENSOR_CAMERA_CAMERA_NODE_H
+#endif  /// PERCEPTION_SENSOR_CAMERA_NODE_CAMERA_NODE_H

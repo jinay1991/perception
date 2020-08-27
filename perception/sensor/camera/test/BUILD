@@ -32,6 +32,5 @@ cc_test(
     deps = [
         "//perception/sensor/camera",
         "@googletest//:gtest_main",
-        "@opencv",
     ],
 )

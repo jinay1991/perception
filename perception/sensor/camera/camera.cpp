@@ -15,6 +15,7 @@ namespace perception
 Camera::Camera(const std::string& source)
     : source_{source}, capture_device_{source_}, calibration_{"data/camera_calibration", 9, 6}
 {
+    ASSERT_CHECK(capture_device_.isOpened());
 }
 
 void Camera::Init()

@@ -15,6 +15,8 @@ void ObjectNode::Init()
     object_.Init();
 
     AddSubscriber<CameraTopic>([this](const auto& data) { object_.SetCameraMessage(data); });
+    AddSubscriber<VehicleDynamicsTopic>([this](const auto& data) { object_.SetEgoVelocity(data.velocity); });
+
     AddPublisher<ObjectListTopic>([this]() { return object_.GetObjectListMessage(); });
 }
 

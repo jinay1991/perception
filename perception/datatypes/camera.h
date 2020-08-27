@@ -42,7 +42,7 @@ using Image = cv::Mat;
 struct CameraMessage
 {
     /// @brief Time Point for captured data
-    std::chrono::system_clock::time_point time_point;
+    std::chrono::system_clock::time_point time_point{};
 
     /// @brief distorted image (original camera captured)
     Image image{};

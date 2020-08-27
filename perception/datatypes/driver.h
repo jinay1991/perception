@@ -13,82 +13,121 @@
 namespace perception
 {
 
-enum class EyeState
+/// @brief Eye State
+enum class EyeState : std::uint8_t
 {
-    kOpenEyes = 0,
-    kCloseEyes = 1,
-    kInvalid = 2
+    kOpenEyes = 0U,
+    kCloseEyes = 1U,
+    kInvalid = 2U
 };
 
-enum class HeadPose
+/// @brief Head Pose
+enum class HeadPose : std::uint8_t
 {
-    kAttentive = 0,
-    kNotAttentive = 1,
-    kInvalid = 2
+    kAttentive = 0U,
+    kNotAttentive = 1U,
+    kInvalid = 2U
 };
 
-enum class GazePose
+/// @brief Gaze Pose
+enum class GazePose : std::uint8_t
 {
-    kFront = 0,
-    kLeft = 1,
-    kRight = 2,
-    kDown = 3,
-    kUp = 4,
-    kInvalid = 5
+    kFront = 0U,
+    kLeft = 1U,
+    kRight = 2U,
+    kDown = 3U,
+    kUp = 4U,
+    kInvalid = 5U
 };
 
-enum class DegradationState
+/// @brief Degradation State
+enum class DegradationState : std::uint8_t
 {
-    kNormalOperation = 0,
-    kValidityError = 1,
-    kOutOfRange = 2,
-    kCommunicationError = 3,
-    kSensorBlockage = 4,
-    kInvalid = 5
+    kNormalOperation = 0U,
+    kValidityError = 1U,
+    kOutOfRange = 2U,
+    kCommunicationError = 3U,
+    kSensorBlockage = 4U,
+    kInvalid = 5U
 };
 
+/// @brief Degradation Information
 struct DegradationMessage
 {
-    DegradationState state;
+    /// @brief Degradation State
+    DegradationState state{DegradationState::kInvalid};
 };
 
+/// @brief Fatigue Information
 struct FatigueMessage
 {
-    EyeState eye_state;
+    /// @brief Driver Eye state
+    EyeState eye_state{EyeState::kInvalid};
 };
 
+/// @brief Visual Attention Information
 struct VisualAttentionMessage
 {
-    HeadPose head_pose;
-    GazePose gaze_pose;
+    /// @brief Driver Head Pose
+    HeadPose head_pose{HeadPose::kInvalid};
+
+    /// @brief Driver Gaze Pose
+    GazePose gaze_pose{GazePose::kInvalid};
 };
 
+/// @brief Driver Face Tracking Information
 struct FaceTracking
 {
-    bool eye_visibility;
-    units::length::millimeter_t eye_lid_opening;
-    units::frequency::hertz_t eye_blink_rate;
+    /// @brief Driver Eye visibility
+    bool eye_visibility{false};
+
+    /// @brief Driver Eye lid opening
+    units::length::millimeter_t eye_lid_opening{0.0};
+
+    /// @brief Driver Eye blink rate
+    units::frequency::hertz_t eye_blink_rate{0.0};
 };
 
+/// @brief Driver Gaze Tracking Information
 struct GazeTracking
 {
-    units::angle::radian_t yaw;
-    units::angle::radian_t pitch;
-    units::angle::radian_t roll;
+    /// @brief Driver Gaze Tracking Yaw
+    units::angle::radian_t yaw{0.0};
+
+    /// @brief Driver Gaze Tracking Pitch
+    units::angle::radian_t pitch{0.0};
+
+    /// @brief Driver Gaze Tracking Roll
+    units::angle::radian_t roll{0.0};
 };
 
+/// @brief Driver Head Tracking Information
 struct HeadTracking
 {
-    units::angle::radian_t yaw;
-    units::angle::radian_t pitch;
-    units::angle::radian_t roll;
+    /// @brief Driver Head Tracking Yaw
+    units::angle::radian_t yaw{0.0};
+
+    /// @brief Driver Head Tracking Pitch
+    units::angle::radian_t pitch{0.0};
+
+    /// @brief Driver Head Tracking Roll
+    units::angle::radian_t roll{0.0};
 };
 
+/// @brief Driver Camera System Information
 struct DriverCameraSystem
 {
-    HeadTracking head_tracking;
-    FaceTracking face_tracking;
-    GazeTracking gaze_tracking;
+    /// @brief Time Point for captured data
+    std::chrono::system_clock::time_point time_point{};
+
+    /// @brief Head Tracking Information
+    HeadTracking head_tracking{};
+
+    /// @brief Face Tracking Information
+    FaceTracking face_tracking{};
+
+    /// @brief Gaze Tracking Information
+    GazeTracking gaze_tracking{};
 };
 
 inline bool operator==(const FaceTracking& lhs, const FaceTracking& rhs) noexcept

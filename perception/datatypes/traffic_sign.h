@@ -14,9 +14,11 @@
 
 namespace perception
 {
+/// @brief Maximum Number of Traffic Signs
 constexpr std::int32_t kMaxNumberOfTrafficSigns{10U};
 
-enum class TrafficSignId : std::int32_t
+/// @brief Traffic Sign Id
+enum class TrafficSignId : std::uint8_t
 {
     kNone = 0U,
     kSpeedLimit = 1U,
@@ -27,15 +29,31 @@ enum class TrafficSignId : std::int32_t
     kInvalid = 255U,
 };
 
+/// @brief Traffic Sign Information
 struct TrafficSignMessage
 {
-    units::length::meter_t distance;
+    /// @brief Traffic Sign Distance
+    units::length::meter_t distance{0.0};
 
-    TrafficSignId id;
-    LaneId lane_id;
+    /// @brief Traffic Sign Id
+    TrafficSignId id{TrafficSignId::kInvalid};
+
+    /// @brief Traffic Sign associated Lane Id
+    LaneId lane_id{LaneId::kInvalid};
 };
 
-using TrafficSignListMessage = std::array<TrafficSignMessage, kMaxNumberOfTrafficSigns>;
+/// @brief Traffic Sign List Information
+struct TrafficSignListMessage
+{
+    /// @brief Time Point for captured traffic sign
+    std::chrono::system_clock::time_point time_point{};
+
+    /// @brief Number of Valid Traffic Signs
+    std::int32_t number_of_valid_traffic_signs{0};
+
+    /// @brief Traffic Sign List
+    std::array<TrafficSignMessage, kMaxNumberOfTrafficSigns> traffic_sign_list{};
+};
 
 inline const char* to_string(const TrafficSignId& id)
 {

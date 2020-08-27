@@ -11,6 +11,7 @@ cc_library(
         "object.h",
         "traffic_light.h",
         "traffic_sign.h",
+        "vehicle_dynamics.h",
     ],
     visibility = ["//visibility:public"],
     deps = [

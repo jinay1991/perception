@@ -9,6 +9,7 @@
 #include "perception/datatypes/camera.h"
 #include "perception/datatypes/lane.h"
 #include "perception/datatypes/object.h"
+#include "perception/datatypes/vehicle_dynamics.h"
 
 namespace perception
 {
@@ -20,6 +21,9 @@ class LaneTopic : public middleware::Topic<LaneMessage>
 {
 };
 class ObjectListTopic : public middleware::Topic<ObjectListMessage>
+{
+};
+class VehicleDynamicsTopic : public middleware::Topic<VehicleDynamicsMessage>
 {
 };
 

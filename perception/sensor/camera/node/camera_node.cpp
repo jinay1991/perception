@@ -9,35 +9,35 @@
 namespace perception
 {
 CameraNode::CameraNode(middleware::IPubSubFactory& factory)
-    : Node{"camera_node", factory}, source_{"data/Megamind.avi"}, camera_{std::make_unique<Camera>(source_)}
+    : Node{"camera_node", factory}, source_{"data/grace_hopper.jpg"}, camera_{source_}
 {
 }
 
 void CameraNode::Init()
 {
-    camera_->Init();
+    camera_.Init();
     InitPublisher();
 }
 
 void CameraNode::InitPublisher()
 {
-    AddPublisher<CameraTopic>([this]() { return camera_->GetCameraMessage(); });
+    AddPublisher<CameraTopic>([this]() { return camera_.GetCameraMessage(); });
 }
 
 void CameraNode::ExecuteStep()
 {
-    camera_->Step();
+    camera_.Step();
 }
 
 void CameraNode::Shutdown()
 {
-    camera_->Shutdown();
+    camera_.Shutdown();
 }
 
 void CameraNode::SetSource(const std::string& source)
 {
     source_ = source;
-    camera_->SetSource(source_);
+    camera_.SetSource(source_);
 }
 
 }  // namespace perception

@@ -3,7 +3,6 @@
 /// @copyright Copyright (c) 2020. MIT License.
 ///
 #include "perception/object/object.h"
-#include "perception/sensor/camera/calibration.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -71,8 +70,6 @@ TEST_F(ObjectTest, GivenTypicalCameraMessage_ExpectObjects)
     EXPECT_THAT(actual.objects.at(0).bounding_box.y, DoubleNear(19.4001, 0.0001));
     EXPECT_THAT(actual.objects.at(0).bounding_box.width, DoubleNear(435.872, 0.001));
     EXPECT_THAT(actual.objects.at(0).bounding_box.height, DoubleNear(309.97, 0.01));
-    EXPECT_THAT(actual.objects.at(0).velocity.value(), DoubleEq(0.0));
-    EXPECT_THAT(actual.objects.at(0).relative_velocity.value(), DoubleEq(0.0));
     EXPECT_THAT(actual.objects.at(0).position.x.value(), DoubleNear(-1.23979, 0.00001));
     EXPECT_THAT(actual.objects.at(0).position.y.value(), DoubleNear(-0.0486435, 0.000001));
     EXPECT_THAT(actual.objects.at(0).position.z.value(), DoubleNear(0.430763, 0.000001));

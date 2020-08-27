@@ -5,12 +5,11 @@ cc_library(
     srcs = glob(["*.cpp"]),
     hdrs = glob(["*.h"]),
     data = [
-        "//:testdata",
+        "//:testdata",  # TODO: Remove
     ],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/communication:topics",
-        "//perception/datatypes",
         "//perception/sensor/camera",
         "@middleware//middleware/communication",
         "@middleware//middleware/lifecycle",

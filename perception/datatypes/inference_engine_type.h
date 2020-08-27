@@ -25,16 +25,16 @@ enum class InferenceEngineType : std::uint8_t
 struct InferenceEngineParameters
 {
     /// @brief Path to Model
-    std::string model_path;
+    std::string model_path{};
 
     /// @brief Input Node/Tensor Name
-    std::string input_tensor_name;
+    std::string input_tensor_name{};
 
     /// @brief List of Output Nodes/Tensors Name
-    std::vector<std::string> output_tensor_names;
+    std::vector<std::string> output_tensor_names{};
 
     /// @brief Path to Model configurations
-    std::string model_config;
+    std::string model_config{};
 };
 
 inline const char* to_string(const InferenceEngineType& inference_engine_type)

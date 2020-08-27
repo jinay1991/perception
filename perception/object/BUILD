@@ -11,6 +11,6 @@ cc_library(
     deps = [
         "//perception/datatypes",
         "//perception/inference_engine",
-        "//perception/sensor/camera:calibration",  # TODO: Remove this
+        "@opencv",
     ],
 )

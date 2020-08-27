@@ -17,7 +17,7 @@
 namespace perception
 {
 /// @brief Maximum number of Objects to save
-constexpr std::int32_t kMaxNumberOfObjects{100U};
+constexpr std::int32_t kMaxNumberOfObjects{25};
 
 /// @brief Label Id (direct mapping for important classes of COCO)
 enum class LabelId : std::uint8_t
@@ -118,14 +118,8 @@ struct ObjectMessage
     /// @brief Lateral distance (3D space)
     units::length::meter_t lateral_distance;
 
-    /// @brief Object (relative) velocity
-    units::velocity::meters_per_second_t relative_velocity;
-
-    /// @brief Object (absolute) velocity
-    units::velocity::meters_per_second_t velocity;
-
-    /// @brief Time to collision to the Object
-    units::time::microsecond_t time_to_collision;
+    /// @brief Time to collision to the Object (usec)
+    units::time::millisecond_t time_to_collision;
 
     /// @brief Object Position (3D)
     Position position;
@@ -190,8 +184,7 @@ inline bool operator!=(const Pose& lhs, const Pose& rhs) noexcept
 inline bool operator==(const ObjectMessage& lhs, const ObjectMessage& rhs) noexcept
 {
     return ((lhs.distance == rhs.distance) && (lhs.longitudinal_distance == rhs.longitudinal_distance) &&
-            (lhs.lateral_distance == rhs.lateral_distance) && (lhs.relative_velocity == rhs.relative_velocity) &&
-            (lhs.velocity == rhs.velocity) && (lhs.time_to_collision == rhs.time_to_collision) &&
+            (lhs.lateral_distance == rhs.lateral_distance) && (lhs.time_to_collision == rhs.time_to_collision) &&
             (lhs.position == rhs.position) && (lhs.pose == rhs.pose) && (lhs.bounding_box == rhs.bounding_box) &&
             (lhs.id == rhs.id) && (lhs.lane_id == rhs.lane_id));
 }
@@ -274,8 +267,7 @@ inline std::ostream& operator<<(std::ostream& stream, const ObjectMessage& objec
 {
     stream << "Object {Id: " << object.id << ", " << object.bounding_box << ", distance: " << object.distance
            << ", longitudinal_distance: " << object.longitudinal_distance
-           << ", lateral_distance: " << object.lateral_distance << ", velocity: " << object.velocity
-           << ", relative_velocity: " << object.relative_velocity << ", ttc: " << object.time_to_collision
+           << ", lateral_distance: " << object.lateral_distance <<  ", ttc: " << object.time_to_collision
            << ", lane_id: " << object.lane_id << ", " << object.position << ", " << object.pose << "}";
     return stream;
 }

@@ -291,9 +291,6 @@ ObjectMessage Object::GenerateObjectMessage(const BoundingBox& bounding_box, con
     object.time_to_collision = distance / ego_velocity_;
     object.lane_id = GetLaneId(position);
 
-    /// @todo Add velocity/relative velocity properties
-    object.velocity = 0.0_mps;
-    object.relative_velocity = 0.0_mps;
     return object;
 }
 

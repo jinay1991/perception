@@ -77,7 +77,6 @@ TEST_F(ObjectNodeTest, GivenTypicalInputs_ExpectDetectedObjects)
 
     // Then
     const auto actual = test_subscriber_.GetSample();
-    std::cout << actual << std::endl;
     EXPECT_EQ(1, actual.number_of_valid_objects);
     EXPECT_EQ(ObjectId::kBicycle, actual.objects.at(0).id);
 }

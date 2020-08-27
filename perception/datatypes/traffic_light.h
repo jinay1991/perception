@@ -5,6 +5,8 @@
 #ifndef PERCEPTION_DATATYPE_TRAFFIC_LIGHT_H
 #define PERCEPTION_DATATYPE_TRAFFIC_LIGHT_H
 
+#include "perception/datatypes/lane.h"
+
 #include <units.h>
 
 #include <array>
@@ -13,6 +15,10 @@
 
 namespace perception
 {
+/// @brief Maximum Number of Traffic Lights
+constexpr std::int32_t kMaxNumberOfTrafficLights{10};
+
+/// @brief Traffic Light Id
 enum class TrafficLightId : std::uint8_t
 {
     kNone = 0U,
@@ -22,15 +28,31 @@ enum class TrafficLightId : std::uint8_t
     kInvalid = 255U,
 };
 
+/// @brief Traffic Light Information
 struct TrafficLightMessage
 {
-    units::length::meter_t distance;
+    /// @brief Traffic Light Distance
+    units::length::meter_t distance{0.0};
 
-    TrafficLightId id;
-    LaneId lane_id;
+    /// @brief Traffic Sign Id
+    TrafficLightId id{TrafficLightId::kInvalid};
+
+    /// @brief Traffic Light associated Lane Id
+    LaneId lane_id{LaneId::kInvalid};
 };
 
-using TrafficLightListMessage = std::array<TrafficLightMessage, 10U>;
+/// @brief Traffic Light List Information
+struct TrafficLightListMessage
+{
+    /// @brief Time Point for captured traffic light
+    std::chrono::system_clock::time_point time_point{};
+
+    /// @brief Number of valid Traffic Lights
+    std::int32_t number_of_valid_traffic_lights{0};
+
+    /// @brief Traffic Light List
+    std::array<TrafficLightMessage, kMaxNumberOfTrafficLights> traffic_light_list{};
+};
 
 inline const char* to_string(const TrafficLightId& id)
 {

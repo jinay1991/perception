@@ -15,17 +15,24 @@
 namespace perception
 {
 
+/// @brief Maximum Number of Lane Points
+constexpr std::int32_t kMaxNumberOfLanePoints{50};
+
+/// @brief Maximum Lane Width (in meters)
 constexpr units::length::meter_t kMaxLaneWidth{3.75};
 
+/// @brief Lane Id
 enum class LaneId : std::int32_t
 {
     kNextToLeft = -2,
     kLeft = -1,
     kEgo = 0,
     kRight = 1,
-    kNextToRight = 2
+    kNextToRight = 2,
+    kInvalid = 255,
 };
 
+/// @brief Lane Type
 enum class LaneType : std::uint8_t
 {
     kDashed = 0U,
@@ -34,23 +41,37 @@ enum class LaneType : std::uint8_t
     kInvalid = 255U
 };
 
+/// @brief Lane Point
 struct LanePoint
 {
-    double x;
-    double y;
+    double x{0.0};
+    double y{0.0};
 };
 
+/// @brief Lane Line
 struct LaneLine
 {
-    std::array<LanePoint, 5U> left;
-    std::array<LanePoint, 5U> right;
+    /// @brief Left Lane Points
+    std::array<LanePoint, kMaxNumberOfLanePoints> left{};
+
+    /// @brief Right Lane Points
+    std::array<LanePoint, kMaxNumberOfLanePoints> right{};
 };
 
+/// @brief Lane Information
 struct LaneMessage
 {
-    LaneId id;
-    LaneType type;
-    LaneLine line;
+    /// @brief Time Point for captured Lane Information
+    std::chrono::system_clock::time_point time_point{};
+
+    /// @brief Lane Id
+    LaneId id{LaneId::kInvalid};
+
+    /// @brief Lane Type
+    LaneType type{LaneType::kInvalid};
+
+    /// @brief Lane Line
+    LaneLine line{};
 };
 
 inline const char* to_string(const LaneId& id)
@@ -67,6 +88,8 @@ inline const char* to_string(const LaneId& id)
             return "kRight";
         case LaneId::kNextToRight:
             return "kNextToRight";
+        case LaneId::kInvalid:
+            return "kInvalid";
         default:
             return "ERROR: Unknown LaneId";
     }

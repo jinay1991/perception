@@ -9,15 +9,14 @@
 
 #include <units.h>
 
-#include <algorithm>
 #include <array>
 #include <chrono>
 #include <cstdint>
 
 namespace perception
 {
-/// @brief Maximum number of Objects to save
-constexpr std::int32_t kMaxNumberOfObjects{25};
+/// @brief Maximum Number of Objects
+constexpr std::int32_t kMaxNumberOfObjects{10};
 
 /// @brief Label Id (direct mapping for important classes of COCO)
 enum class LabelId : std::uint8_t
@@ -66,16 +65,16 @@ enum class ObjectId : std::uint8_t
 struct BoundingBox
 {
     /// @brief Top Left point x-coordinate
-    double x;
+    double x{0.0};
 
     /// @brief Top Left point y-coordinate
-    double y;
+    double y{0.0};
 
     /// @brief Bounding Box width
-    double width;
+    double width{0.0};
 
     /// @brief Bounding Box height
-    double height;
+    double height{0.0};
 };
 
 /// @brief Position - XYZ (3D space)
@@ -84,71 +83,71 @@ struct BoundingBox
 struct Position
 {
     /// @brief distance in X axis
-    units::length::meter_t x;
+    units::length::meter_t x{0.0};
 
     /// @brief distance in Y axis
-    units::length::meter_t y;
+    units::length::meter_t y{0.0};
 
     /// @brief distance in Z axis
-    units::length::meter_t z;
+    units::length::meter_t z{0.0};
 };
 
 /// @brief Pose - Euler Angles
 struct Pose
 {
     /// @brief Yaw Angle (radian)
-    units::angle::radian_t yaw;
+    units::angle::radian_t yaw{0.0};
 
     /// @brief Pitch Angle (radian)
-    units::angle::radian_t pitch;
+    units::angle::radian_t pitch{0.0};
 
     /// @brief Roll Angle (radian)
-    units::angle::radian_t roll;
+    units::angle::radian_t roll{0.0};
 };
 
 /// @brief Object Properties
 struct ObjectMessage
 {
     /// @brief Distance from Camera (3D space)
-    units::length::meter_t distance;
+    units::length::meter_t distance{0.0};
 
     /// @brief Longitudinal distance (3D space)
-    units::length::meter_t longitudinal_distance;
+    units::length::meter_t longitudinal_distance{0.0};
 
     /// @brief Lateral distance (3D space)
-    units::length::meter_t lateral_distance;
+    units::length::meter_t lateral_distance{0.0};
 
     /// @brief Time to collision to the Object (usec)
-    units::time::millisecond_t time_to_collision;
+    units::time::millisecond_t time_to_collision{0.0};
 
     /// @brief Object Position (3D)
-    Position position;
+    Position position{};
 
     /// @brief Object Pose
-    Pose pose;
+    Pose pose{};
 
     /// @brief Object detection bounding box (2D space)
-    BoundingBox bounding_box;
+    BoundingBox bounding_box{};
 
     /// @brief Object Id (classification label)
-    ObjectId id;
+    ObjectId id{ObjectId::kInvalid};
 
     /// @brief Object's associated LaneId
-    LaneId lane_id;
+    LaneId lane_id{LaneId::kInvalid};
 };
 
 /// @brief Object List Message (list of objects)
 struct ObjectListMessage
 {
     /// @brief Time Point for captured data
-    std::chrono::system_clock::time_point time_point;
+    std::chrono::system_clock::time_point time_point{};
 
     /// @brief Number of valid Objects detected
     /// @note Here, valid is considered based on the detection confidence (threshold is default to 50%)
-    std::int32_t number_of_valid_objects;
+    std::int32_t number_of_valid_objects{0};
 
     /// @brief List of Valid Objects
-    std::array<ObjectMessage, kMaxNumberOfObjects> objects;
+    std::array<ObjectMessage, kMaxNumberOfObjects> objects{};
 };
 
 inline bool operator==(const BoundingBox& lhs, const BoundingBox& rhs) noexcept
@@ -267,7 +266,7 @@ inline std::ostream& operator<<(std::ostream& stream, const ObjectMessage& objec
 {
     stream << "Object {Id: " << object.id << ", " << object.bounding_box << ", distance: " << object.distance
            << ", longitudinal_distance: " << object.longitudinal_distance
-           << ", lateral_distance: " << object.lateral_distance <<  ", ttc: " << object.time_to_collision
+           << ", lateral_distance: " << object.lateral_distance << ", ttc: " << object.time_to_collision
            << ", lane_id: " << object.lane_id << ", " << object.position << ", " << object.pose << "}";
     return stream;
 }

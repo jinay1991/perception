@@ -35,29 +35,29 @@ class CameraNodeTest : public ::testing::Test
           test_subscriber_{"test_subscriber", factory_},
           test_capture_{test_video_path_},
           test_image_{cv::imread(test_image_path_, cv::IMREAD_UNCHANGED)},
-          test_calibration_{"data/camera_calibration", 9, 6},
+          test_calibration_{},
           test_image_undistorted_{}
     {
         factory_.RegisterTopic<CameraTopic>();
+        cv::undistort(test_image_, test_image_undistorted_, test_calibration_.intrinsic, test_calibration_.extrinsic);
     }
 
     Image GetTestImage() const { return test_image_; };
-    Image GetUndistortedTestImage() const { return test_image_undistorted_; }
+
+    CameraMessage GetExpectedCameraMessage() const
+    {
+        return CameraMessage{std::chrono::system_clock::now(),
+                             test_image_,
+                             test_image_undistorted_,
+                             {test_calibration_.intrinsic, test_calibration_.extrinsic}};
+    }
     Image GetTestVideoImage() const { return test_video_frame_; }
-    cv::Mat GetIntrinsicTestParams() const { return test_calibration_.GetCameraMatrix(); }
-    cv::Mat GetExtrinsicTestParams() const { return test_calibration_.GetDistanceCoeffs(); }
 
   protected:
     void SetUp() override
     {
         test_subscriber_.Init();
         unit_.Init();
-        test_calibration_.Init();
-        test_calibration_.Execute();
-        cv::undistort(test_image_,
-                      test_image_undistorted_,
-                      test_calibration_.GetCameraMatrix(),
-                      test_calibration_.GetDistanceCoeffs());
     }
 
     void RunOnce()
@@ -70,7 +70,6 @@ class CameraNodeTest : public ::testing::Test
     void TearDown() override
     {
         test_subscriber_.Shutdown();
-        test_calibration_.Shutdown();
         unit_.Shutdown();
     }
 
@@ -85,21 +84,20 @@ class CameraNodeTest : public ::testing::Test
     cv::VideoCapture test_capture_;
     cv::Mat test_image_;
     cv::Mat test_video_frame_;
-    Calibration test_calibration_;
+    CalibrationParams test_calibration_;
     cv::Mat test_image_undistorted_;
 };
 
 TEST_F(CameraNodeTest, GivenTypicalSourceImage_ExpectValidImage)
 {
+    // Given
     unit_.SetSource(test_image_path_);
 
+    // When
     RunOnce();
 
-    auto expected = CameraMessage{};
-    expected.undistorted_image = GetUndistortedTestImage();
-    expected.image = GetTestImage();
-    expected.calibration_params.intrinsic = GetIntrinsicTestParams();
-    expected.calibration_params.extrinsic = GetExtrinsicTestParams();
+    // Then
+    const auto expected = GetExpectedCameraMessage();
     const auto actual = test_subscriber_.GetSample();
     ASSERT_FALSE(actual.undistorted_image.empty());
     ASSERT_EQ(expected.undistorted_image.size(), actual.undistorted_image.size());

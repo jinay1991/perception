@@ -67,7 +67,7 @@ bazel-build-and-test:
     - bazel test //...  --test_output=all --nocache_test_results
   artifacts:
     reports:
-      junit: bazel-out\/.*.xml
+      junit: bazel-out/**/*.xml
     name: TestResults
     when: on_success
 

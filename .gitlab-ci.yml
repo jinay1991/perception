@@ -65,9 +65,13 @@ bazel-build-and-test:
   script:
     - bazel build //... 
     - bazel test //...  --test_output=all --nocache_test_results
+  after_script:
+    - pip install -U pip 
+    - pip install -U xunitmerge
+    - xunitmerge $(find bazel-out/ -name test.xml) ./merged_test_results.xml
   artifacts:
     reports:
-      junit: bazel-out/**/*.xml
+      junit: merged_test_results.xml
     name: TestResults
     when: on_success
 

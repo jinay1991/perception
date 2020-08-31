@@ -58,10 +58,8 @@ class ObjectNodeTest : public ::testing::Test
     {
         test_camera_publisher_.PublishInput(camera_message_);
         test_camera_publisher_.Step();
-
-        /// @todo: Fix this
-        // test_vehicle_dynamics_publisher_.PublishInput(vehicle_dynamics_message_);
-        // test_vehicle_dynamics_publisher_.Step();
+        test_vehicle_dynamics_publisher_.PublishInput(vehicle_dynamics_message_);
+        test_vehicle_dynamics_publisher_.Step();
         unit_.Step();
         test_subscriber_.Step();
     }

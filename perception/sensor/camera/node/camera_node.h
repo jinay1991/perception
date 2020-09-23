@@ -19,7 +19,7 @@ class CameraNode final : public middleware::Node
 {
   public:
     /// @brief Constructor
-    /// @param factor[in] - Middleware Publisher/Subscriber Factory
+    /// @param factor[in] Middleware Publisher/Subscriber Factory
     explicit CameraNode(middleware::IPubSubFactory& factory);
 
     /// @brief Destructor

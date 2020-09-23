@@ -1,7 +1,7 @@
 ---
 Checks:          '-*,clang-analyzer-*,clang-analyzer-cplusplus*,cppcoreguidelines-*,google-build-using-namespace,readability-*,-readability-avoid-const-params-in-decls'
 WarningsAsErrors: ''
-HeaderFilterRegex: ''
+HeaderFilterRegex: 'perception/*'
 FormatStyle: file
 AnalyzeTemporaryDtors: false
 CheckOptions:

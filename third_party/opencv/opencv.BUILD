@@ -5,6 +5,7 @@ package(default_visibility = ["//visibility:public"])
 MODULES = [
     "calib3d",
     "core",
+    "dnn",
     "features2d",
     "flann",
     "highgui",
@@ -45,6 +46,10 @@ MODULE_DEPS = {
         "features2d",
         "flann",
         "calib3d",
+    ],
+    "dnn": [
+        "core",
+        "imgproc",
     ],
     "video": [
         "core",

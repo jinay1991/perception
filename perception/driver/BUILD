@@ -9,3 +9,17 @@ cc_library(
         "//perception/datatypes",
     ],
 )
+
+cc_library(
+    name = "node",
+    srcs = glob(["node/*.cpp"]),
+    hdrs = glob(["node/*.h"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":driver",
+        "//perception/communication:topics",
+        "//perception/datatypes",
+        "@middleware//middleware/communication",
+        "@middleware//middleware/lifecycle",
+    ],
+)

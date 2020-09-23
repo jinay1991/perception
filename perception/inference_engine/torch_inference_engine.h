@@ -5,6 +5,7 @@
 #ifndef PERCEPTION_INFERENCE_ENGINE_INFERENCE_ENGINE_TORCH_INFERENCE_ENGINE_H
 #define PERCEPTION_INFERENCE_ENGINE_INFERENCE_ENGINE_TORCH_INFERENCE_ENGINE_H
 
+#include "perception/datatypes/inference_engine_type.h"
 #include "perception/inference_engine/i_inference_engine.h"
 
 #include <cstdint>
@@ -18,8 +19,9 @@ namespace perception
 class TorchInferenceEngine final : public IInferenceEngine
 {
   public:
-    /// @brief Default Constructor
-    TorchInferenceEngine();
+    /// @brief Constructor
+    /// @param params[in] Inference Engine Parameters such as model input/output node names
+    explicit TorchInferenceEngine(const InferenceEngineParameters& params);
 
     /// @brief Destructor
     ~TorchInferenceEngine() = default;

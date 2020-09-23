@@ -9,6 +9,7 @@ RUN apt-get install -y build-essential gcc g++ gdb lcov make cmake
 RUN apt-get install -y libtool clang-format clang-tidy
 RUN apt-get install -y git git-lfs
 RUN apt-get install -y wget curl vim
+RUN apt-get install -y libncurses5
 
 # Installation of dependencies to Doxygen
 RUN apt-get install -y doxygen graphviz plantuml

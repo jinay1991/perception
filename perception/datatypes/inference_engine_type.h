@@ -18,6 +18,7 @@ enum class InferenceEngineType : std::uint8_t
     kTensorFlowLite = 0U,
     kTensorFlow = 1U,
     kTorch = 2U,
+    kOpenCV = 3U,
     kInvalid = 255U
 };
 
@@ -34,7 +35,7 @@ struct InferenceEngineParameters
     std::vector<std::string> output_tensor_names{};
 
     /// @brief Path to Model configurations
-    std::string model_config{};
+    std::string config_path{};
 };
 
 inline const char* to_string(const InferenceEngineType& inference_engine_type)
@@ -47,6 +48,8 @@ inline const char* to_string(const InferenceEngineType& inference_engine_type)
             return "kTensorFlowLite";
         case InferenceEngineType::kTorch:
             return "kTorch";
+        case InferenceEngineType::kOpenCV:
+            return "kOpenCV";
         default:
             return "ERROR: Unknown InferenceEngineType.";
     }

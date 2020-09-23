@@ -5,6 +5,8 @@
 #include "perception/inference_engine/inference_engine_strategy.h"
 
 #include "perception/common/logging/logging.h"
+#include "perception/inference_engine/null_inference_engine.h"
+#include "perception/inference_engine/opencv_inference_engine.h"
 #include "perception/inference_engine/tf_inference_engine.h"
 #include "perception/inference_engine/tflite_inference_engine.h"
 #include "perception/inference_engine/torch_inference_engine.h"
@@ -32,12 +34,18 @@ void InferenceEngineStrategy::SelectInferenceEngine(const InferenceEngineType& i
         }
         case InferenceEngineType::kTorch:
         {
-            inference_engine_ = std::make_unique<TorchInferenceEngine>();
+            inference_engine_ = std::make_unique<TorchInferenceEngine>(inference_engine_parameters);
+            break;
+        }
+        case InferenceEngineType::kOpenCV:
+        {
+            inference_engine_ = std::make_unique<OpenCVInferenceEngine>(inference_engine_parameters);
             break;
         }
         case InferenceEngineType::kInvalid:
         default:
         {
+            inference_engine_ = std::make_unique<NullInferenceEngine>(inference_engine_parameters);
             LOG(FATAL) << "Received " << inference_engine_type;
             break;
         }

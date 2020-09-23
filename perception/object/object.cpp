@@ -6,9 +6,9 @@
 
 #include "perception/common/logging/logging.h"
 
-#include <opencv2/calib3d/calib3d.hpp>
-#include <opencv2/core/matx.hpp>
+#include <opencv4/opencv2/calib3d/calib3d.hpp>
 #include <opencv4/opencv2/core.hpp>
+#include <opencv4/opencv2/core/matx.hpp>
 #include <opencv4/opencv2/imgcodecs.hpp>
 #include <opencv4/opencv2/imgproc.hpp>
 #include <opencv4/opencv2/videoio.hpp>
@@ -24,7 +24,7 @@ constexpr float kMinObjectDetectionScore{0.50F};
 
 /// @brief Provide Object Id (classification) based on Label Id (COCO Label Map)
 ///
-/// @param label_id[in] - Label Id (COCO Label Map)
+/// @param label_id[in] Label Id (COCO Label Map)
 ///
 /// @return Object Id (classification label)
 constexpr ObjectId GetObjectId(const LabelId& label_id)
@@ -95,8 +95,8 @@ constexpr ObjectId GetObjectId(const LabelId& label_id)
 
 /// @brief Provide Transformation Matrix based on the given rotational and translation matrices
 ///
-/// @param rotational[in] - Rotation Matrix [3x3]
-/// @param translation[in] - Translation Matrix [3x1]
+/// @param rotational[in] Rotation Matrix [3x3]
+/// @param translation[in] Translation Matrix [3x1]
 ///
 /// @return Transformation matrix (4x4)
 cv::Mat GetTransformation(const cv::Mat& rotational, const cv::Mat& translation)
@@ -115,9 +115,9 @@ cv::Mat GetTransformation(const cv::Mat& rotational, const cv::Mat& translation)
 
 /// @brief Transforms given 2D Point to 3D
 ///
-/// @param point[in] - 2D Point
-/// @param rotational[in] - Rotation Matrix [3x3]
-/// @param translation[in] - Translation Matrix [3x1]
+/// @param point[in] 2D Point
+/// @param rotational[in] Rotation Matrix [3x3]
+/// @param translation[in] Translation Matrix [3x1]
 ///
 /// @return Point in 3D Space
 cv::Point3d TransformTo3D(const cv::Point2d& point, const cv::Mat& rotational, const cv::Mat& translation)
@@ -133,7 +133,7 @@ cv::Point3d TransformTo3D(const cv::Point2d& point, const cv::Mat& rotational, c
 
 /// @brief Calculates Euclidean Distance from Origin (0, 0, 0) in 3D Space
 ///
-/// @param position[in] - Position (aka 3D Point)
+/// @param position[in] Position (aka 3D Point)
 ///
 /// @return Euclidean distance of given point from origin
 units::length::meter_t GetEuclideanDistance(const Position& position)
@@ -146,7 +146,7 @@ units::length::meter_t GetEuclideanDistance(const Position& position)
 ///
 /// @ref   https://stackoverflow.com/questions/23009549/roll-pitch-yaw-calculation/23010193#23010193
 ///
-/// @param rotational[in] - Rotation Matrix [3x3]
+/// @param rotational[in] Rotation Matrix [3x3]
 ///
 /// @return Euler angles (pose) - Yaw, Pitch and Roll for the given rotation matrix
 Pose GetObjectPose(const cv::Mat& rotational)
@@ -165,7 +165,7 @@ Pose GetObjectPose(const cv::Mat& rotational)
 /// @note For 3D Point, x axis pointing in the right side from the camera, y axis pointing down, and z axis pointing in
 /// the direction camera is faced.
 ///
-/// @param position[in] - Position (aka 3D Point)
+/// @param position[in] Position (aka 3D Point)
 ///
 /// @return LaneId
 constexpr LaneId GetLaneId(const Position& position)

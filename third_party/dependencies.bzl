@@ -1,3 +1,4 @@
+load("@//third_party/clang:clang.bzl", "clang")
 load("@//third_party/compile_commands:compile_commands.bzl", "compile_commands")
 load("@//third_party/eigen:eigen.bzl", "eigen")
 load("@//third_party/googletest:googletest.bzl", "googletest")
@@ -16,6 +17,7 @@ load("@//third_party/zlib:zlib.bzl", "zlib")
 
 def third_party_dependencies():
     """ Load 3rd party dependencies """
+    clang()
     compile_commands()
     eigen()
     googletest()

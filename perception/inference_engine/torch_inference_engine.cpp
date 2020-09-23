@@ -10,7 +10,7 @@
 
 namespace perception
 {
-TorchInferenceEngine::TorchInferenceEngine() : results_{} {}
+TorchInferenceEngine::TorchInferenceEngine(const InferenceEngineParameters& /* params */) : results_{} {}
 
 void TorchInferenceEngine::Init()
 {

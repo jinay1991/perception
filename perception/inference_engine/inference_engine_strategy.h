@@ -12,8 +12,6 @@
 
 namespace perception
 {
-/// @todo Instead of Strategy Pattern, Factory Pattern would make it much nicers as this Factory of all Inference
-/// Engines
 
 /// @brief Inference Engine Strategy
 class InferenceEngineStrategy
@@ -35,7 +33,7 @@ class InferenceEngineStrategy
     void Shutdown();
 
     /// @brief Select Inference Engine
-    /// @param inference_engine_type [in] - Inference Engine type (TF, TFLite)
+    /// @param inference_engine_type [in] Inference Engine type (TF, TFLite)
     void SelectInferenceEngine(const InferenceEngineType& inference_engine_type,
                                const InferenceEngineParameters& inference_engine_parameters);
 

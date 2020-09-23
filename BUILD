@@ -2,6 +2,10 @@ exports_files(glob([
     "data/**/*.*",
 ]))
 
+exports_files([
+    ".clang-tidy",
+])
+
 filegroup(
     name = "calibration_data",
     srcs = glob([

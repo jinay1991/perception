@@ -18,9 +18,9 @@ class Calibration
 {
   public:
     /// @brief Construct Calibration utility for certain chessboard pattern
-    /// @param dirname [in] - Directory path/name containing calibration images (chessboard images)
-    /// @param nx [in] - Number of chessboard blocks in X-axes
-    /// @param ny [in] - Number of chessboard blocks in Y-axes
+    /// @param dirname [in] Directory path/name containing calibration images (chessboard images)
+    /// @param nx [in] Number of chessboard blocks in X-axes
+    /// @param ny [in] Number of chessboard blocks in Y-axes
     explicit Calibration(const std::string dirname, const std::int32_t nx, const std::int32_t ny);
 
     /// @brief Destructor

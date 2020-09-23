@@ -36,11 +36,11 @@ class Object
 
     /// @brief Computes Rotation and Translation Matrices for given Bounding Box
     ///
-    /// @param bounding_box[in] - Object Bounding Box (Result of object detection)
-    /// @param rows[in] - Camera Image Rows
-    /// @param cols[in] - Camera Image Columns
-    /// @param rotational[out] - Computed Rotation Matrix
-    /// @param translation[out] - Computed translation Matrix
+    /// @param bounding_box[in] Object Bounding Box (Result of object detection)
+    /// @param rows[in] Camera Image Rows
+    /// @param cols[in] Camera Image Columns
+    /// @param rotational[out] Computed Rotation Matrix
+    /// @param translation[out] Computed translation Matrix
     void UpdateSpatialMatrix(const BoundingBox& bounding_box,
                              const std::int32_t rows,
                              const std::int32_t cols,
@@ -50,8 +50,8 @@ class Object
     /// @brief Generator for ObjectMessage POD for given Bounding Box and Label. Additional Object properties will be
     /// computed as well suchas distance, position, pose, etc.
     ///
-    /// @param bounding_box[in] - Object Bounding Box (Result of object detection)
-    /// @param label_id[in] - Label Id
+    /// @param bounding_box[in] Object Bounding Box (Result of object detection)
+    /// @param label_id[in] Label Id
     ///
     /// @return ObjectMessage (object) information
     ObjectMessage GenerateObjectMessage(const BoundingBox& bounding_box, const LabelId& label_id);

@@ -15,7 +15,7 @@ namespace
 class TestNet : public torch::nn::Module
 {
   public:
-    explicit Net(const std::int32_t n, const std::int32_t m)
+    explicit TestNet(const std::int32_t n, const std::int32_t m)
     {
         weight = register_parameter("weight", torch::randn({n, m}));
         bias = register_parameter("bias", torch::randn(m));
@@ -32,7 +32,7 @@ TorchInferenceEngine::TorchInferenceEngine(const InferenceEngineParameters& /* p
 
 void TorchInferenceEngine::Init()
 {
-    auto test_net = TestNet(4, 5);
+    auto test_net = TestNet{4, 5};
     const torch::Tensor tensor = test_net.forward(torch::ones({2, 4}));
     std::cout << tensor << std::endl;
 }

@@ -61,7 +61,7 @@ template <>
 const InferenceEngineParameters GetInferenceEngineParameter<TorchInferenceEngine>()
 {
     return InferenceEngineParameters{
-        "external/ssd_mobilenet_v2_coco/mobilenet_v2-b0353104_torchscript.pth", "input", {"outputs"}, "no-config"};
+        "external/ssd_mobilenet_v2_coco/mobilenet_v2-b0353104_torchscript.pth", "data", {"prob"}, "no-config"};
 }
 
 template <typename T>

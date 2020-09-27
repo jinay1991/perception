@@ -87,7 +87,8 @@ void TorchInferenceEngine::UpdateTensors()
 {
     const std::vector<torch::jit::IValue> inputs{{input_tensor_}};
     const auto outputs = net_.forward(inputs);
-    output_tensors_ = outputs.toTensorVector();
+    // output_tensors_ = outputs.toTensorVector();
+    output_tensors_.push_back(outputs.toTensor());
     LOG(INFO) << "Successfully received results " << output_tensors_.size() << " outputs.";
 }
 

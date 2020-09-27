@@ -62,7 +62,7 @@ class TorchInferenceEngine final : public IInferenceEngine
     const std::string input_tensor_name_;
 
     /// @brief Output Tensors
-    std::vector<torch::Tensor> output_tensors_;
+    std::vector<at::Tensor> output_tensors_;
 
     /// @brief Output Tensors names
     const std::vector<std::string> output_tensor_names_;

@@ -38,6 +38,7 @@ cc_test(
         "@ssd_mobilenet_v2_coco//:frozen_graph",
         "@ssd_mobilenet_v2_coco//:saved_model",
         "@ssd_mobilenet_v2_coco//:tflite",
+        "@ssd_mobilenet_v2_coco//:torch",
     ],
     linkstatic = True,
     tags = ["unit"],

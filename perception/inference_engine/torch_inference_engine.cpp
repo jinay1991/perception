@@ -85,7 +85,7 @@ void TorchInferenceEngine::UpdateInput(const Image& image)
 
 void TorchInferenceEngine::UpdateTensors()
 {
-    const std::vector<torch::jit::IValue> inputs{input_tensor_};
+    const std::vector<torch::jit::IValue> inputs{{input_tensor_}};
     const auto outputs = net_.forward(inputs);
     output_tensors_ = outputs.toTensorVector();
     LOG(INFO) << "Successfully received results " << output_tensors_.size() << " outputs.";

@@ -57,6 +57,13 @@ const InferenceEngineParameters GetInferenceEngineParameter<OpenCVInferenceEngin
                                      "external/ssd_mobilenet_v2_coco/ssd_mobilenet_v2_coco_2018_03_29.pbtxt"};
 }
 
+template <>
+const InferenceEngineParameters GetInferenceEngineParameter<TorchInferenceEngine>()
+{
+    return InferenceEngineParameters{
+        "external/ssd_mobilenet_v2_coco/mobilenet_v2-b0353104_torchscript.pth", "data", {"prob"}, "no-config"};
+}
+
 template <typename T>
 class InferenceEngineFixture_WithInferenceEngineType : public ::testing::Test
 {

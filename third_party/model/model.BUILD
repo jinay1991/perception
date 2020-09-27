@@ -27,3 +27,8 @@ filegroup(
     name = "tflite",
     srcs = glob(["*.tflite"]),
 )
+
+filegroup(
+    name = "torch",
+    srcs = glob(["*.pth"]),
+)

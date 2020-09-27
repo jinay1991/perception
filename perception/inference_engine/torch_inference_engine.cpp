@@ -6,38 +6,68 @@
 
 #include "perception/common/logging/logging.h"
 
-#include <torch/torch.h>
+#include <opencv4/opencv2/core.hpp>
+#include <opencv4/opencv2/imgproc.hpp>
+
+#include <algorithm>
+#include <iterator>
 
 namespace perception
 {
 namespace
 {
-class TestNet : public torch::nn::Module
+/// @brief Converts matrix (aka cv::Mat) to torch::Tensor
+///
+/// @param matrix[in] matrix (aka cv::Mat)
+///
+/// @return Equivalent torch::Tensor for given image by copying the image contents to tensor.
+torch::Tensor ConvertToTensor(const Image& image)
 {
-  public:
-    explicit TestNet(const std::int32_t n, const std::int32_t m)
-    {
-        weight = register_parameter("weight", torch::randn({n, m}));
-        bias = register_parameter("bias", torch::randn(m));
-    }
-    torch::Tensor forward(const torch::Tensor& input) { return torch::addmm(bias, input, weight); }
+    auto tensor = torch::from_blob(image.data, {1, image.rows, image.cols, 3}, torch::kByte);
+    tensor = tensor.permute({0, 3, 1, 2});  // convert to CxHxW
+    tensor = tensor.to(torch::kF32);
+    return tensor;
+}
 
-  private:
-    torch::Tensor weight;
-    torch::Tensor bias;
-};
+/// @brief Converts torch::Tensor to Image (aka cv::Mat)
+///
+/// @param tensor[in] torch::Tensor in [NxHxWxC form]
+///
+/// @return Equivalent image (aka cv::Mat) for given torch::Tensor by copying contents.
+cv::Mat ConvertToMatrix(const torch::Tensor& tensor)
+{
+    const auto tensor_size = tensor.sizes();
+    const auto rows = tensor.dim() > 1 ? static_cast<std::int32_t>(tensor_size[0]) : 1;
+    const auto cols = tensor.dim() > 2 ? static_cast<std::int32_t>(tensor_size[1]) : 1;
+    const auto channels = tensor.dim() > 3 ? static_cast<std::int32_t>(tensor_size[2]) : 1;
+    auto* tensor_ptr = tensor.data_ptr();
+    cv::Mat matrix{rows, cols, CV_32FC(channels), tensor_ptr};
+    return matrix;
+}
 }  // namespace
 
-TorchInferenceEngine::TorchInferenceEngine(const InferenceEngineParameters& /* params */) : results_{} {}
+TorchInferenceEngine::TorchInferenceEngine(const InferenceEngineParameters& params)
+    : net_{},
+      input_tensor_{},
+      input_tensor_name_{params.input_tensor_name},
+      output_tensors_{},
+      output_tensor_names_{params.output_tensor_names},
+      model_path_{params.model_path},
+      results_{}
+{
+}
 
 void TorchInferenceEngine::Init()
 {
-    auto test_net = TestNet{4, 5};
-    const torch::Tensor tensor = test_net.forward(torch::ones({2, 4}));
-    std::cout << tensor << std::endl;
+    net_ = torch::jit::load(model_path_);
 }
 
-void TorchInferenceEngine::Execute(const Image& image) {}
+void TorchInferenceEngine::Execute(const Image& image)
+{
+    UpdateInput(image);
+    UpdateTensors();
+    UpdateOutputs();
+}
 
 void TorchInferenceEngine::Shutdown() {}
 
@@ -46,4 +76,27 @@ std::vector<cv::Mat> TorchInferenceEngine::GetResults() const
     return results_;
 }
 
+void TorchInferenceEngine::UpdateInput(const Image& image)
+{
+    cv::Mat resized_image{};
+    cv::resize(image, resized_image, cv::Size(300, 300));
+    input_tensor_ = ConvertToTensor(resized_image);
+}
+
+void TorchInferenceEngine::UpdateTensors()
+{
+    const std::vector<torch::jit::IValue> inputs{{input_tensor_}};
+    const auto outputs = net_.forward(inputs);
+    // output_tensors_ = outputs.toTensorVector();
+    output_tensors_.push_back(outputs.toTensor());
+    LOG(INFO) << "Successfully received results " << output_tensors_.size() << " outputs.";
+}
+
+void TorchInferenceEngine::UpdateOutputs()
+{
+    std::transform(
+        output_tensors_.cbegin(), output_tensors_.cend(), std::back_inserter(results_), [](auto const& tensor) {
+            return ConvertToMatrix(tensor);
+        });
+}
 }  // namespace perception

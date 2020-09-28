@@ -25,13 +25,13 @@ namespace perception
 namespace
 {
 template <typename T>
-const InferenceEngineParameters GetInferenceEngineParameter()
+InferenceEngineParameters GetInferenceEngineParameter()
 {
     return InferenceEngineParameters{};
 }
 
 template <>
-const InferenceEngineParameters GetInferenceEngineParameter<TFInferenceEngine>()
+InferenceEngineParameters GetInferenceEngineParameter<TFInferenceEngine>()
 {
     return InferenceEngineParameters{"external/ssd_mobilenet_v2_coco/saved_model",
                                      "image_tensor",
@@ -40,7 +40,7 @@ const InferenceEngineParameters GetInferenceEngineParameter<TFInferenceEngine>()
 }
 
 template <>
-const InferenceEngineParameters GetInferenceEngineParameter<TFLiteInferenceEngine>()
+InferenceEngineParameters GetInferenceEngineParameter<TFLiteInferenceEngine>()
 {
     return InferenceEngineParameters{"external/ssd_mobilenet_v2_coco/ssd_mobilenet_v2_coco_2018_03_29.tflite",
                                      "image_tensor",
@@ -49,7 +49,7 @@ const InferenceEngineParameters GetInferenceEngineParameter<TFLiteInferenceEngin
 }
 
 template <>
-const InferenceEngineParameters GetInferenceEngineParameter<OpenCVInferenceEngine>()
+InferenceEngineParameters GetInferenceEngineParameter<OpenCVInferenceEngine>()
 {
     return InferenceEngineParameters{"external/ssd_mobilenet_v2_coco/ssd_mobilenet_v2_coco_2018_03_29.pb",
                                      "image_tensor",
@@ -58,10 +58,12 @@ const InferenceEngineParameters GetInferenceEngineParameter<OpenCVInferenceEngin
 }
 
 template <>
-const InferenceEngineParameters GetInferenceEngineParameter<TorchInferenceEngine>()
+InferenceEngineParameters GetInferenceEngineParameter<TorchInferenceEngine>()
 {
-    return InferenceEngineParameters{
-        "external/ssd_mobilenet_v2_coco/mobilenet_v2-b0353104_torchscript.pth", "data", {"prob"}, "no-config"};
+    return InferenceEngineParameters{"external/ssd_mobilenet_v2_coco/mobilenet-v1-ssd-mp-0_675_torchscript.pth",
+                                     "data",
+                                     {"confidence", "boxes"},
+                                     "no-config"};
 }
 
 template <typename T>

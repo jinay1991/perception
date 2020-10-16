@@ -16,11 +16,10 @@
 
 namespace perception
 {
-class Object
+class Object final
 {
   public:
     Object();
-    ~Object() = default;
 
     virtual void Init();
     virtual void Step();

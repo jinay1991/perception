@@ -13,7 +13,6 @@ class VehicleDynamics
 {
   public:
     VehicleDynamics();
-    ~VehicleDynamics() = default;
 
     void Init();
     void Step();

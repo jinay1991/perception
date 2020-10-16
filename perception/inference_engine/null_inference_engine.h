@@ -26,9 +26,6 @@ class NullInferenceEngine final : public IInferenceEngine
     /// @param params[in] Inference Engine Parameters such as model input/output node names
     explicit NullInferenceEngine(const InferenceEngineParameters& params);
 
-    /// @brief Destructor
-    ~NullInferenceEngine() = default;
-
     /// @brief Initialise Null Inference Engine
     void Init() override;
 

@@ -16,15 +16,12 @@
 namespace perception
 {
 /// @brief Camera Sensor Model/Interface
-class Camera
+class Camera final
 {
   public:
     /// @brief Constructor.
     /// @param source [in] Camera Source (Image/Video Path or 0 for Live Camera)
     explicit Camera(const std::string& source);
-
-    /// @brief Destructor.
-    ~Camera() = default;
 
     /// @brief Initialize Camera
     virtual void Init();

@@ -25,9 +25,6 @@ class OpenCVInferenceEngine final : public IInferenceEngine
     /// @param params[in] Inference Engine Parameters such as model input/output node names
     explicit OpenCVInferenceEngine(const InferenceEngineParameters& params);
 
-    /// @brief Destructor
-    ~OpenCVInferenceEngine() = default;
-
     /// @brief Initialise OpenCV Inference Engine
     void Init() override;
 

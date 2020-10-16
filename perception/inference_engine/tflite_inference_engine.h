@@ -25,9 +25,6 @@ class TFLiteInferenceEngine final : public IInferenceEngine
     /// @brief Constructor
     explicit TFLiteInferenceEngine(const InferenceEngineParameters& params);
 
-    /// @brief Destructor
-    ~TFLiteInferenceEngine() = default;
-
     /// @brief Initialise TFLite Inference Engine
     void Init() override;
 

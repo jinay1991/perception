@@ -26,9 +26,6 @@ class TorchInferenceEngine final : public IInferenceEngine
     /// @param params[in] Inference Engine Parameters such as model input/output node names
     explicit TorchInferenceEngine(const InferenceEngineParameters& params);
 
-    /// @brief Destructor
-    ~TorchInferenceEngine() = default;
-
     /// @brief Initialise Inference Engine
     void Init() override;
 

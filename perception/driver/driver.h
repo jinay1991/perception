@@ -17,7 +17,6 @@ class Driver
 {
   public:
     Driver();
-    ~Driver() = default;
 
     void Init();
     void ExecuteStep();

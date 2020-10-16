@@ -17,7 +17,6 @@ class OutputService
         : parameters_{parameters}, visual_attention_message_{}, fatigue_message_{}, degradation_message_{}
     {
     }
-    ~OutputService() = default;
 
     VisualAttentionMessage GetVisualAttentionMessage() const { return visual_attention_message_; }
     FatigueMessage GetFatigueMessage() const { return fatigue_message_; }

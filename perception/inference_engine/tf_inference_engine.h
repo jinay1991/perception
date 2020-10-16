@@ -26,9 +26,6 @@ class TFInferenceEngine final : public IInferenceEngine
     /// @param params[in] Inference Engine Parameters such as model input/output node names
     explicit TFInferenceEngine(const InferenceEngineParameters& params);
 
-    /// @brief Destructor
-    ~TFInferenceEngine() = default;
-
     /// @brief Initialise TensorFlow Inference Engine
     void Init() override;
 

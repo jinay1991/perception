@@ -23,9 +23,6 @@ class Calibration
     /// @param ny [in] Number of chessboard blocks in Y-axes
     explicit Calibration(const std::string dirname, const std::int32_t nx, const std::int32_t ny);
 
-    /// @brief Destructor
-    ~Calibration() = default;
-
     /// @brief Initialize Calibration. Prepare image points and object points for Calibration
     virtual void Init();
 

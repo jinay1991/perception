@@ -14,14 +14,11 @@ namespace perception
 {
 
 /// @brief Inference Engine Strategy
-class InferenceEngineStrategy
+class InferenceEngineStrategy final
 {
   public:
     /// @brief Default Constructor
     InferenceEngineStrategy();
-
-    /// @brief Destructor
-    ~InferenceEngineStrategy() = default;
 
     /// @brief Initialise Inference Engine
     void Init();

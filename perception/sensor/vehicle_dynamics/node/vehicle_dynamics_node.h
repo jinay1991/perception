@@ -22,9 +22,6 @@ class VehicleDynamicsNode final : public middleware::Node
     /// @param factor[in] Middleware Publisher/Subscriber Factory
     explicit VehicleDynamicsNode(middleware::IPubSubFactory& factory);
 
-    /// @brief Destructor
-    ~VehicleDynamicsNode() = default;
-
     /// @brief Initialize Vehicle Dynamics Node
     void Init() override;
 

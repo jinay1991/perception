@@ -11,7 +11,7 @@
 
 namespace perception
 {
-class ObjectNode : public middleware::Node
+class ObjectNode final : public middleware::Node
 {
   public:
     explicit ObjectNode(middleware::IPubSubFactory& factory);

@@ -22,9 +22,6 @@ class CameraNode final : public middleware::Node
     /// @param factor[in] Middleware Publisher/Subscriber Factory
     explicit CameraNode(middleware::IPubSubFactory& factory);
 
-    /// @brief Destructor
-    ~CameraNode() = default;
-
     /// @brief Initialize Camera Node
     void Init() override;
 

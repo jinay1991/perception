@@ -12,11 +12,10 @@
 namespace perception
 {
 
-class Parameters : public IParameters
+class Parameters final : public IParameters
 {
   public:
     Parameters();
-    ~Parameters() = default;
 
     bool IsFatigueEnabled() const override;
     bool IsVisualAttentionEnabled() const override;

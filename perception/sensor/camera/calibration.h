@@ -24,25 +24,25 @@ class Calibration
     explicit Calibration(const std::string dirname, const std::int32_t nx, const std::int32_t ny);
 
     /// @brief Initialize Calibration. Prepare image points and object points for Calibration
-    virtual void Init();
+    void Init();
 
     /// @brief Executes Calibration with collected image points and object points
-    virtual void Execute();
+    void Execute();
 
     /// @brief Release resources used for calibration
-    virtual void Shutdown();
+    void Shutdown();
 
     /// @brief Provides Camera Calibration Parameters [Camera Matrix]
-    virtual cv::Mat GetCameraMatrix() const;
+    const cv::Mat& GetCameraMatrix() const;
 
     /// @brief Provides Camera Calibration Parameters [Distance Coefficients]
-    virtual cv::Mat GetDistanceCoeffs() const;
+    const cv::Mat& GetDistanceCoeffs() const;
 
     /// @brief Provides Camera Calibration Parameters [Rotational Matrix]
-    virtual cv::Mat GetRotationMatrix() const;
+    const cv::Mat& GetRotationMatrix() const;
 
     /// @brief Provides Camera Calibration Parameters [Translation Matrix]
-    virtual cv::Mat GetTranslationMatrix() const;
+    const cv::Mat& GetTranslationMatrix() const;
 
   private:
     /// @brief List of filepath (calibration images)

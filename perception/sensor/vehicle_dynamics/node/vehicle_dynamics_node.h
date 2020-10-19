@@ -33,7 +33,7 @@ class VehicleDynamicsNode final : public middleware::Node
 
   private:
     /// @brief Initialize Publishers
-    virtual void InitPublisher();
+    void InitPublisher();
 
     /// @brief Instance of Vehicle Dynamics Sensor
     VehicleDynamics vehicle_dynamics_;

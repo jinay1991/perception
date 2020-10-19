@@ -41,13 +41,13 @@ class TorchInferenceEngine final : public IInferenceEngine
   private:
     /// @brief Updates Input Tensor by copying image to input_tensor
     /// @param image[in] Input image to be fed to Inference Engine
-    virtual void UpdateInput(const Image& image);
+    void UpdateInput(const Image& image);
 
     /// @brief Updates Output Tensors by running the tensorflow session
-    virtual void UpdateTensors();
+    void UpdateTensors();
 
     /// @brief Converts output_tensors to cv::Mat results
-    virtual void UpdateOutputs();
+    void UpdateOutputs();
 
     /// @brief Model object
     torch::jit::Module net_;

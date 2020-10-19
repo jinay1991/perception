@@ -36,7 +36,7 @@ class CameraNode final : public middleware::Node
 
   private:
     /// @brief Initialize Publishers
-    virtual void InitPublisher();
+    void InitPublisher();
 
     /// @brief Source Path (Camera/Video/Image)
     std::string source_;

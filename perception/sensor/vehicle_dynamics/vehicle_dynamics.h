@@ -18,7 +18,7 @@ class VehicleDynamics
     void Step();
     void Shutdown();
 
-    virtual VehicleDynamicsMessage GetVehicleDynamicsMessage() const;
+    const VehicleDynamicsMessage& GetVehicleDynamicsMessage() const;
 
   private:
     VehicleDynamicsMessage vehicle_dynamics_message_;

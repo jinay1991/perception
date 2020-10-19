@@ -24,24 +24,24 @@ class Camera final
     explicit Camera(const std::string& source);
 
     /// @brief Initialize Camera
-    virtual void Init();
+    void Init();
 
     /// @brief Execute single step (performs capture frame and updated camera message buffer)
-    virtual void Step();
+    void Step();
 
     /// @brief Release resources used for Camera
-    virtual void Shutdown();
+    void Shutdown();
 
     /// @brief Set Camera Source (Physical Camera/Video/Image Inputs)
     /// @param source [in] Camera Source (video/image path)
-    virtual void SetSource(const std::string source);
+    void SetSource(const std::string source);
 
     /// @brief Provide last updated Camera Message based on the captured frame
-    virtual CameraMessage GetCameraMessage() const;
+    const CameraMessage& GetCameraMessage() const;
 
   private:
     /// @brief Calibrates based on the provided calibration data
-    virtual void Calibrate();
+    void Calibrate();
 
     /// @brief Camera Source
     /// @note Provide {} (i.e. empty string) to use camera inputs or

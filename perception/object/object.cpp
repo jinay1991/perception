@@ -15,8 +15,6 @@
 
 namespace perception
 {
-using namespace units::literals;
-
 namespace
 {
 /// @brief Minimum Detection Score required to consider Valid Object and report to ObjectList

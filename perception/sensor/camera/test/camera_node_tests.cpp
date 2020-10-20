@@ -22,27 +22,24 @@ namespace perception
 namespace
 {
 
+using ::testing::AllOf;
+using ::testing::Eq;
+using ::testing::Field;
+using ::testing::Property;
+
 class CameraNodeTest : public ::testing::Test
 {
   public:
     CameraNodeTest()
-        : test_image_path_{"data/grace_hopper.jpg"},
-          factory_{},
+        : factory_{},
           unit_{factory_},
           test_subscriber_{"test_subscriber", factory_},
           calibration_params_{},
+          test_image_path_{"data/camera_calibration/calibration1.jpg"},
+          test_image_undistorted_path_{"data/undistorted_calibration1.jpg"},
           test_image_{cv::imread(test_image_path_, cv::IMREAD_UNCHANGED)},
-          test_image_undistorted_{}
+          test_image_undistorted_{cv::imread(test_image_undistorted_path_, cv::IMREAD_UNCHANGED)}
     {
-        factory_.RegisterTopic<CameraTopic>();
-    }
-
-    CameraMessage GetExpectedCameraMessage() const
-    {
-        return CameraMessage{std::chrono::system_clock::now(),
-                             test_image_,
-                             test_image_undistorted_,
-                             {calibration_params_.intrinsic, calibration_params_.extrinsic}};
     }
 
   protected:
@@ -50,53 +47,60 @@ class CameraNodeTest : public ::testing::Test
     {
         test_subscriber_.Init();
         unit_.Init();
-
-        cv::undistort(
-            test_image_, test_image_undistorted_, calibration_params_.intrinsic, calibration_params_.extrinsic);
     }
 
     void RunOnce()
     {
+        unit_.SetSource(test_image_path_);
+
         unit_.Step();
         test_subscriber_.Step();
     }
 
     void TearDown() override
     {
-        test_subscriber_.Shutdown();
         unit_.Shutdown();
+        test_subscriber_.Shutdown();
     }
 
-    const std::string test_image_path_;
+    const Image& GetTestImage() const { return test_image_; }
+    const Image& GetTestImageUndistorted() const { return test_image_undistorted_; }
+    const cv::Mat& GetTestIntrinsicParam() const { return calibration_params_.intrinsic; }
+    const cv::Mat& GetTestExtrinsicParam() const { return calibration_params_.extrinsic; }
+
+    CameraMessage GetResults() const { return test_subscriber_.GetSample(); }
+
+  private:
     middleware::IntraProcessPubSubFactory factory_;
     CameraNode unit_;
     middleware::SingleTopicSubscriber<CameraTopic> test_subscriber_;
 
-  private:
     const CalibrationParams calibration_params_;
+    const std::string test_image_path_;
+    const std::string test_image_undistorted_path_;
     cv::Mat test_image_;
     cv::Mat test_image_undistorted_;
 };
 
 TEST_F(CameraNodeTest, GivenTypicalSourceImage_ExpectValidImage)
 {
-    // Given
-    unit_.SetSource(test_image_path_);
-
     // When
     RunOnce();
 
     // Then
-    const auto expected = GetExpectedCameraMessage();
-    const auto actual = test_subscriber_.GetSample();
-    EXPECT_FALSE(actual.undistorted_image.empty());
-    EXPECT_EQ(expected.undistorted_image.size(), actual.undistorted_image.size());
-    EXPECT_FALSE(actual.image.empty());
-    EXPECT_EQ(expected.image.size(), actual.image.size());
-    EXPECT_FALSE(actual.calibration_params.intrinsic.empty());
-    EXPECT_EQ(expected.calibration_params.intrinsic.size(), actual.calibration_params.intrinsic.size());
-    EXPECT_FALSE(actual.calibration_params.extrinsic.empty());
-    EXPECT_EQ(expected.calibration_params.extrinsic.size(), actual.calibration_params.extrinsic.size());
+    const auto actual = GetResults();
+    EXPECT_THAT(actual,
+                AllOf(Field(&CameraMessage::image,
+                            AllOf(Property(&Image::empty, false), Field(&Image::size, GetTestImage().size))),
+                      Field(&CameraMessage::undistorted_image,
+                            AllOf(Property(&Image::empty, false), Field(&Image::size, GetTestImageUndistorted().size))),
+                      Field(&CameraMessage::calibration_params,
+                            AllOf(Field(&CalibrationParams::intrinsic,
+                                        AllOf(Property(&cv::Mat::empty, false),
+                                              Field(&cv::Mat::size, GetTestIntrinsicParam().size))),
+                                  Field(&CalibrationParams::extrinsic,
+                                        AllOf(Property(&cv::Mat::empty, false),
+                                              Field(&cv::Mat::size, GetTestExtrinsicParam().size)))))));
 }
 
 }  // namespace

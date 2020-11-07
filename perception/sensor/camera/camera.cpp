@@ -44,12 +44,6 @@ void Camera::Shutdown()
     capture_device_.release();
 }
 
-void Camera::Calibrate()
-{
-    calibration_.Init();
-    calibration_.Execute();
-}
-
 void Camera::SetSource(const std::string source)
 {
     capture_device_.open(source);
@@ -58,8 +52,15 @@ void Camera::SetSource(const std::string source)
     LOG(INFO) << "Reading " << source << " source.";
 }
 
-CameraMessage Camera::GetCameraMessage() const
+const CameraMessage& Camera::GetCameraMessage() const
 {
     return camera_message_;
 }
+
+void Camera::Calibrate()
+{
+    calibration_.Init();
+    calibration_.Execute();
+}
+
 }  // namespace perception

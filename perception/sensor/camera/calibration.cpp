@@ -74,22 +74,22 @@ void Calibration::Execute()
 
 void Calibration::Shutdown() {}
 
-cv::Mat Calibration::GetCameraMatrix() const
+const cv::Mat& Calibration::GetCameraMatrix() const
 {
     return camera_matrix_;
 }
 
-cv::Mat Calibration::GetDistanceCoeffs() const
+const cv::Mat& Calibration::GetDistanceCoeffs() const
 {
     return dist_coeffs_;
 }
 
-cv::Mat Calibration::GetRotationMatrix() const
+const cv::Mat& Calibration::GetRotationMatrix() const
 {
     return rotation_;
 }
 
-cv::Mat Calibration::GetTranslationMatrix() const
+const cv::Mat& Calibration::GetTranslationMatrix() const
 {
     return translation_;
 }

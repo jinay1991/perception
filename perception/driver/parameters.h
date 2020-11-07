@@ -31,13 +31,13 @@ class Parameters final : public IParameters
     void SetIsFatigueEnabled(const bool is_fatigue_enabled);
     void SetIsVisualAttentionEnabled(const bool is_visual_attention_enabled);
 
-    void SetDistance(const units::length::meter_t value);
-    void SetYaw(const units::angle::radian_t value);
-    void SetPitch(const units::angle::radian_t value);
-    void SetRoll(const units::angle::radian_t value);
+    void SetDistance(const units::length::meter_t distance);
+    void SetYaw(const units::angle::radian_t yaw);
+    void SetPitch(const units::angle::radian_t pitch);
+    void SetRoll(const units::angle::radian_t roll);
 
-    void SetEyeLidOpening(const units::length::millimeter_t value);
-    void SetEyeBlinkRate(const units::frequency::hertz_t value);
+    void SetEyeLidOpening(const units::length::millimeter_t eye_lid_opening);
+    void SetEyeBlinkRate(const units::frequency::hertz_t eye_blink_rate);
 
   private:
     bool is_fatigue_enabled_;

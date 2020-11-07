@@ -21,13 +21,13 @@ class Object final
   public:
     Object();
 
-    virtual void Init();
-    virtual void Step();
-    virtual void Shutdown();
+    void Init();
+    void Step();
+    void Shutdown();
 
-    virtual void SetEgoVelocity(const units::velocity::meters_per_second_t& ego_velocity);
-    virtual void SetCameraMessage(const CameraMessage& camera_message);
-    virtual ObjectListMessage GetObjectListMessage() const;
+    void SetEgoVelocity(const units::velocity::meters_per_second_t& ego_velocity);
+    void SetCameraMessage(const CameraMessage& camera_message);
+    const ObjectListMessage& GetObjectListMessage() const;
 
   private:
     /// @brief Update Outputs (aka Object List)

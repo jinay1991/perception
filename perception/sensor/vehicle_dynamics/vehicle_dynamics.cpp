@@ -22,7 +22,7 @@ void VehicleDynamics::Step()
 
 void VehicleDynamics::Shutdown() {}
 
-VehicleDynamicsMessage VehicleDynamics::GetVehicleDynamicsMessage() const
+const VehicleDynamicsMessage& VehicleDynamics::GetVehicleDynamicsMessage() const
 {
     return vehicle_dynamics_message_;
 }

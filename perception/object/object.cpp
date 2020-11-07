@@ -15,8 +15,6 @@
 
 namespace perception
 {
-using namespace units::literals;
-
 namespace
 {
 /// @brief Minimum Detection Score required to consider Valid Object and report to ObjectList
@@ -222,7 +220,7 @@ void Object::SetEgoVelocity(const units::velocity::meters_per_second_t& ego_velo
     ego_velocity_ = ego_velocity;
 }
 
-ObjectListMessage Object::GetObjectListMessage() const
+const ObjectListMessage& Object::GetObjectListMessage() const
 {
     return object_list_message_;
 }

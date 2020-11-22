@@ -49,7 +49,7 @@ class Calibration
     std::vector<std::string> filelist_;
 
     /// @brief Chessboard Pattern Size (nx, ny)
-    cv::Size pattern_size_;
+    const cv::Size pattern_size_;
 
     /// @brief Calibration Image Size
     cv::Size image_size_;

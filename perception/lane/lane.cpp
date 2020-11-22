@@ -6,33 +6,27 @@
 
 namespace perception
 {
-namespace
-{
-void PerformAbsoluteSobelThreshold(const cv::Mat& image,
-                                   const char orientation = 'x',
-                                   const std::int32_t kernel_size = 3,
-                                   const std::int32_t lower_threshold = 0,
-                                   const std::int32_t upper_threshold = 255)
-{
-    // Perform Sobel Threshold
-}
-
-void CalculateGradientDirection(const cv::Mat& image,
-                                const std::int32_t kernel_size = 3,
-                                const std::int32_t lower_threshold = 0,
-                                const std::int32_t upper_threshold = 255)
-{
-    // Calculate Gradient Threshold
-    // Perform Threshold
-}
-
-}  // namespace
-Lane::Lane() {}
+Lane::Lane() : lane_message_{}, camera_message_{} {}
 
 void Lane::Init() {}
 
 void Lane::Step() {}
 
 void Lane::Shutdown() {}
+
+void Lane::SetCameraMessage(const CameraMessage& camera_message)
+{
+    camera_message_ = camera_message;
+}
+
+const LaneMessage& Lane::GetLaneMessage() const
+{
+    return lane_message_;
+}
+
+void Lane::UpdateOutputs()
+{
+    // update output
+}
 
 }  // namespace perception

@@ -2,7 +2,6 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License.
 ///
-
 #include "perception/driver/driver.h"
 
 namespace perception
@@ -20,7 +19,6 @@ void Driver::Init()
 
 void Driver::ExecuteStep()
 {
-
     fatigue_.ExecuteStep();
     visual_attention_.ExecuteStep();
 }
@@ -29,6 +27,11 @@ void Driver::Shutdown()
 {
     fatigue_.Shutdown();
     visual_attention_.Shutdown();
+}
+
+void Driver::ProcessDriverCameraSystem(const DriverCameraSystem& driver_camera_system)
+{
+    data_source_.UpdateDriverCameraSystem(driver_camera_system);
 }
 
 const VisualAttentionMessage& Driver::GetVisualAttentionMessage()

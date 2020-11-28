@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020. MIT License.
 ///
-#ifndef PERCEPTION_DRIVER_COMMON_I_PARAMETERS_H
-#define PERCEPTION_DRIVER_COMMON_I_PARAMETERS_H
+#ifndef PERCEPTION_DRIVER_I_PARAMETERS_H
+#define PERCEPTION_DRIVER_I_PARAMETERS_H
 
 #include <units.h>
 
@@ -28,4 +28,4 @@ class IParameters
     virtual units::frequency::hertz_t GetEyeBlinkRate() const = 0;
 };
 }  // namespace perception
-#endif  /// PERCEPTION_DRIVER_COMMON_I_PARAMETERS_H
+#endif  /// PERCEPTION_DRIVER_I_PARAMETERS_H

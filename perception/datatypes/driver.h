@@ -16,9 +16,10 @@ namespace perception
 /// @brief Eye State
 enum class EyeState : std::uint8_t
 {
-    kOpenEyes = 0U,
-    kCloseEyes = 1U,
-    kInvalid = 2U
+    kEyesOpen = 0U,
+    kEyesClosed = 1U,
+    kEyesUnknown = 2U,
+    kInvalid = 3U
 };
 
 /// @brief Head Pose
@@ -45,10 +46,9 @@ enum class DegradationState : std::uint8_t
 {
     kNormalOperation = 0U,
     kValidityError = 1U,
-    kOutOfRange = 2U,
-    kCommunicationError = 3U,
-    kSensorBlockage = 4U,
-    kInvalid = 5U
+    kCommunicationError = 2U,
+    kSensorBlockage = 3U,
+    kInvalid = 4U
 };
 
 /// @brief Degradation Information
@@ -163,8 +163,8 @@ inline bool operator!=(const HeadTracking& lhs, const HeadTracking& rhs) noexcep
 
 inline bool operator==(const DriverCameraSystem& lhs, const DriverCameraSystem& rhs) noexcept
 {
-    return ((lhs.head_tracking == rhs.head_tracking) && (lhs.face_tracking == rhs.face_tracking) &&
-            (lhs.gaze_tracking == rhs.gaze_tracking));
+    return ((lhs.time_point == rhs.time_point) && (lhs.head_tracking == rhs.head_tracking) &&
+            (lhs.face_tracking == rhs.face_tracking) && (lhs.gaze_tracking == rhs.gaze_tracking));
 }
 
 inline bool operator!=(const DriverCameraSystem& lhs, const DriverCameraSystem& rhs) noexcept
@@ -180,8 +180,6 @@ inline const char* to_string(const DegradationState& degradation_state)
             return "kNormalOperation";
         case DegradationState::kValidityError:
             return "kValidityError";
-        case DegradationState::kOutOfRange:
-            return "kOutOfRange";
         case DegradationState::kCommunicationError:
             return "kCommunicationError";
         case DegradationState::kSensorBlockage:
@@ -257,10 +255,12 @@ inline const char* to_string(const EyeState& eye_state)
 {
     switch (eye_state)
     {
-        case EyeState::kOpenEyes:
-            return "kOpenEyes";
-        case EyeState::kCloseEyes:
-            return "kCloseEyes";
+        case EyeState::kEyesOpen:
+            return "kEyesOpen";
+        case EyeState::kEyesClosed:
+            return "kEyesClosed";
+        case EyeState::kEyesUnknown:
+            return "kEyesUnknown";
         case EyeState::kInvalid:
             return "kInvalid";
         default:

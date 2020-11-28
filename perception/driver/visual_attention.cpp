@@ -18,7 +18,7 @@ void VisualAttention::ExecuteStep() {}
 
 void VisualAttention::Shutdown() {}
 
-const VisualAttentionMessage& VisualAttention::GetVisualAttentionMessage()
+const VisualAttentionMessage& VisualAttention::GetVisualAttentionMessage() const
 {
     return visual_attention_message_;
 }

@@ -20,7 +20,7 @@ class VisualAttention
     void ExecuteStep();
     void Shutdown();
 
-    const VisualAttentionMessage& GetVisualAttentionMessage();
+    const VisualAttentionMessage& GetVisualAttentionMessage() const;
 
   private:
     const IParameters& parameters_;

@@ -20,9 +20,11 @@ class Fatigue
     void ExecuteStep();
     void Shutdown();
 
-    const FatigueMessage& GetFatigueMessage();
+    const FatigueMessage& GetFatigueMessage() const;
 
   private:
+    EyeState GetEyeState() const;
+
     const IParameters& parameters_;
     const IDataSource& data_source_;
 

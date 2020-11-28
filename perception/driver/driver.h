@@ -22,6 +22,8 @@ class Driver
     void ExecuteStep();
     void Shutdown();
 
+    void ProcessDriverCameraSystem(const DriverCameraSystem& driver_camera_system);
+
     const VisualAttentionMessage& GetVisualAttentionMessage();
     const FatigueMessage& GetFatigueMessage();
 

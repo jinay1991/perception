@@ -1,6 +1,7 @@
 # Extras
 .DS_Store
 term3_sim_*
+coverage/*
 
 # bazel build files
 bazel-*

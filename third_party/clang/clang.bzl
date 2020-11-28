@@ -1,5 +1,4 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 def clang():
     if "clang" not in native.existing_rules():
@@ -12,8 +11,9 @@ def clang():
         )
 
     if "bazel_compilation_database" not in native.existing_rules():
-        git_repository(
+        http_archive(
             name = "bazel_compilation_database",
-            remote = "https://github.com/grailbio/bazel-compilation-database.git",
-            tag = "0.4.1",
+            url = "https://github.com/grailbio/bazel-compilation-database/archive/0.4.5.tar.gz",
+            strip_prefix = "bazel-compilation-database-0.4.5",
+            sha256 = "bcecfd622c4ef272fd4ba42726a52e140b961c4eac23025f18b346c968a8cfb4",
         )

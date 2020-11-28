@@ -4,6 +4,11 @@
 ///
 #include "perception/lane/lane.h"
 
+#include <opencv4/opencv2/core.hpp>
+#include <opencv4/opencv2/highgui.hpp>
+#include <opencv4/opencv2/imgcodecs.hpp>
+#include <opencv4/opencv2/imgproc.hpp>
+
 namespace perception
 {
 Lane::Lane() : lane_message_{}, camera_message_{} {}

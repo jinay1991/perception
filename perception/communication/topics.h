@@ -31,7 +31,7 @@ class VehicleDynamicsTopic : public middleware::Topic<VehicleDynamicsMessage>
 {
 };
 
-class DriverCameraSystemTopic : public middleware::Topic<DriverCameraSystemMessage>
+class DriverCameraTopic : public middleware::Topic<DriverCameraMessage>
 {
 };
 

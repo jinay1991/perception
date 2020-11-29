@@ -16,7 +16,7 @@ class DataSource : public IDataSource
   public:
     DataSource();
 
-    void UpdateDriverCameraSystemMessage(const DriverCameraSystemMessage& driver_camera_system_message);
+    void UpdateDriverCameraMessage(const DriverCameraMessage& driver_camera_message);
 
     std::chrono::system_clock::time_point GetTimePoint() const override;
     const HeadTracking& GetHeadTracking() const override;
@@ -27,7 +27,7 @@ class DataSource : public IDataSource
     units::frequency::hertz_t GetEyeBlinkRate() const override;
 
   private:
-    DriverCameraSystemMessage driver_camera_system_message_;
+    DriverCameraMessage driver_camera_message_;
 };
 }  // namespace perception
 #endif  /// PERCEPTION_DRIVER_DATA_SOURCE_H

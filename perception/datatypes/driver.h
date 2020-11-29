@@ -122,7 +122,7 @@ struct HeadTracking
 };
 
 /// @brief Driver Camera System Information
-struct DriverCameraSystemMessage
+struct DriverCameraMessage
 {
     /// @brief Time Point for captured data
     std::chrono::system_clock::time_point time_point{};
@@ -168,13 +168,13 @@ inline bool operator!=(const HeadTracking& lhs, const HeadTracking& rhs) noexcep
     return !(lhs == rhs);
 }
 
-inline bool operator==(const DriverCameraSystemMessage& lhs, const DriverCameraSystemMessage& rhs) noexcept
+inline bool operator==(const DriverCameraMessage& lhs, const DriverCameraMessage& rhs) noexcept
 {
     return ((lhs.time_point == rhs.time_point) && (lhs.head_tracking == rhs.head_tracking) &&
             (lhs.face_tracking == rhs.face_tracking) && (lhs.gaze_tracking == rhs.gaze_tracking));
 }
 
-inline bool operator!=(const DriverCameraSystemMessage& lhs, const DriverCameraSystemMessage& rhs) noexcept
+inline bool operator!=(const DriverCameraMessage& lhs, const DriverCameraMessage& rhs) noexcept
 {
     return !(lhs == rhs);
 }

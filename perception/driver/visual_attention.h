@@ -7,14 +7,14 @@
 
 #include "perception/datatypes/driver.h"
 #include "perception/driver/i_data_source.h"
-#include "perception/driver/i_parameters.h"
+#include "perception/driver/i_parameter_handler.h"
 
 namespace perception
 {
 class VisualAttention
 {
   public:
-    explicit VisualAttention(const IParameters& parameters, const IDataSource& data_source);
+    explicit VisualAttention(const IParameterHandler& parameter_handler, const IDataSource& data_source);
 
     void Init();
     void ExecuteStep();
@@ -23,7 +23,11 @@ class VisualAttention
     const VisualAttentionMessage& GetVisualAttentionMessage() const;
 
   private:
-    const IParameters& parameters_;
+    HeadPose GetHeadPose() const;
+    bool IsHeadPoseAvailable() const;
+    bool IsHeadPoseAttentive() const;
+
+    const IParameterHandler& parameter_handler_;
     const IDataSource& data_source_;
 
     VisualAttentionMessage visual_attention_message_;

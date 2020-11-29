@@ -16,15 +16,18 @@ class DataSource : public IDataSource
   public:
     DataSource();
 
-    void UpdateDriverCameraSystem(const DriverCameraSystem& driver_camera_system);
+    void UpdateDriverCameraSystemMessage(const DriverCameraSystemMessage& driver_camera_system_message);
 
     std::chrono::system_clock::time_point GetTimePoint() const override;
     const HeadTracking& GetHeadTracking() const override;
-    const FaceTracking& GetFaceTracking() const override;
     const GazeTracking& GetGazeTracking() const override;
 
+    bool IsEyeVisible() const override;
+    units::length::millimeter_t GetEyeLidOpening() const override;
+    units::frequency::hertz_t GetEyeBlinkRate() const override;
+
   private:
-    DriverCameraSystem driver_camera_system_;
+    DriverCameraSystemMessage driver_camera_system_message_;
 };
 }  // namespace perception
 #endif  /// PERCEPTION_DRIVER_DATA_SOURCE_H

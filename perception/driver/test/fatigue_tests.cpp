@@ -3,8 +3,10 @@
 /// @copyright Copyright (c) 2020. MIT License.
 ///
 #include "perception/driver/fatigue.h"
-#include "perception/driver/parameters.h"
-#include "perception/driver/test/support/driver_camera_system_builder.h"
+#include "perception/driver/parameter_handler.h"
+#include "perception/driver/test/support/mocks/data_source_mock.h"
+#include "perception/driver/test/support/mocks/parameter_handler_mock.h"
+#include "perception/driver/test/support/operators.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -16,52 +18,35 @@ namespace
 {
 using ::testing::Field;
 using ::testing::Return;
-using ::testing::ReturnRef;
-using namespace units::literals;
-
-class DataSourceMock : public IDataSource
-{
-  public:
-    DataSourceMock() = default;
-
-    MOCK_CONST_METHOD0(GetTimePoint, std::chrono::system_clock::time_point());
-    MOCK_CONST_METHOD0(GetFaceTracking, const FaceTracking&());
-    MOCK_CONST_METHOD0(GetHeadTracking, const HeadTracking&());
-    MOCK_CONST_METHOD0(GetGazeTracking, const GazeTracking&());
-};
 
 class FatigueFixture : public ::testing::Test
 {
   public:
     FatigueFixture()
-        : parameters_{}, mocked_data_source_{}, fatigue_{parameters_, mocked_data_source_}, driver_camera_system_{}
+        : mocked_data_source_{}, mocked_parameter_handler_{}, fatigue_{mocked_parameter_handler_, mocked_data_source_}
     {
     }
 
   protected:
     void SetUp() override
     {
+        EXPECT_CALL(mocked_parameter_handler_, GetMaxEyeLidOpening()).WillRepeatedly(Return(kMaxEyeLidOpening));
+        EXPECT_CALL(mocked_parameter_handler_, GetMinEyeLidOpening()).WillRepeatedly(Return(kMinEyeLidOpening));
+        EXPECT_CALL(mocked_parameter_handler_, GetEyeBlinkRate()).WillRepeatedly(Return(kMaxEyeBlinkRate));
+
         fatigue_.Init();
-        EXPECT_CALL(mocked_data_source_, GetFaceTracking())
-            .WillRepeatedly(ReturnRef(driver_camera_system_.face_tracking));
     }
+
     void TearDown() override { fatigue_.Shutdown(); }
-
-    void UpdateDriverCameraSystem(const DriverCameraSystem& driver_camera_system)
-    {
-        driver_camera_system_ = driver_camera_system;
-    }
-
     void RunOnce() { fatigue_.ExecuteStep(); }
 
     const FatigueMessage& GetFatigueMessage() const { return fatigue_.GetFatigueMessage(); }
 
-  private:
-    Parameters parameters_;
     ::testing::StrictMock<DataSourceMock> mocked_data_source_;
-    Fatigue fatigue_;
 
-    DriverCameraSystem driver_camera_system_;
+  private:
+    ::testing::StrictMock<ParameterHandlerMock> mocked_parameter_handler_;
+    Fatigue fatigue_;
 };
 template <typename T>
 class FatigueFixtureT : public FatigueFixture, public ::testing::WithParamInterface<T>
@@ -98,9 +83,9 @@ TEST_P(FatigueFixture_WithEyeState, Fatigue_GiveTypicalFaceTracking_ExpectUpdate
 {
     // Given
     const auto param = GetParam();
-    const DriverCameraSystem driver_camera_system =
-        DriverCameraSystemBuilder().WithFaceTracking(param.face_tracking).Build();
-    UpdateDriverCameraSystem(driver_camera_system);
+    EXPECT_CALL(mocked_data_source_, IsEyeVisible()).WillRepeatedly(Return(param.face_tracking.eye_visibility));
+    EXPECT_CALL(mocked_data_source_, GetEyeLidOpening()).WillRepeatedly(Return(param.face_tracking.eye_lid_opening));
+    EXPECT_CALL(mocked_data_source_, GetEyeBlinkRate()).WillRepeatedly(Return(param.face_tracking.eye_blink_rate));
 
     // When
     RunOnce();

@@ -7,14 +7,14 @@
 
 #include "perception/datatypes/driver.h"
 #include "perception/driver/i_data_source.h"
-#include "perception/driver/i_parameters.h"
+#include "perception/driver/i_parameter_handler.h"
 
 namespace perception
 {
 class Fatigue
 {
   public:
-    explicit Fatigue(const IParameters& parameters, const IDataSource& data_source);
+    explicit Fatigue(const IParameterHandler& parameter_handler, const IDataSource& data_source);
 
     void Init();
     void ExecuteStep();
@@ -24,8 +24,10 @@ class Fatigue
 
   private:
     EyeState GetEyeState() const;
+    bool IsEyeVisible() const;
+    bool IsEyeOpen() const;
 
-    const IParameters& parameters_;
+    const IParameterHandler& parameter_handler_;
     const IDataSource& data_source_;
 
     FatigueMessage fatigue_message_;

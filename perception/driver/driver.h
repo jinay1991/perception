@@ -8,7 +8,7 @@
 #include "perception/datatypes/driver.h"
 #include "perception/driver/data_source.h"
 #include "perception/driver/fatigue.h"
-#include "perception/driver/parameters.h"
+#include "perception/driver/parameter_handler.h"
 #include "perception/driver/visual_attention.h"
 
 namespace perception
@@ -22,13 +22,13 @@ class Driver
     void ExecuteStep();
     void Shutdown();
 
-    void ProcessDriverCameraSystem(const DriverCameraSystem& driver_camera_system);
+    void ProcessDriverCameraSystemMessage(const DriverCameraSystemMessage& driver_camera_system_message);
 
-    const VisualAttentionMessage& GetVisualAttentionMessage();
-    const FatigueMessage& GetFatigueMessage();
+    const VisualAttentionMessage& GetVisualAttentionMessage() const;
+    const FatigueMessage& GetFatigueMessage() const;
 
   private:
-    Parameters parameters_;
+    ParameterHandler parameter_handler_;
     DataSource data_source_;
     Fatigue fatigue_;
     VisualAttention visual_attention_;

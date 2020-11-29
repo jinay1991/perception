@@ -6,6 +6,7 @@ cc_library(
     hdrs = glob(["*.h"]),
     visibility = ["//visibility:public"],
     deps = [
+        "//perception/common",
         "//perception/datatypes",
     ],
 )
@@ -13,8 +14,8 @@ cc_library(
 cc_library(
     name = "support",
     testonly = True,
-    srcs = glob(["test/support/*.cpp"]),
-    hdrs = glob(["test/support/*.h"]),
+    srcs = glob(["test/support/**/*.cpp"]),
+    hdrs = glob(["test/support/**/*.h"]),
     visibility = ["//visibility:public"],
     deps = [
         "//perception/datatypes",

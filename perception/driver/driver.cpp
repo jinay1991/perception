@@ -7,7 +7,10 @@
 namespace perception
 {
 Driver::Driver()
-    : parameters_{}, data_source_{}, fatigue_{parameters_, data_source_}, visual_attention_{parameters_, data_source_}
+    : parameter_handler_{},
+      data_source_{},
+      fatigue_{parameter_handler_, data_source_},
+      visual_attention_{parameter_handler_, data_source_}
 {
 }
 
@@ -29,17 +32,17 @@ void Driver::Shutdown()
     visual_attention_.Shutdown();
 }
 
-void Driver::ProcessDriverCameraSystem(const DriverCameraSystem& driver_camera_system)
+void Driver::ProcessDriverCameraSystemMessage(const DriverCameraSystemMessage& driver_camera_system_message)
 {
-    data_source_.UpdateDriverCameraSystem(driver_camera_system);
+    data_source_.UpdateDriverCameraSystemMessage(driver_camera_system_message);
 }
 
-const VisualAttentionMessage& Driver::GetVisualAttentionMessage()
+const VisualAttentionMessage& Driver::GetVisualAttentionMessage() const
 {
     return visual_attention_.GetVisualAttentionMessage();
 }
 
-const FatigueMessage& Driver::GetFatigueMessage()
+const FatigueMessage& Driver::GetFatigueMessage() const
 {
     return fatigue_.GetFatigueMessage();
 }

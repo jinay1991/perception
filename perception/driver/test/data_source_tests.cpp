@@ -3,6 +3,7 @@
 /// @copyright Copyright (c) 2020. MIT License.
 ///
 #include "perception/driver/data_source.h"
+#include "perception/driver/test/support/builders/driver_camera_system_message_builder.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -11,28 +12,28 @@ namespace perception
 {
 namespace
 {
-using namespace units::literals;
+
 using ::testing::AllOf;
 using ::testing::Field;
 using ::testing::Property;
 
-constexpr DriverCameraSystem CreateTypicalDriverCameraSystem()
+constexpr DriverCameraSystemMessage CreateTypicalDriverCameraSystemMessage()
 {
-    DriverCameraSystem driver_camera_system{};
+    DriverCameraSystemMessage driver_camera_system_message{};
 
-    driver_camera_system.face_tracking.eye_visibility = true;
-    driver_camera_system.face_tracking.eye_lid_opening = 10.0_mm;
-    driver_camera_system.face_tracking.eye_blink_rate = 25.0_Hz;
+    driver_camera_system_message.face_tracking.eye_visibility = true;
+    driver_camera_system_message.face_tracking.eye_lid_opening = 10.0_mm;
+    driver_camera_system_message.face_tracking.eye_blink_rate = 25.0_Hz;
 
-    driver_camera_system.gaze_tracking.pitch = 0.01_rad;
-    driver_camera_system.gaze_tracking.roll = 0.01_rad;
-    driver_camera_system.gaze_tracking.yaw = 0.01_rad;
+    driver_camera_system_message.gaze_tracking.pitch = 0.01_rad;
+    driver_camera_system_message.gaze_tracking.roll = 0.01_rad;
+    driver_camera_system_message.gaze_tracking.yaw = 0.01_rad;
 
-    driver_camera_system.head_tracking.pitch = 0.01_rad;
-    driver_camera_system.head_tracking.roll = 0.01_rad;
-    driver_camera_system.head_tracking.yaw = 0.01_rad;
+    driver_camera_system_message.head_tracking.pitch = 0.01_rad;
+    driver_camera_system_message.head_tracking.roll = 0.01_rad;
+    driver_camera_system_message.head_tracking.yaw = 0.01_rad;
 
-    return driver_camera_system;
+    return driver_camera_system_message;
 }
 
 class DataSourceTest : public ::testing::Test
@@ -41,9 +42,9 @@ class DataSourceTest : public ::testing::Test
     DataSourceTest() : data_source_{} {}
 
   protected:
-    void UpdateDriverCameraSystem(const DriverCameraSystem& driver_camera_system)
+    void UpdateDriverCameraSystemMessage(const DriverCameraSystemMessage& driver_camera_system_message)
     {
-        data_source_.UpdateDriverCameraSystem(driver_camera_system);
+        data_source_.UpdateDriverCameraSystemMessage(driver_camera_system_message);
     }
 
     const IDataSource& GetDataSource() const { return data_source_; }
@@ -52,20 +53,28 @@ class DataSourceTest : public ::testing::Test
     DataSource data_source_;
 };
 
-TEST_F(DataSourceTest, UpdateDriverCameraSystem_GivenTypicalDriverCameraSystem_ExpectUpatedDataSource)
+TEST_F(DataSourceTest, UpdateDriverCameraSystemMessage_GivenTypicalDriverCameraSystemMessage_ExpectUpatedDataSource)
 {
     // Given
-    const DriverCameraSystem driver_camera_system = CreateTypicalDriverCameraSystem();
+    const DriverCameraSystemMessage driver_camera_system_message = DriverCameraSystemMessageBuilder()
+                                                                       .WithTimePoint(std::chrono::system_clock::now())
+                                                                       .WithEyeState(true, 10.0_mm, 2.0_Hz)
+                                                                       .WithHeadPose(0.01_rad, 0.01_rad, 0.01_rad)
+                                                                       .WithGazePose(0.01_rad, 0.01_rad, 0.01_rad)
+                                                                       .Build();
 
     // When
-    UpdateDriverCameraSystem(driver_camera_system);
+    UpdateDriverCameraSystemMessage(driver_camera_system_message);
 
     // Then
-    EXPECT_THAT(GetDataSource(),
-                AllOf(Property(&IDataSource::GetTimePoint, driver_camera_system.time_point),
-                      Property(&IDataSource::GetFaceTracking, driver_camera_system.face_tracking),
-                      Property(&IDataSource::GetHeadTracking, driver_camera_system.head_tracking),
-                      Property(&IDataSource::GetGazeTracking, driver_camera_system.gaze_tracking)));
+    EXPECT_THAT(
+        GetDataSource(),
+        AllOf(Property(&IDataSource::GetTimePoint, driver_camera_system_message.time_point),
+              Property(&IDataSource::IsEyeVisible, driver_camera_system_message.face_tracking.eye_visibility),
+              Property(&IDataSource::GetEyeLidOpening, driver_camera_system_message.face_tracking.eye_lid_opening),
+              Property(&IDataSource::GetEyeBlinkRate, driver_camera_system_message.face_tracking.eye_blink_rate),
+              Property(&IDataSource::GetHeadTracking, driver_camera_system_message.head_tracking),
+              Property(&IDataSource::GetGazeTracking, driver_camera_system_message.gaze_tracking)));
 }
 
 }  // namespace

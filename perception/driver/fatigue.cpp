@@ -4,14 +4,13 @@
 ///
 #include "perception/driver/fatigue.h"
 
+#include "perception/common/validity_range.h"
+
 namespace perception
 {
-constexpr units::frequency::hertz_t kMaxEyeBlinkRate{10.0};
-constexpr units::length::millimeter_t kMaxEyeLidOpening{10.0};
-constexpr units::length::millimeter_t kMinEyeLidOpening{1.0};
 
-Fatigue::Fatigue(const IParameters& parameters, const IDataSource& data_source)
-    : parameters_{parameters}, data_source_{data_source}, fatigue_message_{}
+Fatigue::Fatigue(const IParameterHandler& parameter_handler, const IDataSource& data_source)
+    : parameter_handler_{parameter_handler}, data_source_{data_source}, fatigue_message_{}
 {
 }
 
@@ -32,10 +31,9 @@ const FatigueMessage& Fatigue::GetFatigueMessage() const
 EyeState Fatigue::GetEyeState() const
 {
     EyeState eye_state{EyeState::kInvalid};
-    const FaceTracking& face_tracking = data_source_.GetFaceTracking();
-    if (face_tracking.eye_visibility && (face_tracking.eye_blink_rate < kMaxEyeBlinkRate))
+    if (IsEyeVisible())
     {
-        if (face_tracking.eye_lid_opening > kMinEyeLidOpening && face_tracking.eye_lid_opening < kMaxEyeLidOpening)
+        if (IsEyeOpen())
         {
             eye_state = EyeState::kEyesOpen;
         }
@@ -52,4 +50,15 @@ EyeState Fatigue::GetEyeState() const
     return eye_state;
 }
 
+bool Fatigue::IsEyeVisible() const
+{
+    return ((data_source_.IsEyeVisible()) && (data_source_.GetEyeBlinkRate() < parameter_handler_.GetEyeBlinkRate()));
+}
+
+bool Fatigue::IsEyeOpen() const
+{
+    return InRange(data_source_.GetEyeLidOpening(),
+                   parameter_handler_.GetMinEyeLidOpening(),
+                   parameter_handler_.GetMaxEyeLidOpening());
+}
 }  // namespace perception

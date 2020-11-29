@@ -4,7 +4,7 @@
 ///
 #include "perception/inference_engine/opencv_inference_engine.h"
 
-#include "perception/common/logging/logging.h"
+#include "perception/common/logging.h"
 
 #include <opencv4/opencv2/imgproc.hpp>
 
@@ -24,7 +24,7 @@ OpenCVInferenceEngine::OpenCVInferenceEngine(const InferenceEngineParameters& pa
 void OpenCVInferenceEngine::Init()
 {
     net_ = cv::dnn::readNet(model_path_, config_path_);
-    ASSERT_CHECK(!net_.empty()) << "Failed to load opencv model '" << model_path_ << "'";
+    CHECK(!net_.empty()) << "Failed to load opencv model '" << model_path_ << "'";
     LOG(INFO) << "Successfully loaded opencv model from '" << model_path_ << "'.";
 }
 

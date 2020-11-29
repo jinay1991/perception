@@ -1,6 +1,8 @@
-load("@//third_party:dependencies.bzl", "third_party_dependencies")
+workspace(name = "perception")
 
-third_party_dependencies()
+load("@perception//third_party:dependencies.bzl", "perception_dependencies")
+
+perception_dependencies()
 
 load("@tensorflowlite//third_party:dependencies.bzl", "tensorflowlite_dependencies")
 

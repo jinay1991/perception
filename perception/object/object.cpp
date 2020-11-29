@@ -4,7 +4,7 @@
 ///
 #include "perception/object/object.h"
 
-#include "perception/common/logging/logging.h"
+#include "perception/common/logging.h"
 
 #include <opencv4/opencv2/calib3d/calib3d.hpp>
 #include <opencv4/opencv2/core.hpp>
@@ -259,7 +259,7 @@ void Object::UpdateOutputs()
     }
 
     LOG(INFO) << "Observed {" << object_list_message_.number_of_valid_objects << "} detected valid objects!";
-    LOG(DEBUG) << object_list_message_;
+    LOG(INFO) << object_list_message_;
 }
 
 ObjectMessage Object::GenerateObjectMessage(const BoundingBox& bounding_box, const LabelId& label_id)

@@ -4,7 +4,7 @@
 ///
 #include "perception/simulation/simulation.h"
 
-#include "perception/common/logging/logging.h"
+#include "perception/common/logging.h"
 
 namespace perception
 {

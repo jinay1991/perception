@@ -6,6 +6,6 @@ cc_library(
     hdrs = ["simulation.h"],
     visibility = ["//visibility:public"],
     deps = [
-        "//perception/common/logging",
+        "//perception/common",
     ],
 )

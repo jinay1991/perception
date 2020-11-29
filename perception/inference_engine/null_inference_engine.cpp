@@ -4,8 +4,6 @@
 ///
 #include "perception/inference_engine/null_inference_engine.h"
 
-#include "perception/common/logging/logging.h"
-
 namespace perception
 {
 

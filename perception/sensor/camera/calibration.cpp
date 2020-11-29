@@ -4,7 +4,7 @@
 ///
 #include "perception/sensor/camera/calibration.h"
 
-#include "perception/common/logging/logging.h"
+#include "perception/common/logging.h"
 
 #include <opencv4/opencv2/calib3d.hpp>
 #include <opencv4/opencv2/calib3d/calib3d.hpp>

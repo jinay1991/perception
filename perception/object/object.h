@@ -12,21 +12,34 @@
 #include <opencv4/opencv2/core.hpp>
 
 #include <string>
-#include <vector>
 
 namespace perception
 {
+/// @brief Performs Object Detection on received images
 class Object final
 {
   public:
+    /// @brief Constructor
     Object();
 
+    /// @brief Initialize Object Detection
     void Init();
+
+    /// @brief Execute Single step (performs object detections and updates object list buffer)
     void Step();
+
+    /// @brief Release resources used for Object Detection
     void Shutdown();
 
+    /// @brief Set Vehicle velocity
+    /// @param ego_velocity[in] - Vehicle Velocity (mps)
     void SetEgoVelocity(const units::velocity::meters_per_second_t& ego_velocity);
+
+    /// @brief Set Camera Message, containing captured images
+    /// @param camera_message[in] - Camera captured image Message
     void SetCameraMessage(const CameraMessage& camera_message);
+
+    /// @brief Provide Object List based on identified objects from the given Camera image
     const ObjectListMessage& GetObjectListMessage() const;
 
   private:
@@ -55,10 +68,19 @@ class Object final
     /// @return ObjectMessage (object) information
     ObjectMessage GenerateObjectMessage(const BoundingBox& bounding_box, const LabelId& label_id);
 
+    /// @brief Inference Engine related parametes (i.e. model path, model i/o etc.)
     const InferenceEngineParameters inference_engine_params_;
+
+    /// @brief Instance of Inference Engine (Default: TensorFlowInferenceEngine)
     InferenceEngineStrategy inference_engine_;
+
+    /// @brief Received Camera Image message
     CameraMessage camera_message_;
+
+    /// @brief Received Vehicle velocity
     units::velocity::meters_per_second_t ego_velocity_;
+
+    /// @brief Calculated Objects (List)
     ObjectListMessage object_list_message_;
 };
 }  // namespace perception

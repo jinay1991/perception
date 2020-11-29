@@ -7,18 +7,26 @@
 
 #include <units.h>
 
-#include <ostream>
-#include <string>
-
 namespace perception
 {
+using namespace units::literals;
+
+/// @brief maximum eye blink rate (hertz)
+static constexpr units::frequency::hertz_t kMaxEyeBlinkRate{10.0};
+
+/// @brief maximum eye lid opening (mm)
+static constexpr units::length::millimeter_t kMaxEyeLidOpening{10.0};
+
+/// @brief minimum eye lid opening (mm)
+static constexpr units::length::millimeter_t kMinEyeLidOpening{1.0};
 
 /// @brief Eye State
 enum class EyeState : std::uint8_t
 {
-    kOpenEyes = 0U,
-    kCloseEyes = 1U,
-    kInvalid = 2U
+    kEyesOpen = 0U,
+    kEyesClosed = 1U,
+    kEyesUnknown = 2U,
+    kInvalid = 3U
 };
 
 /// @brief Head Pose
@@ -45,10 +53,9 @@ enum class DegradationState : std::uint8_t
 {
     kNormalOperation = 0U,
     kValidityError = 1U,
-    kOutOfRange = 2U,
-    kCommunicationError = 3U,
-    kSensorBlockage = 4U,
-    kInvalid = 5U
+    kCommunicationError = 2U,
+    kSensorBlockage = 3U,
+    kInvalid = 4U
 };
 
 /// @brief Degradation Information
@@ -115,7 +122,7 @@ struct HeadTracking
 };
 
 /// @brief Driver Camera System Information
-struct DriverCameraSystem
+struct DriverCameraSystemMessage
 {
     /// @brief Time Point for captured data
     std::chrono::system_clock::time_point time_point{};
@@ -161,119 +168,15 @@ inline bool operator!=(const HeadTracking& lhs, const HeadTracking& rhs) noexcep
     return !(lhs == rhs);
 }
 
-inline bool operator==(const DriverCameraSystem& lhs, const DriverCameraSystem& rhs) noexcept
+inline bool operator==(const DriverCameraSystemMessage& lhs, const DriverCameraSystemMessage& rhs) noexcept
 {
-    return ((lhs.head_tracking == rhs.head_tracking) && (lhs.face_tracking == rhs.face_tracking) &&
-            (lhs.gaze_tracking == rhs.gaze_tracking));
+    return ((lhs.time_point == rhs.time_point) && (lhs.head_tracking == rhs.head_tracking) &&
+            (lhs.face_tracking == rhs.face_tracking) && (lhs.gaze_tracking == rhs.gaze_tracking));
 }
 
-inline bool operator!=(const DriverCameraSystem& lhs, const DriverCameraSystem& rhs) noexcept
+inline bool operator!=(const DriverCameraSystemMessage& lhs, const DriverCameraSystemMessage& rhs) noexcept
 {
     return !(lhs == rhs);
-}
-
-inline const char* to_string(const DegradationState& degradation_state)
-{
-    switch (degradation_state)
-    {
-        case DegradationState::kNormalOperation:
-            return "kNormalOperation";
-        case DegradationState::kValidityError:
-            return "kValidityError";
-        case DegradationState::kOutOfRange:
-            return "kOutOfRange";
-        case DegradationState::kCommunicationError:
-            return "kCommunicationError";
-        case DegradationState::kSensorBlockage:
-            return "kSensorBlockage";
-        case DegradationState::kInvalid:
-            return "kInvalid";
-        default:
-            return "ERROR: Unknown DegradationState!";
-    }
-    return "ERROR: Unknown DegradationState!";
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const DegradationState& degradation_state)
-{
-    const char* name = to_string(degradation_state);
-    stream << name;
-    return stream;
-}
-
-inline const char* to_string(const HeadPose& head_pose)
-{
-    switch (head_pose)
-    {
-        case HeadPose::kAttentive:
-            return "kAttentive";
-        case HeadPose::kNotAttentive:
-            return "kNotAttentive";
-        case HeadPose::kInvalid:
-            return "kInvalid";
-        default:
-            return "ERROR: Unknown HeadPose!";
-    }
-    return "ERROR: Unknown HeadPose!";
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const HeadPose& head_pose)
-{
-    const char* name = to_string(head_pose);
-    stream << name;
-    return stream;
-}
-
-inline const char* to_string(const GazePose& gaze_pose)
-{
-    switch (gaze_pose)
-    {
-        case GazePose::kFront:
-            return "kFront";
-        case GazePose::kLeft:
-            return "kLeft";
-        case GazePose::kRight:
-            return "kRight";
-        case GazePose::kDown:
-            return "kDown";
-        case GazePose::kUp:
-            return "kUp";
-        case GazePose::kInvalid:
-            return "kInvalid";
-        default:
-            return "ERROR: Unknown GazePose!";
-    }
-    return "ERROR: Unknown GazePose!";
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const GazePose& gaze_pose)
-{
-    const char* name = to_string(gaze_pose);
-    stream << name;
-    return stream;
-}
-
-inline const char* to_string(const EyeState& eye_state)
-{
-    switch (eye_state)
-    {
-        case EyeState::kOpenEyes:
-            return "kOpenEyes";
-        case EyeState::kCloseEyes:
-            return "kCloseEyes";
-        case EyeState::kInvalid:
-            return "kInvalid";
-        default:
-            return "ERROR: Unknown EyeState!";
-    }
-    return "ERROR: Unknown EyeState!";
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const EyeState& eye_state)
-{
-    const char* name = to_string(eye_state);
-    stream << name;
-    return stream;
 }
 
 }  // namespace perception

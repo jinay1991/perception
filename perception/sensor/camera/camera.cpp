@@ -4,7 +4,7 @@
 ///
 #include "perception/sensor/camera/camera.h"
 
-#include "perception/common/logging/logging.h"
+#include "perception/common/logging.h"
 
 #include <opencv4/opencv2/calib3d.hpp>
 
@@ -15,7 +15,7 @@ namespace perception
 Camera::Camera(const std::string& source)
     : source_{source}, capture_device_{source_}, calibration_{"data/camera_calibration", 9, 6}
 {
-    ASSERT_CHECK(capture_device_.isOpened());
+    CHECK(capture_device_.isOpened());
 }
 
 void Camera::Init()
@@ -47,7 +47,7 @@ void Camera::Shutdown()
 void Camera::SetSource(const std::string source)
 {
     capture_device_.open(source);
-    ASSERT_CHECK(capture_device_.isOpened());
+    CHECK(capture_device_.isOpened());
 
     LOG(INFO) << "Reading " << source << " source.";
 }

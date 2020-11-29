@@ -5,41 +5,30 @@
 #ifndef PERCEPTION_DRIVER_VISUAL_ATTENTION_H
 #define PERCEPTION_DRIVER_VISUAL_ATTENTION_H
 
-#include "perception/driver/i_parameters.h"
-#include "perception/driver/input_service.h"
-#include "perception/driver/output_service.h"
+#include "perception/datatypes/driver.h"
+#include "perception/driver/i_data_source.h"
+#include "perception/driver/i_parameter_handler.h"
 
 namespace perception
 {
 class VisualAttention
 {
   public:
-    explicit VisualAttention(const IParameters& parameters,
-                             const InputService& input_service,
-                             OutputService& output_service)
-        : parameters_{parameters},
-          input_service_{input_service},
-          output_service_{output_service},
-          visual_attention_message_{}
-    {
-    }
+    explicit VisualAttention(const IParameterHandler& parameter_handler, const IDataSource& data_source);
 
-    void Init() {}
+    void Init();
+    void ExecuteStep();
+    void Shutdown();
 
-    void ExecuteStep()
-    {
-        visual_attention_message_.gaze_pose = input_service_.GetGazePose();
-        visual_attention_message_.head_pose = input_service_.GetHeadPose();
-
-        output_service_.UpdateVisualAttention(visual_attention_message_);
-    }
-
-    void Shutdown() {}
+    const VisualAttentionMessage& GetVisualAttentionMessage() const;
 
   private:
-    const IParameters& parameters_;
-    const InputService& input_service_;
-    OutputService& output_service_;
+    HeadPose GetHeadPose() const;
+    bool IsHeadPoseAvailable() const;
+    bool IsHeadPoseAttentive() const;
+
+    const IParameterHandler& parameter_handler_;
+    const IDataSource& data_source_;
 
     VisualAttentionMessage visual_attention_message_;
 };

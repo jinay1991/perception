@@ -4,7 +4,7 @@
 ///
 #include "perception/object/object.h"
 
-#include "perception/common/logging/logging.h"
+#include "perception/common/logging.h"
 
 #include <opencv4/opencv2/calib3d/calib3d.hpp>
 #include <opencv4/opencv2/core.hpp>
@@ -259,7 +259,7 @@ void Object::UpdateOutputs()
     }
 
     LOG(INFO) << "Observed {" << object_list_message_.number_of_valid_objects << "} detected valid objects!";
-    LOG(DEBUG) << object_list_message_;
+    LOG(INFO) << object_list_message_;
 }
 
 ObjectMessage Object::GenerateObjectMessage(const BoundingBox& bounding_box, const LabelId& label_id)
@@ -298,10 +298,10 @@ void Object::UpdateSpatialMatrix(const BoundingBox& bounding_box,
                                  cv::Mat& rotational,
                                  cv::Mat& translation) const
 {
-    const std::vector<cv::Point3d> camera_point_3d{
+    const std::array<cv::Point3d, 4U> camera_point_3d{
         cv::Point3d(0, 0, 1), cv::Point3d(cols, 0, 1), cv::Point3d(cols, rows, 1), cv::Point3d(0, rows, 1)};
 
-    const std::vector<cv::Point2d> object_points_2d{
+    const std::array<cv::Point2d, 4U> object_points_2d{
         cv::Point2d(bounding_box.x, bounding_box.y),
         cv::Point2d(bounding_box.x + bounding_box.width, bounding_box.y),
         cv::Point2d(bounding_box.x + bounding_box.width, bounding_box.y + bounding_box.height),

@@ -7,7 +7,7 @@ cc_library(
     srcs = ["calibration.cpp"],
     hdrs = ["calibration.h"],
     deps = [
-        "//perception/common/logging",
+        "//perception/common",
         "//perception/datatypes",
         "@opencv",
     ],
@@ -22,7 +22,7 @@ cc_library(
     ],
     deps = [
         ":calibration",
-        "//perception/common/logging",
+        "//perception/common",
         "//perception/datatypes",
         "@middleware//middleware/lifecycle",
         "@opencv",

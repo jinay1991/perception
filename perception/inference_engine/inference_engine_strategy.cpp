@@ -4,7 +4,7 @@
 ///
 #include "perception/inference_engine/inference_engine_strategy.h"
 
-#include "perception/common/logging/logging.h"
+#include "perception/common/logging.h"
 #include "perception/inference_engine/null_inference_engine.h"
 #include "perception/inference_engine/opencv_inference_engine.h"
 #include "perception/inference_engine/tf_inference_engine.h"

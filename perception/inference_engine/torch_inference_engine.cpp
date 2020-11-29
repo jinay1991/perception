@@ -4,7 +4,7 @@
 ///
 #include "perception/inference_engine/torch_inference_engine.h"
 
-#include "perception/common/logging/logging.h"
+#include "perception/common/logging.h"
 
 #include <opencv4/opencv2/core.hpp>
 #include <opencv4/opencv2/imgproc.hpp>

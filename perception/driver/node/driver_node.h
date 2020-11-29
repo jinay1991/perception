@@ -10,7 +10,7 @@ namespace perception
 class DriverNode : public middleware::Node
 {
   public:
-    explicit DriverNode(middleware::IPubSubFactory& factor);
+    explicit DriverNode(middleware::IPubSubFactory& factory);
 
     void Init() override;
     void ExecuteStep() override;

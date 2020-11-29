@@ -72,6 +72,9 @@ class ObjectNodeTest : public ::testing::Test
         test_subscriber_.Shutdown();
     }
 
+    ObjectListMessage GetResults() const { return test_subscriber_.GetSample(); }
+
+  private:
     middleware::IntraProcessPubSubFactory factory_;
     const std::string test_image_path_;
     CameraMessage camera_message_;
@@ -88,7 +91,7 @@ TEST_F(ObjectNodeTest, GivenTypicalInputs_ExpectDetectedObjects)
     RunOnce();
 
     // Then
-    const auto actual = test_subscriber_.GetSample();
+    const auto& actual = GetResults();
     EXPECT_EQ(1, actual.number_of_valid_objects);
     EXPECT_EQ(ObjectId::kBicycle, actual.objects.at(0).id);
 }

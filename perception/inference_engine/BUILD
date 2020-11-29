@@ -21,7 +21,7 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//perception/common/logging",
+        "//perception/common",
         "//perception/datatypes",
         "@opencv//:dnn",
         "@tensorflow",
@@ -45,7 +45,7 @@ cc_test(
     visibility = ["//visibility:public"],
     deps = [
         ":inference_engine",
-        "//perception/common/logging",
+        "//perception/common",
         "@googletest//:gtest_main",
         "@opencv",
     ],

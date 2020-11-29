@@ -4,7 +4,7 @@
 ///
 #include "perception/inference_engine/tflite_inference_engine.h"
 
-#include "perception/common/logging/logging.h"
+#include "perception/common/logging.h"
 #include "tensorflow/lite/builtin_op_data.h"
 #include "tensorflow/lite/kernels/register.h"
 #include "tensorflow/lite/optional_debug_tools.h"
@@ -98,15 +98,15 @@ TFLiteInferenceEngine::TFLiteInferenceEngine(const InferenceEngineParameters& pa
 void TFLiteInferenceEngine::Init()
 {
     model_ = tflite::FlatBufferModel::BuildFromFile(model_path_.c_str());
-    ASSERT_CHECK(model_) << "Failed to read model " << model_path_;
+    CHECK(model_) << "Failed to read model " << model_path_;
     model_->error_reporter();
 
     tflite::ops::builtin::BuiltinOpResolver resolver{};
 
     tflite::InterpreterBuilder(*model_, resolver)(&interpreter_);
-    ASSERT_CHECK(interpreter_) << "Failed to construct interpreter";
+    CHECK(interpreter_) << "Failed to construct interpreter";
 
-    ASSERT_CHECK_EQ(interpreter_->AllocateTensors(), TfLiteStatus::kTfLiteOk) << "Failed to allocate tensors!";
+    CHECK_EQ(interpreter_->AllocateTensors(), TfLiteStatus::kTfLiteOk) << "Failed to allocate tensors!";
 
     LOG(INFO) << "Successfully loaded tflite model from '" << model_path_ << "'.";
 }
@@ -179,7 +179,7 @@ void TFLiteInferenceEngine::UpdateInput(const Image& image)
 void TFLiteInferenceEngine::UpdateTensors()
 {
     const auto ret = interpreter_->Invoke();
-    ASSERT_CHECK_EQ(ret, TfLiteStatus::kTfLiteOk) << "Failed to invoke tflite!";
+    CHECK_EQ(ret, TfLiteStatus::kTfLiteOk) << "Failed to invoke tflite!";
 }
 
 void TFLiteInferenceEngine::UpdateOutputs()

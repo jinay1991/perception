@@ -11,16 +11,25 @@
 
 namespace perception
 {
+/// @brief Object Detection Node
 class ObjectNode final : public middleware::Node
 {
   public:
+    /// @brief Constructor
+    /// @param factory[in] Middleware Publisher/Subscriber Factory
     explicit ObjectNode(middleware::IPubSubFactory& factory);
 
+    /// @brief Initialize Object Detection
     void Init() override;
+
+    /// @brief Execute single step for Object Detection
     void ExecuteStep() override;
+
+    /// @brief Shutdown/Deinitialize Object Detection
     void Shutdown() override;
 
   private:
+    /// @brief Instance of Object Detection algorithm
     Object object_;
 };
 }  // namespace perception

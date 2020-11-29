@@ -13,10 +13,9 @@ DriverNode::DriverNode(middleware::IPubSubFactory& factory) : middleware::Node{"
 
 void DriverNode::Init()
 {
-    AddSubscriber<DriverCameraSystemTopic>(
-        [&driver = driver_](const DriverCameraSystemMessage& driver_camera_system_message) {
-            driver.ProcessDriverCameraSystemMessage(driver_camera_system_message);
-        });
+    AddSubscriber<DriverCameraTopic>([&driver = driver_](const DriverCameraMessage& driver_camera_message) {
+        driver.ProcessDriverCameraMessage(driver_camera_message);
+    });
 
     AddPublisher<FatigueTopic>([&driver = driver_] { return driver.GetFatigueMessage(); });
     AddPublisher<VisualAttentionTopic>([&driver = driver_] { return driver.GetVisualAttentionMessage(); });

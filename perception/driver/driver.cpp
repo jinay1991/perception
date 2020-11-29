@@ -32,9 +32,9 @@ void Driver::Shutdown()
     visual_attention_.Shutdown();
 }
 
-void Driver::ProcessDriverCameraSystemMessage(const DriverCameraSystemMessage& driver_camera_system_message)
+void Driver::ProcessDriverCameraMessage(const DriverCameraMessage& driver_camera_message)
 {
-    data_source_.UpdateDriverCameraSystemMessage(driver_camera_system_message);
+    data_source_.UpdateDriverCameraMessage(driver_camera_message);
 }
 
 const VisualAttentionMessage& Driver::GetVisualAttentionMessage() const

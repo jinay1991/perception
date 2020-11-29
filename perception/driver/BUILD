@@ -12,6 +12,19 @@ cc_library(
 )
 
 cc_library(
+    name = "node",
+    srcs = glob(["node/*.cpp"]),
+    hdrs = glob(["node/*.h"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":driver",
+        "//perception/communication:topics",
+        "@middleware//middleware/communication",
+        "@middleware//middleware/lifecycle",
+    ],
+)
+
+cc_library(
     name = "support",
     testonly = True,
     srcs = glob(["test/support/**/*.cpp"]),
@@ -22,23 +35,28 @@ cc_library(
     ],
 )
 
-cc_library(
-    name = "node",
-    srcs = glob(["node/*.cpp"]),
-    hdrs = glob(["node/*.h"]),
+cc_test(
+    name = "node_tests",
+    srcs = ["test/driver_node_tests.cpp"],
+    tags = ["unit"],
     visibility = ["//visibility:public"],
     deps = [
-        ":driver",
-        "//perception/communication:topics",
-        "//perception/datatypes",
-        "@middleware//middleware/communication",
-        "@middleware//middleware/lifecycle",
+        ":node",
+        ":support",
+        "@googletest//:gtest_main",
+        "@middleware//middleware/lifecycle/test:test_support",
     ],
 )
 
 cc_test(
     name = "unit_tests",
-    srcs = glob(["test/*.cpp"]),
+    srcs = [
+        "test/data_source_tests.cpp",
+        "test/driver_camera_message_builder_tests.cpp",
+        "test/driver_tests.cpp",
+        "test/fatigue_tests.cpp",
+        "test/parameter_handler_tests.cpp",
+    ],
     tags = ["unit"],
     visibility = ["//visibility:public"],
     deps = [

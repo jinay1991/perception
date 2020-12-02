@@ -53,7 +53,10 @@ cc_test(
         "//:calibration_data",
         "//:testdata",
     ],
-    tags = ["unit"],
+    tags = [
+        "component",
+        "unit",
+    ],
     deps = [
         ":node",
         "@googletest//:gtest_main",

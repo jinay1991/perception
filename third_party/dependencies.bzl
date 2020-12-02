@@ -1,3 +1,4 @@
+load("@perception//third_party/benchmark:benchmark.bzl", "benchmark")
 load("@perception//third_party/clang:clang.bzl", "clang")
 load("@perception//third_party/compile_commands:compile_commands.bzl", "compile_commands")
 load("@perception//third_party/eigen:eigen.bzl", "eigen")
@@ -18,6 +19,7 @@ load("@perception//third_party/zlib:zlib.bzl", "zlib")
 
 def perception_dependencies():
     """ Load 3rd party dependencies """
+    benchmark()
     clang()
     compile_commands()
     eigen()

@@ -36,7 +36,10 @@ cc_library(
 cc_test(
     name = "node_tests",
     srcs = ["test/object_node_tests.cpp"],
-    tags = ["unit"],
+    tags = [
+        "component",
+        "unit",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         ":node",

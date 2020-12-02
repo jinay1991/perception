@@ -31,14 +31,21 @@ cc_library(
     hdrs = glob(["test/support/**/*.h"]),
     visibility = ["//visibility:public"],
     deps = [
+        "//perception/communication:topics",
         "//perception/datatypes",
+        "@middleware//middleware/communication",
+        "@middleware//middleware/lifecycle",
+        "@middleware//middleware/lifecycle/test:test_support",
     ],
 )
 
 cc_test(
     name = "node_tests",
     srcs = ["test/driver_node_tests.cpp"],
-    tags = ["unit"],
+    tags = [
+        "component",
+        "unit",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         ":node",
@@ -63,5 +70,22 @@ cc_test(
         ":driver",
         ":support",
         "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "benchmark_tests",
+    srcs = [
+        "test/driver_benchmark_tests.cpp",
+    ],
+    tags = [
+        "benchmark",
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":node",
+        ":support",
+        "@benchmark//:benchmark_main",
     ],
 )

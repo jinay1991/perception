@@ -5,7 +5,10 @@ package(default_visibility = ["//visibility:public"])
 cc_test(
     name = "node_tests",
     srcs = ["vehicle_dynamics_node_tests.cpp"],
-    tags = ["unit"],
+    tags = [
+        "component",
+        "unit",
+    ],
     deps = [
         "//perception/communication:topics",
         "//perception/sensor/vehicle_dynamics/node",

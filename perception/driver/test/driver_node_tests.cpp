@@ -3,12 +3,12 @@
 /// @copyright Copyright (c) 2020. MIT License.
 ///
 #include "middleware/communication/intra_process_pub_sub_factory.h"
-#include "middleware/lifecycle/test/single_topic_publisher.h"
-#include "middleware/lifecycle/test/single_topic_subscriber.h"
 #include "perception/communication/topics.h"
 #include "perception/driver/node/driver_node.h"
 #include "perception/driver/test/support/builders/driver_camera_message_builder.h"
+#include "perception/driver/test/support/driver_consumer_node.h"
 #include "perception/driver/test/support/operators.h"
+#include "perception/driver/test/support/simulator_node.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -22,62 +22,46 @@ using ::testing::Field;
 class DriverNodeTest : public ::testing::Test
 {
   public:
-    DriverNodeTest()
-        : factory_{},
-          unit_{factory_},
-          driver_camera_publisher_{"driver_camera_publisher", factory_},
-          fatigue_subscriber_{"fatigue_subscriber", factory_},
-          visual_attention_subscriber_{"visual_attention_subscriber", factory_}
-    {
-    }
+    DriverNodeTest() : factory_{}, unit_{factory_}, consumer_{factory_}, simulator_{factory_} {}
 
   protected:
     void SetUp() override
     {
-        driver_camera_publisher_.Init();
+        simulator_.Init();
         unit_.Init();
-        fatigue_subscriber_.Init();
-        visual_attention_subscriber_.Init();
+        consumer_.Init();
     }
 
     void TearDown() override
     {
-        driver_camera_publisher_.Shutdown();
+        simulator_.Shutdown();
         unit_.Shutdown();
-        fatigue_subscriber_.Shutdown();
-        visual_attention_subscriber_.Shutdown();
+        consumer_.Shutdown();
     }
 
     void RunOnce()
     {
-        driver_camera_publisher_.Step();
+        simulator_.Step();
         unit_.Step();
-        fatigue_subscriber_.Step();
-        visual_attention_subscriber_.Step();
+        consumer_.Step();
     }
 
-    void PublishDriverCameraMessage(const DriverCameraMessage& driver_camera_message)
-    {
-        driver_camera_publisher_.PublishInput(driver_camera_message);
-    }
+    SimulatorNode& GetSimulator() { return simulator_; }
 
-    FatigueMessage GetFatigueMessage() const { return fatigue_subscriber_.GetSample(); }
-    VisualAttentionMessage GetVisualAttentionMessage() const { return visual_attention_subscriber_.GetSample(); }
+    const FatigueMessage& GetFatigueMessage() const { return consumer_.GetFatigueMessage(); }
+    const VisualAttentionMessage& GetVisualAttentionMessage() const { return consumer_.GetVisualAttentionMessage(); }
 
   private:
     middleware::IntraProcessPubSubFactory factory_;
     DriverNode unit_;
-    middleware::SingleTopicPublisher<DriverCameraTopic> driver_camera_publisher_;
-    middleware::SingleTopicSubscriber<FatigueTopic> fatigue_subscriber_;
-    middleware::SingleTopicSubscriber<VisualAttentionTopic> visual_attention_subscriber_;
+    SimulatorNode simulator_;
+    DriverConsumerNode consumer_;
 };
 
 TEST_F(DriverNodeTest, GivenTypicalDriverCameraMessage_ExpectFatigueAndVisualAttention)
 {
     // Given
-    const DriverCameraMessage driver_camera_message =
-        DriverCameraMessageBuilder().WithEyeState(true, 1.0_mm, 2.0_Hz).Build();
-    PublishDriverCameraMessage(driver_camera_message);
+    GetSimulator().LookStraight();
 
     // When
     RunOnce();

@@ -31,7 +31,10 @@ cc_test(
     data = [
         "//:testdata",
     ],
-    tags = ["unit"],
+    tags = [
+        "component",
+        "unit",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         ":node",

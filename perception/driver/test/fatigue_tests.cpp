@@ -48,6 +48,7 @@ class FatigueFixture : public ::testing::Test
     ::testing::StrictMock<ParameterHandlerMock> mocked_parameter_handler_;
     Fatigue fatigue_;
 };
+
 template <typename T>
 class FatigueFixtureT : public FatigueFixture, public ::testing::WithParamInterface<T>
 {

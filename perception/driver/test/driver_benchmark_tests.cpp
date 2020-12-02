@@ -5,7 +5,7 @@
 #include "middleware/communication/intra_process_pub_sub_factory.h"
 #include "perception/driver/node/driver_node.h"
 #include "perception/driver/test/support/driver_consumer_node.h"
-#include "perception/driver/test/support/simulator_node.h"
+#include "perception/driver/test/support/driver_simulator_node.h"
 
 #include <benchmark/benchmark.h>
 
@@ -61,7 +61,7 @@ class DriverBenchmarkFixture : public ::benchmark::Fixture
 
   private:
     middleware::IntraProcessPubSubFactory factory_;
-    SimulatorNode simulator_;
+    DriverSimulatorNode simulator_;
     DriverNode unit_;
     DriverConsumerNode consumer_;
 };

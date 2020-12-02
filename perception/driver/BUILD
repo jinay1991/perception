@@ -60,8 +60,11 @@ cc_test(
     srcs = [
         "test/data_source_tests.cpp",
         "test/driver_camera_message_builder_tests.cpp",
+        "test/driver_consumer_node_tests.cpp",
+        "test/driver_simulator_node_tests.cpp",
         "test/driver_tests.cpp",
         "test/fatigue_tests.cpp",
+        "test/operators_tests.cpp",
         "test/parameter_handler_tests.cpp",
     ],
     tags = ["unit"],

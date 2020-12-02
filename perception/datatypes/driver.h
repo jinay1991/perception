@@ -20,6 +20,15 @@ static constexpr units::length::millimeter_t kMaxEyeLidOpening{10.0};
 /// @brief minimum eye lid opening (mm)
 static constexpr units::length::millimeter_t kMinEyeLidOpening{1.0};
 
+/// @brief Maximum possible yaw angle for human head in range [0, 90]
+static constexpr units::angle::radian_t kMaxHeadPoseYaw{80_deg};
+
+/// @brief Maximum possible pitch angle for human head in range [0, 90]
+static constexpr units::angle::radian_t kMaxHeadPosePitch{30_deg};
+
+/// @brief Maximum possible roll angle for human head in range [0, 90]
+static constexpr units::angle::radian_t kMaxHeadPoseRoll{60_deg};
+
 /// @brief Eye State
 enum class EyeState : std::uint8_t
 {
@@ -175,6 +184,26 @@ inline bool operator==(const DriverCameraMessage& lhs, const DriverCameraMessage
 }
 
 inline bool operator!=(const DriverCameraMessage& lhs, const DriverCameraMessage& rhs) noexcept
+{
+    return !(lhs == rhs);
+}
+
+inline bool operator==(const FatigueMessage& lhs, const FatigueMessage& rhs) noexcept
+{
+    return (lhs.eye_state == rhs.eye_state);
+}
+
+inline bool operator!=(const FatigueMessage& lhs, const FatigueMessage& rhs) noexcept
+{
+    return !(lhs == rhs);
+}
+
+inline bool operator==(const VisualAttentionMessage& lhs, const VisualAttentionMessage& rhs) noexcept
+{
+    return ((lhs.head_pose == rhs.head_pose) && (lhs.gaze_pose == rhs.gaze_pose));
+}
+
+inline bool operator!=(const VisualAttentionMessage& lhs, const VisualAttentionMessage& rhs) noexcept
 {
     return !(lhs == rhs);
 }

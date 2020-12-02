@@ -7,8 +7,8 @@
 #include "perception/driver/node/driver_node.h"
 #include "perception/driver/test/support/builders/driver_camera_message_builder.h"
 #include "perception/driver/test/support/driver_consumer_node.h"
+#include "perception/driver/test/support/driver_simulator_node.h"
 #include "perception/driver/test/support/operators.h"
-#include "perception/driver/test/support/simulator_node.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -46,7 +46,7 @@ class DriverNodeTest : public ::testing::Test
         consumer_.Step();
     }
 
-    SimulatorNode& GetSimulator() { return simulator_; }
+    DriverSimulatorNode& GetSimulator() { return simulator_; }
 
     const FatigueMessage& GetFatigueMessage() const { return consumer_.GetFatigueMessage(); }
     const VisualAttentionMessage& GetVisualAttentionMessage() const { return consumer_.GetVisualAttentionMessage(); }
@@ -54,14 +54,14 @@ class DriverNodeTest : public ::testing::Test
   private:
     middleware::IntraProcessPubSubFactory factory_;
     DriverNode unit_;
-    SimulatorNode simulator_;
+    DriverSimulatorNode simulator_;
     DriverConsumerNode consumer_;
 };
 
 TEST_F(DriverNodeTest, GivenTypicalDriverCameraMessage_ExpectFatigueAndVisualAttention)
 {
     // Given
-    GetSimulator().LookStraight();
+    GetSimulator().LookLeft();
 
     // When
     RunOnce();

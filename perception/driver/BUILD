@@ -66,6 +66,7 @@ cc_test(
         "test/fatigue_tests.cpp",
         "test/operators_tests.cpp",
         "test/parameter_handler_tests.cpp",
+        "test/visual_attention_tests.cpp",
     ],
     tags = ["unit"],
     visibility = ["//visibility:public"],

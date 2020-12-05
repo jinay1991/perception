@@ -6,7 +6,7 @@
 
 namespace perception
 {
-DataSource::DataSource() {}
+DataSource::DataSource() : driver_camera_message_{} {}
 
 void DataSource::UpdateDriverCameraMessage(const DriverCameraMessage& driver_camera_message)
 {

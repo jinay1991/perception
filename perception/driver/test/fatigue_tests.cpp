@@ -36,16 +36,15 @@ class FatigueFixture : public ::testing::Test
 
         fatigue_.Init();
     }
-
     void TearDown() override { fatigue_.Shutdown(); }
     void RunOnce() { fatigue_.ExecuteStep(); }
 
     const FatigueMessage& GetFatigueMessage() const { return fatigue_.GetFatigueMessage(); }
 
-    ::testing::StrictMock<DataSourceMock> mocked_data_source_;
+    ::testing::StrictMock<mock::DataSourceMock> mocked_data_source_;
 
   private:
-    ::testing::StrictMock<ParameterHandlerMock> mocked_parameter_handler_;
+    ::testing::StrictMock<mock::ParameterHandlerMock> mocked_parameter_handler_;
     Fatigue fatigue_;
 };
 
@@ -66,7 +65,7 @@ struct TestEyeStateParam
 using FatigueFixture_WithEyeState = FatigueFixtureT<TestEyeStateParam>;
 
 // clang-format off
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     Fatigue, 
     FatigueFixture_WithEyeState, 
     ::testing::Values(

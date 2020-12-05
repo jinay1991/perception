@@ -17,6 +17,7 @@ template <typename T>
 class OperatorFixtureT : public ::testing::TestWithParam<T>
 {
 };
+
 template <typename T>
 struct TestStringParam
 {
@@ -29,7 +30,7 @@ struct TestStringParam
 
 using OperatorsFixture_WithDegradationState = OperatorFixtureT<TestStringParam<DegradationState>>;
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     Operators,
     OperatorsFixture_WithDegradationState,
     ::testing::Values(TestStringParam<DegradationState>{DegradationState::kNormalOperation, "kNormalOperation"},
@@ -66,12 +67,12 @@ TEST_P(OperatorsFixture_WithDegradationState, stream_operator)
 
 using OperatorsFixture_WithHeadPose = OperatorFixtureT<TestStringParam<HeadPose>>;
 
-INSTANTIATE_TEST_CASE_P(Operators,
-                        OperatorsFixture_WithHeadPose,
-                        ::testing::Values(TestStringParam<HeadPose>{HeadPose::kAttentive, "kAttentive"},
-                                          TestStringParam<HeadPose>{HeadPose::kNotAttentive, "kNotAttentive"},
-                                          TestStringParam<HeadPose>{HeadPose::kInvalid, "kInvalid"},
-                                          TestStringParam<HeadPose>{static_cast<HeadPose>(25U), "ERROR"}));
+INSTANTIATE_TEST_SUITE_P(Operators,
+                         OperatorsFixture_WithHeadPose,
+                         ::testing::Values(TestStringParam<HeadPose>{HeadPose::kAttentive, "kAttentive"},
+                                           TestStringParam<HeadPose>{HeadPose::kNotAttentive, "kNotAttentive"},
+                                           TestStringParam<HeadPose>{HeadPose::kInvalid, "kInvalid"},
+                                           TestStringParam<HeadPose>{static_cast<HeadPose>(25U), "ERROR"}));
 
 TEST_P(OperatorsFixture_WithHeadPose, to_string)
 {
@@ -100,15 +101,15 @@ TEST_P(OperatorsFixture_WithHeadPose, stream_operator)
 
 using OperatorsFixture_WithGazePose = OperatorFixtureT<TestStringParam<GazePose>>;
 
-INSTANTIATE_TEST_CASE_P(Operators,
-                        OperatorsFixture_WithGazePose,
-                        ::testing::Values(TestStringParam<GazePose>{GazePose::kFront, "kFront"},
-                                          TestStringParam<GazePose>{GazePose::kLeft, "kLeft"},
-                                          TestStringParam<GazePose>{GazePose::kRight, "kRight"},
-                                          TestStringParam<GazePose>{GazePose::kDown, "kDown"},
-                                          TestStringParam<GazePose>{GazePose::kUp, "kUp"},
-                                          TestStringParam<GazePose>{GazePose::kInvalid, "kInvalid"},
-                                          TestStringParam<GazePose>{static_cast<GazePose>(25U), "ERROR"}));
+INSTANTIATE_TEST_SUITE_P(Operators,
+                         OperatorsFixture_WithGazePose,
+                         ::testing::Values(TestStringParam<GazePose>{GazePose::kFront, "kFront"},
+                                           TestStringParam<GazePose>{GazePose::kLeft, "kLeft"},
+                                           TestStringParam<GazePose>{GazePose::kRight, "kRight"},
+                                           TestStringParam<GazePose>{GazePose::kDown, "kDown"},
+                                           TestStringParam<GazePose>{GazePose::kUp, "kUp"},
+                                           TestStringParam<GazePose>{GazePose::kInvalid, "kInvalid"},
+                                           TestStringParam<GazePose>{static_cast<GazePose>(25U), "ERROR"}));
 
 TEST_P(OperatorsFixture_WithGazePose, to_string)
 {
@@ -137,13 +138,13 @@ TEST_P(OperatorsFixture_WithGazePose, stream_operator)
 
 using OperatorsFixture_WithEyeState = OperatorFixtureT<TestStringParam<EyeState>>;
 
-INSTANTIATE_TEST_CASE_P(Operators,
-                        OperatorsFixture_WithEyeState,
-                        ::testing::Values(TestStringParam<EyeState>{EyeState::kEyesOpen, "kEyesOpen"},
-                                          TestStringParam<EyeState>{EyeState::kEyesClosed, "kEyesClosed"},
-                                          TestStringParam<EyeState>{EyeState::kEyesUnknown, "kEyesUnknown"},
-                                          TestStringParam<EyeState>{EyeState::kInvalid, "kInvalid"},
-                                          TestStringParam<EyeState>{static_cast<EyeState>(25U), "ERROR"}));
+INSTANTIATE_TEST_SUITE_P(Operators,
+                         OperatorsFixture_WithEyeState,
+                         ::testing::Values(TestStringParam<EyeState>{EyeState::kEyesOpen, "kEyesOpen"},
+                                           TestStringParam<EyeState>{EyeState::kEyesClosed, "kEyesClosed"},
+                                           TestStringParam<EyeState>{EyeState::kEyesUnknown, "kEyesUnknown"},
+                                           TestStringParam<EyeState>{EyeState::kInvalid, "kInvalid"},
+                                           TestStringParam<EyeState>{static_cast<EyeState>(25U), "ERROR"}));
 
 TEST_P(OperatorsFixture_WithEyeState, to_string)
 {

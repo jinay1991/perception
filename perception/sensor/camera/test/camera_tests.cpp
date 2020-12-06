@@ -49,6 +49,10 @@ class CameraTest : public ::testing::Test
 
     void TearDown() override { unit_.Shutdown(); }
 
+    void SetImageSource() { unit_.SetSource(test_image_path_); }
+    void SetVideoSource() { unit_.SetSource(test_video_path_); }
+    void SetInvalidSource() { unit_.SetSource(test_invalid_path_); }
+
     const Image& GetTestVideoFrame() const { return test_video_frame_; }
     const Image& GetTestImage() const { return test_image_; }
     const Image& GetTestImageUndistorted() const { return test_image_undistorted_; }
@@ -57,6 +61,7 @@ class CameraTest : public ::testing::Test
 
     const CameraMessage& GetResults() const { return unit_.GetCameraMessage(); }
 
+  private:
     const std::string test_image_path_;
     const std::string test_video_path_;
     const std::string test_invalid_path_;
@@ -73,7 +78,7 @@ class CameraTest : public ::testing::Test
 TEST_F(CameraTest, GivenTypicalSourceImage_ExpectValidImage)
 {
     // Given
-    unit_.SetSource(test_image_path_);
+    SetImageSource();
 
     // When
     RunOnce();
@@ -97,7 +102,7 @@ TEST_F(CameraTest, GivenTypicalSourceImage_ExpectValidImage)
 TEST_F(CameraTest, GivenTypicalSourceVideo_ExpectValidVideoFrame)
 {
     // Given
-    unit_.SetSource(test_video_path_);
+    SetVideoSource();
 
     // When
     RunOnce();
@@ -112,8 +117,8 @@ TEST_F(CameraTest, GivenTypicalSourceVideo_ExpectValidVideoFrame)
 TEST_F(CameraTest, GivenInvalidSource_ExpectException)
 {
     // Then
-    EXPECT_EXIT(Camera{test_invalid_path_}, ::testing::KilledBySignal(SIGABRT), "");
-    EXPECT_EXIT(unit_.SetSource(test_invalid_path_), ::testing::KilledBySignal(SIGABRT), "");
+    EXPECT_EXIT(Camera{"invalid/source"}, ::testing::KilledBySignal(SIGABRT), "");
+    EXPECT_EXIT(SetInvalidSource(), ::testing::KilledBySignal(SIGABRT), "");
 }
 
 }  // namespace

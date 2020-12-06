@@ -146,63 +146,135 @@ struct DriverCameraMessage
     GazeTracking gaze_tracking{};
 };
 
+/// @brief Equality operator for elementwise comparision for FaceTracking
+///
+/// @param lhs[in] - lvalue (FaceTracking)
+/// @param rhs[in] - rvalue (FaceTracking)
+///
+/// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const FaceTracking& lhs, const FaceTracking& rhs) noexcept
 {
     return ((lhs.eye_visibility == rhs.eye_visibility) && (lhs.eye_lid_opening == rhs.eye_lid_opening) &&
             (lhs.eye_blink_rate == rhs.eye_blink_rate));
 }
 
+/// @brief Inequality operator for elementwise comparision for FaceTracking
+///
+/// @param lhs[in] - lvalue (FaceTracking)
+/// @param rhs[in] - rvalue (FaceTracking)
+///
+/// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const FaceTracking& lhs, const FaceTracking& rhs) noexcept
 {
     return !(lhs == rhs);
 }
 
+/// @brief Equality operator for elementwise comparision for GazeTracking
+///
+/// @param lhs[in] - lvalue (GazeTracking)
+/// @param rhs[in] - rvalue (GazeTracking)
+///
+/// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const GazeTracking& lhs, const GazeTracking& rhs) noexcept
 {
     return ((lhs.yaw == rhs.yaw) && (lhs.pitch == rhs.pitch) && (lhs.roll == rhs.roll));
 }
 
+/// @brief Inequality operator for elementwise comparision for GazeTracking
+///
+/// @param lhs[in] - lvalue (GazeTracking)
+/// @param rhs[in] - rvalue (GazeTracking)
+///
+/// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const GazeTracking& lhs, const GazeTracking& rhs) noexcept
 {
     return !(lhs == rhs);
 }
 
+/// @brief Inequality operator for elementwise comparision for GazeTracking
+///
+/// @param lhs[in] - lvalue (HeadTracking)
+/// @param rhs[in] - rvalue (HeadTracking)
+///
+/// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const HeadTracking& lhs, const HeadTracking& rhs) noexcept
 {
     return ((lhs.yaw == rhs.yaw) && (lhs.pitch == rhs.pitch) && (lhs.roll == rhs.roll));
 }
 
+/// @brief Inequality operator for elementwise comparision for HeadTracking
+///
+/// @param lhs[in] - lvalue (HeadTracking)
+/// @param rhs[in] - rvalue (HeadTracking)
+///
+/// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const HeadTracking& lhs, const HeadTracking& rhs) noexcept
 {
     return !(lhs == rhs);
 }
 
+/// @brief Inequality operator for elementwise comparision for DriverCameraMessage
+///
+/// @param lhs[in] - lvalue (DriverCameraMessage)
+/// @param rhs[in] - rvalue (DriverCameraMessage)
+///
+/// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const DriverCameraMessage& lhs, const DriverCameraMessage& rhs) noexcept
 {
     return ((lhs.time_point == rhs.time_point) && (lhs.head_tracking == rhs.head_tracking) &&
             (lhs.face_tracking == rhs.face_tracking) && (lhs.gaze_tracking == rhs.gaze_tracking));
 }
 
+/// @brief Inequality operator for elementwise comparision for DriverCameraMessage
+///
+/// @param lhs[in] - lvalue (DriverCameraMessage)
+/// @param rhs[in] - rvalue (DriverCameraMessage)
+///
+/// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const DriverCameraMessage& lhs, const DriverCameraMessage& rhs) noexcept
 {
     return !(lhs == rhs);
 }
 
+/// @brief Inequality operator for elementwise comparision for FatigueMessage
+///
+/// @param lhs[in] - lvalue (FatigueMessage)
+/// @param rhs[in] - rvalue (FatigueMessage)
+///
+/// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const FatigueMessage& lhs, const FatigueMessage& rhs) noexcept
 {
     return (lhs.eye_state == rhs.eye_state);
 }
 
+/// @brief Inequality operator for elementwise comparision for FatigueMessage
+///
+/// @param lhs[in] - lvalue (FatigueMessage)
+/// @param rhs[in] - rvalue (FatigueMessage)
+///
+/// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const FatigueMessage& lhs, const FatigueMessage& rhs) noexcept
 {
     return !(lhs == rhs);
 }
 
+/// @brief Inequality operator for elementwise comparision for VisualAttentionMessage
+///
+/// @param lhs[in] - lvalue (VisualAttentionMessage)
+/// @param rhs[in] - rvalue (VisualAttentionMessage)
+///
+/// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const VisualAttentionMessage& lhs, const VisualAttentionMessage& rhs) noexcept
 {
     return ((lhs.head_pose == rhs.head_pose) && (lhs.gaze_pose == rhs.gaze_pose));
 }
 
+/// @brief Inequality operator for elementwise comparision for VisualAttentionMessage
+///
+/// @param lhs[in] - lvalue (VisualAttentionMessage)
+/// @param rhs[in] - rvalue (VisualAttentionMessage)
+///
+/// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const VisualAttentionMessage& lhs, const VisualAttentionMessage& rhs) noexcept
 {
     return !(lhs == rhs);

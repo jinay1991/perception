@@ -21,7 +21,7 @@ void CameraNode::Init()
 
 void CameraNode::InitPublisher()
 {
-    AddPublisher<CameraTopic>([this]() { return camera_.GetCameraMessage(); });
+    AddPublisher<CameraTopic>([this] { return camera_.GetCameraMessage(); });
 }
 
 void CameraNode::ExecuteStep()

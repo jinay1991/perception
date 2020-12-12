@@ -1,4 +1,4 @@
-load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
     name = "inference_engine",
@@ -27,26 +27,5 @@ cc_library(
         "@tensorflow",
         "@tensorflowlite",
         "@torch",
-    ],
-)
-
-cc_test(
-    name = "unit_tests",
-    srcs = ["test/inference_engine_tests.cpp"],
-    data = [
-        "//:testdata",
-        "@ssd_mobilenet_v2_coco//:frozen_graph",
-        "@ssd_mobilenet_v2_coco//:saved_model",
-        "@ssd_mobilenet_v2_coco//:tflite",
-        "@ssd_mobilenet_v2_coco//:torch",
-    ],
-    linkstatic = True,
-    tags = ["unit"],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":inference_engine",
-        "//perception/common",
-        "@googletest//:gtest_main",
-        "@opencv",
     ],
 )

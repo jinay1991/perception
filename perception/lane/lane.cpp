@@ -11,7 +11,7 @@
 
 namespace perception
 {
-Lane::Lane() : lane_message_{}, camera_message_{} {}
+Lane::Lane() : camera_message_{}, lane_message_{} {}
 
 void Lane::Init() {}
 

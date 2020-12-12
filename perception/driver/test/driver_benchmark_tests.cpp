@@ -29,8 +29,6 @@ class DriverBenchmarkFixture : public ::benchmark::Fixture
         simulator_.Init();
         unit_.Init();
         consumer_.Init();
-
-        simulator_.LookStraight();
     }
 
     void TearDown(const benchmark::State& /* state */) override
@@ -56,6 +54,8 @@ class DriverBenchmarkFixture : public ::benchmark::Fixture
         }
     }
 
+    void LookStraight() { simulator_.LookStraight(); }
+
     const FatigueMessage& GetFatigueMessage() const { return consumer_.GetFatigueMessage(); }
     const VisualAttentionMessage& GetVisualAttentionMessage() const { return consumer_.GetVisualAttentionMessage(); }
 
@@ -68,6 +68,7 @@ class DriverBenchmarkFixture : public ::benchmark::Fixture
 
 BENCHMARK_F(DriverBenchmarkFixture, DriverIsLookingStraight)(benchmark::State& state)
 {
+    LookStraight();
     RunBenchmarkTest(state);
 }
 

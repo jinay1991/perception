@@ -11,6 +11,8 @@
 
 namespace perception
 {
+namespace mock
+{
 class ParameterHandlerMock : public IParameterHandler
 {
   public:
@@ -20,5 +22,6 @@ class ParameterHandlerMock : public IParameterHandler
     MOCK_CONST_METHOD0(GetMinEyeLidOpening, units::length::millimeter_t());
     MOCK_CONST_METHOD0(GetEyeBlinkRate, units::frequency::hertz_t());
 };
+}  // namespace mock
 }  // namespace perception
 #endif  // PERCEPTION_DRIVER_TEST_SUPPORT_MOCKS_PARAMETER_HANDLER_MOCK_H

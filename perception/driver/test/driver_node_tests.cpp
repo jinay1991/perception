@@ -54,8 +54,8 @@ class DriverNodeTest : public ::testing::Test
   private:
     middleware::IntraProcessPubSubFactory factory_;
     DriverNode unit_;
-    DriverSimulatorNode simulator_;
     DriverConsumerNode consumer_;
+    DriverSimulatorNode simulator_;
 };
 
 TEST_F(DriverNodeTest, GivenTypicalDriverCameraMessage_ExpectFatigueAndVisualAttention)

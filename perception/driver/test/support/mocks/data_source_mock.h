@@ -11,6 +11,8 @@
 
 namespace perception
 {
+namespace mock
+{
 class DataSourceMock : public IDataSource
 {
   public:
@@ -23,5 +25,6 @@ class DataSourceMock : public IDataSource
     MOCK_CONST_METHOD0(GetHeadTracking, const HeadTracking&());
     MOCK_CONST_METHOD0(GetGazeTracking, const GazeTracking&());
 };
+}  // namespace mock
 }  // namespace perception
 #endif  // PERCEPTION_DRIVER_TEST_SUPPORT_MOCKS_DATA_SOURCE_MOCK_H

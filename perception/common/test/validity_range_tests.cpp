@@ -28,7 +28,7 @@ class ValidityRangeFixture_InRange : public ::testing::TestWithParam<TestInRange
 };
 
 // clang-format off
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     ValidityRange,
     ValidityRangeFixture_InRange,
     ::testing::Values(

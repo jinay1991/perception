@@ -91,3 +91,8 @@ cc_library(
     name = "opencv",
     deps = MODULES,
 )
+
+filegroup(
+    name = "haarcascades",
+    srcs = glob(["share/opencv4/haarcascades/*.xml"]),
+)

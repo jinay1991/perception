@@ -129,11 +129,11 @@ TEST_P(InferenceEngineStrategyTest, GivenInferenceEngine_ExpectSelectedEngine)
 
     EXPECT_EQ(GetParam(), unit_.GetInferenceEngineType());
 }
-INSTANTIATE_TEST_CASE_P(InferenceEngine,
-                        InferenceEngineStrategyTest,
-                        ::testing::Values(InferenceEngineType::kTensorFlow,
-                                          InferenceEngineType::kTensorFlowLite,
-                                          InferenceEngineType::kTorch,
-                                          InferenceEngineType::kOpenCV));
+INSTANTIATE_TEST_SUITE_P(InferenceEngine,
+                         InferenceEngineStrategyTest,
+                         ::testing::Values(InferenceEngineType::kTensorFlow,
+                                           InferenceEngineType::kTensorFlowLite,
+                                           InferenceEngineType::kTorch,
+                                           InferenceEngineType::kOpenCV));
 }  // namespace
 }  // namespace perception

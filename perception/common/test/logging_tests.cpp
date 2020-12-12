@@ -12,9 +12,9 @@ namespace perception
 namespace
 {
 
-TEST(LoggingTest, LoggingMacro_Sanity)
+TEST(LoggingTest, BasicLoggingMacro_INFO)
 {
-    const std::string test_log{"Sanity Test!!"};
+    const std::string test_log{"Sanity Test for LogSeverityLevel = INFO!!"};
     ::testing::internal::CaptureStderr();
 
     LOG(INFO) << test_log;
@@ -22,5 +22,28 @@ TEST(LoggingTest, LoggingMacro_Sanity)
     const std::string result = ::testing::internal::GetCapturedStderr();
     EXPECT_THAT(result, ::testing::HasSubstr(test_log));
 }
+
+TEST(LoggingTest, BasicLoggingMacro_WARN)
+{
+    const std::string test_log{"Sanity Test for LogSeverityLevel = WARNING!!"};
+    ::testing::internal::CaptureStderr();
+
+    LOG(WARNING) << test_log;
+
+    const std::string result = ::testing::internal::GetCapturedStderr();
+    EXPECT_THAT(result, ::testing::HasSubstr(test_log));
+}
+
+TEST(LoggingTest, BasicLoggingMacro_ERROR)
+{
+    const std::string test_log{"Sanity Test for LogSeverityLevel = ERROR!!"};
+    ::testing::internal::CaptureStderr();
+
+    LOG(ERROR) << test_log;
+
+    const std::string result = ::testing::internal::GetCapturedStderr();
+    EXPECT_THAT(result, ::testing::HasSubstr(test_log));
+}
+
 }  // namespace
 }  // namespace perception

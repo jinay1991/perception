@@ -57,7 +57,7 @@ bool Fatigue::IsFaceVisible() const
 
 bool Fatigue::IsEyeVisible() const
 {
-    return ((data_source_.IsEyeVisible()) && (data_source_.GetEyeBlinkRate() < parameter_handler_.GetEyeBlinkRate()));
+    return ((data_source_.IsEyeVisible()) && (data_source_.GetEyeBlinkRate() <= parameter_handler_.GetEyeBlinkRate()));
 }
 
 bool Fatigue::IsEyeOpen() const

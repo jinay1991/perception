@@ -61,6 +61,7 @@ class DriverNodeTest : public ::testing::Test
 TEST_F(DriverNodeTest, GivenTypicalDriverCameraMessage_ExpectFatigueAndVisualAttention)
 {
     // Given
+    GetSimulator().ShowFace();
     GetSimulator().CloseEyes();
     GetSimulator().LookLeft();
 

@@ -12,7 +12,7 @@ namespace perception
 using namespace units::literals;
 
 /// @brief maximum eye blink rate (hertz)
-static constexpr units::frequency::hertz_t kMaxEyeBlinkRate{10.0};
+static constexpr units::frequency::hertz_t kMaxEyeBlinkRate{30.0};
 
 /// @brief maximum eye lid opening (mm)
 static constexpr units::length::millimeter_t kMaxEyeLidOpening{10.0};

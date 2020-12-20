@@ -21,9 +21,8 @@ class FaceDetect
 
   private:
     void IdentifyFaces(const Image& image);
-    void IdentifyEyes(const Image& image);
 
-    FaceList face_list_;
+    Faces face_list_;
 };
 }  // namespace perception
 #endif  /// PERCEPTION_SENSOR_DRIVER_CAMERA_FACE_DETECT_H

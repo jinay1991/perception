@@ -10,81 +10,25 @@
 namespace perception
 {
 
-inline const char* to_string(const DegradationState& degradation_state)
+inline const char* to_string(const AttentionState& attention_state)
 {
-    switch (degradation_state)
+    switch (attention_state)
     {
-        case DegradationState::kNormalOperation:
-            return "kNormalOperation";
-        case DegradationState::kValidityError:
-            return "kValidityError";
-        case DegradationState::kCommunicationError:
-            return "kCommunicationError";
-        case DegradationState::kSensorBlockage:
-            return "kSensorBlockage";
-        case DegradationState::kInvalid:
-            return "kInvalid";
-        default:
-            return "ERROR: Unknown DegradationState!";
-    }
-    return "ERROR: Unknown DegradationState!";
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const DegradationState& degradation_state)
-{
-    const char* name = to_string(degradation_state);
-    stream << name;
-    return stream;
-}
-
-inline const char* to_string(const HeadPose& head_pose)
-{
-    switch (head_pose)
-    {
-        case HeadPose::kAttentive:
+        case AttentionState::kAttentive:
             return "kAttentive";
-        case HeadPose::kNotAttentive:
+        case AttentionState::kNotAttentive:
             return "kNotAttentive";
-        case HeadPose::kInvalid:
+        case AttentionState::kInvalid:
             return "kInvalid";
         default:
-            return "ERROR: Unknown HeadPose!";
+            return "ERROR: Unknown AttentionState!";
     }
-    return "ERROR: Unknown HeadPose!";
+    return "ERROR: Unknown AttentionState!";
 }
 
-inline std::ostream& operator<<(std::ostream& stream, const HeadPose& head_pose)
+inline std::ostream& operator<<(std::ostream& stream, const AttentionState& attention_state)
 {
-    const char* name = to_string(head_pose);
-    stream << name;
-    return stream;
-}
-
-inline const char* to_string(const GazePose& gaze_pose)
-{
-    switch (gaze_pose)
-    {
-        case GazePose::kFront:
-            return "kFront";
-        case GazePose::kLeft:
-            return "kLeft";
-        case GazePose::kRight:
-            return "kRight";
-        case GazePose::kDown:
-            return "kDown";
-        case GazePose::kUp:
-            return "kUp";
-        case GazePose::kInvalid:
-            return "kInvalid";
-        default:
-            return "ERROR: Unknown GazePose!";
-    }
-    return "ERROR: Unknown GazePose!";
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const GazePose& gaze_pose)
-{
-    const char* name = to_string(gaze_pose);
+    const char* name = to_string(attention_state);
     stream << name;
     return stream;
 }

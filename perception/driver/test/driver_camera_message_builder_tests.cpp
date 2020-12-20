@@ -40,7 +40,7 @@ TEST(DriverCameraMessageBuilderTest, WithTimePoint_GivenTypicalTimePoint_ExpectU
 TEST(DriverCameraMessageBuilderTest, WithFaceTracking_GivenTypicalFaceTracking_ExpectUpdatedDriverCameraMessage)
 {
     // Given
-    const FaceTracking face_tracking{true, 10.0_mm, 2.0_Hz};
+    const FaceTracking face_tracking{true, true, 10.0_mm, 2.0_Hz};
 
     // When
     const auto result = DriverCameraMessageBuilder().WithFaceTracking(face_tracking).Build();
@@ -102,13 +102,15 @@ TEST(DriverCameraMessageBuilderTest, WithGazePose_GivenTypicalGazePose_ExpectUpd
 TEST(DriverCameraMessageBuilderTest, WithEyesState_GivenTypicalEyesState_ExpectUpdatedDriverCameraMessage)
 {
     // Given
-    const FaceTracking face_tracking{true, 10.0_mm, 2.0_Hz};
+    const FaceTracking face_tracking{true, true, 10.0_mm, 2.0_Hz};
 
     // When
-    const auto result =
-        DriverCameraMessageBuilder()
-            .WithEyeState(face_tracking.eye_visibility, face_tracking.eye_lid_opening, face_tracking.eye_blink_rate)
-            .Build();
+    const auto result = DriverCameraMessageBuilder()
+                            .WithEyeState(face_tracking.face_visibility,
+                                          face_tracking.eye_visibility,
+                                          face_tracking.eye_lid_opening,
+                                          face_tracking.eye_blink_rate)
+                            .Build();
 
     // Then
     EXPECT_EQ(result.face_tracking, face_tracking);

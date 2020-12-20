@@ -16,7 +16,7 @@ void VisualAttention::Init() {}
 
 void VisualAttention::ExecuteStep()
 {
-    visual_attention_message_.head_pose = GetHeadPose();
+    visual_attention_message_.attention_state = GetAttentionState();
 }
 
 void VisualAttention::Shutdown() {}
@@ -26,36 +26,36 @@ const VisualAttentionMessage& VisualAttention::GetVisualAttentionMessage() const
     return visual_attention_message_;
 }
 
-HeadPose VisualAttention::GetHeadPose() const
+AttentionState VisualAttention::GetAttentionState() const
 {
-    HeadPose head_pose{HeadPose::kInvalid};
+    AttentionState attention_state{AttentionState::kInvalid};
 
     if (IsHeadPoseAvailable())
     {
         if (IsHeadPoseAttentive())
         {
-            head_pose = HeadPose::kAttentive;
+            attention_state = AttentionState::kAttentive;
         }
         else
         {
-            head_pose = HeadPose::kNotAttentive;
+            attention_state = AttentionState::kNotAttentive;
         }
     }
     else
     {
-        head_pose = HeadPose::kInvalid;
+        attention_state = AttentionState::kInvalid;
     }
 
-    return head_pose;
+    return attention_state;
 }
 
 bool VisualAttention::IsHeadPoseAvailable() const
 {
-    return true;
+    return (data_source_.GetHeadTracking().yaw == 0.0_rad);
 }
 
 bool VisualAttention::IsHeadPoseAttentive() const
 {
-    return true;
+    return (data_source_.GetHeadTracking().yaw == 0.0_rad);
 }
 }  // namespace perception

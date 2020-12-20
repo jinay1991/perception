@@ -18,6 +18,7 @@ class IDataSource
     virtual const HeadTracking& GetHeadTracking() const = 0;
     virtual const GazeTracking& GetGazeTracking() const = 0;
 
+    virtual bool IsFaceVisible() const = 0;
     virtual bool IsEyeVisible() const = 0;
     virtual units::length::millimeter_t GetEyeLidOpening() const = 0;
     virtual units::frequency::hertz_t GetEyeBlinkRate() const = 0;

@@ -24,6 +24,7 @@ class Fatigue
 
   private:
     EyeState GetEyeState() const;
+    bool IsFaceVisible() const;
     bool IsEyeVisible() const;
     bool IsEyeOpen() const;
 

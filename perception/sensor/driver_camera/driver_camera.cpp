@@ -6,6 +6,7 @@
 
 #include "perception/common/logging.h"
 
+#include <opencv4/opencv2/core.hpp>
 #include <opencv4/opencv2/imgproc.hpp>
 
 #include <iterator>
@@ -80,14 +81,12 @@ void DriverCamera::UpdateFacialFeatureList()
                        std::vector<cv::Rect> detected_right_eye{};
                        left_eye_cascade.detectMultiScale(detected_face, detected_left_eye);
                        right_eye_cascade.detectMultiScale(detected_face, detected_right_eye);
-                       CHECK(!detected_left_eye.empty());
-                       CHECK(!detected_right_eye.empty());
 
-                       DLOG(INFO) << "Found Left + Right eyes for identified face";
+                       const cv::Rect invalid_box{0, 0, 0, 0};
                        FacialFeature facial_feature{};
                        facial_feature.face = face;
-                       facial_feature.eyes.left = detected_left_eye.at(0U);
-                       facial_feature.eyes.right = detected_right_eye.at(0U);
+                       facial_feature.eyes.left = detected_left_eye.empty() ? invalid_box : detected_left_eye.at(0U);
+                       facial_feature.eyes.right = detected_right_eye.empty() ? invalid_box : detected_right_eye.at(0U);
                        return facial_feature;
                    });
 }

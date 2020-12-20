@@ -69,7 +69,8 @@ TEST_F(DriverCameraFixture, DriverCamera_GivenTypicalCameraMessage_ExpectUpdated
     const auto& actual = GetDriverCameraMessage();
     EXPECT_THAT(actual,
                 Field(&DriverCameraMessage::face_tracking,
-                      AllOf(Field(&FaceTracking::eye_visibility, false),
+                      AllOf(Field(&FaceTracking::face_visibility, false),
+                            Field(&FaceTracking::eye_visibility, false),
                             Field(&FaceTracking::eye_lid_opening, 0_mm),
                             Field(&FaceTracking::eye_blink_rate, 0.0_Hz))));
 }

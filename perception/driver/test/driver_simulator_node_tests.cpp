@@ -62,7 +62,8 @@ TEST_F(DriverSimulatorNodeFixture, Initialization_GivenDriverSimulator_ExpectDef
     // Then
     EXPECT_THAT(GetDriverCameraMessage(),
                 AllOf(Field(&DriverCameraMessage::face_tracking,
-                            AllOf(Field(&FaceTracking::eye_blink_rate, 1.0_Hz),
+                            AllOf(Field(&FaceTracking::face_visibility, true),
+                                  Field(&FaceTracking::eye_blink_rate, 1.0_Hz),
                                   Field(&FaceTracking::eye_visibility, true),
                                   Field(&FaceTracking::eye_lid_opening, 1.0_mm))),
                       Field(&DriverCameraMessage::head_tracking,

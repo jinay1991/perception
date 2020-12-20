@@ -69,13 +69,14 @@ INSTANTIATE_TEST_SUITE_P(
     Fatigue, 
     FatigueFixture_WithEyeState, 
     ::testing::Values(
-        //                  eye_visible, eye_lid_opening, eye_blink_rate, (expected) eye_state
-        TestEyeStateParam{{       true,          1.1_mm,         1.0_Hz}, EyeState::kEyesOpen},
-        TestEyeStateParam{{      false,          1.1_mm,         1.0_Hz}, EyeState::kEyesUnknown},
-        TestEyeStateParam{{       true,          1.1_mm,        11.0_Hz}, EyeState::kEyesUnknown},
-        TestEyeStateParam{{       true,          1.0_mm,         1.0_Hz}, EyeState::kEyesClosed},
-        TestEyeStateParam{{       true,         10.0_mm,         1.0_Hz}, EyeState::kEyesClosed},
-        TestEyeStateParam{{       true,          5.0_mm,         1.0_Hz}, EyeState::kEyesOpen}
+        //                face_visible, eye_visible, eye_lid_opening, eye_blink_rate, (expected) eye_state
+        TestEyeStateParam{{       true,       true,          1.1_mm,         1.0_Hz}, EyeState::kEyesOpen   },
+        TestEyeStateParam{{       true,      false,          1.1_mm,         1.0_Hz}, EyeState::kEyesUnknown},
+        TestEyeStateParam{{       true,       true,          1.1_mm,        11.0_Hz}, EyeState::kEyesUnknown},
+        TestEyeStateParam{{       true,       true,          1.0_mm,         1.0_Hz}, EyeState::kEyesClosed },
+        TestEyeStateParam{{       true,       true,         10.0_mm,         1.0_Hz}, EyeState::kEyesClosed },
+        TestEyeStateParam{{       true,       true,          5.0_mm,         1.0_Hz}, EyeState::kEyesOpen   },
+        TestEyeStateParam{{      false,       true,          5.0_mm,         1.0_Hz}, EyeState::kEyesUnknown}
 ));
 // clang-format on
 
@@ -83,6 +84,7 @@ TEST_P(FatigueFixture_WithEyeState, Fatigue_GiveTypicalFaceTracking_ExpectUpdate
 {
     // Given
     const auto param = GetParam();
+    EXPECT_CALL(mocked_data_source_, IsFaceVisible()).WillRepeatedly(Return(param.face_tracking.face_visibility));
     EXPECT_CALL(mocked_data_source_, IsEyeVisible()).WillRepeatedly(Return(param.face_tracking.eye_visibility));
     EXPECT_CALL(mocked_data_source_, GetEyeLidOpening()).WillRepeatedly(Return(param.face_tracking.eye_lid_opening));
     EXPECT_CALL(mocked_data_source_, GetEyeBlinkRate()).WillRepeatedly(Return(param.face_tracking.eye_blink_rate));

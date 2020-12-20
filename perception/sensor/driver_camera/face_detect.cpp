@@ -18,8 +18,9 @@ void FaceDetect::Detect(const Image& image)
     face_cascade_.detectMultiScale(gray, faces_);
 }
 
-const std::vector<cv::Rect>& FaceDetect::GetFaces() const
+const Faces& FaceDetect::GetFaces() const
 {
-    return faces;
+    return face_list_;
 }
+
 }  // namespace perception

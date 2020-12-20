@@ -23,6 +23,7 @@ cc_test(
         "fatigue_tests.cpp",
         "operators_tests.cpp",
         "parameter_handler_tests.cpp",
+        "parameters_tests.cpp",
         "perclos_tests.cpp",
         "visual_attention_tests.cpp",
     ],

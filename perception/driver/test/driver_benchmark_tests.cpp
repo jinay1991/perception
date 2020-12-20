@@ -14,10 +14,6 @@ namespace perception
 namespace
 {
 
-class Simulator
-{
-};
-
 class DriverBenchmarkFixture : public ::benchmark::Fixture
 {
   public:

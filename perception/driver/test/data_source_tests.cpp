@@ -14,7 +14,6 @@ namespace
 {
 
 using ::testing::AllOf;
-using ::testing::Field;
 using ::testing::Property;
 
 class DataSourceTest : public ::testing::Test
@@ -34,15 +33,15 @@ class DataSourceTest : public ::testing::Test
     DataSource data_source_;
 };
 
-TEST_F(DataSourceTest, UpdateDriverCameraMessage_GivenTypicalDriverCameraMessage_ExpectUpatedDataSource)
+TEST_F(DataSourceTest, UpdateDriverCameraMessage_GivenTypicalDriverCameraMessage_ExpectUpdatedDataSource)
 {
     // Given
-    const DriverCameraMessage driver_camera_message = DriverCameraMessageBuilder()
-                                                          .WithTimePoint(std::chrono::system_clock::now())
-                                                          .WithEyeState(true, true, 10.0_mm, 2.0_Hz)
-                                                          .WithHeadPose(0.01_rad, 0.01_rad, 0.01_rad)
-                                                          .WithGazePose(0.01_rad, 0.01_rad, 0.01_rad)
-                                                          .Build();
+    const DriverCameraMessage& driver_camera_message = DriverCameraMessageBuilder()
+                                                           .WithTimePoint(std::chrono::system_clock::now())
+                                                           .WithEyeState(true, true, 10.0_mm, 2.0_Hz)
+                                                           .WithHeadPose(0.01_rad, 0.01_rad, 0.01_rad)
+                                                           .WithGazePose(0.01_rad, 0.01_rad, 0.01_rad)
+                                                           .Build();
 
     // When
     UpdateDriverCameraMessage(driver_camera_message);

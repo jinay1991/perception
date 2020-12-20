@@ -16,7 +16,7 @@ namespace
 TEST(DriverCameraMessageBuilderTest, DefaultConstructor_ExpectDefaultDriverCameraMessage)
 {
     // Given
-    const DriverCameraMessage driver_camera_message{};
+    constexpr DriverCameraMessage driver_camera_message{};
 
     // When
     const auto result = DriverCameraMessageBuilder().Build();

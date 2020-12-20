@@ -14,7 +14,22 @@ namespace
 using namespace units::literals;
 using namespace std::chrono_literals;
 
+using ::testing::AllOf;
+using ::testing::Field;
+
+/// @brief Test Timpoint
 constexpr std::chrono::system_clock::time_point kTimepoint{10ms};
+
+TEST(Driver, GlobalConstants)
+{
+    // Then
+    EXPECT_EQ(kMaxEyeBlinkRate, 10.0_Hz);
+    EXPECT_EQ(kMaxEyeLidOpening, 10.0_mm);
+    EXPECT_EQ(kMinEyeLidOpening, 1.0_mm);
+    EXPECT_EQ(kMaxHeadPoseYaw, 80_deg);
+    EXPECT_EQ(kMaxHeadPosePitch, 30_deg);
+    EXPECT_EQ(kMaxHeadPoseRoll, 60_deg);
+}
 
 template <typename T>
 class OperatorsFixtureT : public ::testing::TestWithParam<T>
@@ -76,6 +91,19 @@ TEST_P(OperatorsFixture_WithFaceTracking, NotEquals)
     EXPECT_NE(is_not_same, param.is_same);
 }
 
+TEST(FaceTracking, InitialValues)
+{
+    // Given
+    constexpr FaceTracking face_tracking{};
+
+    // Then
+    EXPECT_THAT(face_tracking,
+                AllOf(Field(&FaceTracking::face_visibility, false),
+                      Field(&FaceTracking::eye_visibility, false),
+                      Field(&FaceTracking::eye_lid_opening, 0.0_mm),
+                      Field(&FaceTracking::eye_blink_rate, 0.0_Hz)));
+}
+
 using OperatorsFixture_WithGazeTracking = OperatorsFixtureT<TestEqualityParam<GazeTracking>>;
 
 // clang-format off
@@ -118,6 +146,18 @@ TEST_P(OperatorsFixture_WithGazeTracking, NotEquals)
     EXPECT_NE(is_not_same, param.is_same);
 }
 
+TEST(GazeTracking, InitialValues)
+{
+    // Given
+    constexpr GazeTracking gaze_tracking{};
+
+    // Then
+    EXPECT_THAT(gaze_tracking,
+                AllOf(Field(&GazeTracking::yaw, 0.0_rad),
+                      Field(&GazeTracking::pitch, 0.0_rad),
+                      Field(&GazeTracking::roll, 0.0_rad)));
+}
+
 using OperatorsFixture_WithHeadTracking = OperatorsFixtureT<TestEqualityParam<HeadTracking>>;
 
 // clang-format off
@@ -158,6 +198,18 @@ TEST_P(OperatorsFixture_WithHeadTracking, NotEquals)
 
     // Then
     EXPECT_NE(is_not_same, param.is_same);
+}
+
+TEST(HeadTracking, InitialValues)
+{
+    // Given
+    constexpr HeadTracking head_tracking{};
+
+    // Then
+    EXPECT_THAT(head_tracking,
+                AllOf(Field(&HeadTracking::yaw, 0.0_rad),
+                      Field(&HeadTracking::pitch, 0.0_rad),
+                      Field(&HeadTracking::roll, 0.0_rad)));
 }
 
 using OperatorsFixture_WithFatigueMessage = OperatorsFixtureT<TestEqualityParam<FatigueMessage>>;
@@ -204,6 +256,18 @@ TEST_P(OperatorsFixture_WithFatigueMessage, NotEquals)
     EXPECT_NE(is_not_same, param.is_same);
 }
 
+TEST(FatigueMessage, InitialValues)
+{
+    // Given
+    constexpr FatigueMessage fatigue_message{};
+
+    // Then
+    EXPECT_THAT(fatigue_message,
+                AllOf(Field(&FatigueMessage::eye_state, EyeState::kInvalid),
+                      Field(&FatigueMessage::level, FatigueLevel::kInvalid),
+                      Field(&FatigueMessage::confidence, 0.0)));
+}
+
 using OperatorsFixture_WithVisualAttentionMessage = OperatorsFixtureT<TestEqualityParam<VisualAttentionMessage>>;
 
 // clang-format off
@@ -243,6 +307,15 @@ TEST_P(OperatorsFixture_WithVisualAttentionMessage, NotEquals)
 
     // Then
     EXPECT_NE(is_not_same, param.is_same);
+}
+
+TEST(VisualAttentionMessage, InitialValues)
+{
+    // Given
+    constexpr VisualAttentionMessage visual_attention_message{};
+
+    // Then
+    EXPECT_THAT(visual_attention_message, Field(&VisualAttentionMessage::attention_state, AttentionState::kInvalid));
 }
 
 using OperatorsFixture_WithDriverCameraMessage = OperatorsFixtureT<TestEqualityParam<DriverCameraMessage>>;
@@ -288,5 +361,21 @@ TEST_P(OperatorsFixture_WithDriverCameraMessage, NotEquals)
     // Then
     EXPECT_NE(is_not_same, param.is_same);
 }
+
+TEST(DriverCameraMessage, InitialValues)
+{
+    // Given
+    constexpr DriverCameraMessage driver_camera_message{};
+    constexpr FaceTracking default_face_tracking{};
+    constexpr GazeTracking default_gaze_tracking{};
+    constexpr HeadTracking default_head_tracking{};
+
+    // Then
+    EXPECT_THAT(driver_camera_message,
+                AllOf(Field(&DriverCameraMessage::face_tracking, default_face_tracking),
+                      Field(&DriverCameraMessage::head_tracking, default_head_tracking),
+                      Field(&DriverCameraMessage::gaze_tracking, default_gaze_tracking)));
+}
+
 }  // namespace
 }  // namespace perception

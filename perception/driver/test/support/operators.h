@@ -57,4 +57,31 @@ inline std::ostream& operator<<(std::ostream& stream, const EyeState& eye_state)
     stream << name;
     return stream;
 }
+
+inline const char* to_string(const FatigueLevel& fatigue_level)
+{
+    switch (fatigue_level)
+    {
+        case FatigueLevel::kAwake:
+            return "kAwake";
+        case FatigueLevel::kDrowsy:
+            return "kDrowsy";
+        case FatigueLevel::kBeginningSleep:
+            return "kBeginningSleep";
+        case FatigueLevel::kSleep:
+            return "kSleep";
+        case FatigueLevel::kInvalid:
+            return "kInvalid";
+        default:
+            return "ERROR: Unknown FatigueLevel!";
+    }
+    return "ERROR: Unknown FatigueLevel!";
+}
+
+inline std::ostream& operator<<(std::ostream& stream, const FatigueLevel& fatigue_level)
+{
+    const char* name = to_string(fatigue_level);
+    stream << name;
+    return stream;
+}
 }  // namespace perception

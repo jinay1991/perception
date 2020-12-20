@@ -58,7 +58,7 @@ DriverCameraMessageBuilder& DriverCameraMessageBuilder::WithEyeState(const bool 
     return WithFaceTracking(face_tracking);
 }
 
-DriverCameraMessage DriverCameraMessageBuilder::Build() const
+const DriverCameraMessage& DriverCameraMessageBuilder::Build() const
 {
     return driver_camera_message_;
 }

@@ -36,7 +36,7 @@ class DriverCameraMessageBuilder
                                              const units::length::millimeter_t eye_lid_opening = 1.0_mm,
                                              const units::frequency::hertz_t eye_blink_rate = 1.0_Hz);
 
-    DriverCameraMessage Build() const;
+    const DriverCameraMessage& Build() const;
 
   private:
     DriverCameraMessage driver_camera_message_;

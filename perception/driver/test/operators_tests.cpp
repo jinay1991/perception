@@ -98,5 +98,42 @@ TEST_P(OperatorsFixture_WithEyeState, stream_operator)
     EXPECT_THAT(stream.str(), HasSubstr(param.name));
 }
 
+using OperatorsFixture_WithFatigueLevel = OperatorFixtureT<TestStringParam<FatigueLevel>>;
+
+INSTANTIATE_TEST_SUITE_P(Operators,
+                         OperatorsFixture_WithFatigueLevel,
+                         ::testing::Values(TestStringParam<FatigueLevel>{FatigueLevel::kAwake, "kAwake"},
+                                           TestStringParam<FatigueLevel>{FatigueLevel::kDrowsy, "kDrowsy"},
+                                           TestStringParam<FatigueLevel>{FatigueLevel::kBeginningSleep,
+                                                                         "kBeginningSleep"},
+                                           TestStringParam<FatigueLevel>{FatigueLevel::kSleep, "kSleep"},
+                                           TestStringParam<FatigueLevel>{FatigueLevel::kInvalid, "kInvalid"},
+                                           TestStringParam<FatigueLevel>{static_cast<FatigueLevel>(25U), "ERROR"}));
+
+TEST_P(OperatorsFixture_WithFatigueLevel, to_string)
+{
+    // Given
+    const auto param = GetParam();
+
+    // When
+    const std::string name = to_string(param.value);
+
+    // Then
+    EXPECT_THAT(name, HasSubstr(param.name));
+}
+
+TEST_P(OperatorsFixture_WithFatigueLevel, stream_operator)
+{
+    // Given
+    const auto param = GetParam();
+    std::ostringstream stream;
+
+    // When
+    stream << param.value;
+
+    // Then
+    EXPECT_THAT(stream.str(), HasSubstr(param.name));
+}
+
 }  // namespace
 }  // namespace perception

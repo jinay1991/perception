@@ -38,62 +38,30 @@ enum class EyeState : std::uint8_t
     kInvalid = 3U
 };
 
-/// @brief Head Pose
-enum class HeadPose : std::uint8_t
+/// @brief Fatigue Level
+enum class FatigueLevel : std::uint8_t
+{
+    kAwake = 0U,
+    kDrowsy = 1U,
+    kBeginningSleep = 2U,
+    kSleep = 3U,
+    kInvalid = 4U
+};
+
+/// @brief Visual Attention State
+enum class AttentionState : std::uint8_t
 {
     kAttentive = 0U,
     kNotAttentive = 1U,
     kInvalid = 2U
 };
 
-/// @brief Gaze Pose
-enum class GazePose : std::uint8_t
-{
-    kFront = 0U,
-    kLeft = 1U,
-    kRight = 2U,
-    kDown = 3U,
-    kUp = 4U,
-    kInvalid = 5U
-};
-
-/// @brief Degradation State
-enum class DegradationState : std::uint8_t
-{
-    kNormalOperation = 0U,
-    kValidityError = 1U,
-    kCommunicationError = 2U,
-    kSensorBlockage = 3U,
-    kInvalid = 4U
-};
-
-/// @brief Degradation Information
-struct DegradationMessage
-{
-    /// @brief Degradation State
-    DegradationState state{DegradationState::kInvalid};
-};
-
-/// @brief Fatigue Information
-struct FatigueMessage
-{
-    /// @brief Driver Eye state
-    EyeState eye_state{EyeState::kInvalid};
-};
-
-/// @brief Visual Attention Information
-struct VisualAttentionMessage
-{
-    /// @brief Driver Head Pose
-    HeadPose head_pose{HeadPose::kInvalid};
-
-    /// @brief Driver Gaze Pose
-    GazePose gaze_pose{GazePose::kInvalid};
-};
-
 /// @brief Driver Face Tracking Information
 struct FaceTracking
 {
+    /// @brief Driver Face Visibility
+    bool face_visibility{false};
+
     /// @brief Driver Eye visibility
     bool eye_visibility{false};
 
@@ -130,6 +98,32 @@ struct HeadTracking
     units::angle::radian_t roll{0.0};
 };
 
+/// @brief Fatigue Information
+struct FatigueMessage
+{
+    /// @brief Time Point for captured data
+    std::chrono::system_clock::time_point time_point{};
+
+    /// @brief Driver Eye state
+    EyeState eye_state{EyeState::kInvalid};
+
+    /// @brief Driver Fatigue Level
+    FatigueLevel level{FatigueLevel::kInvalid};
+
+    /// @brief Driver Fatigue Confidence
+    double confidence{0.0};
+};
+
+/// @brief Visual Attention Information
+struct VisualAttentionMessage
+{
+    /// @brief Time Point for captured data
+    std::chrono::system_clock::time_point time_point{};
+
+    /// @brief Attention
+    AttentionState attention_state{AttentionState::kInvalid};
+};
+
 /// @brief Driver Camera System Information
 struct DriverCameraMessage
 {
@@ -154,8 +148,8 @@ struct DriverCameraMessage
 /// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const FaceTracking& lhs, const FaceTracking& rhs) noexcept
 {
-    return ((lhs.eye_visibility == rhs.eye_visibility) && (lhs.eye_lid_opening == rhs.eye_lid_opening) &&
-            (lhs.eye_blink_rate == rhs.eye_blink_rate));
+    return ((lhs.face_visibility == rhs.face_visibility) && (lhs.eye_visibility == rhs.eye_visibility) &&
+            (lhs.eye_lid_opening == rhs.eye_lid_opening) && (lhs.eye_blink_rate == rhs.eye_blink_rate));
 }
 
 /// @brief Inequality operator for elementwise comparision for FaceTracking
@@ -213,6 +207,51 @@ inline bool operator!=(const HeadTracking& lhs, const HeadTracking& rhs) noexcep
     return !(lhs == rhs);
 }
 
+/// @brief Inequality operator for elementwise comparision for FatigueMessage
+///
+/// @param lhs[in] - lvalue (FatigueMessage)
+/// @param rhs[in] - rvalue (FatigueMessage)
+///
+/// @return True if (lhs == rhs), otherwise false.
+inline bool operator==(const FatigueMessage& lhs, const FatigueMessage& rhs) noexcept
+{
+    return ((lhs.time_point == rhs.time_point) && (lhs.eye_state == rhs.eye_state) && (lhs.level == rhs.level) &&
+            (lhs.confidence == rhs.confidence));
+}
+
+/// @brief Inequality operator for elementwise comparision for FatigueMessage
+///
+/// @param lhs[in] - lvalue (FatigueMessage)
+/// @param rhs[in] - rvalue (FatigueMessage)
+///
+/// @return True if (lhs != rhs), otherwise false.
+inline bool operator!=(const FatigueMessage& lhs, const FatigueMessage& rhs) noexcept
+{
+    return !(lhs == rhs);
+}
+
+/// @brief Inequality operator for elementwise comparision for VisualAttentionMessage
+///
+/// @param lhs[in] - lvalue (VisualAttentionMessage)
+/// @param rhs[in] - rvalue (VisualAttentionMessage)
+///
+/// @return True if (lhs == rhs), otherwise false.
+inline bool operator==(const VisualAttentionMessage& lhs, const VisualAttentionMessage& rhs) noexcept
+{
+    return ((lhs.time_point == rhs.time_point) && (lhs.attention_state == rhs.attention_state));
+}
+
+/// @brief Inequality operator for elementwise comparision for VisualAttentionMessage
+///
+/// @param lhs[in] - lvalue (VisualAttentionMessage)
+/// @param rhs[in] - rvalue (VisualAttentionMessage)
+///
+/// @return True if (lhs != rhs), otherwise false.
+inline bool operator!=(const VisualAttentionMessage& lhs, const VisualAttentionMessage& rhs) noexcept
+{
+    return !(lhs == rhs);
+}
+
 /// @brief Inequality operator for elementwise comparision for DriverCameraMessage
 ///
 /// @param lhs[in] - lvalue (DriverCameraMessage)
@@ -235,51 +274,6 @@ inline bool operator!=(const DriverCameraMessage& lhs, const DriverCameraMessage
 {
     return !(lhs == rhs);
 }
-
-/// @brief Inequality operator for elementwise comparision for FatigueMessage
-///
-/// @param lhs[in] - lvalue (FatigueMessage)
-/// @param rhs[in] - rvalue (FatigueMessage)
-///
-/// @return True if (lhs == rhs), otherwise false.
-inline bool operator==(const FatigueMessage& lhs, const FatigueMessage& rhs) noexcept
-{
-    return (lhs.eye_state == rhs.eye_state);
-}
-
-/// @brief Inequality operator for elementwise comparision for FatigueMessage
-///
-/// @param lhs[in] - lvalue (FatigueMessage)
-/// @param rhs[in] - rvalue (FatigueMessage)
-///
-/// @return True if (lhs != rhs), otherwise false.
-inline bool operator!=(const FatigueMessage& lhs, const FatigueMessage& rhs) noexcept
-{
-    return !(lhs == rhs);
-}
-
-/// @brief Inequality operator for elementwise comparision for VisualAttentionMessage
-///
-/// @param lhs[in] - lvalue (VisualAttentionMessage)
-/// @param rhs[in] - rvalue (VisualAttentionMessage)
-///
-/// @return True if (lhs == rhs), otherwise false.
-inline bool operator==(const VisualAttentionMessage& lhs, const VisualAttentionMessage& rhs) noexcept
-{
-    return ((lhs.head_pose == rhs.head_pose) && (lhs.gaze_pose == rhs.gaze_pose));
-}
-
-/// @brief Inequality operator for elementwise comparision for VisualAttentionMessage
-///
-/// @param lhs[in] - lvalue (VisualAttentionMessage)
-/// @param rhs[in] - rvalue (VisualAttentionMessage)
-///
-/// @return True if (lhs != rhs), otherwise false.
-inline bool operator!=(const VisualAttentionMessage& lhs, const VisualAttentionMessage& rhs) noexcept
-{
-    return !(lhs == rhs);
-}
-
 }  // namespace perception
 
 #endif  /// PERCEPTION_DATATYPES_DRIVER_H

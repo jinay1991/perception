@@ -18,6 +18,7 @@ class DataSourceMock : public IDataSource
   public:
     DataSourceMock() = default;
 
+    MOCK_CONST_METHOD0(IsFaceVisible, bool());
     MOCK_CONST_METHOD0(IsEyeVisible, bool());
     MOCK_CONST_METHOD0(GetEyeLidOpening, units::length::millimeter_t());
     MOCK_CONST_METHOD0(GetEyeBlinkRate, units::frequency::hertz_t());

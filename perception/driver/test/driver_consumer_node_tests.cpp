@@ -89,8 +89,7 @@ TEST_F(DriverConsumerNodeFixture, GetVisualAttentionMessage_GivenTypicalVisualAt
 {
     // Given
     VisualAttentionMessage visual_attention_message{};
-    visual_attention_message.head_pose = HeadPose::kAttentive;
-    visual_attention_message.gaze_pose = GazePose::kLeft;
+    visual_attention_message.attention_state = AttentionState::kAttentive;
     PublishVisualAttentionMessage(visual_attention_message);
 
     // When

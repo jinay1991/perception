@@ -49,11 +49,12 @@ DriverCameraMessageBuilder& DriverCameraMessageBuilder::WithGazePose(const units
     return WithGazeTracking(gaze_tracking);
 }
 
-DriverCameraMessageBuilder& DriverCameraMessageBuilder::WithEyeState(const bool eye_visibility,
+DriverCameraMessageBuilder& DriverCameraMessageBuilder::WithEyeState(const bool face_visibility,
+                                                                     const bool eye_visibility,
                                                                      const units::length::millimeter_t eye_lid_opening,
                                                                      const units::frequency::hertz_t eye_blink_rate)
 {
-    const FaceTracking face_tracking{eye_visibility, eye_lid_opening, eye_blink_rate};
+    const FaceTracking face_tracking{face_visibility, eye_visibility, eye_lid_opening, eye_blink_rate};
     return WithFaceTracking(face_tracking);
 }
 

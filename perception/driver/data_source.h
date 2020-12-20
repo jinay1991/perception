@@ -22,6 +22,7 @@ class DataSource : public IDataSource
     const HeadTracking& GetHeadTracking() const override;
     const GazeTracking& GetGazeTracking() const override;
 
+    bool IsFaceVisible() const override;
     bool IsEyeVisible() const override;
     units::length::millimeter_t GetEyeLidOpening() const override;
     units::frequency::hertz_t GetEyeBlinkRate() const override;

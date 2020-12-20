@@ -23,7 +23,7 @@ class VisualAttention
     const VisualAttentionMessage& GetVisualAttentionMessage() const;
 
   private:
-    HeadPose GetHeadPose() const;
+    AttentionState GetAttentionState() const;
     bool IsHeadPoseAvailable() const;
     bool IsHeadPoseAttentive() const;
 

@@ -3,10 +3,7 @@ load("@rules_cc//cc:defs.bzl", "cc_test")
 cc_test(
     name = "node_tests",
     srcs = ["driver_node_tests.cpp"],
-    tags = [
-        "component",
-        "unit",
-    ],
+    tags = ["component"],
     deps = [
         "//perception/driver/node",
         "//perception/driver/test/support",
@@ -42,10 +39,7 @@ cc_test(
     srcs = [
         "driver_benchmark_tests.cpp",
     ],
-    tags = [
-        "benchmark",
-        "manual",
-    ],
+    tags = ["benchmark"],
     deps = [
         "//perception/driver/node",
         "//perception/driver/test/support",

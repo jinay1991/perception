@@ -15,7 +15,7 @@ DriverSimulatorNode::DriverSimulatorNode(middleware::IPubSubFactory& factory)
       driver_camera_message_{DriverCameraMessageBuilder()
                                  .WithHeadPose(0.0_rad, 0.0_rad, 0.0_rad)
                                  .WithGazePose(0.0_rad, 0.0_rad, 0.0_rad)
-                                 .WithEyeState(true)
+                                 .WithEyeState(true, true)
                                  .Build()}
 {
 }
@@ -34,12 +34,14 @@ void DriverSimulatorNode::OpenEyes()
 {
     driver_camera_message_.face_tracking.eye_lid_opening = kMaxEyeLidOpening;
     driver_camera_message_.face_tracking.eye_visibility = true;
+    driver_camera_message_.face_tracking.face_visibility = true;
 }
 
 void DriverSimulatorNode::CloseEyes()
 {
     driver_camera_message_.face_tracking.eye_lid_opening = 0.0_mm;
     driver_camera_message_.face_tracking.eye_visibility = true;
+    driver_camera_message_.face_tracking.face_visibility = true;
 }
 
 void DriverSimulatorNode::BlinkEyes(const units::frequency::hertz_t eye_blink_rate)

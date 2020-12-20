@@ -61,6 +61,7 @@ class DriverNodeTest : public ::testing::Test
 TEST_F(DriverNodeTest, GivenTypicalDriverCameraMessage_ExpectFatigueAndVisualAttention)
 {
     // Given
+    GetSimulator().CloseEyes();
     GetSimulator().LookLeft();
 
     // When
@@ -68,7 +69,7 @@ TEST_F(DriverNodeTest, GivenTypicalDriverCameraMessage_ExpectFatigueAndVisualAtt
 
     // Then
     EXPECT_THAT(GetFatigueMessage(), Field(&FatigueMessage::eye_state, EyeState::kEyesClosed));
-    EXPECT_THAT(GetVisualAttentionMessage(), Field(&VisualAttentionMessage::head_pose, HeadPose::kAttentive));
+    EXPECT_THAT(GetVisualAttentionMessage(), Field(&VisualAttentionMessage::attention_state, AttentionState::kInvalid));
 }
 }  // namespace
 }  // namespace perception

@@ -41,7 +41,7 @@ TEST_F(DriverFixture, Driver_GivenTypicalDriverCameraMessage_ExpectUpdatedFatigu
 {
     // Given
     const DriverCameraMessage driver_camera_message =
-        DriverCameraMessageBuilder().WithEyeState(true, 1.0_mm, 1.0_Hz).Build();
+        DriverCameraMessageBuilder().WithEyeState(true, true, 1.0_mm, 1.0_Hz).Build();
     UpdateDriverCameraMessage(driver_camera_message);
 
     // When
@@ -62,7 +62,7 @@ TEST_F(DriverFixture, Driver_GivenTypicalDriverCameraMessage_ExpectUpdatedVisual
     RunOnce();
 
     // Then
-    EXPECT_THAT(GetVisualAttentionMessage(), Field(&VisualAttentionMessage::head_pose, HeadPose::kAttentive));
+    EXPECT_THAT(GetVisualAttentionMessage(), Field(&VisualAttentionMessage::attention_state, AttentionState::kInvalid));
 }
 }  // namespace
 }  // namespace perception

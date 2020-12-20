@@ -23,6 +23,11 @@ const HeadTracking& DataSource::GetHeadTracking() const
     return driver_camera_message_.head_tracking;
 }
 
+bool DataSource::IsFaceVisible() const
+{
+    return driver_camera_message_.face_tracking.face_visibility;
+}
+
 bool DataSource::IsEyeVisible() const
 {
     return driver_camera_message_.face_tracking.eye_visibility;

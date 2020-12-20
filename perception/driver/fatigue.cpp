@@ -31,7 +31,7 @@ const FatigueMessage& Fatigue::GetFatigueMessage() const
 EyeState Fatigue::GetEyeState() const
 {
     EyeState eye_state{EyeState::kInvalid};
-    if (IsEyeVisible())
+    if (IsFaceVisible() && IsEyeVisible())
     {
         if (IsEyeOpen())
         {
@@ -48,6 +48,11 @@ EyeState Fatigue::GetEyeState() const
     }
 
     return eye_state;
+}
+
+bool Fatigue::IsFaceVisible() const
+{
+    return data_source_.IsFaceVisible();
 }
 
 bool Fatigue::IsEyeVisible() const

@@ -23,7 +23,7 @@ constexpr std::chrono::system_clock::time_point kTimepoint{10ms};
 TEST(Driver, GlobalConstants)
 {
     // Then
-    EXPECT_EQ(kMaxEyeBlinkRate, 10.0_Hz);
+    EXPECT_EQ(kMaxEyeBlinkRate, 30.0_Hz);
     EXPECT_EQ(kMaxEyeLidOpening, 10.0_mm);
     EXPECT_EQ(kMinEyeLidOpening, 1.0_mm);
     EXPECT_EQ(kMaxHeadPoseYaw, 80_deg);

@@ -6,6 +6,7 @@
 #define PERCEPTION_DRIVER_FATIGUE_H
 
 #include "perception/datatypes/driver.h"
+#include "perception/driver/fatigue_message_builder.h"
 #include "perception/driver/i_data_source.h"
 #include "perception/driver/i_parameter_handler.h"
 
@@ -31,7 +32,7 @@ class Fatigue
     const IParameterHandler& parameter_handler_;
     const IDataSource& data_source_;
 
-    FatigueMessage fatigue_message_;
+    FatigueMessageBuilder fatigue_builder_;
 };
 }  // namespace perception
 #endif  /// PERCEPTION_DRIVER_FATIGUE_H

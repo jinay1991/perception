@@ -10,7 +10,7 @@ namespace perception
 {
 
 Fatigue::Fatigue(const IParameterHandler& parameter_handler, const IDataSource& data_source)
-    : parameter_handler_{parameter_handler}, data_source_{data_source}, fatigue_message_{}
+    : parameter_handler_{parameter_handler}, data_source_{data_source}, fatigue_builder_{}
 {
 }
 
@@ -18,14 +18,17 @@ void Fatigue::Init() {}
 
 void Fatigue::ExecuteStep()
 {
-    fatigue_message_.eye_state = GetEyeState();
+    fatigue_builder_.WithTimepoint(std::chrono::system_clock::now())
+        .WithEyeState(GetEyeState())
+        .WithFatigueLevel(FatigueLevel::kInvalid)
+        .WithFatigueConfidence(0.0);
 }
 
 void Fatigue::Shutdown() {}
 
 const FatigueMessage& Fatigue::GetFatigueMessage() const
 {
-    return fatigue_message_;
+    return fatigue_builder_.Build();
 }
 
 EyeState Fatigue::GetEyeState() const

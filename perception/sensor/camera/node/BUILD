@@ -4,11 +4,12 @@ cc_library(
     name = "node",
     srcs = ["camera_node.cpp"],
     hdrs = ["camera_node.h"],
-    data = [
-        "//:testdata",
-    ],    copts = [
+    copts = [
         "-Wall",
         "-Werror",
+    ],
+    data = [
+        "//:testdata",
     ],
     visibility = ["//visibility:public"],
     deps = [

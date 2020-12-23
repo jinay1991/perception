@@ -15,10 +15,13 @@ class Perclos
     Perclos();
 
     void Calculate(const EyeState eye_state);
-    double GetCurrentPercentage() const;
+
+    double GetClosurePercentage() const;
+    double GetAvailabilityPercentage() const;
 
   private:
-    double percentage;
+    double closure_percentage_;
+    double availability_percentage_;
 };
 }  // namespace perception
 

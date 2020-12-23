@@ -9,6 +9,7 @@
 #include "perception/driver/fatigue_message_builder.h"
 #include "perception/driver/i_data_source.h"
 #include "perception/driver/i_parameter_handler.h"
+#include "perception/driver/perclos.h"
 
 namespace perception
 {
@@ -24,7 +25,11 @@ class Fatigue
     const FatigueMessage& GetFatigueMessage() const;
 
   private:
-    EyeState GetEyeState() const;
+    void DetermineFatigue();
+    EyeState DetermineEyeState() const;
+    FatigueLevel DetermineFatigueLevel() const;
+    double DetermineFatigueConfidence() const;
+
     bool IsFaceVisible() const;
     bool IsEyeVisible() const;
     bool IsEyeOpen() const;
@@ -33,6 +38,8 @@ class Fatigue
     const IDataSource& data_source_;
 
     FatigueMessageBuilder fatigue_builder_;
+
+    Perclos perclos_;
 };
 }  // namespace perception
 #endif  /// PERCEPTION_DRIVER_FATIGUE_H

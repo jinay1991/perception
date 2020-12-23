@@ -6,13 +6,21 @@
 
 namespace perception
 {
-Perclos::Perclos() : percentage{0.0} {}
+Perclos::Perclos() : closure_percentage_{0.0}, availability_percentage_{0.0} {}
 
-void Perclos::Calculate(const EyeState /* eye_state */) {}
-
-double Perclos::GetCurrentPercentage() const
+void Perclos::Calculate(const EyeState /* eye_state */)
 {
-    return percentage;
+    availability_percentage_ = 100.0;
+}
+
+double Perclos::GetClosurePercentage() const
+{
+    return closure_percentage_;
+}
+
+double Perclos::GetAvailabilityPercentage() const
+{
+    return availability_percentage_;
 }
 
 }  // namespace perception

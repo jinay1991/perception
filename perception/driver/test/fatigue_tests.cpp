@@ -18,6 +18,9 @@ namespace
 {
 using ::testing::Field;
 using ::testing::Return;
+using namespace std::chrono_literals;
+
+constexpr std::chrono::milliseconds kDefaultStepDuration{40U};
 
 class FatigueFixture : public ::testing::Test
 {
@@ -37,7 +40,24 @@ class FatigueFixture : public ::testing::Test
         fatigue_.Init();
     }
     void TearDown() override { fatigue_.Shutdown(); }
+
     void RunOnce() { fatigue_.ExecuteStep(); }
+
+    void RunForDuration(const EyeState& eye_state,
+                        const std::chrono::milliseconds duration,
+                        const std::chrono::milliseconds step = kDefaultStepDuration)
+    {
+        const auto eye_lid_opening = (EyeState::kEyesOpen == eye_state) ? 0.0_mm : kMaxEyeLidOpening;
+        EXPECT_CALL(mocked_data_source_, IsFaceVisible()).WillRepeatedly(Return(true));
+        EXPECT_CALL(mocked_data_source_, IsEyeVisible()).WillRepeatedly(Return(true));
+        EXPECT_CALL(mocked_data_source_, GetEyeLidOpening()).WillRepeatedly(Return(eye_lid_opening));
+        EXPECT_CALL(mocked_data_source_, GetEyeBlinkRate()).WillRepeatedly(Return(kMaxEyeBlinkRate));
+
+        for (auto time_passed = 0ms; time_passed < duration; time_passed += step)
+        {
+            RunOnce();
+        }
+    }
 
     const FatigueMessage& GetFatigueMessage() const { return fatigue_.GetFatigueMessage(); }
 
@@ -56,12 +76,13 @@ class FatigueFixtureT : public FatigueFixture, public ::testing::WithParamInterf
 struct TestEyeStateParam
 {
     // Given
-    FaceTracking face_tracking;
+    bool face_visibility;
+    bool eye_visibility;
+    units::length::millimeter_t eye_lid_opening;
+    units::frequency::hertz_t eye_blink_rate;
 
     // Then
     EyeState eye_state;
-    FatigueLevel level;
-    double confidence;
 };
 
 using FatigueFixture_WithEyeState = FatigueFixtureT<TestEyeStateParam>;
@@ -71,25 +92,25 @@ INSTANTIATE_TEST_SUITE_P(
     Fatigue, 
     FatigueFixture_WithEyeState, 
     ::testing::Values(
-        //                face_visible, eye_visible, eye_lid_opening,            eye_blink_rate, (expected) eye_state  , (expected) level      , (expected) confidence
-        TestEyeStateParam{{       true,        true,          1.1_mm,         kMaxEyeBlinkRate}, EyeState::kEyesOpen   , FatigueLevel::kInvalid,                   0.0},
-        TestEyeStateParam{{       true,       false,          1.1_mm,         kMaxEyeBlinkRate}, EyeState::kEyesUnknown, FatigueLevel::kInvalid,                   0.0},
-        TestEyeStateParam{{       true,        true,          1.1_mm, kMaxEyeBlinkRate + 10_Hz}, EyeState::kEyesUnknown, FatigueLevel::kInvalid,                   0.0},
-        TestEyeStateParam{{       true,        true,          1.0_mm,         kMaxEyeBlinkRate}, EyeState::kEyesClosed , FatigueLevel::kInvalid,                   0.0},
-        TestEyeStateParam{{       true,        true,         10.0_mm,         kMaxEyeBlinkRate}, EyeState::kEyesClosed , FatigueLevel::kInvalid,                   0.0},
-        TestEyeStateParam{{       true,        true,          5.0_mm,         kMaxEyeBlinkRate}, EyeState::kEyesOpen   , FatigueLevel::kInvalid,                   0.0},
-        TestEyeStateParam{{      false,        true,          5.0_mm,         kMaxEyeBlinkRate}, EyeState::kEyesUnknown, FatigueLevel::kInvalid,                   0.0}
+        //                face_visible, eye_visible, eye_lid_opening,            eye_blink_rate, (expected) eye_state  
+        TestEyeStateParam{        true,        true,          1.1_mm,          kMaxEyeBlinkRate, EyeState::kEyesOpen   },
+        TestEyeStateParam{        true,       false,          1.1_mm,          kMaxEyeBlinkRate, EyeState::kEyesUnknown},
+        TestEyeStateParam{        true,        true,          1.1_mm,  kMaxEyeBlinkRate + 10_Hz, EyeState::kEyesUnknown},
+        TestEyeStateParam{        true,        true,          1.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesClosed },
+        TestEyeStateParam{        true,        true,         10.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesClosed },
+        TestEyeStateParam{        true,        true,          5.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesOpen   },
+        TestEyeStateParam{       false,        true,          5.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesUnknown}
 ));
 // clang-format on
 
-TEST_P(FatigueFixture_WithEyeState, Fatigue_GiveTypicalFaceTracking_ExpectUpdatedFatigue)
+TEST_P(FatigueFixture_WithEyeState, Fatigue_GiveTypicalFaceTrackingData_ExpectUpdatedEyeState)
 {
     // Given
     const auto param = GetParam();
-    EXPECT_CALL(mocked_data_source_, IsFaceVisible()).WillRepeatedly(Return(param.face_tracking.face_visibility));
-    EXPECT_CALL(mocked_data_source_, IsEyeVisible()).WillRepeatedly(Return(param.face_tracking.eye_visibility));
-    EXPECT_CALL(mocked_data_source_, GetEyeLidOpening()).WillRepeatedly(Return(param.face_tracking.eye_lid_opening));
-    EXPECT_CALL(mocked_data_source_, GetEyeBlinkRate()).WillRepeatedly(Return(param.face_tracking.eye_blink_rate));
+    EXPECT_CALL(mocked_data_source_, IsFaceVisible()).WillRepeatedly(Return(param.face_visibility));
+    EXPECT_CALL(mocked_data_source_, IsEyeVisible()).WillRepeatedly(Return(param.eye_visibility));
+    EXPECT_CALL(mocked_data_source_, GetEyeLidOpening()).WillRepeatedly(Return(param.eye_lid_opening));
+    EXPECT_CALL(mocked_data_source_, GetEyeBlinkRate()).WillRepeatedly(Return(param.eye_blink_rate));
 
     // When
     RunOnce();
@@ -98,5 +119,18 @@ TEST_P(FatigueFixture_WithEyeState, Fatigue_GiveTypicalFaceTracking_ExpectUpdate
     EXPECT_THAT(GetFatigueMessage(), Field(&FatigueMessage::eye_state, param.eye_state));
 }
 
+TEST_F(FatigueFixture, DISABLED_Fatigue_GivenEyesOpenForDuration_ExpectAwakeFatigueLevel)
+{
+    // Given
+    const auto eye_state = EyeState::kEyesOpen;
+    const auto duration = 2min;
+
+    // When
+    RunForDuration(eye_state, duration);
+
+    // Then
+    EXPECT_THAT(GetFatigueMessage(),
+                AllOf(Field(&FatigueMessage::level, FatigueLevel::kAwake), Field(&FatigueMessage::confidence, 100.0)));
+}
 }  // namespace
 }  // namespace perception

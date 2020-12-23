@@ -10,7 +10,7 @@ namespace perception
 {
 
 Fatigue::Fatigue(const IParameterHandler& parameter_handler, const IDataSource& data_source)
-    : parameter_handler_{parameter_handler}, data_source_{data_source}, fatigue_builder_{}
+    : parameter_handler_{parameter_handler}, data_source_{data_source}, fatigue_builder_{}, perclos_{}
 {
 }
 
@@ -18,10 +18,9 @@ void Fatigue::Init() {}
 
 void Fatigue::ExecuteStep()
 {
-    fatigue_builder_.WithTimepoint(std::chrono::system_clock::now())
-        .WithEyeState(GetEyeState())
-        .WithFatigueLevel(FatigueLevel::kInvalid)
-        .WithFatigueConfidence(0.0);
+    fatigue_builder_.WithTimepoint(std::chrono::system_clock::now());
+
+    DetermineFatigue();
 }
 
 void Fatigue::Shutdown() {}
@@ -31,7 +30,19 @@ const FatigueMessage& Fatigue::GetFatigueMessage() const
     return fatigue_builder_.Build();
 }
 
-EyeState Fatigue::GetEyeState() const
+void Fatigue::DetermineFatigue()
+{
+    const auto eye_state = DetermineEyeState();
+
+    perclos_.Calculate(eye_state);
+
+    const auto level = DetermineFatigueLevel();
+    const auto confidence = DetermineFatigueConfidence();
+
+    fatigue_builder_.WithEyeState(eye_state).WithFatigueLevel(level).WithFatigueConfidence(confidence);
+}
+
+EyeState Fatigue::DetermineEyeState() const
 {
     EyeState eye_state{EyeState::kInvalid};
     if (IsFaceVisible() && IsEyeVisible())
@@ -51,6 +62,54 @@ EyeState Fatigue::GetEyeState() const
     }
 
     return eye_state;
+}
+
+FatigueLevel Fatigue::DetermineFatigueLevel() const
+{
+    const double percentage = perclos_.GetClosurePercentage();
+    FatigueLevel level{FatigueLevel::kInvalid};
+
+    constexpr double kMinConfidence{0.0};
+    constexpr double kMaxConfidence{100.0};
+
+    constexpr double kConfidenceAwake{7.5};
+    constexpr double kConfidenceDrowsy{15.0};
+    constexpr double kConfidenceBeginningSleep{30.0};
+    constexpr double kConfidenceSleep{60.0};
+
+    if (InRange(percentage, kMinConfidence, kMaxConfidence))
+    {
+        if (percentage < kConfidenceAwake)
+        {
+            level = FatigueLevel::kAwake;
+        }
+        else if (percentage < kConfidenceDrowsy)
+        {
+            level = FatigueLevel::kDrowsy;
+        }
+        else if (percentage < kConfidenceBeginningSleep)
+        {
+            level = FatigueLevel::kBeginningSleep;
+        }
+        else if (percentage < kConfidenceSleep)
+        {
+            level = FatigueLevel::kSleep;
+        }
+        else
+        {
+            level = FatigueLevel::kInvalid;
+        }
+    }
+    else
+    {
+        level = FatigueLevel::kInvalid;
+    }
+    return level;
+}
+
+double Fatigue::DetermineFatigueConfidence() const
+{
+    return perclos_.GetAvailabilityPercentage();
 }
 
 bool Fatigue::IsFaceVisible() const

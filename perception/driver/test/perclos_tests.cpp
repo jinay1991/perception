@@ -32,7 +32,7 @@ class PerclosFixture : public ::testing::Test
             perclos_.Calculate(eye_state);
         }
     }
-    double GetCurrentPercentage() const { return perclos_.GetCurrentPercentage(); }
+    double GetClosurePercentage() const { return perclos_.GetClosurePercentage(); }
 
   private:
     Perclos perclos_;
@@ -74,7 +74,7 @@ TEST_P(PerclosFixture_WithEyeStateDuration, Calculate_GivenEyeStateClosedForTypi
     RunForDuration(param.eye_state, param.duration);
 
     // Then
-    EXPECT_DOUBLE_EQ(param.percentage, GetCurrentPercentage());
+    EXPECT_DOUBLE_EQ(param.percentage, GetClosurePercentage());
 }
 }  // namespace
 }  // namespace perception

@@ -10,7 +10,7 @@
 namespace perception
 {
 
-inline const char* to_string(const AttentionState& attention_state)
+inline const char* to_string(const AttentionState& attention_state) noexcept
 {
     switch (attention_state)
     {
@@ -26,14 +26,14 @@ inline const char* to_string(const AttentionState& attention_state)
     return "ERROR: Unknown AttentionState!";
 }
 
-inline std::ostream& operator<<(std::ostream& stream, const AttentionState& attention_state)
+inline std::ostream& operator<<(std::ostream& stream, const AttentionState& attention_state) noexcept
 {
     const char* name = to_string(attention_state);
     stream << name;
     return stream;
 }
 
-inline const char* to_string(const EyeState& eye_state)
+inline const char* to_string(const EyeState& eye_state) noexcept
 {
     switch (eye_state)
     {
@@ -51,14 +51,14 @@ inline const char* to_string(const EyeState& eye_state)
     return "ERROR: Unknown EyeState!";
 }
 
-inline std::ostream& operator<<(std::ostream& stream, const EyeState& eye_state)
+inline std::ostream& operator<<(std::ostream& stream, const EyeState& eye_state) noexcept
 {
     const char* name = to_string(eye_state);
     stream << name;
     return stream;
 }
 
-inline const char* to_string(const FatigueLevel& fatigue_level)
+inline const char* to_string(const FatigueLevel& fatigue_level) noexcept
 {
     switch (fatigue_level)
     {
@@ -78,7 +78,7 @@ inline const char* to_string(const FatigueLevel& fatigue_level)
     return "ERROR: Unknown FatigueLevel!";
 }
 
-inline std::ostream& operator<<(std::ostream& stream, const FatigueLevel& fatigue_level)
+inline std::ostream& operator<<(std::ostream& stream, const FatigueLevel& fatigue_level) noexcept
 {
     const char* name = to_string(fatigue_level);
     stream << name;

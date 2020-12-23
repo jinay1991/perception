@@ -69,41 +69,32 @@ FatigueLevel Fatigue::DetermineFatigueLevel() const
     const double percentage = perclos_.GetClosurePercentage();
     FatigueLevel level{FatigueLevel::kInvalid};
 
-    constexpr double kMinConfidence{0.0};
-    constexpr double kMaxConfidence{100.0};
-
     constexpr double kConfidenceAwake{7.5};
     constexpr double kConfidenceDrowsy{15.0};
     constexpr double kConfidenceBeginningSleep{30.0};
     constexpr double kConfidenceSleep{60.0};
 
-    if (InRange(percentage, kMinConfidence, kMaxConfidence))
+    if (percentage < kConfidenceAwake)
     {
-        if (percentage < kConfidenceAwake)
-        {
-            level = FatigueLevel::kAwake;
-        }
-        else if (percentage < kConfidenceDrowsy)
-        {
-            level = FatigueLevel::kDrowsy;
-        }
-        else if (percentage < kConfidenceBeginningSleep)
-        {
-            level = FatigueLevel::kBeginningSleep;
-        }
-        else if (percentage < kConfidenceSleep)
-        {
-            level = FatigueLevel::kSleep;
-        }
-        else
-        {
-            level = FatigueLevel::kInvalid;
-        }
+        level = FatigueLevel::kAwake;
+    }
+    else if (percentage < kConfidenceDrowsy)
+    {
+        level = FatigueLevel::kDrowsy;
+    }
+    else if (percentage < kConfidenceBeginningSleep)
+    {
+        level = FatigueLevel::kBeginningSleep;
+    }
+    else if (percentage < kConfidenceSleep)
+    {
+        level = FatigueLevel::kSleep;
     }
     else
     {
         level = FatigueLevel::kInvalid;
     }
+
     return level;
 }
 

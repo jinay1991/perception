@@ -4,6 +4,8 @@
 ///
 #include "perception/driver/perclos.h"
 
+#include "perception/common/validity_range.h"
+
 namespace perception
 {
 
@@ -19,14 +21,18 @@ double Perclos::GetClosurePercentage() const
 {
     const auto longterm_storage_count = static_cast<double>(longterm_storage_.count());
     const auto longterm_storage_size = static_cast<double>(longterm_storage_.size());
-    return ((longterm_storage_size != 0.0) ? ((longterm_storage_count * 100.0) / longterm_storage_size) : 0.0);
+    const auto closure_percentage =
+        ((longterm_storage_size != 0.0) ? ((longterm_storage_count * 100.0) / longterm_storage_size) : 0.0);
+    return Clamp(closure_percentage, 0.0, 100.0);
 }
 
 double Perclos::GetAvailabilityPercentage() const
 {
     const auto longterm_storage_size = static_cast<double>(longterm_storage_.size());
     const auto longterm_storage_capacity = static_cast<double>(longterm_storage_.capacity());
-    return ((longterm_storage_capacity != 0.0) ? ((longterm_storage_size * 100.0) / longterm_storage_capacity) : 0.0);
+    const auto availability_percentage =
+        ((longterm_storage_capacity != 0.0) ? ((longterm_storage_size * 100.0) / longterm_storage_capacity) : 0.0);
+    return Clamp(availability_percentage, 0.0, 100.0);
 }
 
 }  // namespace perception

@@ -7,6 +7,10 @@ cc_test(
         "logging_tests.cpp",
         "validity_range_tests.cpp",
     ],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     deps = [
         "//perception/common",
         "@googletest//:gtest_main",

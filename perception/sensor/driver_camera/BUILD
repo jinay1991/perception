@@ -8,6 +8,10 @@ cc_library(
     hdrs = [
         "driver_camera.h",
     ],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     data = ["@opencv//:haarcascades"],
     visibility = ["//visibility:public"],
     deps = [

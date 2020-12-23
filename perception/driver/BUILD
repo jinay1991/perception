@@ -23,6 +23,10 @@ cc_library(
         "perclos.h",
         "visual_attention.h",
     ],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/common",

@@ -6,6 +6,9 @@ cc_library(
     hdrs = ["camera_node.h"],
     data = [
         "//:testdata",
+    ],    copts = [
+        "-Wall",
+        "-Werror",
     ],
     visibility = ["//visibility:public"],
     deps = [

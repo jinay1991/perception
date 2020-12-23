@@ -2,8 +2,12 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
     name = "node",
-    srcs = glob(["*.cpp"]),
-    hdrs = glob(["*.h"]),
+    srcs = ["object_node.cpp"],
+    hdrs = ["object_node.h"],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     data = [
         "//:calibration_data",
         "//:testdata",

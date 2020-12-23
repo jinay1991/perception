@@ -5,9 +5,12 @@ package(default_visibility = ["//visibility:public"])
 cc_test(
     name = "node_tests",
     srcs = ["vehicle_dynamics_node_tests.cpp"],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     tags = [
         "component",
-        "unit",
     ],
     deps = [
         "//perception/communication:topics",
@@ -20,6 +23,10 @@ cc_test(
 cc_test(
     name = "unit_tests",
     srcs = ["vehicle_dynamics_tests.cpp"],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     tags = ["unit"],
     deps = [
         "//perception/sensor/vehicle_dynamics",

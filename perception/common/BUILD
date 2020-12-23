@@ -7,6 +7,10 @@ cc_library(
         "logging.h",
         "validity_range.h",
     ],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "@glog",

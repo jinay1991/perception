@@ -4,6 +4,10 @@ cc_library(
     name = "vehicle_dynamics",
     srcs = ["vehicle_dynamics.cpp"],
     hdrs = ["vehicle_dynamics.h"],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/datatypes",

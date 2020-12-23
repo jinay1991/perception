@@ -2,8 +2,12 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
     name = "node",
-    srcs = glob(["*.cpp"]),
-    hdrs = glob(["*.h"]),
+    srcs = ["driver_node.cpp"],
+    hdrs = ["driver_node.h"],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/communication:topics",

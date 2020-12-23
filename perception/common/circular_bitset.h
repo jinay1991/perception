@@ -40,6 +40,7 @@ class CircularBitset
         head_ = other.head_;
         size_ = other.size_;
         capacity_ = other.capacity_;
+        return *this;
     }
 
     CircularBitset(CircularBitset&& other)
@@ -58,6 +59,7 @@ class CircularBitset
         head_ = other.head_;
         size_ = other.size_;
         capacity_ = other.capacity_;
+        return *this;
     }
 
     size_type count() const { return static_cast<size_type>(bitset_.count()); }

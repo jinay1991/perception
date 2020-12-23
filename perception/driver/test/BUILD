@@ -3,6 +3,10 @@ load("@rules_cc//cc:defs.bzl", "cc_test")
 cc_test(
     name = "node_tests",
     srcs = ["driver_node_tests.cpp"],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     tags = ["component"],
     deps = [
         "//perception/driver/node",
@@ -28,6 +32,10 @@ cc_test(
         "perclos_tests.cpp",
         "visual_attention_tests.cpp",
     ],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     tags = ["unit"],
     deps = [
         "//perception/driver",
@@ -40,6 +48,10 @@ cc_test(
     name = "benchmark_tests",
     srcs = [
         "driver_benchmark_tests.cpp",
+    ],
+    copts = [
+        "-Wall",
+        "-Werror",
     ],
     tags = ["benchmark"],
     deps = [

@@ -4,6 +4,10 @@ cc_library(
     name = "node",
     srcs = ["vehicle_dynamics_node.cpp"],
     hdrs = ["vehicle_dynamics_node.h"],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/communication:topics",

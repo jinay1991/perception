@@ -11,13 +11,9 @@ namespace perception
 {
 namespace
 {
-using namespace units::literals;
-using namespace std::chrono_literals;
-
 using ::testing::AllOf;
 using ::testing::Field;
 
-/// @brief Test Timpoint
 constexpr std::chrono::system_clock::time_point kTimepoint{10ms};
 
 TEST(Driver, GlobalConstants)
@@ -29,6 +25,7 @@ TEST(Driver, GlobalConstants)
     EXPECT_EQ(kMaxHeadPoseYaw, 80_deg);
     EXPECT_EQ(kMaxHeadPosePitch, 30_deg);
     EXPECT_EQ(kMaxHeadPoseRoll, 60_deg);
+    EXPECT_EQ(kMaxEyeStateObservationDuration, 5min);
 }
 
 template <typename T>

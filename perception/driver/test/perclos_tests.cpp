@@ -13,7 +13,6 @@ namespace perception
 {
 namespace
 {
-using namespace std::chrono_literals;
 
 constexpr std::chrono::milliseconds kDefaultStepDuration{40U};
 
@@ -32,7 +31,9 @@ class PerclosFixture : public ::testing::Test
             perclos_.Calculate(eye_state);
         }
     }
+
     double GetClosurePercentage() const { return perclos_.GetClosurePercentage(); }
+    double GetAvailabilityPercentage() const { return perclos_.GetAvailabilityPercentage(); }
 
   private:
     Perclos perclos_;
@@ -50,7 +51,8 @@ struct TestEyeStateDurationParam
     std::chrono::milliseconds duration;
 
     // Then
-    double percentage;
+    double closure_percentage;
+    double availability_percentage;
 };
 
 using PerclosFixture_WithEyeStateDuration = PerclosFixtureT<TestEyeStateDurationParam>;
@@ -60,8 +62,11 @@ INSTANTIATE_TEST_SUITE_P(
     Perclos, 
     PerclosFixture_WithEyeStateDuration, 
     ::testing::Values(
-        //                        eye_state            , duration, (expected) percentage_closure
-        TestEyeStateDurationParam{EyeState::kEyesClosed,     2min,                           0.0}
+        //                        eye_state            , duration, (expected) closure_percentage, availability_percentage
+        TestEyeStateDurationParam{EyeState::kEyesClosed,     2min,                         100.0,                    40.0},
+        TestEyeStateDurationParam{EyeState::kEyesClosed,     5min,                         100.0,                   100.0},
+        TestEyeStateDurationParam{  EyeState::kEyesOpen,     2min,                           0.0,                    40.0},
+        TestEyeStateDurationParam{  EyeState::kEyesOpen,     5min,                           0.0,                   100.0}
 ));
 // clang-format on
 
@@ -74,7 +79,8 @@ TEST_P(PerclosFixture_WithEyeStateDuration, Calculate_GivenEyeStateClosedForTypi
     RunForDuration(param.eye_state, param.duration);
 
     // Then
-    EXPECT_DOUBLE_EQ(param.percentage, GetClosurePercentage());
+    EXPECT_THAT(GetClosurePercentage(), param.closure_percentage);
+    EXPECT_THAT(GetAvailabilityPercentage(), param.availability_percentage);
 }
 }  // namespace
 }  // namespace perception

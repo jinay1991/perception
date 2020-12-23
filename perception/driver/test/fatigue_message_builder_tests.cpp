@@ -13,7 +13,6 @@ namespace
 {
 using ::testing::AllOf;
 using ::testing::Field;
-using namespace std::chrono_literals;
 
 TEST(FatigueMessageBuilder, Build_ExpectDefaultFatigueMessage)
 {

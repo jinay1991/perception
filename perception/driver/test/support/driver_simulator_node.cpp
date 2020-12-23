@@ -9,7 +9,6 @@
 
 namespace perception
 {
-using namespace std::chrono_literals;
 
 constexpr std::chrono::milliseconds kSystemCycleDuration{40U};
 

@@ -17,8 +17,6 @@ namespace
 using ::testing::AllOf;
 using ::testing::Field;
 
-using namespace std::chrono_literals;
-
 class DriverSimulatorNodeFixture : public ::testing::Test
 {
   public:

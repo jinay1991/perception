@@ -18,7 +18,6 @@ namespace
 {
 using ::testing::Field;
 using ::testing::Return;
-using namespace std::chrono_literals;
 
 constexpr std::chrono::milliseconds kDefaultStepDuration{40U};
 

@@ -7,27 +7,33 @@
 
 #include <units.h>
 
+#include <chrono>
+
 namespace perception
 {
 using namespace units::literals;
+using namespace std::chrono_literals;
 
-/// @brief maximum eye blink rate (hertz)
+/// @brief Maximum eye blink rate (hertz)
 static constexpr units::frequency::hertz_t kMaxEyeBlinkRate{30.0};
 
-/// @brief maximum eye lid opening (mm)
+/// @brief Maximum eye lid opening (mm)
 static constexpr units::length::millimeter_t kMaxEyeLidOpening{10.0};
 
-/// @brief minimum eye lid opening (mm)
+/// @brief Minimum eye lid opening (mm)
 static constexpr units::length::millimeter_t kMinEyeLidOpening{1.0};
 
-/// @brief Maximum possible yaw angle for human head in range [0, 90]
+/// @brief Maximum possible yaw angle for human head in range (rad). Range between 0-80_deg
 static constexpr units::angle::radian_t kMaxHeadPoseYaw{80_deg};
 
-/// @brief Maximum possible pitch angle for human head in range [0, 90]
+/// @brief Maximum possible pitch angle for human head in range (rad). Range between 0-30_deg
 static constexpr units::angle::radian_t kMaxHeadPosePitch{30_deg};
 
-/// @brief Maximum possible roll angle for human head in range [0, 90]
+/// @brief Maximum possible roll angle for human head in range (rad). Range between 0-60_deg
 static constexpr units::angle::radian_t kMaxHeadPoseRoll{60_deg};
+
+/// @brief Maximum duration till which eye state is being observed (ms)
+static constexpr std::chrono::milliseconds kMaxEyeStateObservationDuration{5min};
 
 /// @brief Eye State
 enum class EyeState : std::uint8_t

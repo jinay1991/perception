@@ -6,21 +6,27 @@
 
 namespace perception
 {
-Perclos::Perclos() : closure_percentage_{0.0}, availability_percentage_{0.0} {}
 
-void Perclos::Calculate(const EyeState /* eye_state */)
+Perclos::Perclos() : longterm_storage_{} {}
+
+void Perclos::Calculate(const EyeState eye_state)
 {
-    availability_percentage_ = 100.0;
+    const auto state = EyeState::kEyesClosed == eye_state;
+    longterm_storage_.push_back(state);
 }
 
 double Perclos::GetClosurePercentage() const
 {
-    return closure_percentage_;
+    const auto longterm_storage_count = static_cast<double>(longterm_storage_.count());
+    const auto longterm_storage_size = static_cast<double>(longterm_storage_.size());
+    return ((longterm_storage_size != 0.0) ? ((longterm_storage_count * 100.0) / longterm_storage_size) : 0.0);
 }
 
 double Perclos::GetAvailabilityPercentage() const
 {
-    return availability_percentage_;
+    const auto longterm_storage_size = static_cast<double>(longterm_storage_.size());
+    const auto longterm_storage_capacity = static_cast<double>(longterm_storage_.capacity());
+    return ((longterm_storage_capacity != 0.0) ? ((longterm_storage_size * 100.0) / longterm_storage_capacity) : 0.0);
 }
 
 }  // namespace perception

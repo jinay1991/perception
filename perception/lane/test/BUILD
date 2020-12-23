@@ -3,12 +3,15 @@ load("@rules_cc//cc:defs.bzl", "cc_test")
 cc_test(
     name = "node_tests",
     srcs = ["lane_node_tests.cpp"],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     data = [
         "//:testdata",
     ],
     tags = [
         "component",
-        "unit",
     ],
     deps = [
         "//perception/lane/node",
@@ -19,6 +22,10 @@ cc_test(
 cc_test(
     name = "unit_tests",
     srcs = ["lane_tests.cpp"],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     data = [
         "//:testdata",
     ],

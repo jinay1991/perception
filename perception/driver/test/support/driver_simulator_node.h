@@ -19,6 +19,9 @@ class DriverSimulatorNode : public middleware::Node
     void ExecuteStep() override;
     void Shutdown() override;
 
+    void ShowFace();
+    void HideFace();
+
     void OpenEyes();
     void CloseEyes();
     void BlinkEyes(const units::frequency::hertz_t eye_blink_rate);
@@ -38,6 +41,11 @@ class DriverSimulatorNode : public middleware::Node
     void TiltHeadRight(const units::angle::radian_t delta_pitch);
 
   private:
+    void ToggleEyes();
+
+    std::chrono::milliseconds GetEyeBlinkDuration() const;
+
+    std::chrono::milliseconds time_since_last_eye_state_change_;
     DriverCameraMessage driver_camera_message_;
 };
 }  // namespace perception

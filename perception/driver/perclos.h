@@ -5,6 +5,7 @@
 #ifndef PERCEPTION_DRIVER_PERCLOS_H
 #define PERCEPTION_DRIVER_PERCLOS_H
 
+#include "perception/common/circular_bitset.h"
 #include "perception/datatypes/driver.h"
 
 namespace perception
@@ -15,10 +16,15 @@ class Perclos
     Perclos();
 
     void Calculate(const EyeState eye_state);
-    double GetCurrentPercentage() const;
+
+    double GetClosurePercentage() const;
+    double GetAvailabilityPercentage() const;
 
   private:
-    double percentage;
+    static constexpr std::chrono::milliseconds kAssumedCycleDuration{40ms};
+    static constexpr std::int32_t kWindowSize{kMaxEyeStateObservationDuration / kAssumedCycleDuration};
+
+    CircularBitset<kWindowSize> longterm_storage_;
 };
 }  // namespace perception
 

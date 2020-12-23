@@ -2,8 +2,15 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
     name = "common",
-    srcs = glob(["*.cpp"]),
-    hdrs = glob(["*.h"]),
+    hdrs = [
+        "circular_bitset.h",
+        "logging.h",
+        "validity_range.h",
+    ],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "@glog",

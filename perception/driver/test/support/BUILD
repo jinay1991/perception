@@ -3,8 +3,19 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 cc_library(
     name = "support",
     testonly = True,
-    srcs = glob(["*.cpp"]),
-    hdrs = glob(["*.h"]),
+    srcs = [
+        "driver_consumer_node.cpp",
+        "driver_simulator_node.cpp",
+    ],
+    hdrs = [
+        "driver_consumer_node.h",
+        "driver_simulator_node.h",
+        "operators.h",
+    ],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     visibility = ["//perception/driver:__subpackages__"],
     deps = [
         ":builders",
@@ -20,15 +31,25 @@ cc_library(
 cc_library(
     name = "builders",
     testonly = True,
-    srcs = glob(["builders/*.cpp"]),
-    hdrs = glob(["builders/*.h"]),
+    srcs = ["builders/driver_camera_message_builder.cpp"],
+    hdrs = ["builders/driver_camera_message_builder.h"],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     deps = ["//perception/datatypes"],
 )
 
 cc_library(
     name = "mocks",
     testonly = True,
-    srcs = glob(["mocks/*.cpp"]),
-    hdrs = glob(["mocks/*.h"]),
+    hdrs = [
+        "mocks/data_source_mock.h",
+        "mocks/parameter_handler_mock.h",
+    ],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     deps = ["//perception/driver"],
 )

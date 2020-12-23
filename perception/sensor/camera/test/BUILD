@@ -3,13 +3,16 @@ load("@rules_cc//cc:defs.bzl", "cc_test")
 cc_test(
     name = "node_tests",
     srcs = ["camera_node_tests.cpp"],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     data = [
         "//:calibration_data",
         "//:testdata",
     ],
     tags = [
         "component",
-        "unit",
     ],
     deps = [
         "//perception/sensor/camera/node",
@@ -23,6 +26,10 @@ cc_test(
     srcs = [
         "calibration_tests.cpp",
         "camera_tests.cpp",
+    ],
+    copts = [
+        "-Wall",
+        "-Werror",
     ],
     data = [
         "//:calibration_data",

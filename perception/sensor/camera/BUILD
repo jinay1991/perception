@@ -10,6 +10,10 @@ cc_library(
         "calibration.h",
         "camera.h",
     ],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     data = [
         "//:calibration_data",
     ],

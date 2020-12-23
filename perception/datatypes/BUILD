@@ -13,6 +13,10 @@ cc_library(
         "traffic_sign.h",
         "vehicle_dynamics.h",
     ],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "@nholthaus//:units",

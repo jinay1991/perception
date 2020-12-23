@@ -10,12 +10,15 @@
 namespace perception
 {
 
+constexpr std::chrono::milliseconds kSystemCycleDuration{40U};
+
 DriverSimulatorNode::DriverSimulatorNode(middleware::IPubSubFactory& factory)
     : middleware::Node{"driver_simulator_node", factory},
+      time_since_last_eye_state_change_{0U},
       driver_camera_message_{DriverCameraMessageBuilder()
                                  .WithHeadPose(0.0_rad, 0.0_rad, 0.0_rad)
                                  .WithGazePose(0.0_rad, 0.0_rad, 0.0_rad)
-                                 .WithEyeState(true, true)
+                                 .WithEyeState(true, true, kMaxEyeLidOpening, kMaxEyeBlinkRate)
                                  .Build()}
 {
 }
@@ -26,22 +29,65 @@ void DriverSimulatorNode::Init()
         [&driver_camera_message = driver_camera_message_] { return driver_camera_message; });
 }
 
-void DriverSimulatorNode::ExecuteStep() {}
+void DriverSimulatorNode::ExecuteStep()
+{
+    ToggleEyes();
+}
 
 void DriverSimulatorNode::Shutdown() {}
 
+void DriverSimulatorNode::ToggleEyes()
+{
+    if (time_since_last_eye_state_change_ > GetEyeBlinkDuration())
+    {
+        const bool is_eye_open = driver_camera_message_.face_tracking.eye_lid_opening == kMaxEyeLidOpening;
+        if (is_eye_open)
+        {
+            CloseEyes();
+            time_since_last_eye_state_change_ = 0ms;
+        }
+        else
+        {
+            OpenEyes();
+            time_since_last_eye_state_change_ = 0ms;
+        }
+    }
+    time_since_last_eye_state_change_ += kSystemCycleDuration;
+}
+
+std::chrono::milliseconds DriverSimulatorNode::GetEyeBlinkDuration() const
+{
+    const double eye_blink_rate = driver_camera_message_.face_tracking.eye_blink_rate.value();
+    std::chrono::milliseconds eye_blink_duration{0U};
+    if (eye_blink_rate != 0.0)
+    {
+        eye_blink_duration = std::chrono::seconds{static_cast<std::uint32_t>(std::floor(1.0 / eye_blink_rate))};
+    }
+    return eye_blink_duration;
+}
+
+void DriverSimulatorNode::ShowFace()
+{
+    driver_camera_message_.face_tracking.face_visibility = true;
+    driver_camera_message_.face_tracking.eye_visibility = true;
+}
+
+void DriverSimulatorNode::HideFace()
+{
+    driver_camera_message_.face_tracking.face_visibility = false;
+    driver_camera_message_.face_tracking.eye_visibility = false;
+}
+
 void DriverSimulatorNode::OpenEyes()
 {
+    ShowFace();
     driver_camera_message_.face_tracking.eye_lid_opening = kMaxEyeLidOpening;
-    driver_camera_message_.face_tracking.eye_visibility = true;
-    driver_camera_message_.face_tracking.face_visibility = true;
 }
 
 void DriverSimulatorNode::CloseEyes()
 {
+    ShowFace();
     driver_camera_message_.face_tracking.eye_lid_opening = 0.0_mm;
-    driver_camera_message_.face_tracking.eye_visibility = true;
-    driver_camera_message_.face_tracking.face_visibility = true;
 }
 
 void DriverSimulatorNode::BlinkEyes(const units::frequency::hertz_t eye_blink_rate)

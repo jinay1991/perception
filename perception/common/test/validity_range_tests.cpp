@@ -64,6 +64,59 @@ TEST_P(ValidityRangeFixture_InRange, InRange_GivenTypicalValidityRange_ExpectChe
     EXPECT_EQ(result, param.result);
 }
 
+template <typename T>
+struct TestClampParam
+{
+    // Given
+    T value;
+    T lower;
+    T upper;
+
+    // Then
+    T result;
+};
+
+class ValidityRangeFixture_Clamp : public ::testing::TestWithParam<TestClampParam<std::int32_t>>
+{
+};
+
+// clang-format off
+INSTANTIATE_TEST_SUITE_P(
+    ValidityRange,
+    ValidityRangeFixture_Clamp,
+    ::testing::Values(
+        //                          value, lower, upper, result
+        TestClampParam<std::int32_t>{   9,     0,    10,    9},
+        TestClampParam<std::int32_t>{  11,     0,    10,   10},
+        TestClampParam<std::int32_t>{  -1,     0,    10,    0}
+));
+// clang-format on
+
+TEST_P(ValidityRangeFixture_Clamp, Clamp_GivenTypicalInputs_ExpectClampedResult)
+{
+    // Given
+    const auto param = GetParam();
+
+    // When
+    const auto result = Clamp(param.value, param.lower, param.upper);
+
+    // Then
+    EXPECT_EQ(result, param.result);
+}
+
+TEST_P(ValidityRangeFixture_Clamp, Clamp_GivenTypicalValidityRange_ExpectClampedResult)
+{
+    // Given
+    const auto param = GetParam();
+    const ValidityRange<std::int32_t> range{param.lower, param.upper};
+
+    // When
+    const auto result = Clamp(param.value, range);
+
+    // Then
+    EXPECT_EQ(result, param.result);
+}
+
 TEST(ValidityRangeTest, IntegerEquality)
 {
     const ValidityRange<std::int32_t> lhs{1, 10};

@@ -86,6 +86,37 @@ inline constexpr bool InRange(const T value, const ValidityRange<T>& range)
     return InRange(value, range.lower, range.upper);
 }
 
+///
+/// @brief Provided clamped value within range (lower, upper)
+/// @tparam Value type
+///
+/// @param value[in] value to be checked
+/// @param lower[in] lower value (excluding)
+/// @param upper[in] upper value (excluding)
+///
+/// @return value if in given range (lower, upper), else lower if <lower and upper if > upper.
+///
+template <typename T>
+inline constexpr T Clamp(const T value, const T lower, const T upper)
+{
+    return ((value < lower) ? lower : ((value > upper) ? upper : value));
+}
+
+///
+/// @brief Provided clamped value within range (lower, upper)
+/// @tparam Value type
+///
+/// @param value[in] value to be checked
+/// @param range[in] validity range
+///
+/// @return value if in given range (lower, upper), else lower if <lower and upper if > upper.
+///
+template <typename T>
+inline constexpr T Clamp(const T value, const ValidityRange<T>& range)
+{
+    return Clamp(value, range.lower, range.upper);
+}
+
 }  // namespace perception
 
 #endif  /// PERCEPTION_COMMON_VALIDITY_RANGE_UTILS_H

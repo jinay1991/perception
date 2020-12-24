@@ -24,7 +24,7 @@ class DriverCamera
     void Init();
 
     /// @brief Execute single step for Driver Camera
-    void Step();
+    void ExecuteStep();
 
     /// @brief Shutdown/Deinitialize Driver Camera
     void Shutdown();

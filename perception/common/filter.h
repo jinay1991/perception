@@ -24,10 +24,10 @@ class Filter
     {
     }
 
-    void SetHoldDuration(const std::chrono::milliseconds duration) { hold_duration_ = duration; }
+    inline void SetHoldDuration(const std::chrono::milliseconds duration) { hold_duration_ = duration; }
 
-    T GetCurrentState() const { return current_state_; }
-    std::chrono::milliseconds GetStateDuration() const { return state_duration_; }
+    inline constexpr T GetCurrentState() const { return current_state_; }
+    inline constexpr std::chrono::milliseconds GetStateDuration() const { return state_duration_; }
 
     void Update(const T new_state, const std::chrono::milliseconds delta_duration)
     {
@@ -56,7 +56,7 @@ class Filter
     inline constexpr bool IsStateChangeRequired(const T new_state) const { return (current_state_ != new_state); }
     inline constexpr bool IsStateChangePossible() const { return (state_duration_ > hold_duration_); }
 
-    void ChangeState(const T new_state)
+    inline void ChangeState(const T new_state)
     {
         previous_state_ = current_state_;
         current_state_ = new_state;

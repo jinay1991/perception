@@ -16,6 +16,13 @@ namespace
 
 constexpr std::chrono::milliseconds kDefaultStepDuration{40U};
 
+TEST(Perclos, GlobalConstants)
+{
+    // Then
+    EXPECT_THAT(kAssumedCycleDuration, 40ms);
+    EXPECT_THAT(kMaxLongtermStorageSize, kMaxEyeStateObservationDuration / kAssumedCycleDuration);
+}
+
 class PerclosFixture : public ::testing::Test
 {
   public:

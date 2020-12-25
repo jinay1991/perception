@@ -4,6 +4,7 @@ cc_library(
     name = "common",
     hdrs = [
         "circular_bitset.h",
+        "current_previous.h",
         "filter.h",
         "logging.h",
         "validity_range.h",

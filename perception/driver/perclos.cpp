@@ -13,7 +13,7 @@ Perclos::Perclos() : longterm_storage_{}, eye_blink_filter_{EyeState::kInvalid} 
 
 void Perclos::Calculate(const EyeState eye_state)
 {
-    eye_blink_filter_.Update(eye_state, 40ms);
+    eye_blink_filter_.Update(eye_state, kAssumedCycleDuration);
     const auto is_eye_closed = EyeState::kEyesClosed == eye_blink_filter_.GetCurrentState();
     longterm_storage_.push_back(is_eye_closed);
 }

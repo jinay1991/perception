@@ -8,6 +8,8 @@
 #include <units.h>
 
 #include <chrono>
+#include <ostream>
+#include <string>
 
 namespace perception
 {

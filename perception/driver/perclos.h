@@ -7,6 +7,7 @@
 
 #include "perception/common/circular_bitset.h"
 #include "perception/datatypes/driver.h"
+#include "perception/common/filter.h"
 
 namespace perception
 {
@@ -25,6 +26,7 @@ class Perclos
     static constexpr std::int32_t kWindowSize{kMaxEyeStateObservationDuration / kAssumedCycleDuration};
 
     CircularBitset<kWindowSize> longterm_storage_;
+    Filter<EyeState> eye_blink_filter_;
 };
 }  // namespace perception
 

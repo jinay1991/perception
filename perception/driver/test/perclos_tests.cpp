@@ -62,11 +62,14 @@ INSTANTIATE_TEST_SUITE_P(
     Perclos, 
     PerclosFixture_WithEyeStateDuration, 
     ::testing::Values(
-        //                        eye_state            , duration, (expected) closure_percentage, availability_percentage
-        TestEyeStateDurationParam{EyeState::kEyesClosed,     2min,                         100.0,                    40.0},
-        TestEyeStateDurationParam{EyeState::kEyesClosed,     5min,                         100.0,                   100.0},
-        TestEyeStateDurationParam{  EyeState::kEyesOpen,     2min,                           0.0,                    40.0},
-        TestEyeStateDurationParam{  EyeState::kEyesOpen,     5min,                           0.0,                   100.0}
+        //                        eye_state            , duration, (expected) closure_percentage, (expected) availability_percentage
+        TestEyeStateDurationParam{EyeState::kEyesClosed,     2min,                         100.0,                               40.0},
+        TestEyeStateDurationParam{EyeState::kEyesClosed,     5min,                         100.0,                              100.0},
+        TestEyeStateDurationParam{  EyeState::kEyesOpen,     2min,                           0.0,                               40.0},
+        TestEyeStateDurationParam{  EyeState::kEyesOpen,     5min,                           0.0,                              100.0},
+        TestEyeStateDurationParam{  EyeState::kEyesOpen,     0min,                           0.0,                                0.0},
+        TestEyeStateDurationParam{  EyeState::kEyesOpen,     6min,                           0.0,                              100.0},
+        TestEyeStateDurationParam{EyeState::kEyesClosed,     6min,                         100.0,                              100.0}
 ));
 // clang-format on
 

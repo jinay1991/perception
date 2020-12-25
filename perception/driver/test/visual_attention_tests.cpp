@@ -5,7 +5,6 @@
 #include "perception/driver/parameter_handler.h"
 #include "perception/driver/test/support/mocks/data_source_mock.h"
 #include "perception/driver/test/support/mocks/parameter_handler_mock.h"
-#include "perception/driver/test/support/operators.h"
 #include "perception/driver/visual_attention.h"
 
 #include <gmock/gmock.h>

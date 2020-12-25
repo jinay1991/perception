@@ -3,7 +3,6 @@
 /// @copyright Copyright (c) 2020. MIT License.
 ///
 #include "perception/driver/test/support/builders/driver_camera_message_builder.h"
-#include "perception/driver/test/support/operators.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

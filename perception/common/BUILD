@@ -13,7 +13,7 @@ cc_library(
         "-Wall",
         "-Werror",
     ],
-    visibility = ["//visibility:public"],
+    visibility = ["//perception:__subpackages__"],
     deps = [
         "@glog",
     ],

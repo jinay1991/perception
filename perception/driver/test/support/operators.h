@@ -10,7 +10,7 @@
 namespace perception
 {
 
-inline const char* to_string(const AttentionState& attention_state) noexcept
+inline std::string to_string(const AttentionState& attention_state) noexcept
 {
     switch (attention_state)
     {
@@ -28,12 +28,12 @@ inline const char* to_string(const AttentionState& attention_state) noexcept
 
 inline std::ostream& operator<<(std::ostream& stream, const AttentionState& attention_state) noexcept
 {
-    const char* name = to_string(attention_state);
+    const auto name = to_string(attention_state);
     stream << name;
     return stream;
 }
 
-inline const char* to_string(const EyeState& eye_state) noexcept
+inline std::string to_string(const EyeState& eye_state) noexcept
 {
     switch (eye_state)
     {
@@ -53,12 +53,12 @@ inline const char* to_string(const EyeState& eye_state) noexcept
 
 inline std::ostream& operator<<(std::ostream& stream, const EyeState& eye_state) noexcept
 {
-    const char* name = to_string(eye_state);
+    const auto name = to_string(eye_state);
     stream << name;
     return stream;
 }
 
-inline const char* to_string(const FatigueLevel& fatigue_level) noexcept
+inline std::string to_string(const FatigueLevel& fatigue_level) noexcept
 {
     switch (fatigue_level)
     {
@@ -80,7 +80,7 @@ inline const char* to_string(const FatigueLevel& fatigue_level) noexcept
 
 inline std::ostream& operator<<(std::ostream& stream, const FatigueLevel& fatigue_level) noexcept
 {
-    const char* name = to_string(fatigue_level);
+    const auto name = to_string(fatigue_level);
     stream << name;
     return stream;
 }

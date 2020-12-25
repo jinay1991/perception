@@ -16,7 +16,7 @@ cc_library(
         "-Wall",
         "-Werror",
     ],
-    visibility = ["//perception/driver:__subpackages__"],
+    visibility = ["//perception/driver/test:__subpackages__"],
     deps = [
         ":builders",
         ":mocks",
@@ -37,6 +37,7 @@ cc_library(
         "-Wall",
         "-Werror",
     ],
+    visibility = ["//perception/driver/test:__subpackages__"],
     deps = ["//perception/datatypes"],
 )
 
@@ -51,5 +52,6 @@ cc_library(
         "-Wall",
         "-Werror",
     ],
+    visibility = ["//perception/driver/test:__subpackages__"],
     deps = ["//perception/driver"],
 )

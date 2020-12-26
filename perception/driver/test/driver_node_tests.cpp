@@ -8,7 +8,6 @@
 #include "perception/driver/test/support/builders/driver_camera_message_builder.h"
 #include "perception/driver/test/support/driver_consumer_node.h"
 #include "perception/driver/test/support/driver_simulator_node.h"
-#include "perception/driver/test/support/operators.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

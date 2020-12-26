@@ -4,14 +4,17 @@ cc_library(
     name = "common",
     hdrs = [
         "circular_bitset.h",
+        "current_previous.h",
+        "filter.h",
         "logging.h",
+        "toggle.h",
         "validity_range.h",
     ],
     copts = [
         "-Wall",
         "-Werror",
     ],
-    visibility = ["//visibility:public"],
+    visibility = ["//perception:__subpackages__"],
     deps = [
         "@glog",
     ],

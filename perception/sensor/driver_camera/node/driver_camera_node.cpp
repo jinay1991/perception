@@ -24,7 +24,7 @@ void DriverCameraNode::Init()
 
 void DriverCameraNode::ExecuteStep()
 {
-    driver_camera_.Step();
+    driver_camera_.ExecuteStep();
 }
 
 void DriverCameraNode::Shutdown()

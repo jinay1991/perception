@@ -30,11 +30,12 @@ class DriverCameraFixture : public ::testing::Test
     void SetUp() override { unit_.Init(); }
     void TearDown() override { unit_.Shutdown(); }
 
-    void RunOnce() { unit_.Step(); }
+    void RunOnce() { unit_.ExecuteStep(); }
 
     void SetCameraMessage() { unit_.SetCameraMessage(GenerateCameraMessage()); }
     const DriverCameraMessage& GetDriverCameraMessage() const { return unit_.GetDriverCameraMessage(); }
 
+  private:
     CameraMessage GenerateCameraMessage() const
     {
         const CalibrationParams calibration_params{};
@@ -50,7 +51,6 @@ class DriverCameraFixture : public ::testing::Test
         return camera_message;
     }
 
-  private:
     const std::string test_image_path_;
     const cv::Mat test_image_;
     CameraMessage camera_message_;

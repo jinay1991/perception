@@ -6,7 +6,6 @@
 #include "middleware/lifecycle/test/single_topic_publisher.h"
 #include "perception/communication/topics.h"
 #include "perception/driver/test/support/driver_consumer_node.h"
-#include "perception/driver/test/support/operators.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

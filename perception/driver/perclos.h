@@ -6,14 +6,24 @@
 #define PERCEPTION_DRIVER_PERCLOS_H
 
 #include "perception/common/circular_bitset.h"
+#include "perception/common/filter.h"
 #include "perception/datatypes/driver.h"
+#include "perception/driver/i_parameter_handler.h"
 
 namespace perception
 {
+/// @brief Assumed Cycle duration
+static constexpr std::chrono::milliseconds kAssumedCycleDuration{40ms};
+
+/// @brief Maximum allowed longterm storage size (i.e. max samples to store)
+static constexpr std::int32_t kMaxLongtermStorageSize{kMaxEyeStateObservationDuration / kAssumedCycleDuration};
+
 class Perclos
 {
   public:
     Perclos();
+
+    void UpdateParameters(const IParameterHandler& parameter_handler);
 
     void Calculate(const EyeState eye_state);
 
@@ -21,10 +31,8 @@ class Perclos
     double GetAvailabilityPercentage() const;
 
   private:
-    static constexpr std::chrono::milliseconds kAssumedCycleDuration{40ms};
-    static constexpr std::int32_t kWindowSize{kMaxEyeStateObservationDuration / kAssumedCycleDuration};
-
-    CircularBitset<kWindowSize> longterm_storage_;
+    CircularBitset<kMaxLongtermStorageSize> longterm_storage_;
+    Filter<EyeState> eye_blink_filter_;
 };
 }  // namespace perception
 

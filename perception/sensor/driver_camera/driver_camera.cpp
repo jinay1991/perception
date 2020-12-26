@@ -29,7 +29,7 @@ DriverCamera::DriverCamera()
 
 void DriverCamera::Init() {}
 
-void DriverCamera::Step()
+void DriverCamera::ExecuteStep()
 {
     UpdateFaceTracking();
     UpdateHeadTracking();

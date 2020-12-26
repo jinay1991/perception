@@ -8,6 +8,8 @@
 #include <units.h>
 
 #include <chrono>
+#include <ostream>
+#include <string>
 
 namespace perception
 {
@@ -71,36 +73,36 @@ struct FaceTracking
     /// @brief Driver Eye visibility
     bool eye_visibility{false};
 
-    /// @brief Driver Eye lid opening
+    /// @brief Driver Eye lid opening (mm)
     units::length::millimeter_t eye_lid_opening{0.0};
 
-    /// @brief Driver Eye blink rate
+    /// @brief Driver Eye blink rate (hertz)
     units::frequency::hertz_t eye_blink_rate{0.0};
 };
 
 /// @brief Driver Gaze Tracking Information
 struct GazeTracking
 {
-    /// @brief Driver Gaze Tracking Yaw
+    /// @brief Driver Gaze Tracking Yaw (rad)
     units::angle::radian_t yaw{0.0};
 
-    /// @brief Driver Gaze Tracking Pitch
+    /// @brief Driver Gaze Tracking Pitch (rad)
     units::angle::radian_t pitch{0.0};
 
-    /// @brief Driver Gaze Tracking Roll
+    /// @brief Driver Gaze Tracking Roll (rad)
     units::angle::radian_t roll{0.0};
 };
 
 /// @brief Driver Head Tracking Information
 struct HeadTracking
 {
-    /// @brief Driver Head Tracking Yaw
+    /// @brief Driver Head Tracking Yaw (rad)
     units::angle::radian_t yaw{0.0};
 
-    /// @brief Driver Head Tracking Pitch
+    /// @brief Driver Head Tracking Pitch (rad)
     units::angle::radian_t pitch{0.0};
 
-    /// @brief Driver Head Tracking Roll
+    /// @brief Driver Head Tracking Roll (rad)
     units::angle::radian_t roll{0.0};
 };
 
@@ -116,7 +118,7 @@ struct FatigueMessage
     /// @brief Driver Fatigue Level
     FatigueLevel level{FatigueLevel::kInvalid};
 
-    /// @brief Driver Fatigue Confidence
+    /// @brief Driver Fatigue Confidence. Range between 0.0-100.0%
     double confidence{0.0};
 };
 

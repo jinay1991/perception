@@ -43,12 +43,15 @@ TEST(ParameterHandlerTest, SetEyeBlinkRate_GivenTypicalEyeBlinkRate_ExpectUpdate
     // Given
     ParameterHandler parameter_handler{};
     const units::frequency::hertz_t eye_blink_rate = 2.0_Hz;
+    const std::chrono::milliseconds eye_blink_duration =
+        std::chrono::seconds{static_cast<std::int32_t>(std::floor(1.0 / eye_blink_rate.value()))};
 
     // When
     parameter_handler.SetEyeBlinkRate(eye_blink_rate);
 
     // Then
     EXPECT_EQ(eye_blink_rate, parameter_handler.GetEyeBlinkRate());
+    EXPECT_EQ(eye_blink_duration, parameter_handler.GetEyeBlinkDuration());
 }
 }  // namespace
 }  // namespace perception

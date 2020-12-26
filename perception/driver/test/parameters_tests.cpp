@@ -24,7 +24,9 @@ TEST(Parameters, InitialValues)
                 AllOf(Field(&Parameters::eye_lid_opening_range,
                             AllOf(Field(&ValidityRange<units::length::millimeter_t>::lower, kMinEyeLidOpening),
                                   Field(&ValidityRange<units::length::millimeter_t>::upper, kMaxEyeLidOpening))),
-                      Field(&Parameters::eye_blink_rate, kMaxEyeBlinkRate)));
+                      Field(&Parameters::eye_blink_rate,
+                            AllOf(Field(&ValidityRange<units::length::millimeter_t>::lower, kMinEyeLidOpening),
+                                  Field(&ValidityRange<units::length::millimeter_t>::upper, kMaxEyeLidOpening)))));
 }
 }  // namespace
 }  // namespace perception

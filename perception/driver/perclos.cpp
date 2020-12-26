@@ -9,18 +9,11 @@
 namespace perception
 {
 
-Perclos::Perclos() : longterm_storage_{}, eye_blink_filter_{EyeState::kInvalid} {}
-
-void Perclos::UpdateParameters(const IParameterHandler& parameter_handler)
-{
-    eye_blink_filter_.SetHoldDuration(parameter_handler.GetEyeBlinkDuration());
-}
+Perclos::Perclos() : longterm_storage_{} {}
 
 void Perclos::Calculate(const EyeState eye_state)
 {
-    eye_blink_filter_.Update(eye_state, kAssumedCycleDuration);
-    const auto is_eye_closed = EyeState::kEyesClosed == eye_blink_filter_.GetCurrentState();
-    longterm_storage_.push_back(is_eye_closed);
+    longterm_storage_.push_back(IsEyesClosed(eye_state));
 }
 
 double Perclos::GetClosurePercentage() const
@@ -39,6 +32,11 @@ double Perclos::GetAvailabilityPercentage() const
     const auto availability_percentage =
         ((longterm_storage_capacity != 0.0) ? ((longterm_storage_size * 100.0) / longterm_storage_capacity) : 0.0);
     return Clamp(availability_percentage, 0.0, 100.0);
+}
+
+bool Perclos::IsEyesClosed(const EyeState eye_state) const
+{
+    return (EyeState::kEyesClosed == eye_state);
 }
 
 }  // namespace perception

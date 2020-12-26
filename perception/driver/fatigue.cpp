@@ -10,7 +10,11 @@ namespace perception
 {
 
 Fatigue::Fatigue(const IParameterHandler& parameter_handler, const IDataSource& data_source)
-    : parameter_handler_{parameter_handler}, data_source_{data_source}, fatigue_builder_{}, perclos_{}
+    : parameter_handler_{parameter_handler},
+      data_source_{data_source},
+      fatigue_builder_{},
+      perclos_{},
+      eye_blink_filter_{EyeState::kInvalid}
 {
 }
 
@@ -62,6 +66,13 @@ EyeState Fatigue::DetermineEyeState() const
     }
 
     return eye_state;
+}
+
+EyeState Fatigue::ApplyEyeBlinkFilter(const EyeState& eye_state)
+{
+    eye_blink_filter_.SetHoldDuration(data_source_.GetEyeBlinkDuration());
+    eye_blink_filter_.Update(eye_state, kAssumedCycleDuration);
+    return eye_blink_filter_.GetCurrentState();
 }
 
 FatigueLevel Fatigue::DetermineFatigueLevel() const

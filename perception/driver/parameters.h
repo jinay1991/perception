@@ -14,7 +14,7 @@ namespace perception
 struct Parameters
 {
     ValidityRange<units::length::millimeter_t> eye_lid_opening_range{kMinEyeLidOpening, kMaxEyeLidOpening};
-    units::frequency::hertz_t eye_blink_rate{kMaxEyeBlinkRate};
+    ValidityRange<units::frequency::hertz_t> eye_blink_rate{kMinEyeBlinkRate, kMaxEyeBlinkRate};
 };
 
 }  // namespace perception

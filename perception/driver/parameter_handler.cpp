@@ -19,14 +19,14 @@ units::length::millimeter_t ParameterHandler::GetMinEyeLidOpening() const
     return parameters_.eye_lid_opening_range.lower;
 }
 
-units::frequency::hertz_t ParameterHandler::GetEyeBlinkRate() const
+units::frequency::hertz_t ParameterHandler::GetMinEyeBlinkRate() const
 {
-    return parameters_.eye_blink_rate;
+    return parameters_.eye_blink_rate.lower;
 }
 
-std::chrono::milliseconds ParameterHandler::GetEyeBlinkDuration() const
+units::frequency::hertz_t ParameterHandler::GetMaxEyeBlinkRate() const
 {
-    return std::chrono::seconds{static_cast<std::int32_t>(std::floor(1.0 / GetEyeBlinkRate().value()))};
+    return parameters_.eye_blink_rate.upper;
 }
 
 void ParameterHandler::SetMinEyeLidOpening(const units::length::millimeter_t eye_lid_opening)
@@ -39,8 +39,13 @@ void ParameterHandler::SetMaxEyeLidOpening(const units::length::millimeter_t eye
     parameters_.eye_lid_opening_range.upper = eye_lid_opening;
 }
 
-void ParameterHandler::SetEyeBlinkRate(const units::frequency::hertz_t eye_blink_rate)
+void ParameterHandler::SetMinEyeBlinkRate(const units::frequency::hertz_t eye_blink_rate)
 {
-    parameters_.eye_blink_rate = eye_blink_rate;
+    parameters_.eye_blink_rate.lower = eye_blink_rate;
+}
+
+void ParameterHandler::SetMaxEyeBlinkRate(const units::frequency::hertz_t eye_blink_rate)
+{
+    parameters_.eye_blink_rate.upper = eye_blink_rate;
 }
 }  // namespace perception

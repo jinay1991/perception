@@ -17,6 +17,9 @@ using namespace units::literals;
 using namespace std::chrono_literals;
 
 /// @brief Maximum eye blink rate (hertz)
+static constexpr units::frequency::hertz_t kMinEyeBlinkRate{0.0};
+
+/// @brief Maximum eye blink rate (hertz)
 static constexpr units::frequency::hertz_t kMaxEyeBlinkRate{30.0};
 
 /// @brief Maximum eye lid opening (mm)

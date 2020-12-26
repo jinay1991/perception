@@ -24,6 +24,11 @@ units::frequency::hertz_t ParameterHandler::GetEyeBlinkRate() const
     return parameters_.eye_blink_rate;
 }
 
+std::chrono::milliseconds ParameterHandler::GetEyeBlinkDuration() const
+{
+    return std::chrono::seconds{static_cast<std::int32_t>(std::floor(1.0 / GetEyeBlinkRate().value()))};
+}
+
 void ParameterHandler::SetMinEyeLidOpening(const units::length::millimeter_t eye_lid_opening)
 {
     parameters_.eye_lid_opening_range.lower = eye_lid_opening;

@@ -20,17 +20,37 @@ class CurrentPrevious
     /// @param previous - Value for previous
     explicit CurrentPrevious(const T& current, const T& previous) : current_{current}, previous_{previous} {}
 
-    /// @brief Provide delta between current - previous
+    /// @brief Set Current data
+    ///
+    /// @param current_data[in] - Current data
+    inline constexpr void SetCurrent(const T& current) { current_ = current; }
+
+    /// @brief Set Previous data
+    ///
+    /// @param previous[in] - Previous data
+    inline constexpr void SetPrevious(const T& previous) { previous_ = previous; }
+
+    /// @brief Provide current
+    ///
+    /// @return current data
+    inline constexpr const T& GetCurrent() const { return current_; }
+
+    /// @brief Provide previous
+    ///
+    /// @return previous data
+    inline constexpr const T& GetPrevious() const { return previous_; }
+
+    /// @brief Provide delta between current & previous
     ///
     /// @return delta
-    T GetDelta() const { return (current_ - previous_); }
+    inline constexpr T GetDelta() const { return (current_ - previous_); }
 
   private:
     /// @brief Current element of type T
-    const T current_;
+    T current_;
 
     /// @brief Previous element of type T
-    const T previous_;
+    T previous_;
 };
 }  // namespace perception
 

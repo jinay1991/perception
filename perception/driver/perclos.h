@@ -8,6 +8,7 @@
 #include "perception/common/circular_bitset.h"
 #include "perception/common/filter.h"
 #include "perception/datatypes/driver.h"
+#include "perception/driver/i_parameter_handler.h"
 
 namespace perception
 {
@@ -21,6 +22,8 @@ class Perclos
 {
   public:
     Perclos();
+
+    void UpdateParameters(const IParameterHandler& parameter_handler);
 
     void Calculate(const EyeState eye_state);
 

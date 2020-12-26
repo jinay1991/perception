@@ -159,6 +159,5 @@ TEST_F(FilterFixture, Update_GivenValidNewStateAndNonZeroHoldTime_ExpectChangedS
     // Then
     EXPECT_THAT(GetCurrentState(), new_state);
 }
-
 }  // namespace
 }  // namespace perception

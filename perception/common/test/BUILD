@@ -7,6 +7,7 @@ cc_test(
         "current_previous_tests.cpp",
         "filter_tests.cpp",
         "logging_tests.cpp",
+        "toggle_tests.cpp",
         "validity_range_tests.cpp",
     ],
     copts = [

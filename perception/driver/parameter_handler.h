@@ -20,6 +20,7 @@ class ParameterHandler final : public IParameterHandler
     units::length::millimeter_t GetMinEyeLidOpening() const override;
 
     units::frequency::hertz_t GetEyeBlinkRate() const override;
+    std::chrono::milliseconds GetEyeBlinkDuration() const override;
 
     void SetMinEyeLidOpening(const units::length::millimeter_t eye_lid_opening);
     void SetMaxEyeLidOpening(const units::length::millimeter_t eye_lid_opening);

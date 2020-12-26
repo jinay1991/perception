@@ -7,6 +7,7 @@ cc_library(
         "current_previous.h",
         "filter.h",
         "logging.h",
+        "toggle.h",
         "validity_range.h",
     ],
     copts = [

@@ -11,6 +11,11 @@ namespace perception
 
 Perclos::Perclos() : longterm_storage_{}, eye_blink_filter_{EyeState::kInvalid} {}
 
+void Perclos::UpdateParameters(const IParameterHandler& parameter_handler)
+{
+    eye_blink_filter_.SetHoldDuration(parameter_handler.GetEyeBlinkDuration());
+}
+
 void Perclos::Calculate(const EyeState eye_state)
 {
     eye_blink_filter_.Update(eye_state, kAssumedCycleDuration);

@@ -159,5 +159,21 @@ TEST_F(FilterFixture, Update_GivenValidNewStateAndNonZeroHoldTime_ExpectChangedS
     // Then
     EXPECT_THAT(GetCurrentState(), new_state);
 }
+
+TEST_F(FilterFixture, Update_GivenValidSameNewStateAndNonZeroHoldTime_ExpectNoChange)
+{
+    // Given
+    const auto initial_state = State::kState_1;
+    const auto new_state = State::kState_1;
+    const auto hold_duration = 80ms;
+    ChangeState(initial_state);
+    SetHoldDuration(hold_duration);
+
+    // When
+    RunForDuration(new_state, hold_duration + GetDeltaDuration());
+
+    // Then
+    EXPECT_THAT(GetCurrentState(), initial_state);
+}
 }  // namespace
 }  // namespace perception

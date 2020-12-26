@@ -35,6 +35,8 @@ class Fatigue
     bool IsFaceVisible() const;
     bool IsEyeVisible() const;
     bool IsEyeOpen() const;
+    bool IsEyeLidOpeningValid() const;
+    bool IsEyeBlinkRateValid() const;
 
     const IParameterHandler& parameter_handler_;
     const IDataSource& data_source_;

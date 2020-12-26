@@ -11,6 +11,8 @@
 #include <gtest/gtest.h>
 #include <units.h>
 
+#include <cmath>
+
 namespace perception
 {
 namespace
@@ -47,10 +49,13 @@ class FatigueFixture : public ::testing::Test
                         const std::chrono::milliseconds step = kDefaultStepDuration)
     {
         const auto eye_lid_opening = (EyeState::kEyesOpen == eye_state) ? 0.0_mm : kMaxEyeLidOpening;
+        const std::chrono::milliseconds eye_blink_duration =
+            std::chrono::seconds{static_cast<std::uint32_t>(std::floor(1.0 / kMaxEyeBlinkRate.value()))};
         EXPECT_CALL(mocked_data_source_, IsFaceVisible()).WillRepeatedly(Return(true));
         EXPECT_CALL(mocked_data_source_, IsEyeVisible()).WillRepeatedly(Return(true));
         EXPECT_CALL(mocked_data_source_, GetEyeLidOpening()).WillRepeatedly(Return(eye_lid_opening));
         EXPECT_CALL(mocked_data_source_, GetEyeBlinkRate()).WillRepeatedly(Return(kMaxEyeBlinkRate));
+        EXPECT_CALL(mocked_data_source_, GetEyeBlinkDuration()).WillRepeatedly(Return(eye_blink_duration));
 
         for (auto time_passed = 0ms; time_passed < duration; time_passed += step)
         {
@@ -106,10 +111,13 @@ TEST_P(FatigueFixture_WithEyeState, Fatigue_GiveTypicalFaceTrackingData_ExpectUp
 {
     // Given
     const auto param = GetParam();
+    const std::chrono::milliseconds eye_blink_duration =
+        std::chrono::seconds{static_cast<std::uint32_t>(std::floor(1.0 / param.eye_blink_rate.value()))};
     EXPECT_CALL(mocked_data_source_, IsFaceVisible()).WillRepeatedly(Return(param.face_visibility));
     EXPECT_CALL(mocked_data_source_, IsEyeVisible()).WillRepeatedly(Return(param.eye_visibility));
     EXPECT_CALL(mocked_data_source_, GetEyeLidOpening()).WillRepeatedly(Return(param.eye_lid_opening));
     EXPECT_CALL(mocked_data_source_, GetEyeBlinkRate()).WillRepeatedly(Return(param.eye_blink_rate));
+    EXPECT_CALL(mocked_data_source_, GetEyeBlinkDuration()).WillRepeatedly(Return(eye_blink_duration));
 
     // When
     RunOnce();

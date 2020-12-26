@@ -20,7 +20,7 @@ class Camera final
 {
   public:
     /// @brief Constructor.
-    /// @param source [in] Camera Source (Image/Video Path or 0 for Live Camera)
+    /// @param source  [in] Camera Source (Image/Video Path or 0 for Live Camera)
     explicit Camera(const std::string& source);
 
     /// @brief Initialize Camera
@@ -33,7 +33,7 @@ class Camera final
     void Shutdown();
 
     /// @brief Set Camera Source (Physical Camera/Video/Image Inputs)
-    /// @param source [in] Camera Source (video/image path)
+    /// @param source  [in] Camera Source (video/image path)
     void SetSource(const std::string source);
 
     /// @brief Provide last updated Camera Message based on the captured frame

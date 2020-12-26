@@ -22,12 +22,12 @@ class CurrentPrevious
 
     /// @brief Set Current data
     ///
-    /// @param current_data[in] - Current data
+    /// @param current_data [in] - Current data
     inline constexpr void SetCurrent(const T& current) { current_ = current; }
 
     /// @brief Set Previous data
     ///
-    /// @param previous[in] - Previous data
+    /// @param previous [in] - Previous data
     inline constexpr void SetPrevious(const T& previous) { previous_ = previous; }
 
     /// @brief Provide current

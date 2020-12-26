@@ -30,7 +30,7 @@ class InferenceEngineStrategy final
     void Shutdown();
 
     /// @brief Select Inference Engine
-    /// @param inference_engine_type [in] Inference Engine type (TF, TFLite)
+    /// @param inference_engine_type  [in] Inference Engine type (TF, TFLite)
     void SelectInferenceEngine(const InferenceEngineType& inference_engine_type,
                                const InferenceEngineParameters& inference_engine_parameters);
 

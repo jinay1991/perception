@@ -23,14 +23,14 @@ class NullInferenceEngine final : public IInferenceEngine
 {
   public:
     /// @brief Constructor
-    /// @param params[in] Inference Engine Parameters such as model input/output node names
+    /// @param params [in] Inference Engine Parameters such as model input/output node names
     explicit NullInferenceEngine(const InferenceEngineParameters& params);
 
     /// @brief Initialise Null Inference Engine
     void Init() override;
 
     /// @brief Execute Inference with Null Inference Engine
-    /// @param image[in] Image to be fed as input to Inference Engine
+    /// @param image [in] Image to be fed as input to Inference Engine
     void Execute(const Image& image) override;
 
     /// @brief Release Null Inference Engine

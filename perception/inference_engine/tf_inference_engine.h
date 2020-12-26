@@ -23,14 +23,14 @@ class TFInferenceEngine final : public IInferenceEngine
 {
   public:
     /// @brief Constructor
-    /// @param params[in] Inference Engine Parameters such as model input/output node names
+    /// @param params [in] Inference Engine Parameters such as model input/output node names
     explicit TFInferenceEngine(const InferenceEngineParameters& params);
 
     /// @brief Initialise TensorFlow Inference Engine
     void Init() override;
 
     /// @brief Execute Inference with TensorFlow Inference Engine
-    /// @param image[in] Image to be fed as input to Inference Engine
+    /// @param image [in] Image to be fed as input to Inference Engine
     void Execute(const Image& image) override;
 
     /// @brief Release TensorFlow Inference Engine
@@ -43,7 +43,7 @@ class TFInferenceEngine final : public IInferenceEngine
 
   private:
     /// @brief Updates Input Tensor by copying image to input_tensor
-    /// @param image[in] Input image to be fed to Inference Engine
+    /// @param image [in] Input image to be fed to Inference Engine
     void UpdateInput(const Image& image);
 
     /// @brief Updates Output Tensors by running the tensorflow session

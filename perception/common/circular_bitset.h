@@ -13,7 +13,7 @@ namespace perception
 
 /// @brief Circular Bitset holds bitset of max_size. Each bit represents one boolean state.
 ///
-/// @tparam max_size[in] - Max Bitset size
+/// @tparam max_size [in] - Max Bitset size
 template <std::int32_t max_size>
 class CircularBitset final
 {
@@ -38,7 +38,7 @@ class CircularBitset final
 
     /// @brief Constructor
     ///
-    /// @param list[in] - Initializer list to populate bitset with privided bool list.
+    /// @param list [in] - Initializer list to populate bitset with privided bool list.
     explicit CircularBitset(const std::initializer_list<bool> list)
         : bitset_{}, tail_{0}, head_{0}, size_{0}, capacity_{max_size}
     {
@@ -47,7 +47,7 @@ class CircularBitset final
 
     /// @brief Copy Constructor
     ///
-    /// @param other[in] - Circular Bitset object to be copied
+    /// @param other [in] - Circular Bitset object to be copied
     CircularBitset(const CircularBitset& other)
         : bitset_{other.bitset_}, tail_{other.tail_}, head_{other.head_}, size_{other.size_}, capacity_{other.capacity_}
     {
@@ -55,7 +55,7 @@ class CircularBitset final
 
     /// @brief Copy Assignment
     ///
-    /// @param other[in] - Circular Bitset object to be copied
+    /// @param other [in] - Circular Bitset object to be copied
     ///
     /// @return this pointer
     CircularBitset& operator=(const CircularBitset& other) &
@@ -70,7 +70,7 @@ class CircularBitset final
 
     /// @brief Move Constructor
     ///
-    /// @param other[in] - Circular Bitset object to be moved
+    /// @param other [in] - Circular Bitset object to be moved
     CircularBitset(CircularBitset&& other)
         : bitset_{std::move(other.bitset_)},
           tail_{other.tail_},
@@ -82,7 +82,7 @@ class CircularBitset final
 
     /// @brief Move Assignment
     ///
-    /// @param other[in] - Circular Bitset object to be moved
+    /// @param other [in] - Circular Bitset object to be moved
     ///
     /// @return this pointer
     CircularBitset& operator=(CircularBitset&& other) &
@@ -147,7 +147,7 @@ class CircularBitset final
 
     /// @brief Add provided value to bitset at back (i.e. tail)
     ///
-    /// @param value[in] - Value
+    /// @param value [in] - Value
     inline constexpr void push_back(const value_type value)
     {
         if (full())
@@ -162,7 +162,7 @@ class CircularBitset final
 
     /// @brief Remove head value from bitset front (i.e. head)
     ///
-    /// @param value[in] - Value
+    /// @param value [in] - Value
     inline constexpr void pop_front()
     {
         if (!empty())
@@ -186,7 +186,7 @@ class CircularBitset final
 
     /// @brief Value at given index
     ///
-    /// @param n[in] - index
+    /// @param n [in] - index
     ///
     /// @return value at index (n)
     inline constexpr value_type at(const size_type n) const
@@ -197,7 +197,7 @@ class CircularBitset final
 
     /// @brief Reference at given index
     ///
-    /// @param n[in] - index
+    /// @param n [in] - index
     ///
     /// @return reference at index (n)
     inline constexpr reference at(const size_type n)
@@ -225,7 +225,7 @@ class CircularBitset final
 
 /// @brief Equality Operator for Circular Bitset for given max_size
 ///
-/// @tparam max_size[in] - Max Bitset size
+/// @tparam max_size [in] - Max Bitset size
 ///
 /// @return True if lhs == rhs, otherwise False.
 template <std::int32_t max_size>
@@ -247,7 +247,7 @@ inline constexpr bool operator==(const CircularBitset<max_size>& lhs, const Circ
 
 /// @brief Inequality Operator for Circular Bitset for given max_size
 ///
-/// @tparam max_size[in] - Max Bitset size
+/// @tparam max_size [in] - Max Bitset size
 ///
 /// @return True if lhs != rhs, otherwise False.
 template <std::int32_t max_size>

@@ -32,7 +32,7 @@ class DriverCamera
     /// @brief Set received Camera Message for further processing of the received raw image data to extract Face, Head
     /// and Gaze Tracking information
     ///
-    /// @param camera_message [in] - Camera Message
+    /// @param camera_message  [in] - Camera Message
     void SetCameraMessage(const CameraMessage& camera_message);
 
     /// @brief Provide Driver Camera Message containing Face, Head and Gaze Tracking information

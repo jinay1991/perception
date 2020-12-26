@@ -16,7 +16,7 @@ class ObjectNode final : public middleware::Node
 {
   public:
     /// @brief Constructor
-    /// @param factory[in] Middleware Publisher/Subscriber Factory
+    /// @param factory [in] Middleware Publisher/Subscriber Factory
     explicit ObjectNode(middleware::IPubSubFactory& factory);
 
     /// @brief Initialize Object Detection

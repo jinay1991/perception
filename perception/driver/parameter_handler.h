@@ -19,13 +19,14 @@ class ParameterHandler final : public IParameterHandler
     units::length::millimeter_t GetMaxEyeLidOpening() const override;
     units::length::millimeter_t GetMinEyeLidOpening() const override;
 
-    units::frequency::hertz_t GetEyeBlinkRate() const override;
-    std::chrono::milliseconds GetEyeBlinkDuration() const override;
+    units::frequency::hertz_t GetMinEyeBlinkRate() const override;
+    units::frequency::hertz_t GetMaxEyeBlinkRate() const override;
 
     void SetMinEyeLidOpening(const units::length::millimeter_t eye_lid_opening);
     void SetMaxEyeLidOpening(const units::length::millimeter_t eye_lid_opening);
 
-    void SetEyeBlinkRate(const units::frequency::hertz_t eye_blink_rate);
+    void SetMinEyeBlinkRate(const units::frequency::hertz_t eye_blink_rate);
+    void SetMaxEyeBlinkRate(const units::frequency::hertz_t eye_blink_rate);
 
   private:
     Parameters parameters_;

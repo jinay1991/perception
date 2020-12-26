@@ -21,7 +21,7 @@ class Filter
   public:
     /// @brief Default Constructor
     ///
-    /// @param initial_state[in] - Initial state or Invalid State
+    /// @param initial_state [in] - Initial state or Invalid State
     explicit Filter(const T& initial_state)
         : initial_state_{initial_state},
           current_state_{initial_state_},
@@ -33,7 +33,7 @@ class Filter
     }
     /// @brief Update required state hold duration with provided duration
     ///
-    /// @param duration[in] - New state hold duration (ms)
+    /// @param duration [in] - New state hold duration (ms)
     inline constexpr void SetHoldDuration(const std::chrono::milliseconds duration) { hold_duration_ = duration; }
 
     /// @brief Provide current filtered state
@@ -49,8 +49,8 @@ class Filter
     /// @brief Update current state. Changes to provided state only if state hold duration exceeds configured hold
     /// duration. This filters out spikes in signal which could lead to errorinous switch back-n-forth.
     ///
-    /// @param new_state[in] - New state to be updated to
-    /// @param delta_duration[in] - delta duration for which new_state was observed since last update.
+    /// @param new_state [in] - New state to be updated to
+    /// @param delta_duration [in] - delta duration for which new_state was observed since last update.
     inline constexpr void Update(const T& new_state, const std::chrono::milliseconds delta_duration)
     {
         state_duration_ += delta_duration;
@@ -106,7 +106,7 @@ class Filter
 
     /// @brief Changes state to new state & resets state & state hold durations counters
     ///
-    /// @param new_state[in] - New State for change
+    /// @param new_state [in] - New State for change
     inline constexpr void ChangeState(const T& new_state)
     {
         previous_state_ = current_state_;

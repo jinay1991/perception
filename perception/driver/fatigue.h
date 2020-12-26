@@ -5,6 +5,7 @@
 #ifndef PERCEPTION_DRIVER_FATIGUE_H
 #define PERCEPTION_DRIVER_FATIGUE_H
 
+#include "perception/common/filter.h"
 #include "perception/datatypes/driver.h"
 #include "perception/driver/fatigue_message_builder.h"
 #include "perception/driver/i_data_source.h"
@@ -27,6 +28,7 @@ class Fatigue
   private:
     void DetermineFatigue();
     EyeState DetermineEyeState() const;
+    EyeState ApplyEyeBlinkFilter(const EyeState& eye_state);
     FatigueLevel DetermineFatigueLevel() const;
     double DetermineFatigueConfidence() const;
 
@@ -40,6 +42,7 @@ class Fatigue
     FatigueMessageBuilder fatigue_builder_;
 
     Perclos perclos_;
+    Filter<EyeState> eye_blink_filter_;
 };
 }  // namespace perception
 #endif  /// PERCEPTION_DRIVER_FATIGUE_H

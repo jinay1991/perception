@@ -22,6 +22,7 @@ class IDataSource
     virtual bool IsEyeVisible() const = 0;
     virtual units::length::millimeter_t GetEyeLidOpening() const = 0;
     virtual units::frequency::hertz_t GetEyeBlinkRate() const = 0;
+    virtual std::chrono::milliseconds GetEyeBlinkDuration() const = 0;
 };
 }  // namespace perception
 #endif  /// PERCEPTION_DRIVER_I_DATA_SOURCE_H

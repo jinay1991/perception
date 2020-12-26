@@ -33,7 +33,8 @@ class FatigueFixture : public ::testing::Test
     {
         EXPECT_CALL(mocked_parameter_handler_, GetMaxEyeLidOpening()).WillRepeatedly(Return(kMaxEyeLidOpening));
         EXPECT_CALL(mocked_parameter_handler_, GetMinEyeLidOpening()).WillRepeatedly(Return(kMinEyeLidOpening));
-        EXPECT_CALL(mocked_parameter_handler_, GetEyeBlinkRate()).WillRepeatedly(Return(kMaxEyeBlinkRate));
+        EXPECT_CALL(mocked_parameter_handler_, GetMinEyeBlinkRate()).WillRepeatedly(Return(kMinEyeBlinkRate));
+        EXPECT_CALL(mocked_parameter_handler_, GetMaxEyeBlinkRate()).WillRepeatedly(Return(kMaxEyeBlinkRate));
 
         fatigue_.Init();
     }
@@ -91,12 +92,12 @@ INSTANTIATE_TEST_SUITE_P(
     FatigueFixture_WithEyeState, 
     ::testing::Values(
         //                face_visible, eye_visible, eye_lid_opening,            eye_blink_rate, (expected) eye_state  
-        TestEyeStateParam{        true,        true,          1.1_mm,          kMaxEyeBlinkRate, EyeState::kEyesOpen   },
+        TestEyeStateParam{        true,        true,          1.1_mm,          kMaxEyeBlinkRate, EyeState::kEyesClosed },
         TestEyeStateParam{        true,       false,          1.1_mm,          kMaxEyeBlinkRate, EyeState::kEyesUnknown},
         TestEyeStateParam{        true,        true,          1.1_mm,  kMaxEyeBlinkRate + 10_Hz, EyeState::kEyesUnknown},
         TestEyeStateParam{        true,        true,          1.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesClosed },
-        TestEyeStateParam{        true,        true,         10.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesClosed },
-        TestEyeStateParam{        true,        true,          5.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesOpen   },
+        TestEyeStateParam{        true,        true,         10.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesOpen   },
+        TestEyeStateParam{        true,        true,          5.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesClosed },
         TestEyeStateParam{       false,        true,          5.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesUnknown}
 ));
 // clang-format on

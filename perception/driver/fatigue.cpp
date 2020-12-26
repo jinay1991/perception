@@ -10,7 +10,11 @@ namespace perception
 {
 
 Fatigue::Fatigue(const IParameterHandler& parameter_handler, const IDataSource& data_source)
-    : parameter_handler_{parameter_handler}, data_source_{data_source}, fatigue_builder_{}, perclos_{}
+    : parameter_handler_{parameter_handler},
+      data_source_{data_source},
+      fatigue_builder_{},
+      perclos_{},
+      eye_blink_filter_{EyeState::kInvalid}
 {
 }
 
@@ -64,6 +68,13 @@ EyeState Fatigue::DetermineEyeState() const
     return eye_state;
 }
 
+EyeState Fatigue::ApplyEyeBlinkFilter(const EyeState& eye_state)
+{
+    eye_blink_filter_.SetHoldDuration(data_source_.GetEyeBlinkDuration());
+    eye_blink_filter_.Update(eye_state, kAssumedCycleDuration);
+    return eye_blink_filter_.GetCurrentState();
+}
+
 FatigueLevel Fatigue::DetermineFatigueLevel() const
 {
     const double percentage = perclos_.GetClosurePercentage();
@@ -110,13 +121,17 @@ bool Fatigue::IsFaceVisible() const
 
 bool Fatigue::IsEyeVisible() const
 {
-    return ((data_source_.IsEyeVisible()) && (data_source_.GetEyeBlinkRate() <= parameter_handler_.GetEyeBlinkRate()));
+    return ((data_source_.IsEyeVisible()) && (InRangeInclusive(data_source_.GetEyeBlinkRate(),
+                                                               parameter_handler_.GetMinEyeBlinkRate(),
+                                                               parameter_handler_.GetMaxEyeBlinkRate())));
 }
 
 bool Fatigue::IsEyeOpen() const
 {
-    return InRange(data_source_.GetEyeLidOpening(),
-                   parameter_handler_.GetMinEyeLidOpening(),
-                   parameter_handler_.GetMaxEyeLidOpening());
+    const bool is_eye_lid_opening_valid = InRangeInclusive(data_source_.GetEyeLidOpening(),
+                                                           parameter_handler_.GetMinEyeLidOpening(),
+                                                           parameter_handler_.GetMaxEyeLidOpening());
+    const auto is_eye_open = data_source_.GetEyeLidOpening() > (parameter_handler_.GetMaxEyeLidOpening() / 2.0);
+    return (is_eye_lid_opening_valid && is_eye_open);
 }
 }  // namespace perception

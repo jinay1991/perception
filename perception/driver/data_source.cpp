@@ -43,6 +43,13 @@ units::frequency::hertz_t DataSource::GetEyeBlinkRate() const
     return driver_camera_message_.face_tracking.eye_blink_rate;
 }
 
+std::chrono::milliseconds DataSource::GetEyeBlinkDuration() const
+{
+    const std::chrono::seconds eye_blink_duration{
+        static_cast<std::uint32_t>(std::floor(1.0 / GetEyeBlinkRate().value()))};
+    return eye_blink_duration;
+}
+
 const GazeTracking& DataSource::GetGazeTracking() const
 {
     return driver_camera_message_.gaze_tracking;

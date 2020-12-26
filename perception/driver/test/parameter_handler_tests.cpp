@@ -11,8 +11,22 @@ namespace perception
 {
 namespace
 {
+using ::testing::AllOf;
+using ::testing::Property;
 
-TEST(ParameterHandlerTest, SetMinEyeLidOpening_GivenTypicalEyeLidOpening_ExpectUpdatedParameterHandler)
+TEST(ParameterHandler, Constructor_ExpectDefaultValues)
+{
+    // Given
+    const ParameterHandler parameter_handler{};
+
+    // Then
+    EXPECT_THAT(parameter_handler,
+                AllOf(Property(&ParameterHandler::GetMinEyeLidOpening, kMinEyeLidOpening),
+                      Property(&ParameterHandler::GetMaxEyeLidOpening, kMaxEyeLidOpening),
+                      Property(&ParameterHandler::GetMinEyeBlinkRate, kMinEyeBlinkRate),
+                      Property(&ParameterHandler::GetMaxEyeBlinkRate, kMaxEyeBlinkRate)));
+}
+TEST(ParameterHandler, SetMinEyeLidOpening_GivenTypicalEyeLidOpening_ExpectUpdatedParameterHandler)
 {
     // Given
     ParameterHandler parameter_handler{};
@@ -25,7 +39,7 @@ TEST(ParameterHandlerTest, SetMinEyeLidOpening_GivenTypicalEyeLidOpening_ExpectU
     EXPECT_EQ(eye_lid_opening, parameter_handler.GetMinEyeLidOpening());
 }
 
-TEST(ParameterHandlerTest, SetMaxEyeLidOpening_GivenTypicalEyeLidOpening_ExpectUpdatedParameterHandler)
+TEST(ParameterHandler, SetMaxEyeLidOpening_GivenTypicalEyeLidOpening_ExpectUpdatedParameterHandler)
 {
     // Given
     ParameterHandler parameter_handler{};
@@ -38,20 +52,30 @@ TEST(ParameterHandlerTest, SetMaxEyeLidOpening_GivenTypicalEyeLidOpening_ExpectU
     EXPECT_EQ(eye_lid_opening, parameter_handler.GetMaxEyeLidOpening());
 }
 
-TEST(ParameterHandlerTest, SetEyeBlinkRate_GivenTypicalEyeBlinkRate_ExpectUpdatedParameterHandler)
+TEST(ParameterHandler, SetMinEyeBlinkRate_GivenTypicalEyeBlinkRate_ExpectUpdatedParameterHandler)
 {
     // Given
     ParameterHandler parameter_handler{};
     const units::frequency::hertz_t eye_blink_rate = 2.0_Hz;
-    const std::chrono::milliseconds eye_blink_duration =
-        std::chrono::seconds{static_cast<std::int32_t>(std::floor(1.0 / eye_blink_rate.value()))};
 
     // When
-    parameter_handler.SetEyeBlinkRate(eye_blink_rate);
+    parameter_handler.SetMinEyeBlinkRate(eye_blink_rate);
 
     // Then
-    EXPECT_EQ(eye_blink_rate, parameter_handler.GetEyeBlinkRate());
-    EXPECT_EQ(eye_blink_duration, parameter_handler.GetEyeBlinkDuration());
+    EXPECT_EQ(eye_blink_rate, parameter_handler.GetMinEyeBlinkRate());
+}
+
+TEST(ParameterHandler, SetMaxEyeBlinkRate_GivenTypicalEyeBlinkRate_ExpectUpdatedParameterHandler)
+{
+    // Given
+    ParameterHandler parameter_handler{};
+    const units::frequency::hertz_t eye_blink_rate = 2.0_Hz;
+
+    // When
+    parameter_handler.SetMaxEyeBlinkRate(eye_blink_rate);
+
+    // Then
+    EXPECT_EQ(eye_blink_rate, parameter_handler.GetMaxEyeBlinkRate());
 }
 }  // namespace
 }  // namespace perception

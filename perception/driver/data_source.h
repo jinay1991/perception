@@ -26,6 +26,7 @@ class DataSource : public IDataSource
     bool IsEyeVisible() const override;
     units::length::millimeter_t GetEyeLidOpening() const override;
     units::frequency::hertz_t GetEyeBlinkRate() const override;
+    std::chrono::milliseconds GetEyeBlinkDuration() const override;
 
   private:
     DriverCameraMessage driver_camera_message_;

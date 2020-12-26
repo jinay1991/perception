@@ -21,8 +21,8 @@ class Toggle final
     /// @brief Default Constructor
     /// @note Toggles between ON <-> OFF, where initial state is set to OFF.
     ///
-    /// @param state_on[in] - State ON
-    /// @param state_off[in] - State OFF
+    /// @param state_on [in] - State ON
+    /// @param state_off [in] - State OFF
     explicit Toggle(const T& state_on, const T& state_off)
         : state_on_{state_on}, state_off_{state_off}, current_state_{false}, toggle_duration_{0ms}, state_duration_{0ms}
     {
@@ -30,7 +30,7 @@ class Toggle final
 
     /// @brief Update toggle duration (duration between each toggle ON <-> OFF)
     ///
-    /// @param toggle_duration[in] - Toggle Duration (ms)
+    /// @param toggle_duration [in] - Toggle Duration (ms)
     inline constexpr void SetToggleDuration(const std::chrono::milliseconds toggle_duration)
     {
         toggle_duration_ = toggle_duration;
@@ -38,7 +38,7 @@ class Toggle final
 
     /// @brief Check and toggle state based on the toggle duration
     ///
-    /// @param delta_duration[in] - Delta time duration between each update
+    /// @param delta_duration [in] - Delta time duration between each update
     inline constexpr void Update(const std::chrono::milliseconds delta_duration)
     {
         state_duration_ += delta_duration;

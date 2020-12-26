@@ -27,7 +27,7 @@ class Lane
     void Shutdown();
 
     /// @brief Set Camera Message, containing captured images
-    /// @param camera_message[in] - Camera captured image Message
+    /// @param camera_message [in] - Camera captured image Message
     void SetCameraMessage(const CameraMessage& camera_message);
 
     /// @brief Provide Lane Message based on identified Lane Points from the given Camera image

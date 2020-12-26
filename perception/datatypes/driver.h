@@ -17,6 +17,9 @@ using namespace units::literals;
 using namespace std::chrono_literals;
 
 /// @brief Maximum eye blink rate (hertz)
+static constexpr units::frequency::hertz_t kMinEyeBlinkRate{0.0};
+
+/// @brief Maximum eye blink rate (hertz)
 static constexpr units::frequency::hertz_t kMaxEyeBlinkRate{30.0};
 
 /// @brief Maximum eye lid opening (mm)
@@ -150,8 +153,8 @@ struct DriverCameraMessage
 
 /// @brief Equality operator for elementwise comparision for FaceTracking
 ///
-/// @param lhs[in] - lvalue (FaceTracking)
-/// @param rhs[in] - rvalue (FaceTracking)
+/// @param lhs [in] - lvalue (FaceTracking)
+/// @param rhs [in] - rvalue (FaceTracking)
 ///
 /// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const FaceTracking& lhs, const FaceTracking& rhs) noexcept
@@ -162,8 +165,8 @@ inline bool operator==(const FaceTracking& lhs, const FaceTracking& rhs) noexcep
 
 /// @brief Inequality operator for elementwise comparision for FaceTracking
 ///
-/// @param lhs[in] - lvalue (FaceTracking)
-/// @param rhs[in] - rvalue (FaceTracking)
+/// @param lhs [in] - lvalue (FaceTracking)
+/// @param rhs [in] - rvalue (FaceTracking)
 ///
 /// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const FaceTracking& lhs, const FaceTracking& rhs) noexcept
@@ -173,8 +176,8 @@ inline bool operator!=(const FaceTracking& lhs, const FaceTracking& rhs) noexcep
 
 /// @brief Equality operator for elementwise comparision for GazeTracking
 ///
-/// @param lhs[in] - lvalue (GazeTracking)
-/// @param rhs[in] - rvalue (GazeTracking)
+/// @param lhs [in] - lvalue (GazeTracking)
+/// @param rhs [in] - rvalue (GazeTracking)
 ///
 /// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const GazeTracking& lhs, const GazeTracking& rhs) noexcept
@@ -184,8 +187,8 @@ inline bool operator==(const GazeTracking& lhs, const GazeTracking& rhs) noexcep
 
 /// @brief Inequality operator for elementwise comparision for GazeTracking
 ///
-/// @param lhs[in] - lvalue (GazeTracking)
-/// @param rhs[in] - rvalue (GazeTracking)
+/// @param lhs [in] - lvalue (GazeTracking)
+/// @param rhs [in] - rvalue (GazeTracking)
 ///
 /// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const GazeTracking& lhs, const GazeTracking& rhs) noexcept
@@ -195,8 +198,8 @@ inline bool operator!=(const GazeTracking& lhs, const GazeTracking& rhs) noexcep
 
 /// @brief Inequality operator for elementwise comparision for GazeTracking
 ///
-/// @param lhs[in] - lvalue (HeadTracking)
-/// @param rhs[in] - rvalue (HeadTracking)
+/// @param lhs [in] - lvalue (HeadTracking)
+/// @param rhs [in] - rvalue (HeadTracking)
 ///
 /// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const HeadTracking& lhs, const HeadTracking& rhs) noexcept
@@ -206,8 +209,8 @@ inline bool operator==(const HeadTracking& lhs, const HeadTracking& rhs) noexcep
 
 /// @brief Inequality operator for elementwise comparision for HeadTracking
 ///
-/// @param lhs[in] - lvalue (HeadTracking)
-/// @param rhs[in] - rvalue (HeadTracking)
+/// @param lhs [in] - lvalue (HeadTracking)
+/// @param rhs [in] - rvalue (HeadTracking)
 ///
 /// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const HeadTracking& lhs, const HeadTracking& rhs) noexcept
@@ -217,8 +220,8 @@ inline bool operator!=(const HeadTracking& lhs, const HeadTracking& rhs) noexcep
 
 /// @brief Inequality operator for elementwise comparision for FatigueMessage
 ///
-/// @param lhs[in] - lvalue (FatigueMessage)
-/// @param rhs[in] - rvalue (FatigueMessage)
+/// @param lhs [in] - lvalue (FatigueMessage)
+/// @param rhs [in] - rvalue (FatigueMessage)
 ///
 /// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const FatigueMessage& lhs, const FatigueMessage& rhs) noexcept
@@ -229,8 +232,8 @@ inline bool operator==(const FatigueMessage& lhs, const FatigueMessage& rhs) noe
 
 /// @brief Inequality operator for elementwise comparision for FatigueMessage
 ///
-/// @param lhs[in] - lvalue (FatigueMessage)
-/// @param rhs[in] - rvalue (FatigueMessage)
+/// @param lhs [in] - lvalue (FatigueMessage)
+/// @param rhs [in] - rvalue (FatigueMessage)
 ///
 /// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const FatigueMessage& lhs, const FatigueMessage& rhs) noexcept
@@ -240,8 +243,8 @@ inline bool operator!=(const FatigueMessage& lhs, const FatigueMessage& rhs) noe
 
 /// @brief Inequality operator for elementwise comparision for VisualAttentionMessage
 ///
-/// @param lhs[in] - lvalue (VisualAttentionMessage)
-/// @param rhs[in] - rvalue (VisualAttentionMessage)
+/// @param lhs [in] - lvalue (VisualAttentionMessage)
+/// @param rhs [in] - rvalue (VisualAttentionMessage)
 ///
 /// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const VisualAttentionMessage& lhs, const VisualAttentionMessage& rhs) noexcept
@@ -251,8 +254,8 @@ inline bool operator==(const VisualAttentionMessage& lhs, const VisualAttentionM
 
 /// @brief Inequality operator for elementwise comparision for VisualAttentionMessage
 ///
-/// @param lhs[in] - lvalue (VisualAttentionMessage)
-/// @param rhs[in] - rvalue (VisualAttentionMessage)
+/// @param lhs [in] - lvalue (VisualAttentionMessage)
+/// @param rhs [in] - rvalue (VisualAttentionMessage)
 ///
 /// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const VisualAttentionMessage& lhs, const VisualAttentionMessage& rhs) noexcept
@@ -262,8 +265,8 @@ inline bool operator!=(const VisualAttentionMessage& lhs, const VisualAttentionM
 
 /// @brief Inequality operator for elementwise comparision for DriverCameraMessage
 ///
-/// @param lhs[in] - lvalue (DriverCameraMessage)
-/// @param rhs[in] - rvalue (DriverCameraMessage)
+/// @param lhs [in] - lvalue (DriverCameraMessage)
+/// @param rhs [in] - rvalue (DriverCameraMessage)
 ///
 /// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const DriverCameraMessage& lhs, const DriverCameraMessage& rhs) noexcept
@@ -274,8 +277,8 @@ inline bool operator==(const DriverCameraMessage& lhs, const DriverCameraMessage
 
 /// @brief Inequality operator for elementwise comparision for DriverCameraMessage
 ///
-/// @param lhs[in] - lvalue (DriverCameraMessage)
-/// @param rhs[in] - rvalue (DriverCameraMessage)
+/// @param lhs [in] - lvalue (DriverCameraMessage)
+/// @param rhs [in] - rvalue (DriverCameraMessage)
 ///
 /// @return True if (lhs != rhs), otherwise false.
 inline bool operator!=(const DriverCameraMessage& lhs, const DriverCameraMessage& rhs) noexcept

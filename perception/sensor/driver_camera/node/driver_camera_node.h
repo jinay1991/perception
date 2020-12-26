@@ -16,7 +16,7 @@ class DriverCameraNode final : public middleware::Node
 {
   public:
     /// @brief Constructor.
-    /// @param factory[in] Middleware Publisher/Subscriber Factory
+    /// @param factory [in] Middleware Publisher/Subscriber Factory
     explicit DriverCameraNode(middleware::IPubSubFactory& factory);
 
     /// @brief Initialize Driver Camera Node

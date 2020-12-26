@@ -18,7 +18,7 @@ namespace
 {
 /// @brief Converts matrix (aka cv::Mat) to torch::Tensor
 ///
-/// @param matrix[in] matrix (aka cv::Mat)
+/// @param matrix [in] matrix (aka cv::Mat)
 ///
 /// @return Equivalent torch::Tensor for given image by copying the image contents to tensor.
 torch::Tensor ConvertToTensor(const Image& image)
@@ -31,7 +31,7 @@ torch::Tensor ConvertToTensor(const Image& image)
 
 /// @brief Converts torch::Tensor to Image (aka cv::Mat)
 ///
-/// @param tensor[in] torch::Tensor in [NxHxWxC form]
+/// @param tensor [in] torch::Tensor in [NxHxWxC form]
 ///
 /// @return Equivalent image (aka cv::Mat) for given torch::Tensor by copying contents.
 cv::Mat ConvertToMatrix(const torch::Tensor& tensor)

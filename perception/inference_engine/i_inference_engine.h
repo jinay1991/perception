@@ -29,7 +29,7 @@ class IInferenceEngine
     virtual void Init() = 0;
 
     /// @brief Execute Inference with Inference Engine
-    /// @param image[in] Image to be fed as input to Inference Engine
+    /// @param image [in] Image to be fed as input to Inference Engine
     virtual void Execute(const Image& image) = 0;
 
     /// @brief Release Inference Engine

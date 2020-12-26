@@ -24,8 +24,8 @@ struct TestStruct
 
 /// @brief Equal Comparision operator for TestStruct
 ///
-/// @param lhs[in] - LVALUE
-/// @param rhs[in] - RVALUE
+/// @param lhs [in] - LVALUE
+/// @param rhs [in] - RVALUE
 ///
 /// @return True if lhs == rhs, otherwise False.
 inline constexpr bool operator==(const TestStruct& lhs, const TestStruct& rhs) noexcept
@@ -35,8 +35,8 @@ inline constexpr bool operator==(const TestStruct& lhs, const TestStruct& rhs) n
 
 /// @brief Substraction operator for TestStruct
 ///
-/// @param lhs[in] - LVALUE
-/// @param rhs[in] - RVALUE
+/// @param lhs [in] - LVALUE
+/// @param rhs [in] - RVALUE
 ///
 /// @return Resultant TestStruct (lhs - rhs)
 inline constexpr TestStruct operator-(const TestStruct& lhs, const TestStruct& rhs) noexcept

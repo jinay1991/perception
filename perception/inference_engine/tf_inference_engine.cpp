@@ -14,7 +14,7 @@ namespace
 {
 /// @brief Converts tensorflow::Tensor to Image (aka cv::Mat)
 ///
-/// @param tensor[in] tensorflow::Tensor in [NxHxWxC form]
+/// @param tensor [in] tensorflow::Tensor in [NxHxWxC form]
 ///
 /// @return Equivalent image (aka cv::Mat) for given tensorflow::Tensor by copying contents.
 cv::Mat ConvertToMatrix(const tensorflow::Tensor& tensor)
@@ -30,7 +30,7 @@ cv::Mat ConvertToMatrix(const tensorflow::Tensor& tensor)
 
 /// @brief Converts matrix (aka cv::Mat) to tensorflow::Tensor
 ///
-/// @param matrix[in] matrix (aka cv::Mat)
+/// @param matrix [in] matrix (aka cv::Mat)
 ///
 /// @return Equivalent tensorflow::Tensor for given image by copying the image contents to tensor.
 tensorflow::Tensor ConvertToTensor(const cv::Mat& matrix)

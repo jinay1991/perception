@@ -20,8 +20,8 @@ class ParameterHandlerMock : public IParameterHandler
 
     MOCK_CONST_METHOD0(GetMaxEyeLidOpening, units::length::millimeter_t());
     MOCK_CONST_METHOD0(GetMinEyeLidOpening, units::length::millimeter_t());
-    MOCK_CONST_METHOD0(GetEyeBlinkRate, units::frequency::hertz_t());
-    MOCK_CONST_METHOD0(GetEyeBlinkDuration, std::chrono::milliseconds());
+    MOCK_CONST_METHOD0(GetMinEyeBlinkRate, units::frequency::hertz_t());
+    MOCK_CONST_METHOD0(GetMaxEyeBlinkRate, units::frequency::hertz_t());
 };
 }  // namespace mock
 }  // namespace perception

@@ -6,9 +6,7 @@
 #define PERCEPTION_DRIVER_PERCLOS_H
 
 #include "perception/common/circular_bitset.h"
-#include "perception/common/filter.h"
 #include "perception/datatypes/driver.h"
-#include "perception/driver/i_parameter_handler.h"
 
 namespace perception
 {
@@ -23,16 +21,15 @@ class Perclos
   public:
     Perclos();
 
-    void UpdateParameters(const IParameterHandler& parameter_handler);
-
     void Calculate(const EyeState eye_state);
 
     double GetClosurePercentage() const;
     double GetAvailabilityPercentage() const;
 
   private:
+    inline bool IsEyesClosed(const EyeState eye_state) const;
+
     CircularBitset<kMaxLongtermStorageSize> longterm_storage_;
-    Filter<EyeState> eye_blink_filter_;
 };
 }  // namespace perception
 

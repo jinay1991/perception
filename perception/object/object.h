@@ -32,11 +32,11 @@ class Object final
     void Shutdown();
 
     /// @brief Set Vehicle velocity
-    /// @param ego_velocity[in] - Vehicle Velocity (mps)
+    /// @param ego_velocity [in] - Vehicle Velocity (mps)
     void SetEgoVelocity(const units::velocity::meters_per_second_t& ego_velocity);
 
     /// @brief Set Camera Message, containing captured images
-    /// @param camera_message[in] - Camera captured image Message
+    /// @param camera_message [in] - Camera captured image Message
     void SetCameraMessage(const CameraMessage& camera_message);
 
     /// @brief Provide Object List based on identified objects from the given Camera image
@@ -48,9 +48,9 @@ class Object final
 
     /// @brief Computes Rotation and Translation Matrices for given Bounding Box
     ///
-    /// @param bounding_box[in] Object Bounding Box (Result of object detection)
-    /// @param rows[in] Camera Image Rows
-    /// @param cols[in] Camera Image Columns
+    /// @param bounding_box [in] Object Bounding Box (Result of object detection)
+    /// @param rows [in] Camera Image Rows
+    /// @param cols [in] Camera Image Columns
     /// @param rotational[out] Computed Rotation Matrix
     /// @param translation[out] Computed translation Matrix
     void UpdateSpatialMatrix(const BoundingBox& bounding_box,
@@ -62,8 +62,8 @@ class Object final
     /// @brief Generator for ObjectMessage POD for given Bounding Box and Label. Additional Object properties will be
     /// computed as well suchas distance, position, pose, etc.
     ///
-    /// @param bounding_box[in] Object Bounding Box (Result of object detection)
-    /// @param label_id[in] Label Id
+    /// @param bounding_box [in] Object Bounding Box (Result of object detection)
+    /// @param label_id [in] Label Id
     ///
     /// @return ObjectMessage (object) information
     ObjectMessage GenerateObjectMessage(const BoundingBox& bounding_box, const LabelId& label_id);

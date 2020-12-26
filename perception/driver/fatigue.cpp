@@ -38,7 +38,7 @@ void Fatigue::DetermineFatigue()
 {
     const auto eye_state = DetermineEyeState();
 
-    perclos_.Calculate(eye_state);
+    perclos_.Calculate(ApplyEyeBlinkFilter(eye_state));
 
     const auto level = DetermineFatigueLevel();
     const auto confidence = DetermineFatigueConfidence();
@@ -121,17 +121,26 @@ bool Fatigue::IsFaceVisible() const
 
 bool Fatigue::IsEyeVisible() const
 {
-    return ((data_source_.IsEyeVisible()) && (InRangeInclusive(data_source_.GetEyeBlinkRate(),
-                                                               parameter_handler_.GetMinEyeBlinkRate(),
-                                                               parameter_handler_.GetMaxEyeBlinkRate())));
+    return (IsEyeBlinkRateValid() && (data_source_.IsEyeVisible()));
 }
 
 bool Fatigue::IsEyeOpen() const
 {
-    const bool is_eye_lid_opening_valid = InRangeInclusive(data_source_.GetEyeLidOpening(),
-                                                           parameter_handler_.GetMinEyeLidOpening(),
-                                                           parameter_handler_.GetMaxEyeLidOpening());
-    const auto is_eye_open = data_source_.GetEyeLidOpening() > (parameter_handler_.GetMaxEyeLidOpening() / 2.0);
-    return (is_eye_lid_opening_valid && is_eye_open);
+    return (IsEyeLidOpeningValid() &&
+            (data_source_.GetEyeLidOpening() > (parameter_handler_.GetMaxEyeLidOpening() / 2.0)));
+}
+
+bool Fatigue::IsEyeBlinkRateValid() const
+{
+    return InRangeInclusive(data_source_.GetEyeBlinkRate(),
+                            parameter_handler_.GetMinEyeBlinkRate(),
+                            parameter_handler_.GetMaxEyeBlinkRate());
+}
+
+bool Fatigue::IsEyeLidOpeningValid() const
+{
+    return InRangeInclusive(data_source_.GetEyeLidOpening(),
+                            parameter_handler_.GetMinEyeLidOpening(),
+                            parameter_handler_.GetMaxEyeLidOpening());
 }
 }  // namespace perception

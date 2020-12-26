@@ -87,6 +87,37 @@ inline constexpr bool InRange(const T value, const ValidityRange<T>& range)
 }
 
 ///
+/// @brief Check given value to be in range inclusive to boundaries [lower, upper]
+/// @tparam Value type
+///
+/// @param value[in] value to be checked
+/// @param lower[in] lower value (including)
+/// @param upper[in] upper value (including)
+///
+/// @return True if value is in given range [lower, upper], otherwise False.
+///
+template <typename T>
+inline constexpr bool InRangeInclusive(const T value, const T lower, const T upper)
+{
+    return ((value >= lower) && (value <= upper));
+}
+
+///
+/// @brief Check given value to be in range inclusive to bounaries [lower, upper]
+/// @tparam Value type
+///
+/// @param value[in] value to be checked
+/// @param range[in] validity range
+///
+/// @return True if value is in given range [lower, upper], otherwise False.
+///
+template <typename T>
+inline constexpr bool InRangeInclusive(const T value, const ValidityRange<T>& range)
+{
+    return InRangeInclusive(value, range.lower, range.upper);
+}
+
+///
 /// @brief Provided clamped value within range (lower, upper)
 /// @tparam Value type
 ///

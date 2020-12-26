@@ -121,13 +121,15 @@ bool Fatigue::IsFaceVisible() const
 
 bool Fatigue::IsEyeVisible() const
 {
-    return ((data_source_.IsEyeVisible()) && (data_source_.GetEyeBlinkRate() <= parameter_handler_.GetEyeBlinkRate()));
+    return ((data_source_.IsEyeVisible()) && (InRangeInclusive(data_source_.GetEyeBlinkRate(),
+                                                               parameter_handler_.GetMinEyeBlinkRate(),
+                                                               parameter_handler_.GetMaxEyeBlinkRate())));
 }
 
 bool Fatigue::IsEyeOpen() const
 {
-    return InRange(data_source_.GetEyeLidOpening(),
-                   parameter_handler_.GetMinEyeLidOpening(),
-                   parameter_handler_.GetMaxEyeLidOpening());
+    return InRangeInclusive(data_source_.GetEyeLidOpening(),
+                            parameter_handler_.GetMinEyeLidOpening(),
+                            parameter_handler_.GetMaxEyeLidOpening());
 }
 }  // namespace perception

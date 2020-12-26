@@ -21,10 +21,10 @@ TEST(ParameterHandler, Constructor_ExpectDefaultValues)
 
     // Then
     EXPECT_THAT(parameter_handler,
-                AllOf(Property(GetMinEyeLidOpening, kMinEyeLidOpening),
-                      Property(GetMaxEyeLidOpening, kMaxEyeLidOpening),
-                      Property(GetMinEyeBlinkRate, kMinEyeBlinkRate),
-                      Property(GetMaxEyeBlinkRate, kMaxEyeBlinkRate));
+                AllOf(Property(&ParameterHandler::GetMinEyeLidOpening, kMinEyeLidOpening),
+                      Property(&ParameterHandler::GetMaxEyeLidOpening, kMaxEyeLidOpening),
+                      Property(&ParameterHandler::GetMinEyeBlinkRate, kMinEyeBlinkRate),
+                      Property(&ParameterHandler::GetMaxEyeBlinkRate, kMaxEyeBlinkRate)));
 }
 TEST(ParameterHandler, SetMinEyeLidOpening_GivenTypicalEyeLidOpening_ExpectUpdatedParameterHandler)
 {
@@ -57,8 +57,6 @@ TEST(ParameterHandler, SetMinEyeBlinkRate_GivenTypicalEyeBlinkRate_ExpectUpdated
     // Given
     ParameterHandler parameter_handler{};
     const units::frequency::hertz_t eye_blink_rate = 2.0_Hz;
-    const std::chrono::milliseconds eye_blink_duration =
-        std::chrono::seconds{static_cast<std::int32_t>(std::floor(1.0 / eye_blink_rate.value()))};
 
     // When
     parameter_handler.SetMinEyeBlinkRate(eye_blink_rate);
@@ -72,8 +70,6 @@ TEST(ParameterHandler, SetMaxEyeBlinkRate_GivenTypicalEyeBlinkRate_ExpectUpdated
     // Given
     ParameterHandler parameter_handler{};
     const units::frequency::hertz_t eye_blink_rate = 2.0_Hz;
-    const std::chrono::milliseconds eye_blink_duration =
-        std::chrono::seconds{static_cast<std::int32_t>(std::floor(1.0 / eye_blink_rate.value()))};
 
     // When
     parameter_handler.SetMaxEyeBlinkRate(eye_blink_rate);

@@ -23,9 +23,12 @@ struct TestInRangeParam
     bool result;
 };
 
-class ValidityRangeFixture_InRange : public ::testing::TestWithParam<TestInRangeParam<std::int32_t>>
+template <typename T>
+class ValidityRangeT : public ::testing::TestWithParam<T>
 {
 };
+
+using ValidityRangeFixture_InRange = ValidityRangeT<TestInRangeParam<std::int32_t>>;
 
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
@@ -59,6 +62,46 @@ TEST_P(ValidityRangeFixture_InRange, InRange_GivenTypicalValidityRange_ExpectChe
 
     // When
     const bool result = InRange(param.value, range);
+
+    // Then
+    EXPECT_EQ(result, param.result);
+}
+
+using ValidityRangeFixture_InRangeInclusive = ValidityRangeT<TestInRangeParam<std::int32_t>>;
+// clang-format off
+INSTANTIATE_TEST_SUITE_P(
+    ValidityRange,
+    ValidityRangeFixture_InRangeInclusive,
+    ::testing::Values(
+        //                            value, lower, upper, result
+        TestInRangeParam<std::int32_t>{   9,     0,    10,   true},
+        TestInRangeParam<std::int32_t>{  10,     0,    10,   true},
+        TestInRangeParam<std::int32_t>{  11,     0,    10,  false},
+        TestInRangeParam<std::int32_t>{  -1,     0,    10,  false},
+        TestInRangeParam<std::int32_t>{   0,     0,    10,   true}
+));
+// clang-format on
+
+TEST_P(ValidityRangeFixture_InRangeInclusive, InRangeInclusive_GivenTypicalInputs_ExpectCheckedResult)
+{
+    // Given
+    const auto param = GetParam();
+
+    // When
+    const bool result = InRangeInclusive(param.value, param.lower, param.upper);
+
+    // Then
+    EXPECT_EQ(result, param.result);
+}
+
+TEST_P(ValidityRangeFixture_InRangeInclusive, InRangeInclusive_GivenTypicalValidityRange_ExpectCheckedResult)
+{
+    // Given
+    const auto param = GetParam();
+    const ValidityRange<std::int32_t> range{param.lower, param.upper};
+
+    // When
+    const bool result = InRangeInclusive(param.value, range);
 
     // Then
     EXPECT_EQ(result, param.result);

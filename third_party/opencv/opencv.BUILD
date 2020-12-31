@@ -79,7 +79,10 @@ MODULE_DEPS = {
                        "include/opencv4/opencv2/opencv.hpp",
                        "include/opencv4/opencv2/opencv_modules.hpp",
                    ] if module == "core" else []),
-            includes = ["include/opencv4"],
+            includes = [
+                "include",
+                "include/opencv4",
+            ],
             deps = MODULE_DEPS[module] if module in MODULE_DEPS else [],
         )
     )

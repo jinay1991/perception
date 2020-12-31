@@ -5,7 +5,7 @@ def tensorflow():
     if "tensorflow" not in native.existing_rules():
         http_archive(
             name = "tensorflow",
-            sha256 = "a8902992b68c19e183279c7a9685b7bc843bf62385f6204d7fffba0967fd75ef",
-            strip_prefix = "libtensorflow_cc-2.3.0-multios",
-            url = "https://github.com/jinay1991/perception/releases/download/v0.5/libtensorflow_cc-2.3.0-multios.tar.gz",
+            sha256 = "5b7927556650c74dffc7cab9b431089436463479de5d5ecfc07f2ef67af33f9e",
+            strip_prefix = "libtensorflow_cc-2.3.0-linux",
+            url = "https://github.com/jinay1991/perception/releases/download/v0.5/libtensorflow_cc-2.3.0-linux.tar.gz",
         )

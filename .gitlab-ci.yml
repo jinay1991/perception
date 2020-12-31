@@ -21,8 +21,8 @@ clang-format:
   stage: check
   image: ubuntu:20.04
   before_script:
-    - apt-get update -y
-    - apt-get install -y libtool clang-format clang-tidy
+    - apt-get update
+    - apt-get install -y clang-format
   script:
     - find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec cat {} \; | diff -u <(find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec clang-format -style=file {} -verbose \;) -
 
@@ -30,7 +30,7 @@ buildifier:
   stage: check
   image: ubuntu:20.04
   before_script:
-    - apt-get update -y
+    - apt-get update
     - apt-get install -y wget curl
     - wget https://github.com/bazelbuild/buildtools/releases/download/3.4.0/buildifier
     - chmod +x buildifier
@@ -42,7 +42,7 @@ cppcheck:
   stage: check
   image: ubuntu:20.04
   before_script:
-    - apt-get update -y
+    - apt-get update
     - apt-get install -y cppcheck python python-pygments
   script:
     - cppcheck --template=gcc --enable=all --inconclusive --std=c++14 -I perception/**/*.h perception/**/*.cpp  > static_code_analysis.log
@@ -63,10 +63,10 @@ bazel-build-and-test:
   stage: build
   image: registry.gitlab.com/ad_platform/perception
   script:
-    - bazel build //... 
+    - bazel build //...
     - bazel test //...  --test_output=all --nocache_test_results
   after_script:
-    - pip install -U pip 
+    - pip install -U pip
     - pip install -U xunitmerge
     - xunitmerge $(find bazel-out/ -name test.xml) ./merged_test_results.xml
   artifacts:
@@ -79,7 +79,7 @@ doxygen:
   stage: build
   image: ubuntu:20.04
   before_script:
-    - apt-get update -y
+    - apt-get update
     - apt-get install -y doxygen graphviz plantuml
   script:
     - echo "Generating Doxygen Documentation"
@@ -124,6 +124,13 @@ pages:
     - code-coverage
     - cppcheck
     - doxygen
+  needs:
+    - job: code-coverage
+      artifacts: true
+    - job: cppcheck
+      artifacts: true
+    - job: doxygen
+      artifacts: true
   script:
     - mkdir -p reports
     - echo "<!DOCTYPE html> <html> <head> <meta charset="utf-8"> <title>Perception</title> </head> <body> <ul> <li><a href="coverage/">Code Coverage Report</a></li> <li><a href="static_code_analysis_report/">Static Code Analysis Report</a></li> <li><a href="doc/html">Doxygen Documentation</a></li> </ul> </body> </html>" > reports/index.html

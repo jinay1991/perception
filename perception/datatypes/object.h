@@ -118,7 +118,7 @@ struct ObjectMessage
     units::length::meter_t lateral_distance{0.0};
 
     /// @brief Time to collision to the Object (usec)
-    units::time::millisecond_t time_to_collision{0.0};
+    units::time::microsecond_t time_to_collision{0.0};
 
     /// @brief Object Position (3D)
     Position position{};

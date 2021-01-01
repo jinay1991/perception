@@ -35,11 +35,14 @@ struct TrafficSignMessage
     /// @brief Traffic Sign Distance
     units::length::meter_t distance{0.0};
 
+    /// @brief Longitudinal distance (3D space)
+    units::length::meter_t longitudinal_distance{0.0};
+
+    /// @brief Lateral distance (3D space)
+    units::length::meter_t lateral_distance{0.0};
+
     /// @brief Traffic Sign Id
     TrafficSignId id{TrafficSignId::kInvalid};
-
-    /// @brief Traffic Sign associated Lane Id
-    LaneId lane_id{LaneId::kInvalid};
 };
 
 /// @brief Traffic Sign List Information
@@ -55,36 +58,6 @@ struct TrafficSignListMessage
     std::array<TrafficSignMessage, kMaxNumberOfTrafficSigns> traffic_sign_list{};
 };
 
-inline const char* to_string(const TrafficSignId& id)
-{
-    switch (id)
-    {
-        case TrafficSignId::kNone:
-            return "kNone";
-        case TrafficSignId::kSpeedLimit:
-            return "kSpeedLimit";
-        case TrafficSignId::kRoadWorks:
-            return "kRoadWorks";
-        case TrafficSignId::kTurnLeft:
-            return "kTurnLeft";
-        case TrafficSignId::kTurnRight:
-            return "kTurnRight";
-        case TrafficSignId::kTwoBumps:
-            return "kTwoBumps";
-        case TrafficSignId::kInvalid:
-            return "kInvalid";
-        default:
-            return "ERROR: Unknown TrafficSignId";
-    }
-    return "ERROR: Unknown TrafficSignId";
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const TrafficSignId& id)
-{
-    const char* name = to_string(id);
-    stream << name;
-    return stream;
-}
 }  // namespace perception
 
 #endif  /// PERCEPTION_DATATYPE_TRAFFIC_SIGN_H

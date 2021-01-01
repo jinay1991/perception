@@ -37,12 +37,9 @@ class FatigueFixture : public ::testing::Test
         EXPECT_CALL(mocked_parameter_handler_, GetMinEyeLidOpening()).WillRepeatedly(Return(kMinEyeLidOpening));
         EXPECT_CALL(mocked_parameter_handler_, GetMinEyeBlinkRate()).WillRepeatedly(Return(kMinEyeBlinkRate));
         EXPECT_CALL(mocked_parameter_handler_, GetMaxEyeBlinkRate()).WillRepeatedly(Return(kMaxEyeBlinkRate));
-
-        fatigue_.Init();
     }
-    void TearDown() override { fatigue_.Shutdown(); }
 
-    void RunOnce() { fatigue_.ExecuteStep(); }
+    void RunOnce() { fatigue_.Step(); }
 
     void RunForDuration(const EyeState& eye_state,
                         const std::chrono::milliseconds duration,

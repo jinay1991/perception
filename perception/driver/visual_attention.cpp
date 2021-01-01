@@ -12,14 +12,10 @@ VisualAttention::VisualAttention(const IParameterHandler& parameter_handler, con
 {
 }
 
-void VisualAttention::Init() {}
-
-void VisualAttention::ExecuteStep()
+void VisualAttention::Step()
 {
     visual_attention_message_.attention_state = GetAttentionState();
 }
-
-void VisualAttention::Shutdown() {}
 
 const VisualAttentionMessage& VisualAttention::GetVisualAttentionMessage() const
 {

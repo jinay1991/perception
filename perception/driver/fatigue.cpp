@@ -18,16 +18,12 @@ Fatigue::Fatigue(const IParameterHandler& parameter_handler, const IDataSource& 
 {
 }
 
-void Fatigue::Init() {}
-
-void Fatigue::ExecuteStep()
+void Fatigue::Step()
 {
     fatigue_builder_.WithTimepoint(std::chrono::system_clock::now());
 
     DetermineFatigue();
 }
-
-void Fatigue::Shutdown() {}
 
 const FatigueMessage& Fatigue::GetFatigueMessage() const
 {

@@ -22,7 +22,7 @@ class DriverFixture : public ::testing::Test
   protected:
     void SetUp() override { driver_.Init(); }
     void TearDown() override { driver_.Shutdown(); }
-    void RunOnce() { driver_.ExecuteStep(); }
+    void RunOnce() { driver_.Step(); }
 
     void UpdateDriverCameraMessage(const DriverCameraMessage& driver_camera_message)
     {

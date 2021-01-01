@@ -19,7 +19,7 @@ class Driver final
     Driver();
 
     void Init();
-    void ExecuteStep();
+    void Step();
     void Shutdown();
 
     void ProcessDriverCameraMessage(const DriverCameraMessage& driver_camera_message);

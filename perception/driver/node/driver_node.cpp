@@ -25,7 +25,7 @@ void DriverNode::Init()
 
 void DriverNode::ExecuteStep()
 {
-    driver_.ExecuteStep();
+    driver_.Step();
 }
 
 void DriverNode::Shutdown()

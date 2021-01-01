@@ -16,9 +16,7 @@ class VisualAttention final
   public:
     explicit VisualAttention(const IParameterHandler& parameter_handler, const IDataSource& data_source);
 
-    void Init();
-    void ExecuteStep();
-    void Shutdown();
+    void Step();
 
     const VisualAttentionMessage& GetVisualAttentionMessage() const;
 

@@ -19,9 +19,7 @@ class Fatigue final
   public:
     explicit Fatigue(const IParameterHandler& parameter_handler, const IDataSource& data_source);
 
-    void Init();
-    void ExecuteStep();
-    void Shutdown();
+    void Step();
 
     const FatigueMessage& GetFatigueMessage() const;
 

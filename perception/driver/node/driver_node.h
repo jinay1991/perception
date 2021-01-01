@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "middleware/lifecycle/node.h"
 #include "perception/driver/driver.h"

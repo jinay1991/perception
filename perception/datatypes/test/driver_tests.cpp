@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/datatypes/driver.h"
 
@@ -49,8 +49,8 @@ using OperatorsFixture_WithFaceTracking = OperatorsFixtureT<TestEqualityParam<Fa
 
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
-    Operators, 
-    OperatorsFixture_WithFaceTracking, 
+    Operators,
+    OperatorsFixture_WithFaceTracking,
     ::testing::Values(
         //                                       lhs                   ,           rhs                  , is_same?
         TestEqualityParam<FaceTracking>{{ true,  true, 10.0_mm, 1.0_Hz},  {true,  true, 10.0_mm, 1.0_Hz},  true},
@@ -106,8 +106,8 @@ using OperatorsFixture_WithGazeTracking = OperatorsFixtureT<TestEqualityParam<Ga
 
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
-    Operators, 
-    OperatorsFixture_WithGazeTracking, 
+    Operators,
+    OperatorsFixture_WithGazeTracking,
     ::testing::Values(
         //                                       lhs                  ,          rhs                  , is_same?
         TestEqualityParam<GazeTracking>{{10.0_rad, 10.0_rad, 10.0_rad}, {10.0_rad, 10.0_rad, 10.0_rad},  true},
@@ -160,8 +160,8 @@ using OperatorsFixture_WithHeadTracking = OperatorsFixtureT<TestEqualityParam<He
 
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
-    Operators, 
-    OperatorsFixture_WithHeadTracking, 
+    Operators,
+    OperatorsFixture_WithHeadTracking,
     ::testing::Values(
         //                                       lhs                  ,          rhs                  , is_same?
         TestEqualityParam<HeadTracking>{{10.0_rad, 10.0_rad, 10.0_rad}, {10.0_rad, 10.0_rad, 10.0_rad},  true},
@@ -214,8 +214,8 @@ using OperatorsFixture_WithFatigueMessage = OperatorsFixtureT<TestEqualityParam<
 
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
-    Operators, 
-    OperatorsFixture_WithFatigueMessage, 
+    Operators,
+    OperatorsFixture_WithFatigueMessage,
     ::testing::Values(
         //                                              lhs                                               ,          rhs                                                  , is_same?
         TestEqualityParam<FatigueMessage>{{      kTimepoint, EyeState::kEyesClosed,  FatigueLevel::kAwake, 10.0}, {      kTimepoint, EyeState::kEyesClosed,  FatigueLevel::kAwake, 10.0},  true},
@@ -270,8 +270,8 @@ using OperatorsFixture_WithVisualAttentionMessage = OperatorsFixtureT<TestEquali
 
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
-    Operators, 
-    OperatorsFixture_WithVisualAttentionMessage, 
+    Operators,
+    OperatorsFixture_WithVisualAttentionMessage,
     ::testing::Values(
         //                                              lhs                                        ,          rhs                                     , is_same?
         TestEqualityParam<VisualAttentionMessage>{{      kTimepoint,    AttentionState::kAttentive}, {      kTimepoint,    AttentionState::kAttentive},  true},
@@ -279,7 +279,7 @@ INSTANTIATE_TEST_SUITE_P(
         TestEqualityParam<VisualAttentionMessage>{{      kTimepoint,    AttentionState::kAttentive}, {      kTimepoint, AttentionState::kNotAttentive}, false},
         TestEqualityParam<VisualAttentionMessage>{{kTimepoint + 1ms,    AttentionState::kAttentive}, {      kTimepoint,    AttentionState::kAttentive}, false},
         TestEqualityParam<VisualAttentionMessage>{{      kTimepoint, AttentionState::kNotAttentive}, {      kTimepoint,    AttentionState::kAttentive}, false}
-        
+
 ));
 // clang-format on
 
@@ -320,8 +320,8 @@ using OperatorsFixture_WithDriverCameraMessage = OperatorsFixtureT<TestEqualityP
 
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
-    Operators, 
-    OperatorsFixture_WithDriverCameraMessage, 
+    Operators,
+    OperatorsFixture_WithDriverCameraMessage,
     ::testing::Values(
         //                                              lhs                                        ,          rhs                                     , is_same?
         TestEqualityParam<DriverCameraMessage>{{      kTimepoint, HeadTracking{10.0_rad, 10.0_rad, 10.0_rad}, FaceTracking{true, true, 10.0_mm, 1.0_Hz}, GazeTracking{10.0_rad, 10.0_rad, 10.0_rad}}, {      kTimepoint, HeadTracking{10.0_rad, 10.0_rad, 10.0_rad}, FaceTracking{true, true, 10.0_mm, 1.0_Hz}, GazeTracking{10.0_rad, 10.0_rad, 10.0_rad}},  true},

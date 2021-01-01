@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/driver/fatigue.h"
 #include "perception/driver/parameter_handler.h"
@@ -93,10 +93,10 @@ using FatigueFixture_WithEyeState = FatigueFixtureT<TestEyeStateParam>;
 
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
-    Fatigue, 
-    FatigueFixture_WithEyeState, 
+    Fatigue,
+    FatigueFixture_WithEyeState,
     ::testing::Values(
-        //                face_visible, eye_visible, eye_lid_opening,            eye_blink_rate, (expected) eye_state  
+        //                face_visible, eye_visible, eye_lid_opening,            eye_blink_rate, (expected) eye_state
         TestEyeStateParam{        true,        true,          1.1_mm,          kMaxEyeBlinkRate, EyeState::kEyesClosed },
         TestEyeStateParam{        true,       false,          1.1_mm,          kMaxEyeBlinkRate, EyeState::kEyesUnknown},
         TestEyeStateParam{        true,        true,          1.1_mm,  kMaxEyeBlinkRate + 10_Hz, EyeState::kEyesUnknown},

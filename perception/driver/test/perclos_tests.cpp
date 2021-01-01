@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/driver/perclos.h"
 
@@ -64,8 +64,8 @@ using PerclosFixture_WithEyeStateDuration = PerclosFixtureT<TestEyeStateDuration
 
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
-    Perclos, 
-    PerclosFixture_WithEyeStateDuration, 
+    Perclos,
+    PerclosFixture_WithEyeStateDuration,
     ::testing::Values(
         //                        eye_state            , duration, (expected) closure_percentage, (expected) availability_percentage
         TestEyeStateDurationParam{EyeState::kEyesClosed,     2min,                         100.0,                               40.0},

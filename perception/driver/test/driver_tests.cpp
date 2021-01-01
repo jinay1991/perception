@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/driver/driver.h"
 #include "perception/driver/test/support/builders/driver_camera_message_builder.h"

@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_FATIGUE_MESSAGE_BUILDER_H
 #define PERCEPTION_DRIVER_FATIGUE_MESSAGE_BUILDER_H

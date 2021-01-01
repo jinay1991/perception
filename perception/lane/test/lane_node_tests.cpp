@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License
+/// @copyright Copyright (c) 2020-2021. MIT License
 ///
 #include "middleware/communication/intra_process_pub_sub_factory.h"
 #include "perception/lane/node/lane_node.h"

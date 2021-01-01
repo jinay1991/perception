@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #include "middleware/communication/intra_process_pub_sub_factory.h"
 #include "middleware/lifecycle/test/single_topic_subscriber.h"

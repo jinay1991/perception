@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #include "perception/inference_engine/opencv_inference_engine.h"
 

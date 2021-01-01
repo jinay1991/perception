@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_TEST_SUPPORT_MOCKS_PARAMETER_HANDLER_MOCK_H
 #define PERCEPTION_DRIVER_TEST_SUPPORT_MOCKS_PARAMETER_HANDLER_MOCK_H

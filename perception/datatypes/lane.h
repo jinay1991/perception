@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License
+/// @copyright Copyright (c) 2020-2021. MIT License
 ///
 #ifndef PERCEPTION_DATATYPES_LANE_H
 #define PERCEPTION_DATATYPES_LANE_H

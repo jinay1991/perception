@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/driver/visual_attention.h"
 
@@ -12,14 +12,10 @@ VisualAttention::VisualAttention(const IParameterHandler& parameter_handler, con
 {
 }
 
-void VisualAttention::Init() {}
-
-void VisualAttention::ExecuteStep()
+void VisualAttention::Step()
 {
     visual_attention_message_.attention_state = GetAttentionState();
 }
-
-void VisualAttention::Shutdown() {}
 
 const VisualAttentionMessage& VisualAttention::GetVisualAttentionMessage() const
 {

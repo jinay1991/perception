@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/driver/fatigue.h"
 
@@ -18,16 +18,12 @@ Fatigue::Fatigue(const IParameterHandler& parameter_handler, const IDataSource& 
 {
 }
 
-void Fatigue::Init() {}
-
-void Fatigue::ExecuteStep()
+void Fatigue::Step()
 {
     fatigue_builder_.WithTimepoint(std::chrono::system_clock::now());
 
     DetermineFatigue();
 }
-
-void Fatigue::Shutdown() {}
 
 const FatigueMessage& Fatigue::GetFatigueMessage() const
 {

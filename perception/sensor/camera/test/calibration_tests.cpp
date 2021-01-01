@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License
+/// @copyright Copyright (c) 2020-2021. MIT License
 ///
 #include "perception/common/logging.h"
 #include "perception/sensor/camera/calibration.h"

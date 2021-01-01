@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/driver/parameter_handler.h"
 #include "perception/driver/test/support/mocks/data_source_mock.h"
@@ -35,11 +35,8 @@ class VisualAttentionFixture : public ::testing::Test
         EXPECT_CALL(mocked_parameter_handler_, GetMinEyeLidOpening()).WillRepeatedly(Return(kMinEyeLidOpening));
         EXPECT_CALL(mocked_parameter_handler_, GetMinEyeBlinkRate()).WillRepeatedly(Return(kMinEyeBlinkRate));
         EXPECT_CALL(mocked_parameter_handler_, GetMaxEyeBlinkRate()).WillRepeatedly(Return(kMaxEyeBlinkRate));
-
-        visual_attention_.Init();
     }
-    void TearDown() override { visual_attention_.Shutdown(); }
-    void RunOnce() { visual_attention_.ExecuteStep(); }
+    void RunOnce() { visual_attention_.Step(); }
 
     const VisualAttentionMessage& GetVisualAttentionMessage() const
     {

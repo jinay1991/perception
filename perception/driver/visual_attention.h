@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_VISUAL_ATTENTION_H
 #define PERCEPTION_DRIVER_VISUAL_ATTENTION_H
@@ -11,14 +11,12 @@
 
 namespace perception
 {
-class VisualAttention
+class VisualAttention final
 {
   public:
     explicit VisualAttention(const IParameterHandler& parameter_handler, const IDataSource& data_source);
 
-    void Init();
-    void ExecuteStep();
-    void Shutdown();
+    void Step();
 
     const VisualAttentionMessage& GetVisualAttentionMessage() const;
 

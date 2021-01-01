@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #ifndef PERCEPTION_COMMUNICATION_TOPICS_H
 #define PERCEPTION_COMMUNICATION_TOPICS_H
@@ -10,6 +10,7 @@
 #include "perception/datatypes/driver.h"
 #include "perception/datatypes/lane.h"
 #include "perception/datatypes/object.h"
+#include "perception/datatypes/traffic_sign.h"
 #include "perception/datatypes/vehicle_dynamics.h"
 
 namespace perception
@@ -20,6 +21,10 @@ class CameraTopic : public middleware::Topic<CameraMessage>
 };
 
 class LaneTopic : public middleware::Topic<LaneMessage>
+{
+};
+
+class TrafficSignListTopic : public middleware::Topic<TrafficSignListMessage>
 {
 };
 

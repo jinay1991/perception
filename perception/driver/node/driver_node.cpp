@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/driver/node/driver_node.h"
 
@@ -13,6 +13,8 @@ DriverNode::DriverNode(middleware::IPubSubFactory& factory) : middleware::Node{"
 
 void DriverNode::Init()
 {
+    driver_.Init();
+
     AddSubscriber<DriverCameraTopic>([&driver = driver_](const DriverCameraMessage& driver_camera_message) {
         driver.ProcessDriverCameraMessage(driver_camera_message);
     });
@@ -23,7 +25,7 @@ void DriverNode::Init()
 
 void DriverNode::ExecuteStep()
 {
-    driver_.ExecuteStep();
+    driver_.Step();
 }
 
 void DriverNode::Shutdown()

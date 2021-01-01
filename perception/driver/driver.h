@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_DRIVER_H
 #define PERCEPTION_DRIVER_DRIVER_H
@@ -13,13 +13,13 @@
 
 namespace perception
 {
-class Driver
+class Driver final
 {
   public:
     Driver();
 
     void Init();
-    void ExecuteStep();
+    void Step();
     void Shutdown();
 
     void ProcessDriverCameraMessage(const DriverCameraMessage& driver_camera_message);

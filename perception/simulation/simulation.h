@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License
+/// @copyright Copyright (c) 2020-2021. MIT License
 ///
 #ifndef PERCEPTION_SIMULATION_SIMULATION_H
 #define PERCEPTION_SIMULATION_SIMULATION_H

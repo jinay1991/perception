@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License
+/// @copyright Copyright (c) 2020-2021. MIT License
 ///
 #include "perception/sensor/vehicle_dynamics/node/vehicle_dynamics_node.h"
 

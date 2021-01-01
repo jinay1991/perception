@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_FATIGUE_H
 #define PERCEPTION_DRIVER_FATIGUE_H
@@ -14,14 +14,12 @@
 
 namespace perception
 {
-class Fatigue
+class Fatigue final
 {
   public:
     explicit Fatigue(const IParameterHandler& parameter_handler, const IDataSource& data_source);
 
-    void Init();
-    void ExecuteStep();
-    void Shutdown();
+    void Step();
 
     const FatigueMessage& GetFatigueMessage() const;
 

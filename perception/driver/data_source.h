@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_DATA_SOURCE_H
 #define PERCEPTION_DRIVER_DATA_SOURCE_H
@@ -11,7 +11,7 @@
 namespace perception
 {
 
-class DataSource : public IDataSource
+class DataSource final : public IDataSource
 {
   public:
     DataSource();

@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/driver/driver.h"
 #include "perception/driver/test/support/builders/driver_camera_message_builder.h"
@@ -22,7 +22,7 @@ class DriverFixture : public ::testing::Test
   protected:
     void SetUp() override { driver_.Init(); }
     void TearDown() override { driver_.Shutdown(); }
-    void RunOnce() { driver_.ExecuteStep(); }
+    void RunOnce() { driver_.Step(); }
 
     void UpdateDriverCameraMessage(const DriverCameraMessage& driver_camera_message)
     {

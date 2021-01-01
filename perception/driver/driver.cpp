@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. MIT License.
+/// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/driver/driver.h"
 
@@ -14,23 +14,15 @@ Driver::Driver()
 {
 }
 
-void Driver::Init()
+void Driver::Init() {}
+
+void Driver::Step()
 {
-    fatigue_.Init();
-    visual_attention_.Init();
+    fatigue_.Step();
+    visual_attention_.Step();
 }
 
-void Driver::ExecuteStep()
-{
-    fatigue_.ExecuteStep();
-    visual_attention_.ExecuteStep();
-}
-
-void Driver::Shutdown()
-{
-    fatigue_.Shutdown();
-    visual_attention_.Shutdown();
-}
+void Driver::Shutdown() {}
 
 void Driver::ProcessDriverCameraMessage(const DriverCameraMessage& driver_camera_message)
 {

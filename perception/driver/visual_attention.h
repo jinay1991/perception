@@ -11,7 +11,7 @@
 
 namespace perception
 {
-class VisualAttention
+class VisualAttention final
 {
   public:
     explicit VisualAttention(const IParameterHandler& parameter_handler, const IDataSource& data_source);

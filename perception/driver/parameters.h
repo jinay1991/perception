@@ -11,9 +11,13 @@
 namespace perception
 {
 
+/// @brief Driver configuration parameters
 struct Parameters
 {
+    /// @brief Eye Lid Opening Range
     ValidityRange<units::length::millimeter_t> eye_lid_opening_range{kMinEyeLidOpening, kMaxEyeLidOpening};
+
+    /// @brief Eye Blink rate range
     ValidityRange<units::frequency::hertz_t> eye_blink_rate{kMinEyeBlinkRate, kMaxEyeBlinkRate};
 };
 

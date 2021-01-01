@@ -14,7 +14,7 @@
 
 namespace perception
 {
-class Fatigue
+class Fatigue final
 {
   public:
     explicit Fatigue(const IParameterHandler& parameter_handler, const IDataSource& data_source);

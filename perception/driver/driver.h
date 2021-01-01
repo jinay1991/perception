@@ -13,7 +13,7 @@
 
 namespace perception
 {
-class Driver
+class Driver final
 {
   public:
     Driver();

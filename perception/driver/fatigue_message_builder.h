@@ -9,7 +9,7 @@
 
 namespace perception
 {
-class FatigueMessageBuilder
+class FatigueMessageBuilder final
 {
   public:
     FatigueMessageBuilder();

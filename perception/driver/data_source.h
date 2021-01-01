@@ -11,7 +11,7 @@
 namespace perception
 {
 
-class DataSource : public IDataSource
+class DataSource final : public IDataSource
 {
   public:
     DataSource();

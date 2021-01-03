@@ -14,15 +14,11 @@ Driver::Driver()
 {
 }
 
-void Driver::Init() {}
-
 void Driver::Step()
 {
     fatigue_.Step();
     visual_attention_.Step();
 }
-
-void Driver::Shutdown() {}
 
 void Driver::ProcessDriverCameraMessage(const DriverCameraMessage& driver_camera_message)
 {

@@ -13,8 +13,6 @@ DriverNode::DriverNode(middleware::IPubSubFactory& factory) : middleware::Node{"
 
 void DriverNode::Init()
 {
-    driver_.Init();
-
     AddSubscriber<DriverCameraTopic>([&driver = driver_](const DriverCameraMessage& driver_camera_message) {
         driver.ProcessDriverCameraMessage(driver_camera_message);
     });
@@ -30,7 +28,6 @@ void DriverNode::ExecuteStep()
 
 void DriverNode::Shutdown()
 {
-    driver_.Shutdown();
 }
 
 }  // namespace perception

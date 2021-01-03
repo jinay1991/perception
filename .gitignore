@@ -3,6 +3,7 @@
 term3_sim_*
 coverage/*
 *.zip
+compile_commands.json
 
 # bazel build files
 bazel-*

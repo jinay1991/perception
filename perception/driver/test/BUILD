@@ -24,6 +24,7 @@ cc_test(
         "driver_consumer_node_tests.cpp",
         "driver_simulator_node_tests.cpp",
         "driver_tests.cpp",
+        "eye_state_filter_tests.cpp",
         "fatigue_message_builder_tests.cpp",
         "fatigue_tests.cpp",
         "operators_tests.cpp",

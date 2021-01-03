@@ -26,8 +26,6 @@ void DriverNode::ExecuteStep()
     driver_.Step();
 }
 
-void DriverNode::Shutdown()
-{
-}
+void DriverNode::Shutdown() {}
 
 }  // namespace perception

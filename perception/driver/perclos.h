@@ -24,6 +24,8 @@ class Perclos final
     Perclos();
 
     /// @brief Calculate Percentage closure
+    ///
+    /// @param eye_state [in] - Eye State (filtered)
     void Calculate(const EyeState eye_state);
 
     /// @brief Provide calculated closure percentage
@@ -40,7 +42,7 @@ class Perclos final
     /// @brief Check if provided eye state is Closed
     ///
     /// @return True if provided eye state is closed, otherwise False
-    inline bool IsEyesClosed(const EyeState eye_state) const;
+    static inline constexpr bool IsEyesClosed(const EyeState eye_state);
 
     /// @brief Circular buffer for storing eye state for 5min. Used to calculate eye closure percentage
     CircularBitset<kMaxLongtermStorageSize> longterm_storage_;

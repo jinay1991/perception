@@ -34,7 +34,7 @@ double Perclos::GetAvailabilityPercentage() const
     return Clamp(availability_percentage, 0.0, 100.0);
 }
 
-bool Perclos::IsEyesClosed(const EyeState eye_state) const
+constexpr bool Perclos::IsEyesClosed(const EyeState eye_state)
 {
     return (EyeState::kEyesClosed == eye_state);
 }

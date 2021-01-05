@@ -29,6 +29,7 @@ cc_test(
         "fatigue_message_builder_tests.cpp",
         "fatigue_tests.cpp",
         "operators_tests.cpp",
+        "parameter_handler_mock_tests.cpp",
         "parameter_handler_tests.cpp",
         "parameters_tests.cpp",
         "perclos_tests.cpp",

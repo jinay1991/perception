@@ -19,6 +19,7 @@ cc_test(
 cc_test(
     name = "unit_tests",
     srcs = [
+        "data_source_mock_tests.cpp",
         "data_source_tests.cpp",
         "driver_camera_message_builder_tests.cpp",
         "driver_consumer_node_tests.cpp",

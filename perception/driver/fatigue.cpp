@@ -46,7 +46,8 @@ FatigueLevel Fatigue::DetermineFatigueLevel() const
     const auto availability_percentage = perclos_.GetAvailabilityPercentage();
     const auto closure_percentage = perclos_.GetClosurePercentage();
     const auto has_observed_eyes_close = closure_percentage > 10.0;
-    const auto percentage = has_observed_eyes_close ? availability_percentage : 0.0;
+    const auto percentage =
+        (has_observed_eyes_close && (availability_percentage < 100.0)) ? availability_percentage : closure_percentage;
     FatigueLevel level{FatigueLevel::kInvalid};
 
     constexpr double kMaxConfidenceAwake{7.5};

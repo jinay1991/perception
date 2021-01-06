@@ -95,15 +95,17 @@ INSTANTIATE_TEST_SUITE_P(
   ::testing::Values(
     //                                    eye_state, duration,       (expected) level       , (expected) confidence
     TestEyeStateDurationParam{EyeState::kEyesOpen  ,     5min, FatigueLevel::kAwake         ,                 100.0}, // (0)
-    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     0min, FatigueLevel::kInvalid       ,                   0.0}, // (1)
-    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     2min, FatigueLevel::kAwake         ,                  40.0}, // (2)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,     0min, FatigueLevel::kInvalid       ,                   0.0}, // (3)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,     5min, FatigueLevel::kSleep         ,                 100.0}, // (4)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,     4min, FatigueLevel::kSleep         ,                  80.0}, // (5)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,     2min, FatigueLevel::kBeginningSleep,                  40.0}, // (6)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,     1min, FatigueLevel::kDrowsy        ,                  20.0}, // (7)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,      30s, FatigueLevel::kQuestionable  ,                  10.0}, // (8)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,      10s, FatigueLevel::kAwake         ,                   3.3}  // (9)
+    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     6min, FatigueLevel::kAwake         ,                 100.0}, // (1)
+    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     0min, FatigueLevel::kInvalid       ,                   0.0}, // (2)
+    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     2min, FatigueLevel::kAwake         ,                  40.0}, // (3)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     0min, FatigueLevel::kInvalid       ,                   0.0}, // (4)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     5min, FatigueLevel::kSleep         ,                 100.0}, // (5)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     6min, FatigueLevel::kSleep         ,                 100.0}, // (6)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     4min, FatigueLevel::kSleep         ,                  80.0}, // (7)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     2min, FatigueLevel::kBeginningSleep,                  40.0}, // (8)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     1min, FatigueLevel::kDrowsy        ,                  20.0}, // (9)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,      30s, FatigueLevel::kQuestionable  ,                  10.0}, // (10)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,      10s, FatigueLevel::kAwake         ,                   3.3}  // (11)
   ));
 // clang-format on
 

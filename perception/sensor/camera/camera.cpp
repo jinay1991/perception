@@ -12,8 +12,19 @@
 
 namespace perception
 {
+/// @brief Default chessboard data for calibration
+static const std::string kDefaultChessboardData{"data/camera_calibration"};
+
+/// @brief Default number of chessboard blocks in x axis
+static constexpr std::int32_t kDefaultNumberOfChessboardBlocksX{9};
+
+/// @brief Default number of chessboard blocks in y axis
+static constexpr std::int32_t kDefaultNumberOfChessboardBlocksY{6};
+
 Camera::Camera(const std::string& source)
-    : source_{source}, capture_device_{source_}, calibration_{"data/camera_calibration", 9, 6}
+    : source_{source},
+      capture_device_{source_},
+      calibration_{kDefaultChessboardData, kDefaultNumberOfChessboardBlocksX, kDefaultNumberOfChessboardBlocksY}
 {
     CHECK(capture_device_.isOpened());
 }
@@ -29,11 +40,11 @@ void Camera::Step()
     capture_device_ >> image;
 
     Image undistorted_image{};
-    cv::undistort(image, undistorted_image, calibration_.GetCameraMatrix(), calibration_.GetDistanceCoeffs());
+    cv::undistort(image, undistorted_image, calibration_.GetCameraMatrix(), calibration_.GetDistanceCoefficients());
 
     camera_message_.time_point = std::chrono::system_clock::now();
     camera_message_.calibration_params.intrinsic = calibration_.GetCameraMatrix();
-    camera_message_.calibration_params.extrinsic = calibration_.GetDistanceCoeffs();
+    camera_message_.calibration_params.extrinsic = calibration_.GetDistanceCoefficients();
     camera_message_.image = image;
     camera_message_.undistorted_image = undistorted_image;
 }

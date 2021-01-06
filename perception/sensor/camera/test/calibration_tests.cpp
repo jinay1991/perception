@@ -39,7 +39,7 @@ class CalibrationTest : public ::testing::Test
 TEST_F(CalibrationTest, WhenInitialized_ExpectedEmptyCalibrationMatrix)
 {
     ASSERT_TRUE(unit_.GetCameraMatrix().empty());
-    ASSERT_TRUE(unit_.GetDistanceCoeffs().empty());
+    ASSERT_TRUE(unit_.GetDistanceCoefficients().empty());
     ASSERT_TRUE(unit_.GetRotationMatrix().empty());
     ASSERT_TRUE(unit_.GetTranslationMatrix().empty());
 }
@@ -48,7 +48,7 @@ TEST_F(CalibrationTest, GivenTypicalCalibrationInputs_ExpectedCalibrationMatrix)
     RunOnce();
 
     ASSERT_FALSE(unit_.GetCameraMatrix().empty());
-    ASSERT_FALSE(unit_.GetDistanceCoeffs().empty());
+    ASSERT_FALSE(unit_.GetDistanceCoefficients().empty());
     ASSERT_FALSE(unit_.GetRotationMatrix().empty());
     ASSERT_FALSE(unit_.GetTranslationMatrix().empty());
 }
@@ -57,7 +57,7 @@ TEST_F(CalibrationTest, GivenDistortedImage_ExpectUndistortedImage)
 {
     RunOnce();
     const auto camera_matrix = unit_.GetCameraMatrix();
-    const auto distance_coeffs = unit_.GetDistanceCoeffs();
+    const auto distance_coeffs = unit_.GetDistanceCoefficients();
     ASSERT_FALSE(camera_matrix.empty());
     ASSERT_FALSE(distance_coeffs.empty());
 

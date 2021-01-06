@@ -36,7 +36,7 @@ class Calibration
     const cv::Mat& GetCameraMatrix() const;
 
     /// @brief Provides Camera Calibration Parameters [Distance Coefficients]
-    const cv::Mat& GetDistanceCoeffs() const;
+    const cv::Mat& GetDistanceCoefficients() const;
 
     /// @brief Provides Camera Calibration Parameters [Rotational Matrix]
     const cv::Mat& GetRotationMatrix() const;
@@ -64,7 +64,7 @@ class Calibration
     cv::Mat camera_matrix_;
 
     /// @brief Camera Calibration Parameters [Distance Coefficients]
-    cv::Mat dist_coeffs_;
+    cv::Mat distance_coefficients_;
 
     /// @brief Camera Calibration Parameters [Rotational Matrix]
     cv::Mat rotation_;

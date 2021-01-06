@@ -6,6 +6,7 @@ cc_test(
         "circular_bitset_tests.cpp",
         "current_previous_tests.cpp",
         "filter_tests.cpp",
+        "finite_state_machine_tests.cpp",
         "logging_tests.cpp",
         "toggle_tests.cpp",
         "validity_range_tests.cpp",

@@ -43,33 +43,37 @@ void Fatigue::DetermineFatigue()
 
 FatigueLevel Fatigue::DetermineFatigueLevel() const
 {
-    const double percentage = perclos_.GetClosurePercentage();
+    const auto availability_percentage = perclos_.GetAvailabilityPercentage();
+    const auto closure_percentage = perclos_.GetClosurePercentage();
+    const auto has_observed_eyes_close = closure_percentage > 10.0;
+    const auto percentage = has_observed_eyes_close ? availability_percentage : 0.0;
     FatigueLevel level{FatigueLevel::kInvalid};
 
-    constexpr double kConfidenceAwake{7.5};
-    constexpr double kConfidenceDrowsy{15.0};
-    constexpr double kConfidenceBeginningSleep{30.0};
-    constexpr double kConfidenceSleep{60.0};
+    constexpr double kMaxConfidenceAwake{7.5};
+    constexpr double kMaxConfidenceQuestionable{15.0};
+    constexpr double kMaxConfidenceDrowsy{30.0};
+    constexpr double kMaxConfidenceBeginningSleep{60.0};
+    constexpr double kMaxConfidenceSleep{100.0};
 
-    if (percentage < kConfidenceAwake)
+    if (percentage < kMaxConfidenceAwake)  // 0.0% - 7.5%
     {
         level = FatigueLevel::kAwake;
     }
-    else if (percentage < kConfidenceDrowsy)
+    else if (percentage < kMaxConfidenceQuestionable)  // 7.5% - 15.0%
+    {
+        level = FatigueLevel::kQuestionable;
+    }
+    else if (percentage < kMaxConfidenceDrowsy)  // 15.0% - 30.0%
     {
         level = FatigueLevel::kDrowsy;
     }
-    else if (percentage < kConfidenceBeginningSleep)
+    else if (percentage < kMaxConfidenceBeginningSleep)  // 30.0% - 60.0%
     {
         level = FatigueLevel::kBeginningSleep;
     }
-    else if (percentage < kConfidenceSleep)
+    else if (percentage <= kMaxConfidenceSleep)  // 60.0% - 100.0%
     {
         level = FatigueLevel::kSleep;
-    }
-    else
-    {
-        level = FatigueLevel::kInvalid;
     }
 
     return level;

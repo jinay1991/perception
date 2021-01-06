@@ -64,10 +64,10 @@ bazel-build-and-test:
   image: registry.gitlab.com/ad_platform/perception
   script:
     - bazel build //...
-    - bazel test //...  --test_output=all --nocache_test_results
+    - bazel test //...  --test_output=all
   artifacts:
     reports:
-      junit: $(find bazel-out/ -name test.xml)
+      junit: bazel-out/**/*test.xml
     name: TestResults
     when: on_success
 

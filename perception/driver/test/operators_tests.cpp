@@ -103,6 +103,7 @@ using OperatorsFixture_WithFatigueLevel = OperatorFixtureT<TestStringParam<Fatig
 INSTANTIATE_TEST_SUITE_P(Operators,
                          OperatorsFixture_WithFatigueLevel,
                          ::testing::Values(TestStringParam<FatigueLevel>{FatigueLevel::kAwake, "kAwake"},
+                                           TestStringParam<FatigueLevel>{FatigueLevel::kQuestionable, "kQuestionable"},
                                            TestStringParam<FatigueLevel>{FatigueLevel::kDrowsy, "kDrowsy"},
                                            TestStringParam<FatigueLevel>{FatigueLevel::kBeginningSleep,
                                                                          "kBeginningSleep"},

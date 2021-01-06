@@ -17,10 +17,11 @@ namespace perception
 {
 namespace
 {
+using ::testing::DoubleNear;
 using ::testing::Field;
 using ::testing::Return;
 
-constexpr std::chrono::milliseconds kDefaultStepDuration{40U};
+constexpr std::chrono::milliseconds kDefaultStepDuration{40ms};
 
 class FatigueFixture : public ::testing::Test
 {
@@ -45,7 +46,7 @@ class FatigueFixture : public ::testing::Test
                         const std::chrono::milliseconds duration,
                         const std::chrono::milliseconds step = kDefaultStepDuration)
     {
-        const auto eye_lid_opening = (EyeState::kEyesOpen == eye_state) ? 0.0_mm : kMaxEyeLidOpening;
+        const auto eye_lid_opening = (EyeState::kEyesClosed == eye_state) ? 0.0_mm : kMaxEyeLidOpening;
         const std::chrono::milliseconds eye_blink_duration =
             std::chrono::seconds{static_cast<std::uint32_t>(std::floor(1.0 / kMaxEyeBlinkRate.value()))};
         EXPECT_CALL(mocked_data_source_, IsFaceVisible()).WillRepeatedly(Return(true));
@@ -65,7 +66,7 @@ class FatigueFixture : public ::testing::Test
     ::testing::StrictMock<mock::DataSourceMock> mocked_data_source_;
 
   private:
-    ::testing::StrictMock<mock::ParameterHandlerMock> mocked_parameter_handler_;
+    ::testing::NiceMock<mock::ParameterHandlerMock> mocked_parameter_handler_;
     Fatigue fatigue_;
 };
 
@@ -74,67 +75,52 @@ class FatigueFixtureT : public FatigueFixture, public ::testing::WithParamInterf
 {
 };
 
-struct TestEyeStateParam
+struct TestEyeStateDurationParam
 {
     // Given
-    bool face_visibility;
-    bool eye_visibility;
-    units::length::millimeter_t eye_lid_opening;
-    units::frequency::hertz_t eye_blink_rate;
+    EyeState eye_state;
+    std::chrono::milliseconds duration;
 
     // Then
-    EyeState eye_state;
+    FatigueLevel level;
+    double confidence;
 };
 
-using FatigueFixture_WithEyeState = FatigueFixtureT<TestEyeStateParam>;
+using FatigueFixture_WithEyeClosedForDuration = FatigueFixtureT<TestEyeStateDurationParam>;
 
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
-    Fatigue,
-    FatigueFixture_WithEyeState,
-    ::testing::Values(
-        //                face_visible, eye_visible, eye_lid_opening,            eye_blink_rate, (expected) eye_state
-        TestEyeStateParam{        true,        true,          1.1_mm,          kMaxEyeBlinkRate, EyeState::kEyesClosed },
-        TestEyeStateParam{        true,       false,          1.1_mm,          kMaxEyeBlinkRate, EyeState::kEyesUnknown},
-        TestEyeStateParam{        true,        true,          1.1_mm,  kMaxEyeBlinkRate + 10_Hz, EyeState::kEyesUnknown},
-        TestEyeStateParam{        true,        true,          1.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesClosed },
-        TestEyeStateParam{        true,        true,         10.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesOpen   },
-        TestEyeStateParam{        true,        true,          5.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesClosed },
-        TestEyeStateParam{       false,        true,          5.0_mm,          kMaxEyeBlinkRate, EyeState::kEyesUnknown}
-));
+  Fatigue,
+  FatigueFixture_WithEyeClosedForDuration,
+  ::testing::Values(
+    //                                    eye_state, duration,       (expected) level       , (expected) confidence
+    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     5min, FatigueLevel::kAwake         ,                 100.0}, // (0)
+    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     6min, FatigueLevel::kAwake         ,                 100.0}, // (1)
+    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     0min, FatigueLevel::kInvalid       ,                   0.0}, // (2)
+    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     2min, FatigueLevel::kAwake         ,                  40.0}, // (3)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     0min, FatigueLevel::kInvalid       ,                   0.0}, // (4)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     5min, FatigueLevel::kSleep         ,                 100.0}, // (5)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     6min, FatigueLevel::kSleep         ,                 100.0}, // (6)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     4min, FatigueLevel::kSleep         ,                  80.0}, // (7)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     2min, FatigueLevel::kBeginningSleep,                  40.0}, // (8)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     1min, FatigueLevel::kDrowsy        ,                  20.0}, // (9)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,      30s, FatigueLevel::kQuestionable  ,                  10.0}, // (10)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,      10s, FatigueLevel::kAwake         ,                   3.3}  // (11)
+  ));
 // clang-format on
 
-TEST_P(FatigueFixture_WithEyeState, Fatigue_GiveTypicalFaceTrackingData_ExpectUpdatedEyeState)
+TEST_P(FatigueFixture_WithEyeClosedForDuration, Fatigue_GivenTypicalEyeStateForDuration_ExpectUpdatedFatigueProperties)
 {
     // Given
     const auto param = GetParam();
-    const std::chrono::milliseconds eye_blink_duration =
-        std::chrono::seconds{static_cast<std::uint32_t>(std::floor(1.0 / param.eye_blink_rate.value()))};
-    EXPECT_CALL(mocked_data_source_, IsFaceVisible()).WillRepeatedly(Return(param.face_visibility));
-    EXPECT_CALL(mocked_data_source_, IsEyeVisible()).WillRepeatedly(Return(param.eye_visibility));
-    EXPECT_CALL(mocked_data_source_, GetEyeLidOpening()).WillRepeatedly(Return(param.eye_lid_opening));
-    EXPECT_CALL(mocked_data_source_, GetEyeBlinkRate()).WillRepeatedly(Return(param.eye_blink_rate));
-    EXPECT_CALL(mocked_data_source_, GetEyeBlinkDuration()).WillRepeatedly(Return(eye_blink_duration));
 
     // When
-    RunOnce();
-
-    // Then
-    EXPECT_THAT(GetFatigueMessage(), Field(&FatigueMessage::eye_state, param.eye_state));
-}
-
-TEST_F(FatigueFixture, DISABLED_Fatigue_GivenEyesOpenForDuration_ExpectAwakeFatigueLevel)
-{
-    // Given
-    const auto eye_state = EyeState::kEyesOpen;
-    const auto duration = 2min;
-
-    // When
-    RunForDuration(eye_state, duration);
+    RunForDuration(param.eye_state, param.duration);
 
     // Then
     EXPECT_THAT(GetFatigueMessage(),
-                AllOf(Field(&FatigueMessage::level, FatigueLevel::kAwake), Field(&FatigueMessage::confidence, 100.0)));
+                AllOf(Field(&FatigueMessage::level, param.level),
+                      Field(&FatigueMessage::confidence, DoubleNear(param.confidence, 0.1))));
 }
 }  // namespace
 }  // namespace perception

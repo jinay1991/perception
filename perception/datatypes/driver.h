@@ -52,10 +52,11 @@ enum class EyeState : std::uint8_t
 enum class FatigueLevel : std::uint8_t
 {
     kAwake = 0U,
-    kDrowsy = 1U,
-    kBeginningSleep = 2U,
-    kSleep = 3U,
-    kInvalid = 4U
+    kQuestionable = 1U,
+    kDrowsy = 2U,
+    kBeginningSleep = 3U,
+    kSleep = 4U,
+    kInvalid = 5U
 };
 
 /// @brief Visual Attention State

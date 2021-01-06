@@ -64,6 +64,8 @@ inline std::string to_string(const FatigueLevel& fatigue_level) noexcept
     {
         case FatigueLevel::kAwake:
             return "kAwake";
+        case FatigueLevel::kQuestionable:
+            return "kQuestionable";
         case FatigueLevel::kDrowsy:
             return "kDrowsy";
         case FatigueLevel::kBeginningSleep:

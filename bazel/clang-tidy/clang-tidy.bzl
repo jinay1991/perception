@@ -148,7 +148,7 @@ clang_tidy_aspect = aspect(
             cfg = "host",
         ),
         "_clang_tidy_config": attr.label(
-            default = Label("@//:.clang-tidy"),
+            default = Label("@perception//:.clang-tidy"),
             allow_single_file = True,
         ),
         "_command_wrapper": attr.label(

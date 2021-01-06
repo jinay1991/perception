@@ -18,9 +18,7 @@ class Driver final
   public:
     Driver();
 
-    void Init();
     void Step();
-    void Shutdown();
 
     void ProcessDriverCameraMessage(const DriverCameraMessage& driver_camera_message);
 

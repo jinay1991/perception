@@ -17,6 +17,8 @@ namespace
 using ::testing::AllOf;
 using ::testing::Field;
 
+constexpr std::chrono::milliseconds kAssumedCycleDuration{40ms};
+
 class DriverSimulatorNodeFixture : public ::testing::Test
 {
   public:
@@ -42,6 +44,14 @@ class DriverSimulatorNodeFixture : public ::testing::Test
     {
         simulator_.Step();
         driver_camera_subscriber_.Step();
+    }
+
+    void RunForDuration(const std::chrono::milliseconds duration)
+    {
+        for (auto time_passed = 0ms; time_passed < duration; time_passed += kAssumedCycleDuration)
+        {
+            RunOnce();
+        }
     }
 
     DriverSimulatorNode& GetSimulator() { return simulator_; }
@@ -159,6 +169,35 @@ TEST_F(DriverSimulatorNodeFixture, ToggleEyes_GivenEyesOpen_ExpectToggleEyes)
     // Then
     EXPECT_THAT(GetDriverCameraMessage(),
                 Field(&DriverCameraMessage::face_tracking, Field(&FaceTracking::eye_lid_opening, 0.0_mm)));
+}
+
+TEST_F(DriverSimulatorNodeFixture, ToggleEyes_GivenEyesClosed_ExpectToggleEyes)
+{
+    // Given
+    ASSERT_THAT(GetDriverCameraMessage(),
+                Field(&DriverCameraMessage::face_tracking, Field(&FaceTracking::eye_lid_opening, 0.0_mm)));
+
+    // When
+    RunOnce();
+
+    // Then
+    EXPECT_THAT(GetDriverCameraMessage(),
+                Field(&DriverCameraMessage::face_tracking, Field(&FaceTracking::eye_lid_opening, kMaxEyeLidOpening)));
+}
+
+TEST_F(DriverSimulatorNodeFixture, ToggleEyes_GivenEyesClosedAfterSeveralBlinks_ExpectToggleEyes)
+{
+    // Given
+    RunForDuration(2 * kAssumedCycleDuration);
+    ASSERT_THAT(GetDriverCameraMessage(),
+                Field(&DriverCameraMessage::face_tracking, Field(&FaceTracking::eye_lid_opening, 0.0_mm)));
+
+    // When
+    RunOnce();
+
+    // Then
+    EXPECT_THAT(GetDriverCameraMessage(),
+                Field(&DriverCameraMessage::face_tracking, Field(&FaceTracking::eye_lid_opening, kMaxEyeLidOpening)));
 }
 
 TEST_F(DriverSimulatorNodeFixture, LookLeft_GivenDriverSimulator_ExpectMaxPositiveHeadTrackingYaw)

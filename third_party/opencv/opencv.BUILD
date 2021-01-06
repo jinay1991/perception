@@ -70,8 +70,8 @@ MODULE_DEPS = {
         cc_library(
             name = module,
             srcs = select({
-                "@//bazel/platforms:macos": glob(["lib/libopencv_{}.dylib".format(module)]),
-                "@//bazel/platforms:linux": glob(["lib/libopencv_{}.so*".format(module)]),
+                "@perception//bazel/platforms:macos": glob(["lib/libopencv_{}.dylib".format(module)]),
+                "@perception//bazel/platforms:linux": glob(["lib/libopencv_{}.so*".format(module)]),
             }),
             hdrs = ["include/opencv4/opencv2/{}.hpp".format(module)] + glob(["include/opencv4/opencv2/{}/**/*.h*".format(module)]) +
                    ([

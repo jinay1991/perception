@@ -10,17 +10,20 @@ namespace perception
 {
 
 Fatigue::Fatigue(const IParameterHandler& parameter_handler, const IDataSource& data_source)
-    : parameter_handler_{parameter_handler},
-      data_source_{data_source},
-      fatigue_builder_{},
-      perclos_{},
-      eye_blink_filter_{EyeState::kInvalid}
+    : fatigue_builder_{}, perclos_{}, eye_state_filter_{parameter_handler, data_source}
 {
 }
 
 void Fatigue::Step()
 {
     fatigue_builder_.WithTimepoint(std::chrono::system_clock::now());
+
+    eye_state_filter_.Step();
+
+    const auto eye_state = eye_state_filter_.GetFilteredEyeState();
+    fatigue_builder_.WithEyeState(eye_state);
+
+    perclos_.Calculate(eye_state);
 
     DetermineFatigue();
 }
@@ -32,74 +35,46 @@ const FatigueMessage& Fatigue::GetFatigueMessage() const
 
 void Fatigue::DetermineFatigue()
 {
-    const auto eye_state = DetermineEyeState();
-
-    perclos_.Calculate(ApplyEyeBlinkFilter(eye_state));
-
     const auto level = DetermineFatigueLevel();
     const auto confidence = DetermineFatigueConfidence();
 
-    fatigue_builder_.WithEyeState(eye_state).WithFatigueLevel(level).WithFatigueConfidence(confidence);
-}
-
-EyeState Fatigue::DetermineEyeState() const
-{
-    EyeState eye_state{EyeState::kInvalid};
-    if (IsFaceVisible() && IsEyeVisible())
-    {
-        if (IsEyeOpen())
-        {
-            eye_state = EyeState::kEyesOpen;
-        }
-        else
-        {
-            eye_state = EyeState::kEyesClosed;
-        }
-    }
-    else
-    {
-        eye_state = EyeState::kEyesUnknown;
-    }
-
-    return eye_state;
-}
-
-EyeState Fatigue::ApplyEyeBlinkFilter(const EyeState& eye_state)
-{
-    eye_blink_filter_.SetHoldDuration(data_source_.GetEyeBlinkDuration());
-    eye_blink_filter_.Update(eye_state, kAssumedCycleDuration);
-    return eye_blink_filter_.GetCurrentState();
+    fatigue_builder_.WithFatigueLevel(level).WithFatigueConfidence(confidence);
 }
 
 FatigueLevel Fatigue::DetermineFatigueLevel() const
 {
-    const double percentage = perclos_.GetClosurePercentage();
+    const auto availability_percentage = perclos_.GetAvailabilityPercentage();
+    const auto closure_percentage = perclos_.GetClosurePercentage();
+    const auto has_observed_eyes_close = closure_percentage > 10.0;
+    const auto percentage =
+        (has_observed_eyes_close && (availability_percentage < 100.0)) ? availability_percentage : closure_percentage;
     FatigueLevel level{FatigueLevel::kInvalid};
 
-    constexpr double kConfidenceAwake{7.5};
-    constexpr double kConfidenceDrowsy{15.0};
-    constexpr double kConfidenceBeginningSleep{30.0};
-    constexpr double kConfidenceSleep{60.0};
+    constexpr double kMaxConfidenceAwake{7.5};
+    constexpr double kMaxConfidenceQuestionable{15.0};
+    constexpr double kMaxConfidenceDrowsy{30.0};
+    constexpr double kMaxConfidenceBeginningSleep{60.0};
+    constexpr double kMaxConfidenceSleep{100.0};
 
-    if (percentage < kConfidenceAwake)
+    if (percentage < kMaxConfidenceAwake)  // 0.0% - 7.5%
     {
         level = FatigueLevel::kAwake;
     }
-    else if (percentage < kConfidenceDrowsy)
+    else if (percentage < kMaxConfidenceQuestionable)  // 7.5% - 15.0%
+    {
+        level = FatigueLevel::kQuestionable;
+    }
+    else if (percentage < kMaxConfidenceDrowsy)  // 15.0% - 30.0%
     {
         level = FatigueLevel::kDrowsy;
     }
-    else if (percentage < kConfidenceBeginningSleep)
+    else if (percentage < kMaxConfidenceBeginningSleep)  // 30.0% - 60.0%
     {
         level = FatigueLevel::kBeginningSleep;
     }
-    else if (percentage < kConfidenceSleep)
+    else if (percentage <= kMaxConfidenceSleep)  // 60.0% - 100.0%
     {
         level = FatigueLevel::kSleep;
-    }
-    else
-    {
-        level = FatigueLevel::kInvalid;
     }
 
     return level;
@@ -110,33 +85,4 @@ double Fatigue::DetermineFatigueConfidence() const
     return perclos_.GetAvailabilityPercentage();
 }
 
-bool Fatigue::IsFaceVisible() const
-{
-    return data_source_.IsFaceVisible();
-}
-
-bool Fatigue::IsEyeVisible() const
-{
-    return (IsEyeBlinkRateValid() && (data_source_.IsEyeVisible()));
-}
-
-bool Fatigue::IsEyeOpen() const
-{
-    return (IsEyeLidOpeningValid() &&
-            (data_source_.GetEyeLidOpening() > (parameter_handler_.GetMaxEyeLidOpening() / 2.0)));
-}
-
-bool Fatigue::IsEyeBlinkRateValid() const
-{
-    return InRangeInclusive(data_source_.GetEyeBlinkRate(),
-                            parameter_handler_.GetMinEyeBlinkRate(),
-                            parameter_handler_.GetMaxEyeBlinkRate());
-}
-
-bool Fatigue::IsEyeLidOpeningValid() const
-{
-    return InRangeInclusive(data_source_.GetEyeLidOpening(),
-                            parameter_handler_.GetMinEyeLidOpening(),
-                            parameter_handler_.GetMaxEyeLidOpening());
-}
 }  // namespace perception

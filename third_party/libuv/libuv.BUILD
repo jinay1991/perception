@@ -1,3 +1,5 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
@@ -33,12 +35,12 @@ cc_library(
         "src/uv-data-getter-setters.c",
         "src/version.c",
     ] + select({
-        "@//bazel/platforms:macos": [
+        "@perception//bazel/platforms:macos": [
             "src/unix/darwin-proctitle.c",
             "src/unix/darwin.c",
             "src/unix/fsevents.c",
         ],
-        "@//bazel/platforms:linux": [
+        "@perception//bazel/platforms:linux": [
             "src/unix/linux-core.c",
             "src/unix/linux-inotify.c",
             "src/unix/linux-syscalls.c",
@@ -59,7 +61,7 @@ cc_library(
             "_FILE_OFFSET_BITS=64",
             "_LARGEFILE_SOURCE",
         ] + select({
-            "@//bazel/platforms:macos": [
+            "@perception//bazel/platforms:macos": [
                 "_DARWIN_UNLIMITED_SELECT=1",
                 "_DARWIN_USE_64_BIT_INODE=1",
             ],
@@ -76,7 +78,7 @@ cc_library(
     linkopts = [
         "-lpthread",
     ] + select({
-        "@//bazel/platforms:linux": [
+        "@perception//bazel/platforms:linux": [
             "-ldl",
             "-lrt",
         ],

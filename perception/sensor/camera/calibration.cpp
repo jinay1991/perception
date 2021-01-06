@@ -25,7 +25,7 @@ Calibration::Calibration(const std::string dirname, const std::int32_t nx, const
       object_points_{},
       image_points_{},
       camera_matrix_{},
-      dist_coeffs_{},
+      distance_coefficients_{},
       rotation_{},
       translation_{}
 {
@@ -66,7 +66,7 @@ void Calibration::Init()
 void Calibration::Execute()
 {
     const double root_mean_square = cv::calibrateCamera(
-        object_points_, image_points_, image_size_, camera_matrix_, dist_coeffs_, rotation_, translation_);
+        object_points_, image_points_, image_size_, camera_matrix_, distance_coefficients_, rotation_, translation_);
 
     LOG(INFO) << "Root Mean Square (RMS) Error reported after calibrating " << filelist_.size()
               << " images for CAMERA: " << root_mean_square;
@@ -79,9 +79,9 @@ const cv::Mat& Calibration::GetCameraMatrix() const
     return camera_matrix_;
 }
 
-const cv::Mat& Calibration::GetDistanceCoeffs() const
+const cv::Mat& Calibration::GetDistanceCoefficients() const
 {
-    return dist_coeffs_;
+    return distance_coefficients_;
 }
 
 const cv::Mat& Calibration::GetRotationMatrix() const

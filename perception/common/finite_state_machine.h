@@ -11,88 +11,148 @@
 namespace perception
 {
 
+/// @brief Simple Finite State Machine
+///
+/// @tparam State - State Type (must be enum/enum class type)
 template <typename State>
 class FiniteStateMachine
 {
-    static_assert(std::is_enum<State>::value, "State template argument is not of enum type");
 
   public:
+    /// @brief State Transition Guard (function) type
     using Guard = std::function<bool()>;
+
+    /// @brief State Transition Action (function) type
     using Action = std::function<void()>;
 
+    /// @brief Default Constructor
+    ///
+    /// @param initial_state [in] - Initial State for State Machine
     explicit FiniteStateMachine(const State initial_state)
-        : state_actions_{},
-          transitions_{},
-          transition_actions_{},
+        : state_action_list_{},
+          transition_list_{},
+          transition_action_list_{},
           initial_state_{initial_state},
           current_state_{initial_state},
           current_state_actions_{}
     {
+        static_assert(std::is_enum<State>::value, "State type must be enum/enum class type.");
     }
 
+    /// @brief Add Transition to State Machine - Registers transition guard, which will be used to check if
+    /// transition from -> to state possible or not.
+    ///
+    /// @param from_state [in] - Transition from State
+    /// @param to_state [in] - Transition to State
+    /// @param guard [in] - Transition Guard
     void AddTransition(const State from_state, const State to_state, const Guard& guard) noexcept
     {
         const ToTransition to_transition{to_state, guard};
-        transitions_.insert({from_state, to_transition});
+        transition_list_.insert({from_state, to_transition});
     }
 
-    void AddTransitionAction(const State from_state, const State to_state, const Action& transition_action) noexcept
+    /// @brief Add Transition action to State Machine - Registers transition action, which will be executed upon
+    /// transition from -> to state
+    ///
+    /// @param from_state [in] - Transition from State
+    /// @param to_state [in] - Transition to State
+    /// @param action [in] - Transition action
+    void AddTransitionAction(const State from_state, const State to_state, const Action& action) noexcept
     {
-        transition_actions_.insert({std::make_pair(from_state, to_state), transition_action});
+        transition_action_list_.insert({std::make_pair(from_state, to_state), action});
     }
 
+    /// @brief Add State Actions. To be executed based on entry/exit or during state if set.
+    ///
+    /// @param state [in] - State for which actions to be registered
+    /// @param entry_action [in] - Registers action to be executed while entering the state
+    /// @param state_action [in] - Registers action to be executed while in state
+    /// @param exit_action [in] - Registers action to be executed while exiting the state
     void AddStateAction(const State state,
                         const Action& entry_action = nullptr,
                         const Action& state_action = nullptr,
                         const Action& exit_action = nullptr) noexcept
     {
-        ReplaceCurrentActionsIfRelevantForCurrentState(state, entry_action, state_action, exit_action);
-        state_actions_[state] = Actions{entry_action, state_action, exit_action};
+        UpdateCurrentActionsBasedOnState(state, entry_action, state_action, exit_action);
+        state_action_list_.insert({state, Actions{entry_action, state_action, exit_action}});
     }
 
+    /// @brief Check for State Transitions, if possible performs transitions and executes registered actions.
     void Step()
     {
-        if (!WasTransitionToOtherStatePerformed())
+        if (!PerformStateTransition())
         {
             ExecuteAction(current_state_actions_.state_action);
         }
     }
 
-    void Reset() noexcept { SwitchState(initial_state_); }
+    /// @brief Resets state to initial state.
+    /// @note Registered transitions and actions will be unchanged. If intended to reset them as well, create new object
+    /// instead.
+    void Reset() noexcept { ChangeState(initial_state_); }
 
+    /// @brief Provide current state of State Machine
+    ///
+    /// @return current_state
     State GetCurrentState() const { return current_state_; }
 
   private:
+    /// @brief Transition information (transition state and guard to check)
     struct ToTransition
     {
+        /// @brief State to which transition to be performed if Guard is passed
         State to_state;
+        /// @brief Guard to be checked to allow transition
         Guard guard;
     };
 
+    /// @brief State Actions
     struct Actions
     {
+        /// @brief State Entry Action. To be called upon entering the state.
         Action entry_action{nullptr};
+
+        /// @brief State Action. To be called everytime till in same state.
         Action state_action{nullptr};
+
+        /// @brief State Exit Action. To be called upon leaving the state.
         Action exit_action{nullptr};
     };
 
+    /// @brief State specific actions associated with state
     struct StateActions
     {
+        /// @brief State
         State state;
 
+        /// @brief State Entry Action. To be called upon entering the state.
         Action entry_action{nullptr};
+
+        /// @brief State Action. To be called everytime till in same state.
         Action state_action{nullptr};
+
+        /// @brief State Exit Action. To be called upon leaving the state.
         Action exit_action{nullptr};
     };
 
+    /// @brief State Actions map. Hold all the registered state actions as to map actions with its associated states
     using StateActionList = std::map<State, Actions>;
+
+    /// @brief Transition (from -> to) state pair
     using Transition = std::pair<State, State>;
+
+    /// @brief State Transition information map. Hold transition informations including guard.
     using TransitionList = std::multimap<State, ToTransition>;
+
+    /// @brief State Transition Action map. Hold transitions actions for each defined Transition pair (from -> to)
     using TransitionActionList = std::map<Transition, Action>;
 
-    bool WasTransitionToOtherStatePerformed()
+    /// @brief Perform State Transition if not performed already
+    ///
+    /// @return True if state transition successfully performed, otherwise False.
+    bool PerformStateTransition()
     {
-        const auto possible_transitions = transitions_.equal_range(current_state_);
+        const auto possible_transitions = transition_list_.equal_range(current_state_);
         for (auto transition = possible_transitions.first; transition != possible_transitions.second; ++transition)
         {
             const auto& to_transition = transition->second;
@@ -100,7 +160,7 @@ class FiniteStateMachine
             {
                 ExecuteAction(current_state_actions_.exit_action);
                 ExecuteTransitionAction(std::make_pair(current_state_, to_transition.to_state));
-                SwitchState(to_transition.to_state);
+                ChangeState(to_transition.to_state);
                 ExecuteAction(current_state_actions_.entry_action);
                 return true;
             }
@@ -108,6 +168,9 @@ class FiniteStateMachine
         return false;
     }
 
+    /// @brief Execute provided action if available
+    ///
+    /// @param action [in] - Action to be executed
     void ExecuteAction(const Action& action)
     {
         if (action != nullptr)
@@ -116,11 +179,14 @@ class FiniteStateMachine
         }
     }
 
+    /// @brief Execute Transition actions for provided Transition if available
+    ///
+    /// @param transition [in] - Transition to be checked for it's transition actions
     void ExecuteTransitionAction(const Transition& transition)
     {
-        if (transition_actions_.find(transition) != transition_actions_.end())
+        if (transition_action_list_.find(transition) != transition_action_list_.end())
         {
-            const auto transition_action = transition_actions_.at(transition);
+            const auto transition_action = transition_action_list_.at(transition);
             if (transition_action != nullptr)
             {
                 transition_action();
@@ -128,23 +194,35 @@ class FiniteStateMachine
         }
     }
 
+    /// @brief Check if transition is possible based on the provided guard. Executes guard in order to determine this.
+    ///
+    /// @return True if guard is available and passed, otherwise False
     bool IsTransitionPossible(const Guard& guard) { return ((guard != nullptr) && guard()); }
 
-    void SwitchState(const State state) noexcept
+    /// @brief Change state to new state
+    ///
+    /// @param state [in] - State to switch to
+    void ChangeState(const State state) noexcept
     {
         current_state_ = state;
-        if (state_actions_.count(current_state_) == 0)
+        if (state_action_list_.count(current_state_) == 0)
         {
-            current_state_actions_ = {nullptr, nullptr, nullptr};
+            current_state_actions_ = Actions{nullptr, nullptr, nullptr};
             return;
         }
-        current_state_actions_ = state_actions_.at(current_state_);
+        current_state_actions_ = state_action_list_.at(current_state_);
     }
 
-    void ReplaceCurrentActionsIfRelevantForCurrentState(const State state,
-                                                        const Action& entry_action,
-                                                        const Action& state_action,
-                                                        const Action& exit_action) noexcept
+    /// @brief Replace current actions if provided state matches current_state
+    ///
+    /// @param state [in] - state associated with actions
+    /// @param entry_action [in] - State Entry action
+    /// @param state_action [in] - State action
+    /// @param exit_action [in] - State Exit action
+    void UpdateCurrentActionsBasedOnState(const State state,
+                                          const Action& entry_action,
+                                          const Action& state_action,
+                                          const Action& exit_action) noexcept
     {
         if (current_state_ == state)
         {
@@ -152,14 +230,22 @@ class FiniteStateMachine
         }
     }
 
-    StateActionList state_actions_;
-    TransitionList transitions_;
-    TransitionActionList transition_actions_;
+    /// @brief List of state actions
+    StateActionList state_action_list_;
 
+    /// @brief List of transitions
+    TransitionList transition_list_;
+
+    /// @brief List of transition actions
+    TransitionActionList transition_action_list_;
+
+    /// @brief Initial State
     const State initial_state_;
 
+    /// @brief Current State
     State current_state_;
 
+    /// @brief Current State Actions
     Actions current_state_actions_;
 };
 

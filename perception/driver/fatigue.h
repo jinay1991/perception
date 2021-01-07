@@ -25,7 +25,7 @@ class Fatigue final
 
   private:
     void DetermineFatigue();
-    EyeState DetermineEyeState() const;
+    EyeState DetermineEyeState();
     FatigueLevel DetermineFatigueLevel() const;
     double DetermineFatigueConfidence() const;
 

@@ -18,6 +18,8 @@
 
 ## Build
 
+**NOTE**: Currently due to limitation of developer environment, only Linux OS is supported. Although there is a plan in place to provide compatibility with macOS as well. 
+
 * Build project
     * Release `bazel build //...`
     * Debug `bazel build -c dbg //...`
@@ -30,10 +32,13 @@ Install all the required dependencies:
 ```
 sudo apt-get install -y build-essential gcc g++ lcov make cmake
 sudo apt-get install -y openjdk-11-jdk openjdk-11-jre
-sudo apt-get install -y libtool clang-format-6.0
+sudo apt-get install -y libtool clang-format clang-tidy clangd
 sudo apt-get install -y git curl
 sudo apt-get install -y wget
 sudo apt-get install -y libuv1-dev libssl-dev
+sudo apt-get install -y libgtkglext1 libgtkglext1-dev libgtk-3-dev libgtk2.0-dev 
+sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libavresample-dev libavutil-dev
+sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
 ```
 ### TensorFlow
 
@@ -52,6 +57,8 @@ To build `libtensorflow_cc.so`
 ```
 
 Package `libtensorflow_cc-2.3.0-linux.tar.gz` contains required tensorflow libraries.
+
+Download pre-built binaries (Linux/macOS): https://github.com/jinay1991/perception/releases/
 
 ### TensorFlow Lite
 
@@ -72,6 +79,8 @@ To build `libtensorflowlite.so`
 
 Package `libtensorflowlite-2.3.0-linux.tar.gz` contains required tensorflowlite libraries.
 
+Download pre-built binaries (Linux/macOS): https://github.com/jinay1991/perception/releases/
+
 ### OpenCV
 
 Install OpenCV v4.x
@@ -86,12 +95,12 @@ wget https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip && \
 unzip ${OPENCV_VERSION}.zip && rm -rf ${OPENCV_VERSION}.zip && \
 mkdir -p opencv-${OPENCV_VERSION}/build
 cd opencv-${OPENCV_VERSION}/build && \
-cmake -DBUILD_TESTS=OFF -DBUILT_PERF_TESTS=OFF -DBUILD_EXAMPLES=OFF -DWITH_LIBV4L=ON -DWITH_OPENGL=ON .. && \
-make -j8 && \
-make install && \
-cd -
-rm -rf opencv-${OPENCV_VERSION}
+cmake -DCMAKE_INSTALL_PREFIX=../install -DBUILD_TESTS=OFF -DBUILD_PERF_TESTS=OFF -DBUILD_opencv_apps=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release -DWITH_1394=OFF -DWITH_GSTREAMER=ON -DWITH_FFMPEG=ON -DWITH_GTK=ON .. && \
+make -j8 && make install && \
+cd ../install && tar cvzf libopencv_dev-4.5.0-linux.tar.gz \
 ```
+
+Download pre-built binaries (Linux): https://github.com/jinay1991/perception/releases/
 
 ## Supported OS
 
@@ -109,6 +118,8 @@ Repository uses some of the third party library as follows, which are being down
 * [nholthaus/json](https://github.com/nlohmann/json)
 * [uWebSockets](https://github.com/uWebSockets/uWebSockets)
 * [googletest](https://github.com/google/googletest)
+* [benchmark](https://github.com/google/benchmark)
+* [glog](https://github.com/google/glog)
 * [eigen](https://bitbucket.org/eigen/eigen)
 * [tensorflow](https://github.com/tensorflow/tensorflow)
 * [pytorch](https://github.com/pytorch/pytorch)

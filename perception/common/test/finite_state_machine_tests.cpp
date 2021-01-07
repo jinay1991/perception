@@ -21,9 +21,7 @@ constexpr std::chrono::milliseconds kDefaultCycleDuration{40ms};
 enum class State : std::uint8_t
 {
     kState_Init = 0U,
-    kState_Ready = 1U,
     kState_Run = 2U,
-    kState_Stop = 3U,
     kState_Release = 4U,
     kInvalid = 5U
 };
@@ -34,12 +32,15 @@ class FiniteStateMachineFixture : public ::testing::Test
     FiniteStateMachineFixture() : state_machine_{State::kState_Init}, time_since_startup_{0ms} {}
 
   protected:
+    using Action = std::function<void()>;
+
     void SetUp() override
     {
-        state_machine_.AddTransition(State::kState_Init, State::kState_Ready, [&] { return ToReady(); });
-        state_machine_.AddTransition(State::kState_Ready, State::kState_Run, [&] { return ToRun(); });
-        state_machine_.AddTransition(State::kState_Run, State::kState_Stop, [&] { return ToStop(); });
-        state_machine_.AddTransition(State::kState_Stop, State::kState_Release, [&] { return ToRelease(); });
+        state_machine_.AddTransition(State::kState_Init, State::kState_Run, [&] { return ToRun(); });
+        state_machine_.AddTransition(State::kState_Run, State::kState_Release, [&] { return ToRelease(); });
+
+        state_machine_.AddTransition(State::kState_Run, State::kState_Init, [&] { return ToInit(); });
+        state_machine_.AddTransition(State::kState_Release, State::kState_Init, [&] { return ToInit(); });
     }
 
     void RunOnce()
@@ -56,33 +57,52 @@ class FiniteStateMachineFixture : public ::testing::Test
         }
     }
 
+    void AddStateActions(const State state,
+                         const Action& entry_action,
+                         const Action& state_action,
+                         const Action& exit_action)
+    {
+        state_machine_.AddStateActions(state, entry_action, state_action, exit_action);
+    }
+
+    void AddTransitionAction(const State from_state, const State to_state, const Action& action)
+    {
+        state_machine_.AddTransitionAction(from_state, to_state, action);
+    }
+
+    void Reset() { state_machine_.Reset(); }
+    void ResetClock() { time_since_startup_ = 0ms; }
+
     State GetCurrentState() const { return state_machine_.GetCurrentState(); }
 
   private:
-    bool ToReady() const { return time_since_startup_ >= kDefaultCycleDuration; }
-    bool ToRun() const { return time_since_startup_ >= (2 * kDefaultCycleDuration); }
-    bool ToStop() const { return time_since_startup_ >= (3 * kDefaultCycleDuration); }
-    bool ToRelease() const { return time_since_startup_ >= (4 * kDefaultCycleDuration); }
+    bool ToRun() const
+    {
+        static constexpr std::chrono::milliseconds kTimeTransitionToRun{kDefaultCycleDuration};
+        return (time_since_startup_ >= kTimeTransitionToRun);
+    }
+    bool ToRelease() const
+    {
+        static constexpr std::chrono::milliseconds kTimeTransitionToRelease{3 * kDefaultCycleDuration};
+        return (time_since_startup_ >= kTimeTransitionToRelease);
+    }
+    bool ToInit() const { return (time_since_startup_ == 0ms); }
 
     FiniteStateMachine<State> state_machine_;
 
     std::chrono::milliseconds time_since_startup_;
 };
 
-TEST_F(FiniteStateMachineFixture, FiniteStateMachine_GivenStateMachineInInitializeState_ExpectTransitionToReadyState)
+TEST_F(FiniteStateMachineFixture, FiniteStateMachine_GivenInitializedStateMachine_ExpectInitialState)
 {
-    // When
-    RunOnce();
-
     // Then
-    EXPECT_THAT(GetCurrentState(), State::kState_Ready);
+    EXPECT_THAT(GetCurrentState(), State::kState_Init);
 }
 
-TEST_F(FiniteStateMachineFixture, FiniteStateMachine_GivenStateMachineInReadyState_ExpectTransitionToRunState)
+TEST_F(FiniteStateMachineFixture, FiniteStateMachine_GivenStateMachineInInitializeState_ExpectTransitionToRunState)
 {
     // Given
-    RunOnce();
-    ASSERT_THAT(GetCurrentState(), State::kState_Ready);
+    ASSERT_THAT(GetCurrentState(), State::kState_Init);
 
     // When
     RunOnce();
@@ -94,14 +114,88 @@ TEST_F(FiniteStateMachineFixture, FiniteStateMachine_GivenStateMachineInReadySta
 TEST_F(FiniteStateMachineFixture, FiniteStateMachine_GivenStateMachineInRunState_ExpectTransitionToStopState)
 {
     // Given
-    RunForDuration(2 * kDefaultCycleDuration);
+    RunOnce();
     ASSERT_THAT(GetCurrentState(), State::kState_Run);
+
+    // When
+    RunForDuration(2 * kDefaultCycleDuration);
+
+    // Then
+    EXPECT_THAT(GetCurrentState(), State::kState_Release);
+}
+
+TEST_F(FiniteStateMachineFixture, Reset_GivenStateMachineInRunState_ExpectTransitionToInitState)
+{
+    // Given
+    RunOnce();
+    ASSERT_THAT(GetCurrentState(), State::kState_Run);
+
+    // When
+    Reset();
+
+    // Then
+    EXPECT_THAT(GetCurrentState(), State::kState_Init);
+}
+
+TEST_F(FiniteStateMachineFixture, AddStateActions_GivenStateActions_ExpectExecutedStateActionsUpOnStateChange)
+{
+    // Given
+    std::int32_t number_of_entries = 0;
+    std::int32_t number_of_steps_in_state = 0;
+    std::int32_t number_of_exits = 0;
+    const auto entry_action = [&number_of_entries] { number_of_entries++; };
+    const auto state_action = [&number_of_steps_in_state] { number_of_steps_in_state++; };
+    const auto exit_action = [&number_of_exits] { number_of_exits++; };
+    AddStateActions(State::kState_Run, entry_action, state_action, exit_action);
+    ASSERT_THAT(GetCurrentState(), State::kState_Init);
+
+    // When
+    RunForDuration(3 * kDefaultCycleDuration);
+
+    // Then
+    EXPECT_THAT(GetCurrentState(), State::kState_Release);
+    EXPECT_THAT(number_of_entries, 1);
+    EXPECT_THAT(number_of_exits, 1);
+    EXPECT_THAT(number_of_steps_in_state, 1);
+}
+
+TEST_F(FiniteStateMachineFixture, AddStateActions_GivenStateActions_ExpectExecutedStateActionsForCurrentState)
+{
+    // Given
+    RunOnce();
+    ASSERT_THAT(GetCurrentState(), State::kState_Run);
+    std::int32_t number_of_entries = 0;
+    std::int32_t number_of_steps_in_state = 0;
+    std::int32_t number_of_exits = 0;
+    const auto entry_action = [&number_of_entries] { number_of_entries++; };
+    const auto state_action = [&number_of_steps_in_state] { number_of_steps_in_state++; };
+    const auto exit_action = [&number_of_exits] { number_of_exits++; };
+    AddStateActions(State::kState_Run, entry_action, state_action, exit_action);
 
     // When
     RunOnce();
 
     // Then
-    EXPECT_THAT(GetCurrentState(), State::kState_Stop);
+    EXPECT_THAT(GetCurrentState(), State::kState_Run);
+    EXPECT_THAT(number_of_entries, 0);
+    EXPECT_THAT(number_of_exits, 0);
+    EXPECT_THAT(number_of_steps_in_state, 1);
+}
+
+TEST_F(FiniteStateMachineFixture,
+       AddTransitionAction_GivenTransitionAction_ExpectExecutedTransitionActionsUpOnStateChange)
+{
+    // Given
+    std::int32_t number_of_actions = 0;
+    AddTransitionAction(State::kState_Init, State::kState_Run, [&number_of_actions] { number_of_actions++; });
+    ASSERT_THAT(GetCurrentState(), State::kState_Init);
+
+    // When
+    RunOnce();
+
+    // Then
+    EXPECT_THAT(GetCurrentState(), State::kState_Run);
+    EXPECT_THAT(number_of_actions, 1);
 }
 }  // namespace
 }  // namespace perception

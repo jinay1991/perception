@@ -60,7 +60,8 @@ class FiniteStateMachine final
                                               const State to_state,
                                               const Action& action) noexcept
     {
-        transition_actions_.insert({std::make_pair(from_state, to_state), action});
+        const Transition transition{from_state, to_state};
+        transition_actions_.insert({transition, action});
     }
 
     /// @brief Add State Action. To be executed based on entry/exit or during state if set.
@@ -69,16 +70,16 @@ class FiniteStateMachine final
     /// @param entry_action [in] - Registers action to be executed while entering the state
     /// @param state_action [in] - Registers action to be executed while in state
     /// @param exit_action [in] - Registers action to be executed while exiting the state
-    inline constexpr void AddStateAction(const State state,
-                                         const Action& entry_action = nullptr,
-                                         const Action& state_action = nullptr,
-                                         const Action& exit_action = nullptr) noexcept
+    inline constexpr void AddStateActions(const State state,
+                                          const Action& entry_action = nullptr,
+                                          const Action& state_action = nullptr,
+                                          const Action& exit_action = nullptr) noexcept
     {
-        ReplaceChangeCurrentStateActionsIfRelevant(state, entry_action, state_action, exit_action);
+        ReplaceCurrentStateActionsIfRelevant(state, entry_action, state_action, exit_action);
         state_actions_.insert({state, StateAction{entry_action, state_action, exit_action}});
     }
 
-    /// @brief Check for State ToTransition, if possible performs transitions and executes registered actions.
+    /// @brief Check for State Transition, if possible performs transitions and executes registered actions.
     inline constexpr void Step()
     {
         if (!PerformStateTransition())
@@ -102,10 +103,10 @@ class FiniteStateMachine final
     struct ToTransition
     {
         /// @brief State to which transition to be performed if Guard is passed
-        State to_state;
+        State to_state{};
 
         /// @brief Guard to be checked to allow transition
-        Guard guard;
+        Guard guard{nullptr};
     };
 
     /// @brief State Action
@@ -176,10 +177,7 @@ class FiniteStateMachine final
         if (transition_actions_.find(transition) != transition_actions_.end())
         {
             const auto transition_action = transition_actions_.at(transition);
-            if (transition_action != nullptr)
-            {
-                transition_action();
-            }
+            ExecuteAction(transition_action);
         }
     }
 
@@ -208,10 +206,10 @@ class FiniteStateMachine final
     /// @param entry_action [in] - State Entry action
     /// @param state_action [in] - State action
     /// @param exit_action [in] - State Exit action
-    inline constexpr void ReplaceChangeCurrentStateActionsIfRelevant(const State state,
-                                                                     const Action& entry_action,
-                                                                     const Action& state_action,
-                                                                     const Action& exit_action) noexcept
+    inline constexpr void ReplaceCurrentStateActionsIfRelevant(const State state,
+                                                               const Action& entry_action,
+                                                               const Action& state_action,
+                                                               const Action& exit_action) noexcept
     {
         if (current_state_ == state)
         {

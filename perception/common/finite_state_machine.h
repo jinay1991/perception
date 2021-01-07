@@ -7,14 +7,15 @@
 
 #include <functional>
 #include <map>
+#include <type_traits>
 
 namespace perception
 {
 
 /// @brief Simple Finite State Machine
 ///
-/// @tparam State - State Type (must be enum/enum class type)
-template <typename State>
+/// @tparam T - State Type (must be enum/enum class type)
+template <typename T>
 class FiniteStateMachine final
 {
   public:
@@ -24,10 +25,13 @@ class FiniteStateMachine final
     /// @brief State Transition Action (function) type
     using Action = std::function<void()>;
 
-    /// @brief Default Constructor
+    /// @brief Default Constructor (Initializes initial state to 0U)
+    inline constexpr FiniteStateMachine() : FiniteStateMachine{static_cast<T>(0U)} {}
+
+    /// @brief Constructor.
     ///
-    /// @param initial_state [in] - Initial State for State Machine (Default: 0U)
-    inline constexpr explicit FiniteStateMachine(const State initial_state = static_cast<State>(0U))
+    /// @param initial_state [in] - Initial State for State Machine
+    inline constexpr explicit FiniteStateMachine(const T initial_state) noexcept
         : state_actions_{},
           transitions_{},
           transition_actions_{},
@@ -35,7 +39,7 @@ class FiniteStateMachine final
           current_state_{initial_state_},
           current_state_actions_{}
     {
-        static_assert(std::is_enum<State>::value, "State type must be enum/enum class type.");
+        static_assert(std::is_enum<T>::value, "State type must be enum/enum class type.");
     }
 
     /// @brief Add Transition to State Machine - Registers transition guard, which will be used to check if
@@ -44,7 +48,7 @@ class FiniteStateMachine final
     /// @param from_state [in] - Transition from State
     /// @param to_state [in] - Transition to State
     /// @param guard [in] - Transition Guard
-    inline constexpr void AddTransition(const State from_state, const State to_state, const Guard& guard) noexcept
+    inline constexpr void AddTransition(const T from_state, const T to_state, const Guard& guard) noexcept
     {
         const ToTransition to_transition{to_state, guard};
         transitions_.insert({from_state, to_transition});
@@ -56,9 +60,7 @@ class FiniteStateMachine final
     /// @param from_state [in] - Transition from State
     /// @param to_state [in] - Transition to State
     /// @param action [in] - Transition action
-    inline constexpr void AddTransitionAction(const State from_state,
-                                              const State to_state,
-                                              const Action& action) noexcept
+    inline constexpr void AddTransitionAction(const T from_state, const T to_state, const Action& action) noexcept
     {
         const Transition transition{from_state, to_state};
         transition_actions_.insert({transition, action});
@@ -70,13 +72,13 @@ class FiniteStateMachine final
     /// @param entry_action [in] - Registers action to be executed while entering the state
     /// @param state_action [in] - Registers action to be executed while in state
     /// @param exit_action [in] - Registers action to be executed while exiting the state
-    inline constexpr void AddStateActions(const State state,
+    inline constexpr void AddStateActions(const T state,
                                           const Action& entry_action = nullptr,
                                           const Action& state_action = nullptr,
                                           const Action& exit_action = nullptr) noexcept
     {
-        ReplaceCurrentStateActionsIfRelevant(state, entry_action, state_action, exit_action);
-        state_actions_.insert({state, StateAction{entry_action, state_action, exit_action}});
+        ReplaceCurrentActionssIfRelevant(state, entry_action, state_action, exit_action);
+        state_actions_.insert({state, Actions{entry_action, state_action, exit_action}});
     }
 
     /// @brief Check for State Transition, if possible performs transitions and executes registered actions.
@@ -96,21 +98,21 @@ class FiniteStateMachine final
     /// @brief Provide current state of State Machine
     ///
     /// @return current_state
-    inline constexpr State GetCurrentState() const { return current_state_; }
+    inline constexpr T GetCurrentState() const noexcept { return current_state_; }
 
   private:
     /// @brief Transition (transition state and guard to check)
     struct ToTransition
     {
         /// @brief State to which transition to be performed if Guard is passed
-        State to_state{};
+        T to_state{};
 
         /// @brief Guard to be checked to allow transition
         Guard guard{nullptr};
     };
 
     /// @brief State Action
-    struct StateAction
+    struct Actions
     {
         /// @brief State Entry Action. To be called upon entering the state.
         Action entry_action{nullptr};
@@ -124,15 +126,15 @@ class FiniteStateMachine final
 
     /// @brief State actions list map. Hold all the registered state actions as to map actions with its associated
     /// states
-    using StateActionList = std::map<State, StateAction>;
+    using StateActionsList = std::map<T, Actions>;
 
     /// @brief Transition (from -> to) state pair
-    using Transition = std::pair<State, State>;
+    using Transition = std::pair<T, T>;
 
     /// @brief State Transition information map. Hold transition informations including guard.
     /// @note It can hold (many to many relation) values - one state can have multiple to_transition. Due to this,
     /// multimap is preferred here.
-    using TransitionList = std::multimap<State, ToTransition>;
+    using TransitionList = std::multimap<T, ToTransition>;
 
     /// @brief State Transition Action map. Hold transitions actions for each defined Transition pair (from -> to)
     using TransitionActionList = std::map<Transition, Action>;
@@ -189,12 +191,12 @@ class FiniteStateMachine final
     /// @brief Change state to new state
     ///
     /// @param state [in] - State to switch to
-    inline constexpr void ChangeState(const State state) noexcept
+    inline constexpr void ChangeState(const T state) noexcept
     {
         current_state_ = state;
         if (state_actions_.count(current_state_) == 0)
         {
-            current_state_actions_ = StateAction{nullptr, nullptr, nullptr};
+            current_state_actions_ = Actions{nullptr, nullptr, nullptr};
             return;
         }
         current_state_actions_ = state_actions_.at(current_state_);
@@ -206,19 +208,19 @@ class FiniteStateMachine final
     /// @param entry_action [in] - State Entry action
     /// @param state_action [in] - State action
     /// @param exit_action [in] - State Exit action
-    inline constexpr void ReplaceCurrentStateActionsIfRelevant(const State state,
-                                                               const Action& entry_action,
-                                                               const Action& state_action,
-                                                               const Action& exit_action) noexcept
+    inline constexpr void ReplaceCurrentActionssIfRelevant(const T state,
+                                                           const Action& entry_action,
+                                                           const Action& state_action,
+                                                           const Action& exit_action) noexcept
     {
         if (current_state_ == state)
         {
-            current_state_actions_ = StateAction{entry_action, state_action, exit_action};
+            current_state_actions_ = Actions{entry_action, state_action, exit_action};
         }
     }
 
     /// @brief List of state actions
-    StateActionList state_actions_;
+    StateActionsList state_actions_;
 
     /// @brief List of transitions
     TransitionList transitions_;
@@ -227,13 +229,13 @@ class FiniteStateMachine final
     TransitionActionList transition_actions_;
 
     /// @brief Initial State
-    const State initial_state_;
+    const T initial_state_;
 
     /// @brief Current State
-    State current_state_;
+    T current_state_;
 
     /// @brief Current State action
-    StateAction current_state_actions_;
+    Actions current_state_actions_;
 };
 
 }  // namespace perception

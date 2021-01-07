@@ -18,7 +18,10 @@ class CurrentPrevious
     ///
     /// @param current - Value for Current
     /// @param previous - Value for previous
-    explicit CurrentPrevious(const T& current, const T& previous) : current_{current}, previous_{previous} {}
+    inline constexpr explicit CurrentPrevious(const T& current, const T& previous)
+        : current_{current}, previous_{previous}
+    {
+    }
 
     /// @brief Set Current data
     ///

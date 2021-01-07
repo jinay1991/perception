@@ -34,7 +34,7 @@ struct ValidityRange
 /// @return True if lhs == rhs, otherwise False
 ///
 template <typename T>
-inline bool operator==(const ValidityRange<T>& lhs, const ValidityRange<T>& rhs) noexcept
+inline constexpr bool operator==(const ValidityRange<T>& lhs, const ValidityRange<T>& rhs) noexcept
 {
     return ((lhs.lower == rhs.lower) && (lhs.upper == rhs.upper));
 }
@@ -50,7 +50,7 @@ inline bool operator==(const ValidityRange<T>& lhs, const ValidityRange<T>& rhs)
 /// @return True if lhs != rhs, otherwise False
 ///
 template <typename T>
-inline bool operator!=(const ValidityRange<T>& lhs, const ValidityRange<T>& rhs) noexcept
+inline constexpr bool operator!=(const ValidityRange<T>& lhs, const ValidityRange<T>& rhs) noexcept
 {
     return !(lhs == rhs);
 }

@@ -18,13 +18,6 @@ void Fatigue::Step()
 {
     fatigue_builder_.WithTimepoint(std::chrono::system_clock::now());
 
-    eye_state_filter_.Step();
-
-    const auto eye_state = eye_state_filter_.GetFilteredEyeState();
-    fatigue_builder_.WithEyeState(eye_state);
-
-    perclos_.Calculate(eye_state);
-
     DetermineFatigue();
 }
 
@@ -35,10 +28,20 @@ const FatigueMessage& Fatigue::GetFatigueMessage() const
 
 void Fatigue::DetermineFatigue()
 {
+    const auto eye_state = DetermineEyeState();
+
+    perclos_.Calculate(eye_state);
+
     const auto level = DetermineFatigueLevel();
     const auto confidence = DetermineFatigueConfidence();
 
-    fatigue_builder_.WithFatigueLevel(level).WithFatigueConfidence(confidence);
+    fatigue_builder_.WithEyeState(eye_state).WithFatigueLevel(level).WithFatigueConfidence(confidence);
+}
+
+EyeState Fatigue::DetermineEyeState()
+{
+    eye_state_filter_.Step();
+    return eye_state_filter_.GetFilteredEyeState();
 }
 
 FatigueLevel Fatigue::DetermineFatigueLevel() const

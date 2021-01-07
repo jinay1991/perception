@@ -23,7 +23,7 @@ class Toggle final
     ///
     /// @param state_on [in] - State ON
     /// @param state_off [in] - State OFF
-    explicit Toggle(const T& state_on, const T& state_off)
+    inline constexpr explicit Toggle(const T& state_on, const T& state_off)
         : state_on_{state_on}, state_off_{state_off}, current_state_{false}, toggle_duration_{0ms}, state_duration_{0ms}
     {
     }

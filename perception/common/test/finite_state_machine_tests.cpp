@@ -93,6 +93,25 @@ class FiniteStateMachineFixture : public ::testing::Test
     std::chrono::milliseconds time_since_startup_;
 };
 
+TEST(FiniteStateMachine, FiniteStateMachine_GivenDefaultConstructor_ExpectDefaultState)
+{
+    // When
+    const FiniteStateMachine<State> state_machine{};
+
+    // Then
+    EXPECT_THAT(state_machine.GetCurrentState(), static_cast<State>(0U));
+    EXPECT_THAT(state_machine.GetCurrentState(), State::kState_Init);
+}
+
+TEST(FiniteStateMachine, FiniteStateMachine_GivenExplicitConstructor_ExpectProvidedInitialState)
+{
+    // When
+    const FiniteStateMachine<State> state_machine{State::kState_Run};
+
+    // Then
+    EXPECT_THAT(state_machine.GetCurrentState(), State::kState_Run);
+}
+
 TEST_F(FiniteStateMachineFixture, FiniteStateMachine_GivenInitializedStateMachine_ExpectInitialState)
 {
     // Then

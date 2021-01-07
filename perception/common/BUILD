@@ -6,6 +6,7 @@ cc_library(
         "circular_bitset.h",
         "current_previous.h",
         "filter.h",
+        "finite_state_machine.h",
         "logging.h",
         "toggle.h",
         "validity_range.h",

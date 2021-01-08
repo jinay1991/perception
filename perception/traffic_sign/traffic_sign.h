@@ -3,7 +3,9 @@
 /// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/datatypes/camera.h"
+#include "perception/datatypes/inference_engine_type.h"
 #include "perception/datatypes/traffic_sign.h"
+#include "perception/inference_engine/inference_engine_strategy.h"
 
 namespace perception
 {
@@ -33,6 +35,12 @@ class TrafficSign final
   private:
     /// @brief Update Outputs (aka Traffic Sign)
     void UpdateOutputs();
+
+    /// @brief Inference Engine related parameters (i.e. model path, model IO etc.)
+    const InferenceEngineParameters inference_engine_params_;
+
+    /// @brief Instance of Inference Engine (Default: TensorFlowInferenceEngine)
+    InferenceEngineStrategy inference_engine_;
 
     /// @brief Received Camera Image message
     CameraMessage camera_message_;

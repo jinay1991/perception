@@ -6,11 +6,23 @@
 
 namespace perception
 {
-TrafficSign::TrafficSign() : camera_message_{}, traffic_sign_list_message_{} {}
+TrafficSign::TrafficSign()
+    : inference_engine_params_{}, inference_engine_{}, camera_message_{}, traffic_sign_list_message_{}
+{
+}
 
-void TrafficSign::Init() {}
+void TrafficSign::Init()
+{
+    inference_engine_.SelectInferenceEngine(InferenceEngineType::kTensorFlow, inference_engine_params_);
+    inference_engine_.Init();
+}
 
-void TrafficSign::Step() {}
+void TrafficSign::Step()
+{
+    inference_engine_.Execute(camera_message_.undistorted_image);
+
+    UpdateOutputs();
+}
 
 void TrafficSign::Shutdown() {}
 
@@ -26,6 +38,7 @@ const TrafficSignListMessage& TrafficSign::GetTrafficSignListMessage() const
 
 void TrafficSign::UpdateOutputs()
 {
-    // update output
+    // extract outputs
 }
+
 }  // namespace perception

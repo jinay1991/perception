@@ -55,7 +55,7 @@ struct TrafficSignListMessage
     std::int32_t number_of_valid_traffic_signs{0};
 
     /// @brief Traffic Sign List
-    std::array<TrafficSignMessage, kMaxNumberOfTrafficSigns> traffic_sign_list{};
+    std::array<TrafficSignMessage, kMaxNumberOfTrafficSigns> traffic_signs{};
 };
 
 }  // namespace perception

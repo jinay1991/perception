@@ -16,5 +16,6 @@ cc_library(
     deps = [
         "//perception/common",
         "//perception/datatypes",
+        "//perception/inference_engine",
     ],
 )

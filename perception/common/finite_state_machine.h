@@ -39,7 +39,7 @@ class FiniteStateMachine final
           current_state_{initial_state_},
           current_state_actions_{}
     {
-        static_assert(std::is_enum<T>::value, "State type must be enum/enum class type.");
+        static_assert(std::is_enum<T>::value, "Template type must be enum/enum class type.");
     }
 
     /// @brief Add Transition to State Machine - Registers transition guard, which will be used to check if

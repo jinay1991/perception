@@ -5,7 +5,6 @@ def tensorflowlite():
     if "tensorflowlite" not in native.existing_rules():
         http_archive(
             name = "tensorflowlite",
-            sha256 = "7576e61634dd51620b821460b36f1add2aa7444c81cdd6104c1b19b816df6b75",
-            strip_prefix = "libtensorflowlite_cc-2.3.0-linux",
-            url = "https://github.com/jinay1991/perception/releases/download/v0.5/libtensorflowlite_cc-2.3.0-linux.tar.gz",
+            sha256 = "d8cdfc3e96ca8c2057acd4c5caaa19e335305334adc50bc0ec8872108e0f81e9",
+            url = "https://github.com/jinay1991/perception/releases/download/v1.0/libtensorflowlite_cc-2.3.0-linux.tar.gz",
         )

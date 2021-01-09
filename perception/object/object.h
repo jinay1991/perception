@@ -68,7 +68,7 @@ class Object final
     /// @return ObjectMessage (object) information
     ObjectMessage GenerateObjectMessage(const BoundingBox& bounding_box, const LabelId& label_id);
 
-    /// @brief Inference Engine related parametes (i.e. model path, model i/o etc.)
+    /// @brief Inference Engine related parameters (i.e. model path, model i/o etc.)
     const InferenceEngineParameters inference_engine_params_;
 
     /// @brief Instance of Inference Engine (Default: TensorFlowInferenceEngine)

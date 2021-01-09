@@ -23,9 +23,10 @@ class Toggle final
     ///
     /// @param state_on [in] - State ON
     /// @param state_off [in] - State OFF
-    inline constexpr explicit Toggle(const T& state_on, const T& state_off)
+    inline constexpr explicit Toggle(const T state_on, const T state_off)
         : state_on_{state_on}, state_off_{state_off}, current_state_{false}, toggle_duration_{0ms}, state_duration_{0ms}
     {
+        static_assert(std::is_enum<T>::value, "Template type must be enum/enum class type.");
     }
 
     /// @brief Update toggle duration (duration between each toggle ON <-> OFF)
@@ -55,7 +56,7 @@ class Toggle final
     /// @brief Provide current state (i.e. ON or OFF)
     ///
     /// @return current state
-    inline constexpr const T& GetCurrentState() const { return (current_state_ ? state_on_ : state_off_); }
+    inline constexpr T GetCurrentState() const { return (current_state_ ? state_on_ : state_off_); }
 
   private:
     /// @brief Check if state toggle is possible

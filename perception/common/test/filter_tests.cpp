@@ -72,6 +72,25 @@ class FilterFixtureT : public FilterFixture, public ::testing::WithParamInterfac
 {
 };
 
+TEST(Filter, Filter_GivenDefaultConstructor_ExpectDefaultState)
+{
+    // When
+    const Filter<State> state_machine{};
+
+    // Then
+    EXPECT_THAT(state_machine.GetCurrentState(), static_cast<State>(0U));
+    EXPECT_THAT(state_machine.GetCurrentState(), State::kState_0);
+}
+
+TEST(Filter, Filter_GivenExplicitConstructor_ExpectProvidedInitialState)
+{
+    // When
+    const Filter<State> state_machine{State::kState_2};
+
+    // Then
+    EXPECT_THAT(state_machine.GetCurrentState(), State::kState_2);
+}
+
 using FilterFixture_WithState = FilterFixtureT<State>;
 
 INSTANTIATE_TEST_SUITE_P(

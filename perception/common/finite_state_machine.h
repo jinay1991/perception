@@ -39,7 +39,7 @@ class FiniteStateMachine final
           current_state_{initial_state_},
           current_state_actions_{}
     {
-        static_assert(std::is_enum<T>::value, "State type must be enum/enum class type.");
+        static_assert(std::is_enum<T>::value, "Template type must be enum/enum class type.");
     }
 
     /// @brief Add Transition to State Machine - Registers transition guard, which will be used to check if
@@ -77,7 +77,7 @@ class FiniteStateMachine final
                                           const Action& state_action = nullptr,
                                           const Action& exit_action = nullptr) noexcept
     {
-        ReplaceCurrentActionssIfRelevant(state, entry_action, state_action, exit_action);
+        ReplaceCurrentActionsIfRelevant(state, entry_action, state_action, exit_action);
         state_actions_.insert({state, Actions{entry_action, state_action, exit_action}});
     }
 
@@ -208,10 +208,10 @@ class FiniteStateMachine final
     /// @param entry_action [in] - State Entry action
     /// @param state_action [in] - State action
     /// @param exit_action [in] - State Exit action
-    inline constexpr void ReplaceCurrentActionssIfRelevant(const T state,
-                                                           const Action& entry_action,
-                                                           const Action& state_action,
-                                                           const Action& exit_action) noexcept
+    inline constexpr void ReplaceCurrentActionsIfRelevant(const T state,
+                                                          const Action& entry_action,
+                                                          const Action& state_action,
+                                                          const Action& exit_action) noexcept
     {
         if (current_state_ == state)
         {

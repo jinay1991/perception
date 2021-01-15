@@ -3,6 +3,7 @@
 /// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "perception/driver/perclos.h"
+#include "perception/driver/test/support/operators.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -14,13 +15,6 @@ namespace perception
 namespace
 {
 
-TEST(Perclos, GlobalConstants)
-{
-    // Then
-    EXPECT_THAT(kAssumedCycleDuration, 40ms);
-    EXPECT_THAT(kMaxLongtermStorageSize, kMaxEyeStateObservationDuration / kAssumedCycleDuration);
-}
-
 class PerclosFixture : public ::testing::Test
 {
   public:
@@ -31,7 +25,7 @@ class PerclosFixture : public ::testing::Test
 
     void RunForDuration(const EyeState& eye_state, const std::chrono::milliseconds duration)
     {
-        for (auto time_passed = 0ms; time_passed < duration; time_passed += kAssumedCycleDuration)
+        for (auto time_passed = 0ms; time_passed < duration; time_passed += kMaxCycleDuration)
         {
             RunOnce(eye_state);
         }
@@ -39,6 +33,15 @@ class PerclosFixture : public ::testing::Test
 
     double GetClosurePercentage() const { return perclos_.GetClosurePercentage(); }
     double GetAvailabilityPercentage() const { return perclos_.GetAvailabilityPercentage(); }
+
+    void SetEyeStateObservationDuration(const std::chrono::milliseconds duration)
+    {
+        perclos_.SetEyeStateObservationDuration(duration);
+    }
+    std::chrono::milliseconds GetEyeStateObservationDuration() const
+    {
+        return perclos_.GetEyeStateObservationDuration();
+    }
 
   private:
     Perclos perclos_;
@@ -91,5 +94,45 @@ TEST_P(PerclosFixture_WithEyeStateDuration, Calculate_GivenEyeStateClosedForTypi
     EXPECT_THAT(GetAvailabilityPercentage(), param.availability_percentage);
 }
 
+struct TestEyeStateObservationDurationParam
+{
+    // Given
+    std::chrono::milliseconds eye_state_observation_duration;
+
+    // Then
+    std::chrono::milliseconds changed_eye_state_observation_duration;
+};
+
+using PerclosFixture_WithEyeStateObservationDuration = PerclosFixtureT<TestEyeStateObservationDurationParam>;
+
+// clang-format off
+INSTANTIATE_TEST_SUITE_P(
+    Perclos,
+    PerclosFixture_WithEyeStateObservationDuration,
+    ::testing::Values(
+        ///                                    eye_state_observation_duration     , (expected) changed_eye_state_observation_duration
+        TestEyeStateObservationDurationParam{  kMaxEyeStateObservationDuration / 2, kMaxEyeStateObservationDuration / 2}, // observe change
+        TestEyeStateObservationDurationParam{kMaxEyeStateObservationDuration + 1ms, kMaxEyeStateObservationDuration    }  // no change
+));
+// clang-format on
+
+TEST_P(PerclosFixture_WithEyeStateObservationDuration,
+       SetEyeStateObservationDuration_GivenTypicalEyeStateObservationDuration_ExpectUpdatedEyeStateObservationDuration)
+{
+    // Given
+    const auto param = GetParam();
+
+    // When
+    SetEyeStateObservationDuration(param.eye_state_observation_duration);
+
+    // Then
+    EXPECT_THAT(GetEyeStateObservationDuration(), param.changed_eye_state_observation_duration);
+}
+
+TEST_F(PerclosFixture, GetEyeStateObservationDuration_GivenInitializedPerclos_ExpectMaxEyeStateObservationDuration)
+{
+    // Then
+    EXPECT_THAT(GetEyeStateObservationDuration(), kMaxEyeStateObservationDuration);
+}
 }  // namespace
 }  // namespace perception

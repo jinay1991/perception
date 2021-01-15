@@ -39,6 +39,12 @@ static constexpr units::angle::radian_t kMaxHeadPoseRoll{60_deg};
 /// @brief Maximum duration till which eye state is being observed (ms)
 static constexpr std::chrono::milliseconds kMaxEyeStateObservationDuration{5min};
 
+/// @brief Max assumed cycle duration (ms)
+static constexpr std::chrono::milliseconds kMaxCycleDuration{40ms};
+
+/// @brief Maximum allowed longterm storage size (i.e. max samples to store)
+static constexpr std::int32_t kMaxLongtermStorageSize{kMaxEyeStateObservationDuration / kMaxCycleDuration};
+
 /// @brief Eye State
 enum class EyeState : std::uint8_t
 {

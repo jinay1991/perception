@@ -17,8 +17,6 @@ namespace
 using ::testing::AllOf;
 using ::testing::Field;
 
-constexpr std::chrono::milliseconds kAssumedCycleDuration{40ms};
-
 class DriverSimulatorNodeFixture : public ::testing::Test
 {
   public:
@@ -48,7 +46,7 @@ class DriverSimulatorNodeFixture : public ::testing::Test
 
     void RunForDuration(const std::chrono::milliseconds duration)
     {
-        for (auto time_passed = 0ms; time_passed < duration; time_passed += kAssumedCycleDuration)
+        for (auto time_passed = 0ms; time_passed < duration; time_passed += kMaxCycleDuration)
         {
             RunOnce();
         }
@@ -188,7 +186,7 @@ TEST_F(DriverSimulatorNodeFixture, ToggleEyes_GivenEyesClosed_ExpectToggleEyes)
 TEST_F(DriverSimulatorNodeFixture, ToggleEyes_GivenEyesClosedAfterSeveralBlinks_ExpectToggleEyes)
 {
     // Given
-    RunForDuration(2 * kAssumedCycleDuration);
+    RunForDuration(80ms);
     ASSERT_THAT(GetDriverCameraMessage(),
                 Field(&DriverCameraMessage::face_tracking, Field(&FaceTracking::eye_lid_opening, 0.0_mm)));
 

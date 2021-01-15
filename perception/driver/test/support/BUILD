@@ -22,9 +22,9 @@ cc_library(
         ":mocks",
         "//perception/communication:topics",
         "//perception/datatypes",
-        "@middleware//middleware/communication",
-        "@middleware//middleware/lifecycle",
-        "@middleware//middleware/lifecycle/test:test_support",
+        "@middleware//:communication",
+        "@middleware//:lifecycle",
+        "@middleware//:support",
     ],
 )
 

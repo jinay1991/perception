@@ -3,7 +3,7 @@
 /// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #include "middleware/communication/intra_process_pub_sub_factory.h"
-#include "middleware/lifecycle/test/single_topic_subscriber.h"
+#include "middleware/lifecycle/test/support/single_topic_subscriber.h"
 #include "perception/communication/topics.h"
 #include "perception/sensor/vehicle_dynamics/node/vehicle_dynamics_node.h"
 

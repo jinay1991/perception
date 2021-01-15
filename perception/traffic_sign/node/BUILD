@@ -12,7 +12,7 @@ cc_library(
     deps = [
         "//perception/communication:topics",
         "//perception/traffic_sign",
-        "@middleware//middleware/communication",
-        "@middleware//middleware/lifecycle",
+        "@middleware//:communication",
+        "@middleware//:lifecycle",
     ],
 )

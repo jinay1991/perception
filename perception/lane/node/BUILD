@@ -13,7 +13,7 @@ cc_library(
         "//perception/communication:topics",
         "//perception/datatypes",
         "//perception/lane",
-        "@middleware//middleware/communication",
-        "@middleware//middleware/lifecycle",
+        "@middleware//:communication",
+        "@middleware//:lifecycle",
     ],
 )

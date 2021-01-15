@@ -14,7 +14,7 @@ cc_test(
         "//perception/datatypes",
         "//perception/object/node",
         "@googletest//:gtest_main",
-        "@middleware//middleware/lifecycle/test:test_support",
+        "@middleware//:support",
     ],
 )
 

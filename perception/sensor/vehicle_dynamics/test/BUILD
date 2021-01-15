@@ -16,7 +16,7 @@ cc_test(
         "//perception/communication:topics",
         "//perception/sensor/vehicle_dynamics/node",
         "@googletest//:gtest_main",
-        "@middleware//middleware/lifecycle/test:test_support",
+        "@middleware//:support",
     ],
 )
 

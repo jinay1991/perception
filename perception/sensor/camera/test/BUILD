@@ -17,7 +17,7 @@ cc_test(
     deps = [
         "//perception/sensor/camera/node",
         "@googletest//:gtest_main",
-        "@middleware//middleware/lifecycle/test:test_support",
+        "@middleware//:support",
     ],
 )
 

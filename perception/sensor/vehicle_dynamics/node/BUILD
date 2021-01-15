@@ -12,7 +12,7 @@ cc_library(
     deps = [
         "//perception/communication:topics",
         "//perception/sensor/vehicle_dynamics",
-        "@middleware//middleware/communication",
-        "@middleware//middleware/lifecycle",
+        "@middleware//:communication",
+        "@middleware//:lifecycle",
     ],
 )

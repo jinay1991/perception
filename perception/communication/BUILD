@@ -9,6 +9,6 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "@middleware//middleware/communication",
+        "@middleware//:communication",
     ],
 )

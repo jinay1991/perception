@@ -12,7 +12,7 @@ cc_test(
         "//perception/driver/node",
         "//perception/driver/test/support",
         "@googletest//:gtest_main",
-        "@middleware//middleware/lifecycle/test:test_support",
+        "@middleware//:support",
     ],
 )
 

@@ -31,68 +31,15 @@ class CircularBitset final
     using reference = typename container::reference;
 
     /// @brief Default Constructor
-    CircularBitset() : bitset_{}, tail_{0}, head_{0}, size_{0}, capacity_{max_size} {}
-
-    /// @brief Default Destructor
-    ~CircularBitset() { clear(); }
+    inline constexpr CircularBitset() : bitset_{}, tail_{0}, head_{0}, size_{0}, capacity_{max_size} {}
 
     /// @brief Constructor
     ///
     /// @param list [in] - Initializer list to populate bitset with privided bool list.
-    explicit CircularBitset(const std::initializer_list<bool> list)
+    inline constexpr explicit CircularBitset(const std::initializer_list<bool> list)
         : bitset_{}, tail_{0}, head_{0}, size_{0}, capacity_{max_size}
     {
         std::for_each(list.begin(), list.end(), [this](const auto& value) { push_back(value); });
-    }
-
-    /// @brief Copy Constructor
-    ///
-    /// @param other [in] - Circular Bitset object to be copied
-    CircularBitset(const CircularBitset& other)
-        : bitset_{other.bitset_}, tail_{other.tail_}, head_{other.head_}, size_{other.size_}, capacity_{other.capacity_}
-    {
-    }
-
-    /// @brief Copy Assignment
-    ///
-    /// @param other [in] - Circular Bitset object to be copied
-    ///
-    /// @return this pointer
-    CircularBitset& operator=(const CircularBitset& other) &
-    {
-        bitset_ = other.bitset_;
-        tail_ = other.tail_;
-        head_ = other.head_;
-        size_ = other.size_;
-        capacity_ = other.capacity_;
-        return *this;
-    }
-
-    /// @brief Move Constructor
-    ///
-    /// @param other [in] - Circular Bitset object to be moved
-    CircularBitset(CircularBitset&& other)
-        : bitset_{std::move(other.bitset_)},
-          tail_{other.tail_},
-          head_{other.head_},
-          size_{other.size_},
-          capacity_{other.capacity_}
-    {
-    }
-
-    /// @brief Move Assignment
-    ///
-    /// @param other [in] - Circular Bitset object to be moved
-    ///
-    /// @return this pointer
-    CircularBitset& operator=(CircularBitset&& other) &
-    {
-        bitset_ = std::move(other.bitset_);
-        tail_ = other.tail_;
-        head_ = other.head_;
-        size_ = other.size_;
-        capacity_ = other.capacity_;
-        return *this;
     }
 
     /// @brief Current bit set count

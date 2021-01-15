@@ -12,7 +12,7 @@ cc_test(
         "//perception/traffic_sign/node",
         "//perception/traffic_sign/test/support",
         "@googletest//:gtest_main",
-        "@middleware//middleware/lifecycle/test:test_support",
+        "@middleware//:support",
     ],
 )
 

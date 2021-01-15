@@ -16,6 +16,18 @@ void Perclos::Calculate(const EyeState eye_state)
     longterm_storage_.push_back(IsEyesClosed(eye_state));
 }
 
+void Perclos::SetEyeStateObservationDuration(const std::chrono::milliseconds duration)
+{
+    static_assert(0ms != kMaxCycleDuration, "Maximum cycle duration can not be set to 0ms!");
+    const auto capacity = duration / kMaxCycleDuration;
+    longterm_storage_.resize(capacity);
+}
+
+std::chrono::milliseconds Perclos::GetEyeStateObservationDuration() const
+{
+    return (longterm_storage_.capacity() * kMaxCycleDuration);
+}
+
 double Perclos::GetClosurePercentage() const
 {
     const auto longterm_storage_count = static_cast<double>(longterm_storage_.count());

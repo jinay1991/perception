@@ -10,11 +10,6 @@
 
 namespace perception
 {
-/// @brief Assumed Cycle duration
-static constexpr std::chrono::milliseconds kAssumedCycleDuration{40ms};
-
-/// @brief Maximum allowed longterm storage size (i.e. max samples to store)
-static constexpr std::int32_t kMaxLongtermStorageSize{kMaxEyeStateObservationDuration / kAssumedCycleDuration};
 
 /// @brief Perclos Algorithm (Percentage of Eye Closure)
 class Perclos final
@@ -27,6 +22,19 @@ class Perclos final
     ///
     /// @param eye_state [in] - Eye State (filtered)
     void Calculate(const EyeState eye_state);
+
+    /// @brief Set/Adjust Longterm Storage Window size based on the provided duration
+    /// @note This will resize the longterm storage (w/o re-allocation) hence duration must be less than
+    /// kMaxEyeStateObservationDuration. If provided more than that, resize will not be performed and return without any
+    /// change.
+    ///
+    /// @param duration [in] - observation window duration to be updated to.
+    void SetEyeStateObservationDuration(const std::chrono::milliseconds duration);
+
+    /// @brief Provide current observation window duration (must not be more than kMaxEyeStateObservationDuration)
+    ///
+    /// @return duration (Range: 0ms - kMaxEyeStateObservationDuration)
+    std::chrono::milliseconds GetEyeStateObservationDuration() const;
 
     /// @brief Provide calculated closure percentage
     ///

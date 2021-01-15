@@ -3,7 +3,7 @@
 /// @copyright Copyright (c) 2020-2021. MIT License.
 ///
 #include "middleware/communication/intra_process_pub_sub_factory.h"
-#include "middleware/lifecycle/test/single_topic_publisher.h"
+#include "middleware/lifecycle/test/support/single_topic_publisher.h"
 #include "perception/communication/topics.h"
 #include "perception/driver/test/support/driver_consumer_node.h"
 

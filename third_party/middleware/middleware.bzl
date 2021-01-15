@@ -5,7 +5,7 @@ def middleware():
     if "middleware" not in native.existing_rules():
         http_archive(
             name = "middleware",
-            url = "https://gitlab.com/ad_platform/middleware/-/archive/v1.1/middleware-v1.1.tar.gz",
-            strip_prefix = "middleware-v1.1",
-            sha256 = "d84d4841cff8c7f7bee75f3c44ac5b4bf2cdce877f472f988d83e048837ffc2d",
+            url = "https://github.com/jinay1991/artifactory/releases/download/v1.0/libmiddleware_dev-linux.tar.gz",
+            sha256 = "50b1b7cbe0392648d3be940c847ea5ae4b5df51cde2ac4bcff49f7ce8ceefa7c",
+            build_file = "//third_party/middleware:middleware.BUILD",
         )

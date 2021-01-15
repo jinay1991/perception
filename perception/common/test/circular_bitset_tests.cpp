@@ -28,7 +28,7 @@ TEST(CircularBitset, DefaultConstructor)
     EXPECT_THAT(circular_bitset.count(), 0);
 }
 
-TEST(CircularBitset, ExpliitConstructorWithInitializerList)
+TEST(CircularBitset, ExplicitConstructorWithInitializerList)
 {
     // Given
     CircularBitset<kTestCircularBitsetSize> circular_bitset{true, false, true, false};

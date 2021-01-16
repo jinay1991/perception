@@ -3,10 +3,10 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 cc_library(
     name = "camera",
     srcs = [
-        "camera.cpp",
+        "calibration.cpp",
     ],
     hdrs = [
-        "camera.h",
+        "calibration.h",
     ],
     copts = [
         "-Wall",
@@ -15,11 +15,9 @@ cc_library(
     data = [
         "//:calibration_data",
     ],
-    visibility = ["//visibility:public"],
+    visibility = ["//perception/sensor:__subpackages__"],
     deps = [
         "//perception/common",
-        "//perception/datatypes",
-        "//perception/sensor/calibration/camera",
         "@opencv",
     ],
 )

@@ -5,7 +5,7 @@
 #include "middleware/communication/intra_process_pub_sub_factory.h"
 #include "middleware/lifecycle/test/support/single_topic_subscriber.h"
 #include "perception/communication/topics.h"
-#include "perception/sensor/camera/calibration.h"
+#include "perception/sensor/calibration/camera/calibration.h"
 #include "perception/sensor/camera/node/camera_node.h"
 
 #include <gmock/gmock.h>

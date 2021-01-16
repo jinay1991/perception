@@ -24,7 +24,6 @@ cc_test(
 cc_test(
     name = "unit_tests",
     srcs = [
-        "calibration_tests.cpp",
         "camera_tests.cpp",
     ],
     copts = [
@@ -32,7 +31,6 @@ cc_test(
         "-Werror",
     ],
     data = [
-        "//:calibration_data",
         "//:testdata",
     ],
     tags = ["unit"],

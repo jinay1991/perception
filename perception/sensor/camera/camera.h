@@ -6,7 +6,7 @@
 #define PERCEPTION_SENSOR_CAMERA_CAMERA_H
 
 #include "perception/datatypes/camera.h"
-#include "perception/sensor/camera/calibration.h"
+#include "perception/sensor/calibration/camera/calibration.h"
 
 #include <opencv4/opencv2/core.hpp>
 #include <opencv4/opencv2/videoio.hpp>

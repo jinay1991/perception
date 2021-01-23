@@ -77,10 +77,10 @@ enum class AttentionState : std::uint8_t
 struct FaceTracking
 {
     /// @brief Driver Face Visibility
-    bool face_visibility{false};
+    bool face_visible{false};
 
     /// @brief Driver Eye visibility
-    bool eye_visibility{false};
+    bool eye_visible{false};
 
     /// @brief Driver Eye lid opening (mm)
     units::length::millimeter_t eye_lid_opening{0.0};
@@ -165,7 +165,7 @@ struct DriverCameraMessage
 /// @return True if (lhs == rhs), otherwise false.
 inline bool operator==(const FaceTracking& lhs, const FaceTracking& rhs) noexcept
 {
-    return ((lhs.face_visibility == rhs.face_visibility) && (lhs.eye_visibility == rhs.eye_visibility) &&
+    return ((lhs.face_visible == rhs.face_visible) && (lhs.eye_visible == rhs.eye_visible) &&
             (lhs.eye_lid_opening == rhs.eye_lid_opening) && (lhs.eye_blink_rate == rhs.eye_blink_rate));
 }
 

@@ -70,8 +70,8 @@ TEST_F(DriverSimulatorNodeFixture, Initialization_GivenDriverSimulator_ExpectDef
     // Then
     EXPECT_THAT(GetDriverCameraMessage(),
                 AllOf(Field(&DriverCameraMessage::face_tracking,
-                            AllOf(Field(&FaceTracking::face_visibility, true),
-                                  Field(&FaceTracking::eye_visibility, true),
+                            AllOf(Field(&FaceTracking::face_visible, true),
+                                  Field(&FaceTracking::eye_visible, true),
                                   Field(&FaceTracking::eye_blink_rate, kMaxEyeBlinkRate),
                                   Field(&FaceTracking::eye_lid_opening, kMaxEyeLidOpening))),
                       Field(&DriverCameraMessage::head_tracking,
@@ -94,7 +94,7 @@ TEST_F(DriverSimulatorNodeFixture, ShowFace_GivenDriverSimulator_ExpectVisibleFa
 
     // Then
     EXPECT_THAT(GetDriverCameraMessage(),
-                Field(&DriverCameraMessage::face_tracking, Field(&FaceTracking::face_visibility, true)));
+                Field(&DriverCameraMessage::face_tracking, Field(&FaceTracking::face_visible, true)));
 }
 
 TEST_F(DriverSimulatorNodeFixture, HideFace_GivenDriverSimulator_ExpectVisibleFace)
@@ -107,7 +107,7 @@ TEST_F(DriverSimulatorNodeFixture, HideFace_GivenDriverSimulator_ExpectVisibleFa
 
     // Then
     EXPECT_THAT(GetDriverCameraMessage(),
-                Field(&DriverCameraMessage::face_tracking, Field(&FaceTracking::face_visibility, false)));
+                Field(&DriverCameraMessage::face_tracking, Field(&FaceTracking::face_visible, false)));
 }
 
 TEST_F(DriverSimulatorNodeFixture, CloseEyes_GivenDriverSimulator_ExpectClosedEyes)
@@ -119,10 +119,9 @@ TEST_F(DriverSimulatorNodeFixture, CloseEyes_GivenDriverSimulator_ExpectClosedEy
     RunOnce();
 
     // Then
-    EXPECT_THAT(
-        GetDriverCameraMessage(),
-        Field(&DriverCameraMessage::face_tracking,
-              AllOf(Field(&FaceTracking::eye_lid_opening, 0.0_mm), Field(&FaceTracking::eye_visibility, true))));
+    EXPECT_THAT(GetDriverCameraMessage(),
+                Field(&DriverCameraMessage::face_tracking,
+                      AllOf(Field(&FaceTracking::eye_lid_opening, 0.0_mm), Field(&FaceTracking::eye_visible, true))));
 }
 
 TEST_F(DriverSimulatorNodeFixture, OpenEyes_GivenDriverSimulator_ExpectOpenedEyes)
@@ -137,7 +136,7 @@ TEST_F(DriverSimulatorNodeFixture, OpenEyes_GivenDriverSimulator_ExpectOpenedEye
     EXPECT_THAT(GetDriverCameraMessage(),
                 Field(&DriverCameraMessage::face_tracking,
                       AllOf(Field(&FaceTracking::eye_lid_opening, kMaxEyeLidOpening),
-                            Field(&FaceTracking::eye_visibility, true))));
+                            Field(&FaceTracking::eye_visible, true))));
 }
 
 TEST_F(DriverSimulatorNodeFixture, BlinkEyes_GivenTypicalBlinkRate_ExpectUpdatedEyesBlinkRate)

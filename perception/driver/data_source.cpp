@@ -25,12 +25,12 @@ const HeadTracking& DataSource::GetHeadTracking() const
 
 bool DataSource::IsFaceVisible() const
 {
-    return driver_camera_message_.face_tracking.face_visibility;
+    return driver_camera_message_.face_tracking.face_visible;
 }
 
 bool DataSource::IsEyeVisible() const
 {
-    return driver_camera_message_.face_tracking.eye_visibility;
+    return driver_camera_message_.face_tracking.eye_visible;
 }
 
 units::length::millimeter_t DataSource::GetEyeLidOpening() const

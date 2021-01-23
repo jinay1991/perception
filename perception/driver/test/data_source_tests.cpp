@@ -56,8 +56,8 @@ TEST_F(DataSourceTest, UpdateDriverCameraMessage_GivenTypicalDriverCameraMessage
     // Then
     EXPECT_THAT(GetDataSource(),
                 AllOf(Property(&IDataSource::GetTimePoint, driver_camera_message.time_point),
-                      Property(&IDataSource::IsFaceVisible, driver_camera_message.face_tracking.face_visibility),
-                      Property(&IDataSource::IsEyeVisible, driver_camera_message.face_tracking.eye_visibility),
+                      Property(&IDataSource::IsFaceVisible, driver_camera_message.face_tracking.face_visible),
+                      Property(&IDataSource::IsEyeVisible, driver_camera_message.face_tracking.eye_visible),
                       Property(&IDataSource::GetEyeLidOpening, driver_camera_message.face_tracking.eye_lid_opening),
                       Property(&IDataSource::GetEyeBlinkRate, driver_camera_message.face_tracking.eye_blink_rate),
                       Property(&IDataSource::GetEyeBlinkDuration,

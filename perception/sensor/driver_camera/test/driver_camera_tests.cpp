@@ -20,7 +20,7 @@ class DriverCameraFixture : public ::testing::Test
 {
   public:
     DriverCameraFixture()
-        : test_image_path_{"data/grace_hopper.jpg"},
+        : test_image_path_{"external/opencv/data/lena.jpg"},
           test_image_{cv::imread(test_image_path_, cv::IMREAD_UNCHANGED)},
           unit_{}
     {
@@ -69,9 +69,9 @@ TEST_F(DriverCameraFixture, DriverCamera_GivenTypicalCameraMessage_ExpectUpdated
     const auto& actual = GetDriverCameraMessage();
     EXPECT_THAT(actual,
                 Field(&DriverCameraMessage::face_tracking,
-                      AllOf(Field(&FaceTracking::face_visibility, false),
-                            Field(&FaceTracking::eye_visibility, false),
-                            Field(&FaceTracking::eye_lid_opening, 0_mm),
+                      AllOf(Field(&FaceTracking::face_visible, true),
+                            Field(&FaceTracking::eye_visible, true),
+                            Field(&FaceTracking::eye_lid_opening, kMaxEyeLidOpening),
                             Field(&FaceTracking::eye_blink_rate, 0.0_Hz))));
 }
 

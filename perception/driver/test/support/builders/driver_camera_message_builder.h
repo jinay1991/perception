@@ -31,8 +31,8 @@ class DriverCameraMessageBuilder
                                              const units::angle::radian_t pitch,
                                              const units::angle::radian_t roll);
 
-    DriverCameraMessageBuilder& WithEyeState(const bool face_visibility,
-                                             const bool eye_visibility,
+    DriverCameraMessageBuilder& WithEyeState(const bool face_visible,
+                                             const bool eye_visible,
                                              const units::length::millimeter_t eye_lid_opening = 1.0_mm,
                                              const units::frequency::hertz_t eye_blink_rate = 1.0_Hz);
 

@@ -12,7 +12,10 @@ cc_library(
         "-Wall",
         "-Werror",
     ],
-    data = ["@opencv//:haarcascades"],
+    data = [
+        "@opencv//:haarcascades",
+        "@opencv//:lbpcascades",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/common",

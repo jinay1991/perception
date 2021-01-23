@@ -68,14 +68,14 @@ std::chrono::milliseconds DriverSimulatorNode::GetEyeBlinkDuration() const
 
 void DriverSimulatorNode::ShowFace()
 {
-    driver_camera_message_.face_tracking.face_visibility = true;
-    driver_camera_message_.face_tracking.eye_visibility = true;
+    driver_camera_message_.face_tracking.face_visible = true;
+    driver_camera_message_.face_tracking.eye_visible = true;
 }
 
 void DriverSimulatorNode::HideFace()
 {
-    driver_camera_message_.face_tracking.face_visibility = false;
-    driver_camera_message_.face_tracking.eye_visibility = false;
+    driver_camera_message_.face_tracking.face_visible = false;
+    driver_camera_message_.face_tracking.eye_visible = false;
 }
 
 void DriverSimulatorNode::OpenEyes()

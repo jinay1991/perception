@@ -7,28 +7,15 @@
 
 #include "perception/datatypes/camera.h"
 #include "perception/datatypes/driver.h"
+#include "perception/datatypes/driver_camera.h"
 
+#include <opencv4/opencv2/core.hpp>
 #include <opencv4/opencv2/objdetect.hpp>
 
 #include <chrono>
 
 namespace perception
 {
-/// @brief Face Bounding Box
-using Face = cv::Rect;
-
-/// @brief Eye (single) Bounding Box
-using Eye = cv::Rect;
-
-/// @brief Eyes (both, Left & Right) Bounding Boxes
-struct Eyes
-{
-    /// @brief Left Eye Bounding Box
-    Eye left{};
-
-    /// @brief Right Eye Bounding Box
-    Eye right{};
-};
 /// @brief Driver Camera
 class DriverCamera
 {

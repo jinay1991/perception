@@ -6,27 +6,35 @@
 
 #include "perception/common/logging.h"
 
-#include <opencv4/opencv2/core.hpp>
-#include <opencv4/opencv2/imgcodecs.hpp>
 #include <opencv4/opencv2/imgproc.hpp>
-
-#include <iterator>
 
 namespace perception
 {
 namespace
 {
+/// @brief Invalid Bounding Box
 const cv::Rect kInvalidBox{0, 0, 0, 0};
+
+/// @brief Invalid Face Bounding Box
 const Face kInvalidFace{kInvalidBox};
+
+/// @brief Invalid Eye Bounding Box
 const Eye kInvalidEye{kInvalidBox};
+
+/// @brief Invalid Eyes (left/right) Bounding Boxes
 const Eyes kInvalidEyes{kInvalidBox, kInvalidBox};
 
+/// @brief Check whether provided bounding box is valid by checking non-zero entities.
+///
+/// @param bounding_box [in] - Bounding box (Rect) to check for validity
+///
+/// @return True if provided box persist valid values and forms valid box, otherwise False.
 bool IsBoundingBoxValid(const cv::Rect& bounding_box)
 {
-    return ((bounding_box.x > 0) && (bounding_box.y > 0) && (bounding_box.width > 0) && (bounding_box.height > 0));
+    return ((bounding_box.x != 0) && (bounding_box.y != 0) && (bounding_box.width != 0) && (bounding_box.height != 0));
 }
-
 }  // namespace
+
 DriverCamera::DriverCamera()
     : face_cascade_{"external/opencv/share/opencv4/haarcascades/haarcascade_frontalface_alt2.xml"},
       left_eye_cascade_{"external/opencv/share/opencv4/haarcascades/haarcascade_lefteye_2splits.xml"},

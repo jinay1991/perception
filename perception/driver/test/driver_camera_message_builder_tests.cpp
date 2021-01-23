@@ -105,8 +105,8 @@ TEST(DriverCameraMessageBuilderTest, WithEyesState_GivenTypicalEyesState_ExpectU
 
     // When
     const auto result = DriverCameraMessageBuilder()
-                            .WithEyeState(face_tracking.face_visibility,
-                                          face_tracking.eye_visibility,
+                            .WithEyeState(face_tracking.face_visible,
+                                          face_tracking.eye_visible,
                                           face_tracking.eye_lid_opening,
                                           face_tracking.eye_blink_rate)
                             .Build();

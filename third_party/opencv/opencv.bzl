@@ -5,5 +5,5 @@ def opencv():
         http_archive(
             name = "opencv",
             url = "https://github.com/jinay1991/artifactory/releases/download/v1.0/libopencv_dev-4.5.0-linux.tar.gz",
-            sha256 = "97b67c8a8c1131f51c16282f4e97e71717af6496c0c22d8563aa83837e43dcae",
+            sha256 = "01f39b03af48dec4f4c58a86f4fa850112cb3dd6c506fd12ce2302d2a9f4d6bb",
         )

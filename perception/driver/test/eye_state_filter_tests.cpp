@@ -84,8 +84,8 @@ TEST_F(EyeStateFilterFixture, EyeStateFilter_ExpectInitialValues)
 struct TestEyeStateParam
 {
     // Given
-    bool face_visibility;
-    bool eye_visibility;
+    bool face_visible;
+    bool eye_visible;
     units::length::millimeter_t eye_lid_opening;
     units::frequency::hertz_t eye_blink_rate;
 
@@ -117,8 +117,8 @@ TEST_P(EyeStateFilterFixture_WithEyeState, EyeStateFilter_GiveTypicalFaceTrackin
     const auto param = GetParam();
     const std::chrono::milliseconds eye_blink_duration =
         std::chrono::seconds{static_cast<std::uint32_t>(std::floor(1.0 / param.eye_blink_rate.value()))};
-    EXPECT_CALL(mocked_data_source_, IsFaceVisible()).WillRepeatedly(Return(param.face_visibility));
-    EXPECT_CALL(mocked_data_source_, IsEyeVisible()).WillRepeatedly(Return(param.eye_visibility));
+    EXPECT_CALL(mocked_data_source_, IsFaceVisible()).WillRepeatedly(Return(param.face_visible));
+    EXPECT_CALL(mocked_data_source_, IsEyeVisible()).WillRepeatedly(Return(param.eye_visible));
     EXPECT_CALL(mocked_data_source_, GetEyeLidOpening()).WillRepeatedly(Return(param.eye_lid_opening));
     EXPECT_CALL(mocked_data_source_, GetEyeBlinkRate()).WillRepeatedly(Return(param.eye_blink_rate));
     EXPECT_CALL(mocked_data_source_, GetEyeBlinkDuration()).WillRepeatedly(Return(eye_blink_duration));

@@ -7,7 +7,10 @@ cc_test(
         "-Wall",
         "-Werror",
     ],
-    data = ["//:testdata"],
+    data = [
+        "//:testdata",
+        "@opencv//data:all_images",
+    ],
     deps = [
         "//perception/sensor/driver_camera",
         "@googletest//:gtest_main",

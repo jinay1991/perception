@@ -5,6 +5,7 @@ cc_test(
     srcs = [
         "circular_bitset_tests.cpp",
         "current_previous_tests.cpp",
+        "event_monitor_tests.cpp",
         "filter_tests.cpp",
         "finite_state_machine_tests.cpp",
         "logging_tests.cpp",

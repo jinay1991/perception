@@ -34,16 +34,14 @@ class EventMonitor
         recuperable_events_ = recuperable_events;
     }
 
-    inline constexpr void RecordEvent(const bool is_event_occurred) { event_buffer_.push_back(is_event_occurred); }
+    inline constexpr void RecordEvent(const bool is_event_occurred) { UpdateEvent(is_event_occurred); }
 
-    inline constexpr bool IsTriggerConditionMet() const
-    {
-        std::cout << "event_buffer: " << event_buffer_.count() << std::endl;
-        return (event_buffer_.count() > acceptable_events_);
-    }
+    inline constexpr bool IsTriggerConditionMet() const { return (event_buffer_.count() > acceptable_events_); }
     inline constexpr bool IsResetConditionMet() const { return (event_buffer_.count() <= recuperable_events_); }
 
   private:
+    inline constexpr void UpdateEvent(const bool is_event_occurred) { event_buffer_.push_back(is_event_occurred); }
+
     std::int32_t acceptable_events_;
     std::int32_t recuperable_events_;
     CircularBitset<max_size> event_buffer_;

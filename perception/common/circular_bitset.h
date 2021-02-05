@@ -44,17 +44,17 @@ class CircularBitset final
 
     /// @brief Current bit set count
     ///
-    /// @return count
+    /// @return Number of bits set
     inline constexpr size_type count() const { return static_cast<size_type>(bitset_.count()); }
 
     /// @brief Current bit set size
     ///
-    /// @return size
+    /// @return Number of bits filled
     inline constexpr size_type size() const { return size_; }
 
     /// @brief Current bit set capacity
     ///
-    /// @return capacity
+    /// @return Number of bits can be stored
     inline constexpr size_type capacity() const { return capacity_; }
 
     /// @brief Check if bitset is empty

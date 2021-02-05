@@ -31,7 +31,7 @@ class EventMonitorFixture : public ::testing::Test
 
     void RunOnce(const bool is_event_occurred) { event_monitor_.RecordEvent(is_event_occurred); }
 
-    void RunFor(const std::initializer_list<bool> event_list)
+    void RunForEvents(const std::initializer_list<bool> event_list)
     {
         for (const auto& event : event_list)
         {
@@ -98,7 +98,7 @@ TEST_F(EventMonitorFixture, EventMonitor_GivenSequenceOfEvents_ExpectTriggerCond
     const auto events_list = {true, true, false, true, false, true, true, true, true, true, true};
 
     // When
-    RunFor(events_list);
+    RunForEvents(events_list);
 
     // Then
     EXPECT_TRUE(IsTriggerConditionMet());

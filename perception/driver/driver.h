@@ -13,6 +13,8 @@
 
 namespace perception
 {
+
+/// @brief Driver Montioring Wrapper class
 class Driver final
 {
   public:

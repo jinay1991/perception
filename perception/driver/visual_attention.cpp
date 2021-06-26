@@ -7,8 +7,8 @@
 namespace perception
 {
 
-VisualAttention::VisualAttention(const IParameterHandler& parameter_handler, const IDataSource& data_source)
-    : parameter_handler_{parameter_handler}, data_source_{data_source}, visual_attention_message_{}
+VisualAttention::VisualAttention(const IParameterHandler& /* parameter_handler */, const IDataSource& data_source)
+    : data_source_{data_source}, visual_attention_message_{}
 {
 }
 

@@ -5,6 +5,7 @@ cc_library(
     hdrs = [
         "circular_bitset.h",
         "current_previous.h",
+        "event_monitor.h",
         "filter.h",
         "finite_state_machine.h",
         "logging.h",

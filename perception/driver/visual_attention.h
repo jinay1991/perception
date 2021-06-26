@@ -45,9 +45,6 @@ class VisualAttention final
     /// @return True if the Head Pose is attentive on road, otherwise False.
     bool IsHeadPoseAttentive() const;
 
-    /// @brief Instance of the Parameter handler
-    const IParameterHandler& parameter_handler_;
-
     /// @brief Instance of Data Source
     const IDataSource& data_source_;
 

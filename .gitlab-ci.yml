@@ -59,7 +59,7 @@ cppcheck:
 # ------------
 # Stage: Build
 # ------------
-bazel-build-and-test:
+bazel-gcc-build-and-test:
   stage: build
   image: registry.gitlab.com/ad_platform/perception
   script:

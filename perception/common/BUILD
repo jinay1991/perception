@@ -8,6 +8,7 @@ cc_library(
         "event_monitor.h",
         "filter.h",
         "finite_state_machine.h",
+        "geometry.h",
         "logging.h",
         "toggle.h",
         "validity_range.h",

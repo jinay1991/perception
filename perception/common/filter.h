@@ -20,12 +20,12 @@ class Filter
 {
   public:
     /// @brief Default Constructor. Consider initial state as 0U.
-    inline constexpr Filter() : Filter{static_cast<T>(0U)} {}
+    constexpr Filter() : Filter{static_cast<T>(0U)} {}
 
     /// @brief Constructor
     ///
     /// @param initial_state [in] - Initial state or Invalid State
-    inline constexpr explicit Filter(const T initial_state)
+    constexpr explicit Filter(const T initial_state)
         : initial_state_{initial_state},
           current_state_{initial_state_},
           previous_state_{initial_state_},
@@ -38,24 +38,24 @@ class Filter
     /// @brief Update required state hold duration with provided duration
     ///
     /// @param duration [in] - New state hold duration (ms)
-    inline constexpr void SetHoldDuration(const std::chrono::milliseconds duration) { hold_duration_ = duration; }
+    constexpr void SetHoldDuration(const std::chrono::milliseconds duration) { hold_duration_ = duration; }
 
     /// @brief Provide current filtered state
     ///
     /// @return current state (template type T)
-    inline constexpr T GetCurrentState() const { return current_state_; }
+    constexpr T GetCurrentState() const { return current_state_; }
 
     /// @brief Provide current filtered state duration (ms)
     ///
     /// @return state duration (ms)
-    inline constexpr std::chrono::milliseconds GetStateDuration() const { return state_duration_; }
+    constexpr std::chrono::milliseconds GetStateDuration() const { return state_duration_; }
 
     /// @brief Update current state. Changes to provided state only if state hold duration exceeds configured hold
     /// duration. This filters out spikes in signal which could lead to erroneous switch back-n-forth.
     ///
     /// @param new_state [in] - New state to be updated to
     /// @param delta_duration [in] - delta duration for which new_state was observed since last update.
-    inline constexpr void Update(const T new_state, const std::chrono::milliseconds delta_duration)
+    constexpr void Update(const T new_state, const std::chrono::milliseconds delta_duration)
     {
         state_duration_ += delta_duration;
 
@@ -91,27 +91,27 @@ class Filter
     /// @brief Check if provided state is valid (compares with initial state)
     ///
     /// @return True if state is not inital state, otherwise False
-    inline constexpr bool IsStateValid(const T state) const { return (state != initial_state_); }
+    constexpr bool IsStateValid(const T state) const { return (state != initial_state_); }
 
     /// @brief Check if current state is valid (compares with initial state)
     ///
     /// @return True if state is not inital state, otherwise False
-    inline constexpr bool IsCurrentStateValid() const { return IsStateValid(current_state_); }
+    constexpr bool IsCurrentStateValid() const { return IsStateValid(current_state_); }
 
     /// @brief Check if state change required for provided state (compares with current state)
     ///
     /// @return True if state is not same as current state, otherwise False
-    inline constexpr bool IsStateChangeRequired(const T new_state) const { return (current_state_ != new_state); }
+    constexpr bool IsStateChangeRequired(const T new_state) const { return (current_state_ != new_state); }
 
     /// @brief Check if current state hold duration exceeds required state hold duration.
     ///
     /// @return True if state hold duration exceeds required hold duration, otherwise False
-    inline constexpr bool IsStateChangePossible() const { return (state_hold_duration_ > hold_duration_); }
+    constexpr bool IsStateChangePossible() const { return (state_hold_duration_ > hold_duration_); }
 
     /// @brief Changes state to new state & resets state & state hold durations counters
     ///
     /// @param new_state [in] - New State for change
-    inline constexpr void ChangeState(const T new_state)
+    constexpr void ChangeState(const T new_state)
     {
         previous_state_ = current_state_;
         current_state_ = new_state;

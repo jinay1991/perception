@@ -34,7 +34,7 @@ struct ValidityRange
 /// @return True if lhs == rhs, otherwise False
 ///
 template <typename T>
-inline constexpr bool operator==(const ValidityRange<T>& lhs, const ValidityRange<T>& rhs) noexcept
+constexpr bool operator==(const ValidityRange<T>& lhs, const ValidityRange<T>& rhs) noexcept
 {
     return ((lhs.lower == rhs.lower) && (lhs.upper == rhs.upper));
 }
@@ -50,7 +50,7 @@ inline constexpr bool operator==(const ValidityRange<T>& lhs, const ValidityRang
 /// @return True if lhs != rhs, otherwise False
 ///
 template <typename T>
-inline constexpr bool operator!=(const ValidityRange<T>& lhs, const ValidityRange<T>& rhs) noexcept
+constexpr bool operator!=(const ValidityRange<T>& lhs, const ValidityRange<T>& rhs) noexcept
 {
     return !(lhs == rhs);
 }
@@ -66,7 +66,7 @@ inline constexpr bool operator!=(const ValidityRange<T>& lhs, const ValidityRang
 /// @return True if value is in given range (lower, upper), otherwise False.
 ///
 template <typename T>
-inline constexpr bool InRange(const T value, const T lower, const T upper)
+constexpr bool InRange(const T value, const T lower, const T upper)
 {
     return ((value > lower) && (value < upper));
 }
@@ -81,7 +81,7 @@ inline constexpr bool InRange(const T value, const T lower, const T upper)
 /// @return True if value is in given range (lower, upper), otherwise False.
 ///
 template <typename T>
-inline constexpr bool InRange(const T value, const ValidityRange<T>& range)
+constexpr bool InRange(const T value, const ValidityRange<T>& range)
 {
     return InRange(value, range.lower, range.upper);
 }
@@ -97,7 +97,7 @@ inline constexpr bool InRange(const T value, const ValidityRange<T>& range)
 /// @return True if value is in given range [lower, upper], otherwise False.
 ///
 template <typename T>
-inline constexpr bool InRangeInclusive(const T value, const T lower, const T upper)
+constexpr bool InRangeInclusive(const T value, const T lower, const T upper)
 {
     return ((value >= lower) && (value <= upper));
 }
@@ -112,7 +112,7 @@ inline constexpr bool InRangeInclusive(const T value, const T lower, const T upp
 /// @return True if value is in given range [lower, upper], otherwise False.
 ///
 template <typename T>
-inline constexpr bool InRangeInclusive(const T value, const ValidityRange<T>& range)
+constexpr bool InRangeInclusive(const T value, const ValidityRange<T>& range)
 {
     return InRangeInclusive(value, range.lower, range.upper);
 }
@@ -128,7 +128,7 @@ inline constexpr bool InRangeInclusive(const T value, const ValidityRange<T>& ra
 /// @return value if in given range (lower, upper), else lower if <lower and upper if > upper.
 ///
 template <typename T>
-inline constexpr T Clamp(const T value, const T lower, const T upper)
+constexpr T Clamp(const T value, const T lower, const T upper)
 {
     return ((value < lower) ? lower : ((value > upper) ? upper : value));
 }
@@ -143,7 +143,7 @@ inline constexpr T Clamp(const T value, const T lower, const T upper)
 /// @return value if in given range (lower, upper), else lower if <lower and upper if > upper.
 ///
 template <typename T>
-inline constexpr T Clamp(const T value, const ValidityRange<T>& range)
+constexpr T Clamp(const T value, const ValidityRange<T>& range)
 {
     return Clamp(value, range.lower, range.upper);
 }

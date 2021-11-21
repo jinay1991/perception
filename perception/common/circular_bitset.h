@@ -31,12 +31,12 @@ class CircularBitset final
     using reference = typename container::reference;
 
     /// @brief Default Constructor
-    inline constexpr CircularBitset() : bitset_{}, tail_{0}, head_{0}, size_{0}, capacity_{max_size} {}
+    constexpr CircularBitset() : bitset_{}, tail_{0}, head_{0}, size_{0}, capacity_{max_size} {}
 
     /// @brief Constructor
     ///
     /// @param list [in] - Initializer list to populate bitset with privided bool list.
-    inline constexpr explicit CircularBitset(const std::initializer_list<bool> list)
+    constexpr explicit CircularBitset(const std::initializer_list<bool> list) noexcept
         : bitset_{}, tail_{0}, head_{0}, size_{0}, capacity_{max_size}
     {
         std::for_each(list.begin(), list.end(), [this](const auto& value) { push_back(value); });
@@ -45,30 +45,30 @@ class CircularBitset final
     /// @brief Current bit set count
     ///
     /// @return Number of bits set
-    inline constexpr size_type count() const { return static_cast<size_type>(bitset_.count()); }
+    constexpr size_type count() const noexcept { return static_cast<size_type>(bitset_.count()); }
 
     /// @brief Current bit set size
     ///
     /// @return Number of bits filled
-    inline constexpr size_type size() const { return size_; }
+    constexpr size_type size() const noexcept { return size_; }
 
     /// @brief Current bit set capacity
     ///
     /// @return Number of bits can be stored
-    inline constexpr size_type capacity() const { return capacity_; }
+    constexpr size_type capacity() const noexcept { return capacity_; }
 
     /// @brief Check if bitset is empty
     ///
     /// @return True if bitset is empty, otherwise False
-    inline constexpr bool empty() const { return (0 == size()); }
+    constexpr bool empty() const noexcept { return (0 == size()); }
 
     /// @brief Check if bitset is full (i.e. full capacity)
     ///
     /// @return True if bitset is full, otherwise False
-    inline constexpr bool full() const { return (size() == capacity()); }
+    constexpr bool full() const noexcept { return (size() == capacity()); }
 
     /// @brief Clear all the elements from the bitset
-    inline constexpr void clear()
+    constexpr void clear() noexcept
     {
         const auto number_of_elements_to_remove{size()};
         for (auto i = 0; i < number_of_elements_to_remove; ++i)
@@ -82,7 +82,7 @@ class CircularBitset final
 
     /// @brief Resize current bitset to the new size.
     /// @note Resize is possible only if provided new size is <max_size (compiled-time) value.
-    inline constexpr void resize(const size_type new_size)
+    constexpr void resize(const size_type new_size) noexcept
     {
         const auto new_capacity = std::min(new_size, static_cast<size_type>(max_size));
         if (capacity_ != new_capacity)
@@ -95,7 +95,7 @@ class CircularBitset final
     /// @brief Add provided value to bitset at back (i.e. tail)
     ///
     /// @param value [in] - Value
-    inline constexpr void push_back(const value_type value)
+    constexpr void push_back(const value_type value) noexcept
     {
         if (full())
         {
@@ -110,7 +110,7 @@ class CircularBitset final
     /// @brief Remove head value from bitset front (i.e. head)
     ///
     /// @param value [in] - Value
-    inline constexpr void pop_front()
+    constexpr void pop_front() noexcept
     {
         if (!empty())
         {
@@ -124,19 +124,19 @@ class CircularBitset final
     /// @brief Provide value at tail
     ///
     /// @return value at tail
-    inline constexpr value_type back() const { return at(size() - 1); }
+    constexpr value_type back() const noexcept { return at(size() - 1); }
 
     /// @brief Provide value at head
     ///
     /// @return value at head
-    inline constexpr value_type front() const { return at(0); }
+    constexpr value_type front() const noexcept { return at(0); }
 
     /// @brief Value at given index
     ///
     /// @param n [in] - index
     ///
     /// @return value at index (n)
-    inline constexpr value_type at(const size_type n) const
+    constexpr value_type at(const size_type n) const noexcept
     {
         const auto wrapped_index = static_cast<std::size_t>((head_ + n) % capacity());
         return bitset_[wrapped_index];
@@ -147,7 +147,7 @@ class CircularBitset final
     /// @param n [in] - index
     ///
     /// @return reference at index (n)
-    inline constexpr reference at(const size_type n)
+    constexpr reference at(const size_type n) noexcept
     {
         const auto wrapped_index = static_cast<std::size_t>((head_ + n) % capacity());
         return bitset_[wrapped_index];
@@ -176,7 +176,7 @@ class CircularBitset final
 ///
 /// @return True if lhs == rhs, otherwise False.
 template <std::int32_t max_size>
-inline constexpr bool operator==(const CircularBitset<max_size>& lhs, const CircularBitset<max_size>& rhs) noexcept
+constexpr bool operator==(const CircularBitset<max_size>& lhs, const CircularBitset<max_size>& rhs) noexcept
 {
     bool result = ((!lhs.empty()) && (!rhs.empty()) && (lhs.capacity() == rhs.capacity()) &&
                    (lhs.size() == rhs.size()) && (lhs.count() == rhs.count()));
@@ -198,7 +198,7 @@ inline constexpr bool operator==(const CircularBitset<max_size>& lhs, const Circ
 ///
 /// @return True if lhs != rhs, otherwise False.
 template <std::int32_t max_size>
-inline constexpr bool operator!=(const CircularBitset<max_size>& lhs, const CircularBitset<max_size>& rhs) noexcept
+constexpr bool operator!=(const CircularBitset<max_size>& lhs, const CircularBitset<max_size>& rhs) noexcept
 {
     return (!(lhs == rhs));
 }

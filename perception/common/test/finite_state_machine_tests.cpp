@@ -131,7 +131,7 @@ TEST_F(FiniteStateMachineFixture, FiniteStateMachine_GivenStateMachineInInitiali
     EXPECT_THAT(GetCurrentState(), State::kRun);
 }
 
-TEST_F(FiniteStateMachineFixture, FiniteStateMachine_GivenStateMachineInRunState_ExpectTransitionToStopState)
+TEST_F(FiniteStateMachineFixture, FiniteStateMachine_GivenStateMachineInRunState_ExpectTransitionToReleaseState)
 {
     // Given
     RunOnce();

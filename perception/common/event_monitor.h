@@ -22,18 +22,18 @@ class EventMonitor
 {
   public:
     /// @brief Default Constructor
-    inline constexpr EventMonitor() : acceptable_events_{}, recuperable_events_{}, time_frame_{}, event_buffer_{} {}
+    constexpr EventMonitor() : acceptable_events_{}, recuperable_events_{}, time_frame_{}, event_buffer_{} {}
 
     /// @brief Set time frame to observe
     ///
     /// @param time_frame [in] - Time frame to watch events.
-    inline constexpr void SetTimeFrame(const std::chrono::milliseconds time_frame) { time_frame_ = time_frame; }
+    constexpr void SetTimeFrame(const std::chrono::milliseconds time_frame) noexcept { time_frame_ = time_frame; }
 
     /// @brief Set acceptable number of events. Acceptable Events will be used to check when to trigger event request.
     /// @note Number of recorded events exceeds acceptable number of events will request event trigger.
     ///
     /// @param acceptable_events [in] - Acceptable Number of Events
-    inline constexpr void SetAcceptableEvents(const std::int32_t acceptable_events)
+    constexpr void SetAcceptableEvents(const std::int32_t acceptable_events) noexcept
     {
         acceptable_events_ = acceptable_events;
     }
@@ -43,7 +43,7 @@ class EventMonitor
     /// event.
     ///
     /// @param recuperable_events [in] - Recuperable Number of Events
-    inline constexpr void SetRecuperableEvents(const std::int32_t recuperable_events)
+    constexpr void SetRecuperableEvents(const std::int32_t recuperable_events) noexcept
     {
         recuperable_events_ = recuperable_events;
     }
@@ -52,7 +52,7 @@ class EventMonitor
     ///
     /// @param is_event_occurred [in] - Event Status
     /// @param delta_duration [in] - Delta time of events
-    inline constexpr void RecordEvent(const bool is_event_occurred, const std::chrono::milliseconds delta_duration)
+    constexpr void RecordEvent(const bool is_event_occurred, const std::chrono::milliseconds delta_duration) noexcept
     {
         UpdateEventBuffer(is_event_occurred, delta_duration);
         DetermineCurrentNumberOfEvents();
@@ -62,19 +62,19 @@ class EventMonitor
     /// @brief Provide Current Number of Events
     ///
     /// @return current_number_of_events in given time_frame
-    inline constexpr std::int32_t GetCurrentNumberOfEvents() const { return current_number_of_events_; }
+    constexpr std::int32_t GetCurrentNumberOfEvents() const noexcept { return current_number_of_events_; }
 
     /// @brief Check whether recorded number of events exceeds acceptable events, which implies trigger conditions are
     /// met.
     ///
     /// @return True, if number of events recorded in the buffer exceeds that of set acceptable number of events.
-    inline constexpr bool IsNumberOfEventsAboveThreshold() const
+    constexpr bool IsNumberOfEventsAboveThreshold() const noexcept
     {
         return (GetCurrentNumberOfEvents() > acceptable_events_);
     }
 
     /// @brief Performs reset to Event Monitor. Reset all the internal state attributes
-    inline constexpr void Reset()
+    constexpr void Reset() noexcept
     {
         acceptable_events_ = 0;
         recuperable_events_ = 0;
@@ -92,8 +92,8 @@ class EventMonitor
     ///
     /// @param is_event_occurred [in] - Event Status
     /// @param delta_duration [in] - Delta duration between calls (usually cycle duration)
-    inline constexpr void UpdateEventBuffer(const bool is_event_occurred,
-                                            const std::chrono::milliseconds delta_duration)
+    constexpr void UpdateEventBuffer(const bool is_event_occurred,
+                                     const std::chrono::milliseconds delta_duration) noexcept
     {
 
         time_since_last_event_ += delta_duration;
@@ -108,7 +108,7 @@ class EventMonitor
     }
 
     /// @brief Determine Current Number Of Events from event buffer
-    inline constexpr void DetermineCurrentNumberOfEvents()
+    constexpr void DetermineCurrentNumberOfEvents() noexcept
     {
         current_number_of_events_ = 0;
         std::chrono::milliseconds accumulated_duration = time_since_last_event_;
@@ -126,7 +126,7 @@ class EventMonitor
     }
 
     /// @brief Determine if current number of events exceeds acceptable events or falls below recuperable events.
-    inline constexpr void DetermineNumberOfEventsAboveThreshold()
+    constexpr void DetermineNumberOfEventsAboveThreshold() noexcept
     {
         if (GetCurrentNumberOfEvents() > acceptable_events_)
         {
@@ -160,8 +160,9 @@ class EventMonitor
     /// @brief Time since last event has recorded
     std::chrono::milliseconds time_since_last_event_;
 
-    /// @brief Event buffer of size (max_size)
-    /// @note Provided max_size will define the window size to hold events for.
+    /// @brief Event buffer of size (kMaxNumberOfEvents)
+    /// @note Provided kMaxNumberOfEvents will define the window size to hold events for.
+    /// @see CircularBitset
     CircularBitset<kMaxNumberOfEvents> event_buffer_;
 };
 

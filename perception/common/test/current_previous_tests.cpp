@@ -28,7 +28,7 @@ struct TestStruct
 /// @param rhs [in] - RVALUE
 ///
 /// @return True if lhs == rhs, otherwise False.
-inline constexpr bool operator==(const TestStruct& lhs, const TestStruct& rhs) noexcept
+constexpr bool operator==(const TestStruct& lhs, const TestStruct& rhs) noexcept
 {
     return (lhs.value == rhs.value);
 }
@@ -39,7 +39,7 @@ inline constexpr bool operator==(const TestStruct& lhs, const TestStruct& rhs) n
 /// @param rhs [in] - RVALUE
 ///
 /// @return Resultant TestStruct (lhs - rhs)
-inline constexpr TestStruct operator-(const TestStruct& lhs, const TestStruct& rhs) noexcept
+constexpr TestStruct operator-(const TestStruct& lhs, const TestStruct& rhs) noexcept
 {
     return TestStruct{lhs.value - rhs.value};
 }

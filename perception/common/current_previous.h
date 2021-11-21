@@ -18,35 +18,32 @@ class CurrentPrevious
     ///
     /// @param current - Value for Current
     /// @param previous - Value for previous
-    inline constexpr explicit CurrentPrevious(const T& current, const T& previous)
-        : current_{current}, previous_{previous}
-    {
-    }
+    constexpr explicit CurrentPrevious(const T& current, const T& previous) : current_{current}, previous_{previous} {}
 
     /// @brief Set Current data
     ///
     /// @param current_data [in] - Current data
-    inline constexpr void SetCurrent(const T& current) { current_ = current; }
+    constexpr void SetCurrent(const T& current) { current_ = current; }
 
     /// @brief Set Previous data
     ///
     /// @param previous [in] - Previous data
-    inline constexpr void SetPrevious(const T& previous) { previous_ = previous; }
+    constexpr void SetPrevious(const T& previous) { previous_ = previous; }
 
     /// @brief Provide current
     ///
     /// @return current data
-    inline constexpr const T& GetCurrent() const { return current_; }
+    constexpr const T& GetCurrent() const { return current_; }
 
     /// @brief Provide previous
     ///
     /// @return previous data
-    inline constexpr const T& GetPrevious() const { return previous_; }
+    constexpr const T& GetPrevious() const { return previous_; }
 
     /// @brief Provide delta between current & previous
     ///
     /// @return delta
-    inline constexpr T GetDelta() const { return (current_ - previous_); }
+    constexpr T GetDelta() const { return (current_ - previous_); }
 
   private:
     /// @brief Current element of type T

@@ -10,6 +10,7 @@ cc_test(
         "finite_state_machine_tests.cpp",
         "geometry_tests.cpp",
         "logging_tests.cpp",
+        "matrix_tests.cpp",
         "toggle_tests.cpp",
         "validity_range_tests.cpp",
     ],

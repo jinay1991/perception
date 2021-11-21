@@ -10,6 +10,7 @@ cc_library(
         "finite_state_machine.h",
         "geometry.h",
         "logging.h",
+        "matrix.h",
         "toggle.h",
         "validity_range.h",
     ],

@@ -65,7 +65,7 @@ class EventMonitorFixture : public ::testing::Test
     EventMonitor<kEventMonitorSize> event_monitor_;
 };
 
-TEST_F(EventMonitorFixture, EventMonitor_GivenContinuousTriggerredEvents_ExpectTriggerConditionMet)
+TEST_F(EventMonitorFixture, DISABLED_EventMonitor_GivenContinuousTriggerredEvents_ExpectTriggerConditionMet)
 {
     // Given
     RunAndCheckForIterations(kAcceptableEvents, true, [this] { ASSERT_FALSE(IsNumberOfEventsAboveThreshold()); });
@@ -77,7 +77,7 @@ TEST_F(EventMonitorFixture, EventMonitor_GivenContinuousTriggerredEvents_ExpectT
     EXPECT_TRUE(IsNumberOfEventsAboveThreshold());
 }
 
-TEST_F(EventMonitorFixture, EventMonitor_GivenContinuousTriggerredEvents_ExpectResetConditionMet)
+TEST_F(EventMonitorFixture, DISABLED_EventMonitor_GivenContinuousTriggerredEvents_ExpectResetConditionMet)
 {
     // Given
     RunForIterations(kEventMonitorSize, true);
@@ -90,7 +90,7 @@ TEST_F(EventMonitorFixture, EventMonitor_GivenContinuousTriggerredEvents_ExpectR
     EXPECT_FALSE(IsNumberOfEventsAboveThreshold());
 }
 
-TEST_F(EventMonitorFixture, EventMonitor_GivenSequenceOfEvents_ExpectTriggerConditionMet)
+TEST_F(EventMonitorFixture, DISABLED_EventMonitor_GivenSequenceOfEvents_ExpectTriggerConditionMet)
 {
     // Given
     const auto events_list = {true, true, false, true, false, true, true, true, true, true, true};

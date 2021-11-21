@@ -18,7 +18,7 @@ using namespace std::chrono_literals;
 ///
 /// @tparam kMaxNumberOfEvents [in] - Max Number of Events
 template <std::int32_t kMaxNumberOfEvents>
-class EventMonitor
+class EventMonitor final
 {
   public:
     /// @brief Default Constructor

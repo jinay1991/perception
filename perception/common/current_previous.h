@@ -11,7 +11,7 @@ namespace perception
 ///
 /// @tparam Type T - Type for Current/Previous elements
 template <typename T>
-class CurrentPrevious
+class CurrentPrevious final
 {
   public:
     /// @brief Default constructor.
@@ -23,27 +23,27 @@ class CurrentPrevious
     /// @brief Set Current data
     ///
     /// @param current_data [in] - Current data
-    constexpr void SetCurrent(const T& current) { current_ = current; }
+    constexpr void SetCurrent(const T& current) noexcept { current_ = current; }
 
     /// @brief Set Previous data
     ///
     /// @param previous [in] - Previous data
-    constexpr void SetPrevious(const T& previous) { previous_ = previous; }
+    constexpr void SetPrevious(const T& previous) noexcept { previous_ = previous; }
 
     /// @brief Provide current
     ///
     /// @return current data
-    constexpr const T& GetCurrent() const { return current_; }
+    constexpr const T& GetCurrent() const noexcept { return current_; }
 
     /// @brief Provide previous
     ///
     /// @return previous data
-    constexpr const T& GetPrevious() const { return previous_; }
+    constexpr const T& GetPrevious() const noexcept { return previous_; }
 
     /// @brief Provide delta between current & previous
     ///
     /// @return delta
-    constexpr T GetDelta() const { return (current_ - previous_); }
+    constexpr T GetDelta() const noexcept { return (current_ - previous_); }
 
   private:
     /// @brief Current element of type T

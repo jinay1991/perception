@@ -66,7 +66,7 @@ constexpr bool operator!=(const ValidityRange<T>& lhs, const ValidityRange<T>& r
 /// @return True if value is in given range (lower, upper), otherwise False.
 ///
 template <typename T>
-constexpr bool InRange(const T value, const T lower, const T upper)
+constexpr bool InRange(const T value, const T lower, const T upper) noexcept
 {
     return ((value > lower) && (value < upper));
 }
@@ -81,7 +81,7 @@ constexpr bool InRange(const T value, const T lower, const T upper)
 /// @return True if value is in given range (lower, upper), otherwise False.
 ///
 template <typename T>
-constexpr bool InRange(const T value, const ValidityRange<T>& range)
+constexpr bool InRange(const T value, const ValidityRange<T>& range) noexcept
 {
     return InRange(value, range.lower, range.upper);
 }
@@ -97,7 +97,7 @@ constexpr bool InRange(const T value, const ValidityRange<T>& range)
 /// @return True if value is in given range [lower, upper], otherwise False.
 ///
 template <typename T>
-constexpr bool InRangeInclusive(const T value, const T lower, const T upper)
+constexpr bool InRangeInclusive(const T value, const T lower, const T upper) noexcept
 {
     return ((value >= lower) && (value <= upper));
 }
@@ -112,7 +112,7 @@ constexpr bool InRangeInclusive(const T value, const T lower, const T upper)
 /// @return True if value is in given range [lower, upper], otherwise False.
 ///
 template <typename T>
-constexpr bool InRangeInclusive(const T value, const ValidityRange<T>& range)
+constexpr bool InRangeInclusive(const T value, const ValidityRange<T>& range) noexcept
 {
     return InRangeInclusive(value, range.lower, range.upper);
 }
@@ -128,7 +128,7 @@ constexpr bool InRangeInclusive(const T value, const ValidityRange<T>& range)
 /// @return value if in given range (lower, upper), else lower if <lower and upper if > upper.
 ///
 template <typename T>
-constexpr T Clamp(const T value, const T lower, const T upper)
+constexpr T Clamp(const T value, const T lower, const T upper) noexcept
 {
     return ((value < lower) ? lower : ((value > upper) ? upper : value));
 }
@@ -143,7 +143,7 @@ constexpr T Clamp(const T value, const T lower, const T upper)
 /// @return value if in given range (lower, upper), else lower if <lower and upper if > upper.
 ///
 template <typename T>
-constexpr T Clamp(const T value, const ValidityRange<T>& range)
+constexpr T Clamp(const T value, const ValidityRange<T>& range) noexcept
 {
     return Clamp(value, range.lower, range.upper);
 }

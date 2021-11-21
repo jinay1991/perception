@@ -14,9 +14,9 @@ cc_library(
         "traffic_sign.h",
         "vehicle_dynamics.h",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//visibility:public"],
     deps = [

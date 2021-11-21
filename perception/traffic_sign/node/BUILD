@@ -4,9 +4,9 @@ cc_library(
     name = "node",
     srcs = ["traffic_sign_node.cpp"],
     hdrs = ["traffic_sign_node.h"],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//visibility:public"],
     deps = [

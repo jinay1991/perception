@@ -12,9 +12,9 @@ cc_test(
         "toggle_tests.cpp",
         "validity_range_tests.cpp",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     deps = [
         "//perception/common",

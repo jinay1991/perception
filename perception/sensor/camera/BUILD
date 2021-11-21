@@ -8,12 +8,12 @@ cc_library(
     hdrs = [
         "camera.h",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
-    ],
     data = [
         "//:calibration_data",
+    ],
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//visibility:public"],
     deps = [

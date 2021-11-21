@@ -8,9 +8,9 @@ cc_library(
     hdrs = [
         "traffic_sign.h",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//visibility:public"],
     deps = [

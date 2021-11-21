@@ -12,9 +12,9 @@ cc_library(
         "toggle.h",
         "validity_range.h",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//perception:__subpackages__"],
     deps = [

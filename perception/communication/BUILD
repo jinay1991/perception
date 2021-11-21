@@ -3,9 +3,9 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 cc_library(
     name = "topics",
     hdrs = ["topics.h"],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//visibility:public"],
     deps = [

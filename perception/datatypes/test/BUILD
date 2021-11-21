@@ -6,9 +6,9 @@ cc_test(
         "camera_tests.cpp",
         "driver_tests.cpp",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     deps = [
         "//perception/datatypes",

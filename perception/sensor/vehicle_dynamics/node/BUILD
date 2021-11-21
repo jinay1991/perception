@@ -4,9 +4,9 @@ cc_library(
     name = "node",
     srcs = ["vehicle_dynamics_node.cpp"],
     hdrs = ["vehicle_dynamics_node.h"],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//visibility:public"],
     deps = [

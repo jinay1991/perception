@@ -12,9 +12,9 @@ cc_library(
         "driver_simulator_node.h",
         "operators.h",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//perception/driver/test:__subpackages__"],
     deps = [
@@ -33,9 +33,9 @@ cc_library(
     testonly = True,
     srcs = ["builders/driver_camera_message_builder.cpp"],
     hdrs = ["builders/driver_camera_message_builder.h"],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//perception/driver/test:__subpackages__"],
     deps = ["//perception/datatypes"],
@@ -48,9 +48,9 @@ cc_library(
         "mocks/data_source_mock.h",
         "mocks/parameter_handler_mock.h",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//perception/driver/test:__subpackages__"],
     deps = ["//perception/driver"],

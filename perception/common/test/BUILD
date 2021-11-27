@@ -9,6 +9,7 @@ cc_test(
         "filter_tests.cpp",
         "finite_state_machine_tests.cpp",
         "geometry_tests.cpp",
+        "linear_kalman_filter_tests.cpp",
         "logging_tests.cpp",
         "matrix_tests.cpp",
         "toggle_tests.cpp",

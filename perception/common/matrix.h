@@ -93,11 +93,6 @@ class GenericMatrix
         return submatrix;
     }
 
-    constexpr T Determinant() const noexcept
-    {
-        /// @todo: Add API to access SubMatrix
-    }
-
     constexpr std::size_t GetSize() const noexcept { return matrix_.size(); }
     constexpr std::size_t GetRows() const noexcept { return rows_; }
     constexpr std::size_t GetCols() const noexcept { return cols_; }

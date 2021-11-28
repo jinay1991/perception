@@ -1,5 +1,3 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
-
 cc_library(
     name = "node",
     srcs = ["driver_camera_node.cpp"],

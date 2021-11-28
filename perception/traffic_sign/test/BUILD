@@ -1,5 +1,3 @@
-load("@rules_cc//cc:defs.bzl", "cc_test")
-
 cc_test(
     name = "node_tests",
     srcs = ["traffic_sign_node_tests.cpp"],

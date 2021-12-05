@@ -1,5 +1,3 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
-
 cc_library(
     name = "support",
     testonly = True,
@@ -7,9 +5,9 @@ cc_library(
     hdrs = [
         "operators.h",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//perception/traffic_sign/test:__subpackages__"],
     deps = [

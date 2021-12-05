@@ -1,5 +1,3 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
-
 cc_library(
     name = "common",
     hdrs = [
@@ -8,16 +6,20 @@ cc_library(
         "event_monitor.h",
         "filter.h",
         "finite_state_machine.h",
+        "geometry.h",
+        "linear_kalman_filter.h",
         "logging.h",
+        "matrix.h",
         "toggle.h",
         "validity_range.h",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//perception:__subpackages__"],
     deps = [
+        "@eigen",
         "@glog",
     ],
 )

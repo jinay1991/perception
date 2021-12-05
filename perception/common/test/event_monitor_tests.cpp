@@ -59,10 +59,7 @@ class EventMonitorFixture : public ::testing::Test
         }
     }
 
-    inline constexpr bool IsNumberOfEventsAboveThreshold() const
-    {
-        return event_monitor_.IsNumberOfEventsAboveThreshold();
-    }
+    constexpr bool IsNumberOfEventsAboveThreshold() const { return event_monitor_.IsNumberOfEventsAboveThreshold(); }
 
   private:
     EventMonitor<kEventMonitorSize> event_monitor_;

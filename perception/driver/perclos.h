@@ -50,7 +50,7 @@ class Perclos final
     /// @brief Check if provided eye state is Closed
     ///
     /// @return True if provided eye state is closed, otherwise False
-    static inline constexpr bool IsEyesClosed(const EyeState eye_state);
+    static constexpr bool IsEyesClosed(const EyeState eye_state);
 
     /// @brief Circular buffer for storing eye state for 5min. Used to calculate eye closure percentage
     CircularBitset<kMaxLongtermStorageSize> longterm_storage_;

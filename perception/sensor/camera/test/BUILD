@@ -1,15 +1,13 @@
-load("@rules_cc//cc:defs.bzl", "cc_test")
-
 cc_test(
     name = "node_tests",
     srcs = ["camera_node_tests.cpp"],
-    copts = [
-        "-Wall",
-        "-Werror",
-    ],
     data = [
         "//:calibration_data",
         "//:testdata",
+    ],
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     tags = [
         "component",
@@ -26,12 +24,12 @@ cc_test(
     srcs = [
         "camera_tests.cpp",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
-    ],
     data = [
         "//:testdata",
+    ],
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     tags = ["unit"],
     deps = [

@@ -20,7 +20,7 @@ constexpr std::int32_t kTestCircularBitsetSize{10};
 TEST(CircularBitset, DefaultConstructor)
 {
     // Given
-    CircularBitset<kTestCircularBitsetSize> circular_bitset{};
+    CircularBitset<kTestCircularBitsetSize> circular_bitset;
 
     // Then
     EXPECT_THAT(circular_bitset.size(), 0);

@@ -1,16 +1,14 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
-
 cc_library(
     name = "node",
     srcs = ["object_node.cpp"],
     hdrs = ["object_node.h"],
-    copts = [
-        "-Wall",
-        "-Werror",
-    ],
     data = [
         "//:calibration_data",
         "//:testdata",
+    ],
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//visibility:public"],
     deps = [

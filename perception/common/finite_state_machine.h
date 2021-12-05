@@ -14,8 +14,8 @@ namespace perception
 
 /// @brief Simple Finite State Machine
 ///
-/// @tparam T - State Type (must be enum/enum class type)
-template <typename T>
+/// @tparam State - State Type (must be enum/enum class type)
+template <typename State, std::enable_if_t<std::is_enum<State>::value, bool> = true>
 class FiniteStateMachine final
 {
   public:
@@ -26,20 +26,19 @@ class FiniteStateMachine final
     using Action = std::function<void()>;
 
     /// @brief Default Constructor (Initializes initial state to 0U)
-    inline constexpr FiniteStateMachine() : FiniteStateMachine{static_cast<T>(0U)} {}
+    constexpr FiniteStateMachine() : FiniteStateMachine{static_cast<State>(0U)} {}
 
     /// @brief Constructor.
     ///
     /// @param initial_state [in] - Initial State for State Machine
-    inline constexpr explicit FiniteStateMachine(const T initial_state) noexcept
+    constexpr explicit FiniteStateMachine(const State initial_state) noexcept
         : state_actions_{},
           transitions_{},
           transition_actions_{},
           initial_state_{initial_state},
-          current_state_{initial_state_},
+          current_state_{initial_state},
           current_state_actions_{}
     {
-        static_assert(std::is_enum<T>::value, "Template type must be enum/enum class type.");
     }
 
     /// @brief Add Transition to State Machine - Registers transition guard, which will be used to check if
@@ -48,7 +47,7 @@ class FiniteStateMachine final
     /// @param from_state [in] - Transition from State
     /// @param to_state [in] - Transition to State
     /// @param guard [in] - Transition Guard
-    inline constexpr void AddTransition(const T from_state, const T to_state, const Guard& guard) noexcept
+    constexpr void AddTransition(const State from_state, const State to_state, const Guard& guard) noexcept
     {
         const ToTransition to_transition{to_state, guard};
         transitions_.insert({from_state, to_transition});
@@ -60,7 +59,7 @@ class FiniteStateMachine final
     /// @param from_state [in] - Transition from State
     /// @param to_state [in] - Transition to State
     /// @param action [in] - Transition action
-    inline constexpr void AddTransitionAction(const T from_state, const T to_state, const Action& action) noexcept
+    constexpr void AddTransitionAction(const State from_state, const State to_state, const Action& action) noexcept
     {
         const Transition transition{from_state, to_state};
         transition_actions_.insert({transition, action});
@@ -72,17 +71,17 @@ class FiniteStateMachine final
     /// @param entry_action [in] - Registers action to be executed while entering the state
     /// @param state_action [in] - Registers action to be executed while in state
     /// @param exit_action [in] - Registers action to be executed while exiting the state
-    inline constexpr void AddStateActions(const T state,
-                                          const Action& entry_action = nullptr,
-                                          const Action& state_action = nullptr,
-                                          const Action& exit_action = nullptr) noexcept
+    constexpr void AddStateActions(const State state,
+                                   const Action& entry_action = nullptr,
+                                   const Action& state_action = nullptr,
+                                   const Action& exit_action = nullptr) noexcept
     {
         ReplaceCurrentActionsIfRelevant(state, entry_action, state_action, exit_action);
         state_actions_.insert({state, Actions{entry_action, state_action, exit_action}});
     }
 
     /// @brief Check for State Transition, if possible performs transitions and executes registered actions.
-    inline constexpr void Step()
+    constexpr void Step() noexcept
     {
         if (!PerformStateTransition())
         {
@@ -93,19 +92,19 @@ class FiniteStateMachine final
     /// @brief Resets state to initial state.
     /// @note Registered transitions and actions will be unchanged. If intended to reset them as well, create new object
     /// instead.
-    inline constexpr void Reset() noexcept { ChangeState(initial_state_); }
+    constexpr void Reset() noexcept { ChangeState(initial_state_); }
 
     /// @brief Provide current state of State Machine
     ///
     /// @return current_state
-    inline constexpr T GetCurrentState() const noexcept { return current_state_; }
+    constexpr State GetCurrentState() const noexcept { return current_state_; }
 
   private:
     /// @brief Transition (transition state and guard to check)
     struct ToTransition
     {
         /// @brief State to which transition to be performed if Guard is passed
-        T to_state{};
+        State to_state{static_cast<State>(0)};
 
         /// @brief Guard to be checked to allow transition
         Guard guard{nullptr};
@@ -126,15 +125,15 @@ class FiniteStateMachine final
 
     /// @brief State actions list map. Hold all the registered state actions as to map actions with its associated
     /// states
-    using StateActionsList = std::map<T, Actions>;
+    using StateActionsList = std::map<State, Actions>;
 
     /// @brief Transition (from -> to) state pair
-    using Transition = std::pair<T, T>;
+    using Transition = std::pair<State, State>;
 
     /// @brief State Transition information map. Hold transition informations including guard.
     /// @note It can hold (many to many relation) values - one state can have multiple to_transition. Due to this,
     /// multimap is preferred here.
-    using TransitionList = std::multimap<T, ToTransition>;
+    using TransitionList = std::multimap<State, ToTransition>;
 
     /// @brief State Transition Action map. Hold transitions actions for each defined Transition pair (from -> to)
     using TransitionActionList = std::map<Transition, Action>;
@@ -142,7 +141,7 @@ class FiniteStateMachine final
     /// @brief Perform State Transition if not performed already
     ///
     /// @return True if state transition successfully performed, otherwise False.
-    inline constexpr bool PerformStateTransition()
+    constexpr bool PerformStateTransition() noexcept
     {
         const auto possible_transitions = transitions_.equal_range(current_state_);
         for (auto transition = possible_transitions.first; transition != possible_transitions.second; ++transition)
@@ -163,7 +162,7 @@ class FiniteStateMachine final
     /// @brief Execute provided action if available
     ///
     /// @param action [in] - Action to be executed
-    inline constexpr void ExecuteAction(const Action& action)
+    constexpr void ExecuteAction(const Action& action) noexcept
     {
         if (action != nullptr)
         {
@@ -174,7 +173,7 @@ class FiniteStateMachine final
     /// @brief Execute Transition actions for provided Transition if available
     ///
     /// @param transition [in] - Transition to be checked for it's transition actions
-    inline constexpr void ExecuteTransitionAction(const Transition& transition)
+    constexpr void ExecuteTransitionAction(const Transition& transition) noexcept
     {
         if (transition_actions_.find(transition) != transition_actions_.end())
         {
@@ -186,12 +185,12 @@ class FiniteStateMachine final
     /// @brief Check if transition is possible based on the provided guard. Executes guard in order to determine this.
     ///
     /// @return True if guard is available and passed, otherwise False
-    inline constexpr bool IsTransitionPossible(const Guard& guard) { return ((guard != nullptr) && guard()); }
+    constexpr bool IsTransitionPossible(const Guard& guard) noexcept { return ((guard != nullptr) && guard()); }
 
     /// @brief Change state to new state
     ///
     /// @param state [in] - State to switch to
-    inline constexpr void ChangeState(const T state) noexcept
+    constexpr void ChangeState(const State state) noexcept
     {
         current_state_ = state;
         if (state_actions_.count(current_state_) == 0)
@@ -208,10 +207,10 @@ class FiniteStateMachine final
     /// @param entry_action [in] - State Entry action
     /// @param state_action [in] - State action
     /// @param exit_action [in] - State Exit action
-    inline constexpr void ReplaceCurrentActionsIfRelevant(const T state,
-                                                          const Action& entry_action,
-                                                          const Action& state_action,
-                                                          const Action& exit_action) noexcept
+    constexpr void ReplaceCurrentActionsIfRelevant(const State state,
+                                                   const Action& entry_action,
+                                                   const Action& state_action,
+                                                   const Action& exit_action) noexcept
     {
         if (current_state_ == state)
         {
@@ -229,10 +228,10 @@ class FiniteStateMachine final
     TransitionActionList transition_actions_;
 
     /// @brief Initial State
-    const T initial_state_;
+    const State initial_state_;
 
     /// @brief Current State
-    T current_state_;
+    State current_state_;
 
     /// @brief Current State action
     Actions current_state_actions_;

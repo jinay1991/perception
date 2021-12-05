@@ -7,4 +7,5 @@ def eigen():
             build_file = "//third_party/eigen:eigen.BUILD",
             url = "https://gitlab.com/libeigen/eigen/-/archive/3.3.8/eigen-3.3.8.tar.gz",
             sha256 = "146a480b8ed1fb6ac7cd33fec9eb5e8f8f62c3683b3f850094d9d5c35a92419a",
+            strip_prefix = "eigen-3.3.8",
         )

@@ -1,11 +1,9 @@
-load("@rules_cc//cc:defs.bzl", "cc_test")
-
 cc_test(
     name = "node_tests",
     srcs = ["traffic_sign_node_tests.cpp"],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     tags = ["component"],
     deps = [
@@ -22,9 +20,9 @@ cc_test(
         "operators_tests.cpp",
         "traffic_sign_tests.cpp",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     tags = ["unit"],
     deps = [

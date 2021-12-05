@@ -1,12 +1,10 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
-
 cc_library(
     name = "lane",
     srcs = ["lane.cpp"],
     hdrs = ["lane.h"],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//visibility:public"],
     deps = [

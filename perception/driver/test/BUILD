@@ -1,11 +1,9 @@
-load("@rules_cc//cc:defs.bzl", "cc_test")
-
 cc_test(
     name = "node_tests",
     srcs = ["driver_node_tests.cpp"],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     tags = ["component"],
     deps = [
@@ -35,9 +33,9 @@ cc_test(
         "perclos_tests.cpp",
         "visual_attention_tests.cpp",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     tags = ["unit"],
     deps = [
@@ -52,9 +50,9 @@ cc_test(
     srcs = [
         "driver_benchmark_tests.cpp",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     tags = ["benchmark"],
     deps = [

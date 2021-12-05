@@ -1,5 +1,3 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
-
 cc_library(
     name = "camera",
     srcs = [
@@ -8,12 +6,12 @@ cc_library(
     hdrs = [
         "calibration.h",
     ],
-    copts = [
-        "-Wall",
-        "-Werror",
-    ],
     data = [
         "//:calibration_data",
+    ],
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     visibility = ["//perception/sensor:__subpackages__"],
     deps = [

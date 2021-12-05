@@ -1,14 +1,12 @@
-load("@rules_cc//cc:defs.bzl", "cc_test")
-
 cc_test(
     name = "node_tests",
     srcs = ["lane_node_tests.cpp"],
-    copts = [
-        "-Wall",
-        "-Werror",
-    ],
     data = [
         "//:testdata",
+    ],
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     tags = [
         "component",
@@ -22,12 +20,12 @@ cc_test(
 cc_test(
     name = "unit_tests",
     srcs = ["lane_tests.cpp"],
-    copts = [
-        "-Wall",
-        "-Werror",
-    ],
     data = [
         "//:testdata",
+    ],
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     tags = ["unit"],
     deps = [

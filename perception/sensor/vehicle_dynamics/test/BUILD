@@ -1,13 +1,11 @@
-load("@rules_cc//cc:defs.bzl", "cc_test")
-
 package(default_visibility = ["//visibility:public"])
 
 cc_test(
     name = "node_tests",
     srcs = ["vehicle_dynamics_node_tests.cpp"],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     tags = [
         "component",
@@ -23,9 +21,9 @@ cc_test(
 cc_test(
     name = "unit_tests",
     srcs = ["vehicle_dynamics_tests.cpp"],
-    copts = [
-        "-Wall",
-        "-Werror",
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
     ],
     tags = ["unit"],
     deps = [

@@ -8,6 +8,7 @@
 #include "perception/common/kalman_filter/multivariate_moments.h"
 
 #include <cstdint>
+#include <functional>
 
 #include <Eigen/Dense>
 
@@ -16,10 +17,28 @@ namespace perception
 
 template <typename T,
           std::int32_t kStateVectorDimension,
-          std::int32_t kControlVectorDimension,
+          typename TransitionFunctorT,
           std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
 class ExtendedPredictModel
 {
+  public:
+    using TransitionFunctorType = TransitionFunctorT;
+    using ProcessNoiseType = Eigen::Matrix<T, kStateVectorDimension, kStateVectorDimension>;
+
+    constexpr ExtendedPredictModel() : transition_functor_{}, process_noise_{ProcessNoiseType::Zero()} {}
+
+    explicit constexpr ExtendedPredictModel(const TransitionFunctorType& transition_functor,
+                                            const ProcessNoiseType& process_noise)
+        : transition_functor_{transition_functor}, process_noise_{process_noise}
+    {
+    }
+
+    constexpr const TransitionFunctorType& GetTransitionFunctor() const noexcept { return transition_functor_; }
+    constexpr const ProcessNoiseType& GetProcessNoise() const noexcept { return process_noise_; }
+
+  private:
+    TransitionFunctorType transition_functor_;
+    ProcessNoiseType process_noise_;
 };
 
 template <typename T,
@@ -27,10 +46,20 @@ template <typename T,
           std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
 class ExtendedPredictResult
 {
+  public:
+    using PredictedStateType = MultivariateMoments<T, kStateVectorDimension>;
+
+    constexpr ExtendedPredictResult() : predicted_state_{} {}
+
+    constexpr const PredictedStateType& PredictedStateType() const noexcept { return predicted_state_; }
+
+  private:
+    PredictedStateType predicted_state_;
 };
 
 template <typename T,
           std::int32_t kMeasurementVectorDimension,
+          typename MeasurementFunctorT,
           std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
 class ExtendedUpdateModel
 {
@@ -38,22 +67,17 @@ class ExtendedUpdateModel
     using MeasurementFunctorType = MeasurementFunctorT;
     using MeasurementNoiseType = Eigen::Matrix<T, kMeasurementVectorDimension, kMeasurementVectorDimension>;
 
-    constexpr ExtendedUpdateModel()
-        : measurement_model_{MeasurementModelType::Zero()}, measurement_noise_{MeasurementNoiseType::Zero()}
-    {
-    }
-
-    explicit constexpr ExtendedUpdateModel(const MeasurementModelType& measurement_functor,
+    explicit constexpr ExtendedUpdateModel(const MeasurementFunctorType& measurement_functor,
                                            const MeasurementNoiseType& measurement_noise)
-        : measurement_model_{measurement_model}, measurement_noise_{measurement_noise}
+        : measurement_functor_{measurement_functor}, measurement_noise_{measurement_noise}
     {
     }
 
-    constexpr const MeasurementModelType& GetMeasurementModel() const { return measurement_model_; }
+    constexpr const MeasurementFunctorType& GetMeasurementFunctor() const { return measurement_functor_; }
     constexpr const MeasurementNoiseType& GetMeasurementNoise() const { return measurement_noise_; }
 
   private:
-    MeasurementModelType measurement_model_;
+    MeasurementFunctorType measurement_functor_;
     MeasurementNoiseType measurement_noise_;
 };
 
@@ -63,6 +87,40 @@ template <typename T,
           std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
 class ExtendedUpdateResult
 {
+  public:
+    using UpdatedStateType = MultivariateMoments<T, kStateVectorDimension>;
+    using GainType = Eigen::Matrix<T, kStateVectorDimension, kMeasurementVectorDimension>;
+    using MeasurementType = Eigen::Matrix<T, kMeasurementVectorDimension, 1>;
+    using CrossCovarianceType = Eigen::Matrix<T, kMeasurementVectorDimension, kMeasurementVectorDimension>;
+
+    constexpr ExtendedUpdateResult()
+        : updated_state_{},
+          kalman_gain_{GainType::Zero()},
+          estimated_measurement_{MeasurementType::Zero()},
+          cross_covariance_{CrossCovarianceType::Zero()}
+    {
+    }
+
+    explicit constexpr ExtendedUpdateResult(const UpdatedStateType& updated_state,
+                                            const GainType& kalman_gain,
+                                            const MeasurementType& estimated_measurement,
+                                            const CrossCovarianceType& cross_covariance)
+        : updated_state_{updated_state},
+          kalman_gain_{kalman_gain},
+          estimated_measurement_{estimated_measurement},
+          cross_covariance_{cross_covariance}
+    {
+    }
+    constexpr const UpdatedStateType& GetUpdatedState() const noexcept { return updated_state_; }
+    constexpr const GainType& GetKalmanGain() const noexcept { return kalman_gain_; }
+    constexpr const MeasurementType& GetEstimatedMeasurement() const noexcept { return estimated_measurement_; }
+    constexpr const CrossCovarianceType& GetCrossCovariance() const noexcept { return cross_covariance_; }
+
+  private:
+    UpdatedStateType updated_state_;
+    GainType kalman_gain_;
+    MeasurementType estimated_measurement_;
+    CrossCovarianceType cross_covariance_;
 };
 
 ///
@@ -138,8 +196,8 @@ constexpr ExtendedPredictResult<T, kStateVectorDimension> ExtendedPrediction(
 
 ///
 /// @brief Perform Update step of Linear Kalman filter computations given by expressions,
-///        K = P * H_T * (R + H * P * H_T)^-1
-///        x_k = x + (K * (z - H * x))
+///        K = P * H_T * S^-1
+///        x_k = x + (K * y)
 ///        P_k = ((I - K * H) * P * (I - K * H)^T) + (K * R * K_T);
 ///        z_k = H * x
 ///
@@ -149,6 +207,9 @@ constexpr ExtendedPredictResult<T, kStateVectorDimension> ExtendedPrediction(
 ///               H_T = transpose of measurement model
 ///               R = measurement noise
 ///               z = measurement vector
+///               y = measurement residual (z - (H * x))
+///               S = measurement residual covariance (R + (H * P * H_T))
+///               I = identity covariance matrix
 ///               K = kalman gain
 ///               x_k = updated state vector
 ///               P_k = updated covariance matrix
@@ -169,10 +230,12 @@ constexpr ExtendedUpdateResult<T, kStateVectorDimension, kMeasurementVectorDimen
     const auto& H_T = H.transpose();
     const auto& R = update_model.GetMeasurementNoise();
     const auto& z = measurement_vector;
+    const auto& y = z - (H * x);
+    const auto& S = R + (H * P * H_T);
     const auto& I = Eigen::Matrix<T, kStateVectorDimension, kStateVectorDimension>::Identity();
 
-    const auto K = P * H_T * (R + (H * P * H_T)).inverse();
-    const auto x_k = x + (K * (z - (H * x)));
+    const auto K = P * H_T * S.inverse();
+    const auto x_k = x + (K * y);
     const auto P_k = ((I - K * H) * P * (I - K * H).transpose()) + (K * R * K.transpose());
     const auto z_k = H * x;
 

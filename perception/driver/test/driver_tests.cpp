@@ -28,7 +28,6 @@ class DriverFixture : public ::testing::Test
     }
 
     const FatigueMessage& GetFatigueMessage() const { return driver_.GetFatigueMessage(); }
-    const VisualAttentionMessage& GetVisualAttentionMessage() const { return driver_.GetVisualAttentionMessage(); }
 
   private:
     Driver driver_;
@@ -48,18 +47,5 @@ TEST_F(DriverFixture, Driver_GivenTypicalDriverCameraMessage_ExpectUpdatedFatigu
     EXPECT_THAT(GetFatigueMessage(), Field(&FatigueMessage::eye_state, EyeState::kEyesClosed));
 }
 
-TEST_F(DriverFixture, Driver_GivenTypicalDriverCameraMessage_ExpectUpdatedVisualAttention)
-{
-    // Given
-    const DriverCameraMessage driver_camera_message =
-        DriverCameraMessageBuilder().WithHeadPose(0.10_rad, 0.11_rad, 0.0_rad).Build();
-    UpdateDriverCameraMessage(driver_camera_message);
-
-    // When
-    RunOnce();
-
-    // Then
-    EXPECT_THAT(GetVisualAttentionMessage(), Field(&VisualAttentionMessage::attention_state, AttentionState::kInvalid));
-}
 }  // namespace
 }  // namespace perception

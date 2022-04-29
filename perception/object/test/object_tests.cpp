@@ -80,26 +80,26 @@ TEST_F(ObjectTest, GivenTypicalCameraMessage_ExpectObjectListMessageWithValidObj
                 Contains(AllOf(
                     Field(&ObjectMessage::id, ObjectId::kBicycle),
                     Field(&ObjectMessage::distance,
-                          Property(&units::length::meter_t::value, DoubleNear(1.31339, 0.00001))),
+                          Property(&units::length::meter_t::value, DoubleNear(1.31339, 0.001))),
                     Field(&ObjectMessage::bounding_box,
-                          AllOf(Field(&BoundingBox::x, DoubleNear(18.9724, 0.0001)),
-                                Field(&BoundingBox::y, DoubleNear(19.4001, 0.0001)),
-                                Field(&BoundingBox::width, DoubleNear(435.872, 0.001)),
+                          AllOf(Field(&BoundingBox::x, DoubleNear(18.9724, 0.001)),
+                                Field(&BoundingBox::y, DoubleNear(19.4001, 0.001)),
+                                Field(&BoundingBox::width, DoubleNear(435.872, 0.01)),
                                 Field(&BoundingBox::height, DoubleNear(309.97, 0.01)))),
                     Field(&ObjectMessage::position,
                           AllOf(Field(&Position::x,
-                                      Property(&units::length::meter_t::value, DoubleNear(-1.23979, 0.00001))),
+                                      Property(&units::length::meter_t::value, DoubleNear(-1.23979, 0.0001))),
                                 Field(&Position::y,
-                                      Property(&units::length::meter_t::value, DoubleNear(-0.0486435, 0.000001))),
+                                      Property(&units::length::meter_t::value, DoubleNear(-0.0486435, 0.00001))),
                                 Field(&Position::z,
-                                      Property(&units::length::meter_t::value, DoubleNear(0.430763, 0.000001))))),
-                    Field(&ObjectMessage::pose,
-                          AllOf(Field(&Pose::yaw,
-                                      Property(&units::angle::radian_t::value, DoubleNear(-0.378735, 0.00001))),
-                                Field(&Pose::pitch,
-                                      Property(&units::angle::radian_t::value, DoubleNear(-1.15457, 0.00001))),
-                                Field(&Pose::roll,
-                                      Property(&units::angle::radian_t::value, DoubleNear(-0.604467, 0.000001))))))))));
+                                      Property(&units::length::meter_t::value, DoubleNear(0.430763, 0.00001))))),
+                    Field(
+                        &ObjectMessage::pose,
+                        AllOf(
+                            Field(&Pose::yaw, Property(&units::angle::radian_t::value, DoubleNear(-0.378735, 0.0001))),
+                            Field(&Pose::pitch, Property(&units::angle::radian_t::value, DoubleNear(-1.15457, 0.0001))),
+                            Field(&Pose::roll,
+                                  Property(&units::angle::radian_t::value, DoubleNear(-0.604467, 0.00001))))))))));
 }
 }  // namespace
 }  // namespace perception

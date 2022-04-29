@@ -7,7 +7,6 @@ cc_library(
         "filter.h",
         "finite_state_machine.h",
         "geometry.h",
-        "linear_kalman_filter.h",
         "logging.h",
         "matrix.h",
         "toggle.h",

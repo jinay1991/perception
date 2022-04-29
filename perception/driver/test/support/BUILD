@@ -1,13 +1,7 @@
 cc_library(
     name = "support",
     testonly = True,
-    srcs = [
-        "driver_consumer_node.cpp",
-        "driver_simulator_node.cpp",
-    ],
     hdrs = [
-        "driver_consumer_node.h",
-        "driver_simulator_node.h",
         "operators.h",
     ],
     features = [
@@ -18,11 +12,7 @@ cc_library(
     deps = [
         ":builders",
         ":mocks",
-        "//perception/communication:topics",
         "//perception/datatypes",
-        "@middleware//:communication",
-        "@middleware//:lifecycle",
-        "@middleware//:support",
     ],
 )
 

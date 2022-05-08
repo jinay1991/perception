@@ -6,6 +6,12 @@ build --test_output=errors
 build --cxxopt="-std=c++14"
 build --cxxopt="-Wall"
 
+# LCOV Coverage
+coverage --coverage_report_generator=@bazel_tools//tools/test:coverage_report_generator
+coverage --combined_report=lcov
+coverage --instrumentation_filter=//...
+coverage -s
+coverage --action_env=COVERAGE_GCOV_OPTIONS=-b
 
 # LLVM 12.0 Build Configuration
 build:clang12 --experimental_guard_against_concurrent_changes
@@ -15,7 +21,6 @@ build:clang12 --compiler=clang
 build:clang12 --features=treat_warnings_as_errors
 build:clang12 --features=third_party_warnings
 build:clang12 --cxxopt="-std=c++14"
-
 
 build:clang_tidy12 --aspects=bazel/clang_tidy/clang_tidy_aspect.bzl%clang_tidy_aspect
 build:clang_tidy12 --output_groups=cc_aspect_output

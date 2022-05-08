@@ -50,3 +50,15 @@ build:ubsan --copt=-fsanitize=undefined,float-cast-overflow
 build:ubsan --copt=-fno-sanitize=float-divide-by-zero
 build:ubsan --linkopt=-fsanitize=undefined
 build:ubsan --action_env=UBSANOPTIONS=print_stacktrace=1
+
+# GNU C/C++ Compiler for aarch64
+build:aarch64_gcc --experimental_guard_against_concurrent_changes
+build:aarch64_gcc --crosstool_top=//bazel/toolchains/aarch64_linux_gnu:toolchain_suite
+build:aarch64_gcc --host_crosstool_top=@bazel_tools//tools/cpp:toolchain
+build:aarch64_gcc --compiler=gcc
+build:aarch64_gcc --cpu=aarch64
+build:aarch64_gcc --features=no_legacy_features
+build:aarch64_gcc --features=treat_warnings_as_errors
+build:aarch64_gcc --cxxopt="-std=c++14"
+build:aarch64_gcc --cxxopt="-Wall"
+build:aarch64_gcc --cxxopt="-Werror"

@@ -101,7 +101,7 @@ code-coverage:
   image: registry.gitlab.com/ad_platform/perception
   script:
      - bazel coverage //...
-     - genhtml -s --num-spaces 4 --legend --highlight --sort -t "Coverage" --demangle-cpp --branch-coverage --function-coverage --output genhtml "$(bazel info output_path)/_coverage/_coverage_report.dat"
+     - genhtml -s --num-spaces 4 --legend --highlight --sort -t "Coverage" --demangle-cpp --branch-coverage --function-coverage --output coverage "$(bazel info output_path)/_coverage/_coverage_report.dat"
   coverage: /lines.*:\s(\d+.\d+%)/
   allow_failure: true
   artifacts:

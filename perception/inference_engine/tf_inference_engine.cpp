@@ -98,10 +98,10 @@ void TFInferenceEngine::UpdateTensors()
 
 void TFInferenceEngine::UpdateOutputs()
 {
-    std::transform(
-        output_tensors_.cbegin(), output_tensors_.cend(), std::back_inserter(results_), [](auto const& tensor) {
-            return ConvertToMatrix(tensor);
-        });
+    std::transform(output_tensors_.cbegin(),
+                   output_tensors_.cend(),
+                   std::back_inserter(results_),
+                   [](auto const& tensor) { return ConvertToMatrix(tensor); });
 }
 
 }  // namespace perception

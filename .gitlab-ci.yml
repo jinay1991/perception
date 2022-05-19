@@ -1,6 +1,3 @@
-# ------------
-# Docker Image
-# ------------
 include:
   - template: Code-Quality.gitlab-ci.yml
   - template: SAST.gitlab-ci.yml
@@ -19,7 +16,7 @@ stages:
 # ------------
 clang-format:
   stage: check
-  image: ubuntu:20.04
+  image: ubuntu:22.04
   before_script:
     - apt-get update
     - apt-get install -y clang-format
@@ -28,19 +25,19 @@ clang-format:
 
 buildifier:
   stage: check
-  image: ubuntu:20.04
+  image: ubuntu:22.04
   before_script:
     - apt-get update
     - apt-get install -y wget curl
-    - wget https://github.com/bazelbuild/buildtools/releases/download/4.0.1/buildifier
-    - chmod +x buildifier
-    - mv buildifier /usr/bin
+    - wget https://github.com/bazelbuild/buildtools/releases/download/5.0.1/buildifier-linux-amd64
+    - chmod +x buildifier-linux-amd64
+    - mv buildifier-linux-amd64 /usr/bin/buildifier
   script:
     - buildifier -v -d -r .
 
 cppcheck:
   stage: check
-  image: ubuntu:20.04
+  image: ubuntu:22.04
   before_script:
     - apt-get update
     - apt-get install -y cppcheck python python-pygments
@@ -78,7 +75,7 @@ bazel-gcc-build-and-test:
 
 doxygen:
   stage: build
-  image: ubuntu:20.04
+  image: ubuntu:22.04
   before_script:
     - apt-get update
     - apt-get install -y doxygen graphviz plantuml

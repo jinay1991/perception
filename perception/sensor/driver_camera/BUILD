@@ -18,6 +18,7 @@ cc_library(
     deps = [
         "//perception/common",
         "//perception/datatypes",
+        "//perception/driver/datatype",
         "@opencv",
     ],
 )

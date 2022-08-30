@@ -6,8 +6,8 @@
 #define PERCEPTION_SENSOR_DRIVER_CAMERA_DRIVER_CAMERA_H
 
 #include "perception/datatypes/camera.h"
-#include "perception/datatypes/driver.h"
 #include "perception/datatypes/driver_camera.h"
+#include "perception/driver/datatype/driver.h"
 
 #include <opencv4/opencv2/core.hpp>
 #include <opencv4/opencv2/objdetect.hpp>

@@ -450,6 +450,6 @@ constexpr bool operator!=(const DriverCameraMessage& lhs, const DriverCameraMess
 {
     return !(lhs == rhs);
 }
-}  // namespace perception
 
+}  // namespace perception
 #endif  /// PERCEPTION_DATATYPES_DRIVER_H

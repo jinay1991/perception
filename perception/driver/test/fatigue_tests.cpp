@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/fatigue.h"
 #include "perception/driver/parameter_handler.h"
@@ -14,6 +14,8 @@
 #include <cmath>
 
 namespace perception
+{
+namespace driver
 {
 namespace
 {
@@ -63,10 +65,9 @@ class FatigueFixture : public ::testing::Test
 
     const FatigueMessage& GetFatigueMessage() const { return fatigue_.GetFatigueMessage(); }
 
-    ::testing::StrictMock<mock::DataSourceMock> mocked_data_source_;
-
   private:
-    ::testing::NiceMock<mock::ParameterHandlerMock> mocked_parameter_handler_;
+    ::testing::StrictMock<test::support::DataSourceMock> mocked_data_source_;
+    ::testing::NiceMock<test::support::ParameterHandlerMock> mocked_parameter_handler_;
     Fatigue fatigue_;
 };
 
@@ -82,7 +83,7 @@ struct TestEyeStateDurationParam
     std::chrono::milliseconds duration;
 
     // Then
-    FatigueLevel level;
+    FatigueState state;
     double confidence;
 };
 
@@ -93,19 +94,19 @@ INSTANTIATE_TEST_SUITE_P(
   Fatigue,
   FatigueFixture_WithEyeClosedForDuration,
   ::testing::Values(
-    //                                    eye_state, duration,       (expected) level       , (expected) confidence
-    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     5min, FatigueLevel::kAwake         ,                 100.0}, // (0)
-    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     6min, FatigueLevel::kAwake         ,                 100.0}, // (1)
-    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     0min, FatigueLevel::kInvalid       ,                   0.0}, // (2)
-    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     2min, FatigueLevel::kAwake         ,                  40.0}, // (3)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,     0min, FatigueLevel::kInvalid       ,                   0.0}, // (4)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,     5min, FatigueLevel::kSleep         ,                 100.0}, // (5)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,     6min, FatigueLevel::kSleep         ,                 100.0}, // (6)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,     4min, FatigueLevel::kSleep         ,                  80.0}, // (7)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,     2min, FatigueLevel::kBeginningSleep,                  40.0}, // (8)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,     1min, FatigueLevel::kDrowsy        ,                  20.0}, // (9)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,      30s, FatigueLevel::kQuestionable  ,                  10.0}, // (10)
-    TestEyeStateDurationParam{EyeState::kEyesClosed,      10s, FatigueLevel::kAwake         ,                   3.3}  // (11)
+    //                         eye_state           , duration,       (expected) state       , (expected) confidence
+    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     5min, FatigueState::kAwake         ,                 1.0  }, // (0)
+    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     6min, FatigueState::kAwake         ,                 1.0  }, // (1)
+    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     0min, FatigueState::kInvalid       ,                 0.0  }, // (2)
+    TestEyeStateDurationParam{EyeState::kEyesOpen  ,     2min, FatigueState::kAwake         ,                 0.4  }, // (3)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     0min, FatigueState::kInvalid       ,                 0.0  }, // (4)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     5min, FatigueState::kSleep         ,                 1.0  }, // (5)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     6min, FatigueState::kSleep         ,                 1.0  }, // (6)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     4min, FatigueState::kSleep         ,                 0.8  }, // (7)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     2min, FatigueState::kBeginningSleep,                 0.4  }, // (8)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,     1min, FatigueState::kDrowsy        ,                 0.2  }, // (9)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,      30s, FatigueState::kQuestionable  ,                 0.1  }, // (10)
+    TestEyeStateDurationParam{EyeState::kEyesClosed,      10s, FatigueState::kAwake         ,                 0.033}  // (11)
   ));
 // clang-format on
 
@@ -119,8 +120,9 @@ TEST_P(FatigueFixture_WithEyeClosedForDuration, Fatigue_GivenTypicalEyeStateForD
 
     // Then
     EXPECT_THAT(GetFatigueMessage(),
-                AllOf(Field(&FatigueMessage::level, param.level),
+                AllOf(Field(&FatigueMessage::state, param.state),
                       Field(&FatigueMessage::confidence, DoubleNear(param.confidence, 0.1))));
 }
 }  // namespace
+}  // namespace driver
 }  // namespace perception

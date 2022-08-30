@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/test/support/mocks/parameter_handler_mock.h"
 
@@ -9,7 +9,11 @@
 
 namespace perception
 {
-namespace mock
+namespace driver
+{
+namespace test
+{
+namespace support
 {
 namespace
 {
@@ -76,6 +80,34 @@ TEST_F(ParameterHandlerMockFixture, GetMinEyeBlinkRate_GivenTypicalValue_ExpectS
     // Then
     EXPECT_THAT(result, eye_blink_rate);
 }
+
+TEST_F(ParameterHandlerMockFixture, GetMaxVelocity_GivenTypicalValue_ExpectSame)
+{
+    // Given
+    const auto velocity = 10.0_kph;
+    EXPECT_CALL(mocked_parameter_handler_, GetMaxVelocity()).WillRepeatedly(Return(velocity));
+
+    // When
+    const auto result = mocked_parameter_handler_.GetMaxVelocity();
+
+    // Then
+    EXPECT_THAT(result, velocity);
+}
+
+TEST_F(ParameterHandlerMockFixture, GetMinVelocity_GivenTypicalValue_ExpectSame)
+{
+    // Given
+    const auto velocity = 1.0_kph;
+    EXPECT_CALL(mocked_parameter_handler_, GetMinVelocity()).WillRepeatedly(Return(velocity));
+
+    // When
+    const auto result = mocked_parameter_handler_.GetMinVelocity();
+
+    // Then
+    EXPECT_THAT(result, velocity);
+}
 }  // namespace
-}  // namespace mock
+}  // namespace support
+}  // namespace test
+}  // namespace driver
 }  // namespace perception

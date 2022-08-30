@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/eye_state_filter.h"
 
@@ -8,7 +8,9 @@
 
 namespace perception
 {
-EyeStateFilter::EyeStateFilter(const IParameterHandler& parameter_handler, const IDataSource& data_source)
+namespace driver
+{
+EyeStateFilter::EyeStateFilter(const IFatigueParameterHandler& parameter_handler, const IFatigueDataSource& data_source)
     : parameter_handler_{parameter_handler}, data_source_{data_source}, eye_blink_filter_{EyeState::kInvalid}
 {
 }
@@ -82,4 +84,5 @@ bool EyeStateFilter::IsEyeLidOpeningValid() const
                             parameter_handler_.GetMinEyeLidOpening(),
                             parameter_handler_.GetMaxEyeLidOpening());
 }
+}  // namespace driver
 }  // namespace perception

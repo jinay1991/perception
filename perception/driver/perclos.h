@@ -1,14 +1,17 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_PERCLOS_H
 #define PERCEPTION_DRIVER_PERCLOS_H
 
 #include "perception/common/circular_bitset.h"
-#include "perception/datatypes/driver.h"
+#include "perception/driver/datatype/driver.h"
+#include "perception/driver/i_fatigue_detector.h"
 
 namespace perception
+{
+namespace driver
 {
 
 /// @brief Perclos Algorithm (Percentage of Eye Closure)
@@ -47,14 +50,10 @@ class Perclos final
     double GetAvailabilityPercentage() const;
 
   private:
-    /// @brief Check if provided eye state is Closed
-    ///
-    /// @return True if provided eye state is closed, otherwise False
-    static constexpr bool IsEyesClosed(const EyeState eye_state);
-
     /// @brief Circular buffer for storing eye state for 5min. Used to calculate eye closure percentage
     CircularBitset<kMaxLongtermStorageSize> longterm_storage_;
 };
+}  // namespace driver
 }  // namespace perception
 
 #endif  /// PERCEPTION_DRIVER_PERCLOS_H

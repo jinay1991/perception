@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/test/support/builders/driver_camera_message_builder.h"
 
@@ -9,10 +9,16 @@
 
 namespace perception
 {
+namespace driver
+{
+namespace test
+{
+namespace support
+{
 namespace
 {
 
-TEST(DriverCameraMessageBuilderTest, DefaultConstructor_ExpectDefaultDriverCameraMessage)
+TEST(DriverCameraMessageBuilderTest, Build_ExpectDefaultDriverCameraMessage)
 {
     // Given
     constexpr DriverCameraMessage driver_camera_message{};
@@ -115,4 +121,7 @@ TEST(DriverCameraMessageBuilderTest, WithEyesState_GivenTypicalEyesState_ExpectU
     EXPECT_EQ(result.face_tracking, face_tracking);
 }
 }  // namespace
+}  // namespace support
+}  // namespace test
+}  // namespace driver
 }  // namespace perception

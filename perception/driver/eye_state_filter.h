@@ -1,16 +1,18 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_EYE_BLINK_FILTER_H
 #define PERCEPTION_DRIVER_EYE_BLINK_FILTER_H
 
 #include "perception/common/filter.h"
-#include "perception/datatypes/driver.h"
-#include "perception/driver/i_data_source.h"
+#include "perception/driver/datatype/driver.h"
+#include "perception/driver/i_fatigue_data_source.h"
 #include "perception/driver/i_parameter_handler.h"
 
 namespace perception
+{
+namespace driver
 {
 /// @brief Eye State Filter to remove the eye blinks and flickers
 class EyeStateFilter
@@ -20,7 +22,7 @@ class EyeStateFilter
     ///
     /// @param parameter_handler [in] - Instance of the Parameter Handler
     /// @param data_source [in] - Instance of the Data Source
-    explicit EyeStateFilter(const IParameterHandler& parameter_handler, const IDataSource& data_source);
+    explicit EyeStateFilter(const IFatigueParameterHandler& parameter_handler, const IFatigueDataSource& data_source);
 
     /// @brief Calculate Driver's Eye state based on the received inputs
     void Step();
@@ -63,14 +65,15 @@ class EyeStateFilter
     inline bool IsEyeOpen() const;
 
     /// @brief Instance of the Parameter handler
-    const IParameterHandler& parameter_handler_;
+    const IFatigueParameterHandler& parameter_handler_;
 
     /// @brief Instance of Data Source
-    const IDataSource& data_source_;
+    const IFatigueDataSource& data_source_;
 
     /// @brief Filter to remove Eye Blinks
     Filter<EyeState> eye_blink_filter_;
 };
+}  // namespace driver
 }  // namespace perception
 
 #endif  /// PERCEPTION_DRIVER_EYE_BLINK_FILTER_H

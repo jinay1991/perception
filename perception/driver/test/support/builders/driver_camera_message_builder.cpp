@@ -1,10 +1,16 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/test/support/builders/driver_camera_message_builder.h"
 
 namespace perception
+{
+namespace driver
+{
+namespace test
+{
+namespace support
 {
 DriverCameraMessageBuilder::DriverCameraMessageBuilder() : driver_camera_message_{} {}
 
@@ -62,4 +68,7 @@ const DriverCameraMessage& DriverCameraMessageBuilder::Build() const
 {
     return driver_camera_message_;
 }
+}  // namespace support
+}  // namespace test
+}  // namespace driver
 }  // namespace perception

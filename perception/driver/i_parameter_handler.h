@@ -1,42 +1,41 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_I_PARAMETER_HANDLER_H
 #define PERCEPTION_DRIVER_I_PARAMETER_HANDLER_H
 
-#include <units.h>
+#include "perception/driver/i_activity_parameter_handler.h"
+#include "perception/driver/i_distraction_parameter_handler.h"
+#include "perception/driver/i_fatigue_parameter_handler.h"
+#include "perception/driver/i_responsiveness_parameter_handler.h"
 
 namespace perception
 {
+namespace driver
+{
 
 /// @brief Parameter handler interface
-class IParameterHandler
+class IParameterHandler : public IFatigueParameterHandler,
+                          public IDistractionParameterHandler,
+                          public IActivityParameterHandler,
+                          public IResponsivenessParameterHandler
 {
   public:
     /// @brief Default Destructor
     virtual ~IParameterHandler() = default;
 
-    /// @brief Provide set maximum eye lid opening
+    /// @brief Provide Minimum Vehicle Velocity Required for System
     ///
-    /// @return max_eye_lid_opening (mm)
-    virtual units::length::millimeter_t GetMaxEyeLidOpening() const = 0;
+    /// @return minimum_velocity
+    virtual units::velocity::meters_per_second_t GetMinVelocity() const = 0;
 
-    /// @brief Provide set minimum eye lid opening
+    /// @brief Provide Maximum Vehicle Velocity Required for System
     ///
-    /// @return min_eye_lid_opening (mm)
-    virtual units::length::millimeter_t GetMinEyeLidOpening() const = 0;
-
-    /// @brief Provide set maximum eye blink rate
-    ///
-    /// @return max_eye_blink_rate (hertz)
-    virtual units::frequency::hertz_t GetMinEyeBlinkRate() const = 0;
-
-    /// @brief Provide set minimum eye blink rate
-    ///
-    /// @return min_eye_blink_rate (hertz)
-    virtual units::frequency::hertz_t GetMaxEyeBlinkRate() const = 0;
+    /// @return maximum_velocity
+    virtual units::velocity::meters_per_second_t GetMaxVelocity() const = 0;
 };
+}  // namespace driver
 }  // namespace perception
 
 #endif  /// PERCEPTION_DRIVER_I_PARAMETER_HANDLER_H

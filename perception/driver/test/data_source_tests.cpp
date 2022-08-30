@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/data_source.h"
 #include "perception/driver/test/support/builders/driver_camera_message_builder.h"
@@ -9,6 +9,8 @@
 #include <gtest/gtest.h>
 
 namespace perception
+{
+namespace driver
 {
 namespace
 {
@@ -43,12 +45,12 @@ class DataSourceTest : public ::testing::Test
 TEST_F(DataSourceTest, UpdateDriverCameraMessage_GivenTypicalDriverCameraMessage_ExpectUpdatedDataSource)
 {
     // Given
-    const DriverCameraMessage& driver_camera_message = DriverCameraMessageBuilder()
-                                                           .WithTimePoint(std::chrono::system_clock::now())
-                                                           .WithEyeState(true, true, 10.0_mm, 2.0_Hz)
-                                                           .WithHeadPose(0.01_rad, 0.01_rad, 0.01_rad)
-                                                           .WithGazePose(0.01_rad, 0.01_rad, 0.01_rad)
-                                                           .Build();
+    const auto driver_camera_message = test::support::DriverCameraMessageBuilder()
+                                           .WithTimePoint(std::chrono::system_clock::now())
+                                           .WithEyeState(true, true, 10.0_mm, 2.0_Hz)
+                                           .WithHeadPose(0.01_rad, 0.01_rad, 0.01_rad)
+                                           .WithGazePose(0.01_rad, 0.01_rad, 0.01_rad)
+                                           .Build();
 
     // When
     UpdateDriverCameraMessage(driver_camera_message);
@@ -67,4 +69,5 @@ TEST_F(DataSourceTest, UpdateDriverCameraMessage_GivenTypicalDriverCameraMessage
 }
 
 }  // namespace
+}  // namespace driver
 }  // namespace perception

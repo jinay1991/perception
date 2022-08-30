@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_TEST_SUPPORT_MOCKS_DATA_SOURCE_MOCK_H
 #define PERCEPTION_DRIVER_TEST_SUPPORT_MOCKS_DATA_SOURCE_MOCK_H
@@ -11,7 +11,11 @@
 
 namespace perception
 {
-namespace mock
+namespace driver
+{
+namespace test
+{
+namespace support
 {
 class DataSourceMock : public IDataSource
 {
@@ -27,6 +31,8 @@ class DataSourceMock : public IDataSource
     MOCK_CONST_METHOD0(GetHeadTracking, const HeadTracking&());
     MOCK_CONST_METHOD0(GetGazeTracking, const GazeTracking&());
 };
-}  // namespace mock
+}  // namespace support
+}  // namespace test
+}  // namespace driver
 }  // namespace perception
 #endif  // PERCEPTION_DRIVER_TEST_SUPPORT_MOCKS_DATA_SOURCE_MOCK_H

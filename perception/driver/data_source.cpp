@@ -1,10 +1,12 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/data_source.h"
 
 namespace perception
+{
+namespace driver
 {
 DataSource::DataSource() : driver_camera_message_{} {}
 
@@ -55,4 +57,5 @@ const GazeTracking& DataSource::GetGazeTracking() const
     return driver_camera_message_.gaze_tracking;
 }
 
+}  // namespace driver
 }  // namespace perception

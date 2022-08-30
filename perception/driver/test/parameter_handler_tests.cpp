@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/parameter_handler.h"
 
@@ -8,6 +8,8 @@
 #include <gtest/gtest.h>
 
 namespace perception
+{
+namespace driver
 {
 namespace
 {
@@ -24,7 +26,9 @@ TEST(ParameterHandler, Constructor_ExpectDefaultValues)
                 AllOf(Property(&ParameterHandler::GetMinEyeLidOpening, kMinEyeLidOpening),
                       Property(&ParameterHandler::GetMaxEyeLidOpening, kMaxEyeLidOpening),
                       Property(&ParameterHandler::GetMinEyeBlinkRate, kMinEyeBlinkRate),
-                      Property(&ParameterHandler::GetMaxEyeBlinkRate, kMaxEyeBlinkRate)));
+                      Property(&ParameterHandler::GetMaxEyeBlinkRate, kMaxEyeBlinkRate),
+                      Property(&ParameterHandler::GetMinVelocity, kMinVelocity),
+                      Property(&ParameterHandler::GetMaxVelocity, kMaxVelocity)));
 }
 TEST(ParameterHandler, SetMinEyeLidOpening_GivenTypicalEyeLidOpening_ExpectUpdatedParameterHandler)
 {
@@ -77,5 +81,32 @@ TEST(ParameterHandler, SetMaxEyeBlinkRate_GivenTypicalEyeBlinkRate_ExpectUpdated
     // Then
     EXPECT_EQ(eye_blink_rate, parameter_handler.GetMaxEyeBlinkRate());
 }
+
+TEST(ParameterHandler, SetMinVelocity_GivenTypicalVelocity_ExpectUpdatedParameterHandler)
+{
+    // Given
+    ParameterHandler parameter_handler{};
+    const units::velocity::meters_per_second_t velocity = 8.0_kph;
+
+    // When
+    parameter_handler.SetMinVelocity(velocity);
+
+    // Then
+    EXPECT_EQ(velocity, parameter_handler.GetMinVelocity());
+}
+
+TEST(ParameterHandler, SetMaxVelocity_GivenTypicalVelocity_ExpectUpdatedParameterHandler)
+{
+    // Given
+    ParameterHandler parameter_handler{};
+    const units::velocity::meters_per_second_t velocity = 130.0_kph;
+
+    // When
+    parameter_handler.SetMaxVelocity(velocity);
+
+    // Then
+    EXPECT_EQ(velocity, parameter_handler.GetMaxVelocity());
+}
 }  // namespace
+}  // namespace driver
 }  // namespace perception

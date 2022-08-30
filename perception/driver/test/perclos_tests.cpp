@@ -1,9 +1,8 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/perclos.h"
-#include "perception/driver/test/support/operators.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -11,6 +10,8 @@
 #include <chrono>
 
 namespace perception
+{
+namespace driver
 {
 namespace
 {
@@ -135,4 +136,5 @@ TEST_F(PerclosFixture, GetEyeStateObservationDuration_GivenInitializedPerclos_Ex
     EXPECT_THAT(GetEyeStateObservationDuration(), kMaxEyeStateObservationDuration);
 }
 }  // namespace
+}  // namespace driver
 }  // namespace perception

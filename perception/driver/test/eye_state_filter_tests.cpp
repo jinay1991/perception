@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/eye_state_filter.h"
 #include "perception/driver/test/support/mocks/data_source_mock.h"
@@ -13,6 +13,8 @@
 #include <cmath>
 
 namespace perception
+{
+namespace driver
 {
 namespace
 {
@@ -51,7 +53,7 @@ class EyeStateFilterFixture : public ::testing::Test
 
     void RunOnce() { eye_state_filter_.Step(); }
 
-    void RunForDuration(const EyeState eye_state, const std::chrono::milliseconds duration)
+    void RunForDuration(const std::chrono::milliseconds duration)
     {
         for (auto time_passed = 0ms; time_passed < duration; time_passed += delta_duration_)
         {
@@ -61,10 +63,11 @@ class EyeStateFilterFixture : public ::testing::Test
 
     EyeState GetFilteredEyeState() const { return eye_state_filter_.GetFilteredEyeState(); }
 
-    ::testing::NiceMock<mock::DataSourceMock> mocked_data_source_;
+    ::testing::NiceMock<test::support::DataSourceMock>& GetMockDataSource() { return mocked_data_source_; }
 
   private:
-    ::testing::NiceMock<mock::ParameterHandlerMock> mocked_parameter_handler_;
+    ::testing::NiceMock<test::support::DataSourceMock> mocked_data_source_;
+    ::testing::NiceMock<test::support::ParameterHandlerMock> mocked_parameter_handler_;
     EyeStateFilter eye_state_filter_;
     std::chrono::milliseconds delta_duration_;
     const std::chrono::milliseconds eye_blink_duration_;
@@ -117,11 +120,11 @@ TEST_P(EyeStateFilterFixture_WithEyeState, EyeStateFilter_GiveTypicalFaceTrackin
     const auto param = GetParam();
     const std::chrono::milliseconds eye_blink_duration =
         std::chrono::seconds{static_cast<std::uint32_t>(std::floor(1.0 / param.eye_blink_rate.value()))};
-    EXPECT_CALL(mocked_data_source_, IsFaceVisible()).WillRepeatedly(Return(param.face_visible));
-    EXPECT_CALL(mocked_data_source_, IsEyeVisible()).WillRepeatedly(Return(param.eye_visible));
-    EXPECT_CALL(mocked_data_source_, GetEyeLidOpening()).WillRepeatedly(Return(param.eye_lid_opening));
-    EXPECT_CALL(mocked_data_source_, GetEyeBlinkRate()).WillRepeatedly(Return(param.eye_blink_rate));
-    EXPECT_CALL(mocked_data_source_, GetEyeBlinkDuration()).WillRepeatedly(Return(eye_blink_duration));
+    EXPECT_CALL(GetMockDataSource(), IsFaceVisible()).WillRepeatedly(Return(param.face_visible));
+    EXPECT_CALL(GetMockDataSource(), IsEyeVisible()).WillRepeatedly(Return(param.eye_visible));
+    EXPECT_CALL(GetMockDataSource(), GetEyeLidOpening()).WillRepeatedly(Return(param.eye_lid_opening));
+    EXPECT_CALL(GetMockDataSource(), GetEyeBlinkRate()).WillRepeatedly(Return(param.eye_blink_rate));
+    EXPECT_CALL(GetMockDataSource(), GetEyeBlinkDuration()).WillRepeatedly(Return(eye_blink_duration));
 
     // When
     RunOnce();
@@ -130,4 +133,5 @@ TEST_P(EyeStateFilterFixture_WithEyeState, EyeStateFilter_GiveTypicalFaceTrackin
     EXPECT_THAT(GetFilteredEyeState(), param.eye_state);
 }
 }  // namespace
+}  // namespace driver
 }  // namespace perception

@@ -1,11 +1,11 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_TEST_SUPPORT_BUILDERS_DRIVER_CAMERA_BUILDER_H
 #define PERCEPTION_DRIVER_TEST_SUPPORT_BUILDERS_DRIVER_CAMERA_BUILDER_H
 
-#include "perception/datatypes/driver.h"
+#include "perception/driver/datatype/driver.h"
 
 #include <units.h>
 
@@ -13,7 +13,12 @@
 
 namespace perception
 {
-
+namespace driver
+{
+namespace test
+{
+namespace support
+{
 class DriverCameraMessageBuilder
 {
   public:
@@ -41,6 +46,9 @@ class DriverCameraMessageBuilder
   private:
     DriverCameraMessage driver_camera_message_;
 };
+}  // namespace support
+}  // namespace test
+}  // namespace driver
 }  // namespace perception
 
 #endif  /// PERCEPTION_DRIVER_TEST_SUPPORT_BUILDERS_DRIVER_CAMERA_BUILDER_H

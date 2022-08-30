@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/test/support/mocks/data_source_mock.h"
 
@@ -9,7 +9,11 @@
 
 namespace perception
 {
-namespace mock
+namespace driver
+{
+namespace test
+{
+namespace support
 {
 namespace
 {
@@ -138,5 +142,7 @@ TEST_F(DataSourceMockFixture, GetTimePoint_GivenTypicalValue_ExpectSame)
     EXPECT_THAT(result, time_point);
 }
 }  // namespace
-}  // namespace mock
+}  // namespace support
+}  // namespace test
+}  // namespace driver
 }  // namespace perception

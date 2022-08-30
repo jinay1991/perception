@@ -22,7 +22,6 @@ cc_test(
         "perclos_tests.cpp",
         "responsiveness_message_builder_tests.cpp",
         "responsiveness_tests.cpp",
-        "risk_assessment_tests.cpp",
     ],
     features = [
         "treat_warnings_as_errors",

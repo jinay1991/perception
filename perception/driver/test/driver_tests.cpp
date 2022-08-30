@@ -38,12 +38,6 @@ class DriverFixture : public ::testing::Test
         driver_.UpdateDriverCameraMessage(driver_camera_message);
     }
 
-    const FatigueMessage& GetFatigueMessage() const { return driver_.GetFatigueMessage(); }
-    const DistractionMessage& GetDistractionMessage() const { return driver_.GetDistractionMessage(); }
-    const ActivityMessage& GetActivityMessage() const { return driver_.GetActivityMessage(); }
-    const ResponsivenessMessage& GetResponsivenessMessage() const { return driver_.GetResponsivenessMessage(); }
-    RiskAssessmentState GetRiskAssessmentState() const { return driver_.GetRiskAssessmentState(); }
-
     const DriverMessage& GetDriverMessage() const { return driver_.GetDriverMessage(); }
 
   private:
@@ -62,11 +56,6 @@ TEST_F(DriverFixture, Driver_GivenTypicalDriverCameraMessage_ExpectUpdatedMessag
     RunOnce();
 
     // Then
-    EXPECT_THAT(GetFatigueMessage(), Field(&FatigueMessage::state, FatigueState::kAwake));
-    EXPECT_THAT(GetDistractionMessage(), Field(&DistractionMessage::state, DistractionState::kNotDistracted));
-    EXPECT_THAT(GetActivityMessage(), Field(&ActivityMessage::state, ActivityState::kNotAvailable));
-    EXPECT_THAT(GetResponsivenessMessage(), Field(&ResponsivenessMessage::state, ResponsivenessState::kResponsive));
-    EXPECT_THAT(GetRiskAssessmentState(), RiskAssessmentState::kNone);
     EXPECT_THAT(
         GetDriverMessage(),
         AllOf(Field(&DriverMessage::fatigue, Field(&FatigueMessage::state, FatigueState::kAwake)),
@@ -88,13 +77,15 @@ TEST_F(DriverFixture, Driver_GivenSlowBlinkRate_ExpectDriverDrowsy)
     RunForDuration(35s);
 
     // Then
-    EXPECT_THAT(GetFatigueMessage(), Field(&FatigueMessage::state, FatigueState::kQuestionable));
+    EXPECT_THAT(GetDriverMessage(),
+                Field(&DriverMessage::fatigue, Field(&FatigueMessage::state, FatigueState::kQuestionable)));
 
     // When
     RunForDuration(35s);
 
     // Then
-    EXPECT_THAT(GetFatigueMessage(), Field(&FatigueMessage::state, FatigueState::kDrowsy));
+    EXPECT_THAT(GetDriverMessage(),
+                Field(&DriverMessage::fatigue, Field(&FatigueMessage::state, FatigueState::kDrowsy)));
 }
 
 }  // namespace

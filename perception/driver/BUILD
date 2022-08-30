@@ -51,8 +51,6 @@ cc_library(
         "responsiveness.h",
         "responsiveness_message_builder.cpp",
         "responsiveness_message_builder.h",
-        "risk_assessment.cpp",
-        "risk_assessment.h",
     ],
     hdrs = [
         "i_driver.h",

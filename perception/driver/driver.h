@@ -14,7 +14,6 @@
 #include "perception/driver/i_fatigue_feature.h"
 #include "perception/driver/i_responsiveness_feature.h"
 #include "perception/driver/parameter_handler.h"
-#include "perception/driver/risk_assessment.h"
 
 #include <memory>
 
@@ -37,31 +36,6 @@ class Driver final : public IDriver
     ///
     /// @param driver_camera_message [in] - Driver Camera Message
     void UpdateDriverCameraMessage(const DriverCameraMessage& driver_camera_message) override;
-
-    /// @brief Provide calculated Driver's Fatigue Information
-    ///
-    /// @return fatigue_message
-    const FatigueMessage& GetFatigueMessage() const override;
-
-    /// @brief Provide calculated Driver's Distraction Information
-    ///
-    /// @return distraction_message
-    const DistractionMessage& GetDistractionMessage() const override;
-
-    /// @brief Provide calculated Driver's Activity Information
-    ///
-    /// @return activity_message
-    const ActivityMessage& GetActivityMessage() const override;
-
-    //// @brief Provide calculated Driver's responsiveness
-    ///
-    /// @return responsiveness_message
-    const ResponsivenessMessage& GetResponsivenessMessage() const override;
-
-    /// @brief Provide Risk Assessment based on the calculated Fatigue, Distraction and Activity
-    ///
-    /// @return risk_assessment
-    RiskAssessmentState GetRiskAssessmentState() const;
 
     /// @brief Provide (monitored) Driver's State Information
     ///
@@ -86,9 +60,6 @@ class Driver final : public IDriver
 
     /// @brief Instance of Responsiveness to identify Driver's Responsiveness
     std::unique_ptr<IResponsivenessFeature> responsiveness_;
-
-    /// @brief Instance of Risk Assessment for Driver's state
-    RiskAssessment risk_assessment_;
 
     /// @brief Instance of Driver Message Builder
     DriverMessageBuilder builder_;

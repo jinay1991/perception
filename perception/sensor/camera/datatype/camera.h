@@ -1,9 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
-#ifndef PERCEPTION_DATATYPES_CAMERA_H
-#define PERCEPTION_DATATYPES_CAMERA_H
+#ifndef PERCEPTION_SENSOR_CAMERA_DATATYPES_CAMERA_H
+#define PERCEPTION_SENSOR_CAMERA_DATATYPES_CAMERA_H
 
 #include <opencv4/opencv2/core.hpp>
 
@@ -56,4 +56,4 @@ struct CameraMessage
 
 }  // namespace perception
 
-#endif  /// PERCEPTION_DATATYPES_CAMERA_H
+#endif  /// PERCEPTION_SENSOR_CAMERA_DATATYPES_CAMERA_H

@@ -23,6 +23,7 @@ class NullInferenceEngine final : public IInferenceEngine
 {
   public:
     /// @brief Constructor
+    ///
     /// @param params [in] Inference Engine Parameters such as model input/output node names
     explicit NullInferenceEngine(const InferenceEngineParameters& params);
 
@@ -30,6 +31,7 @@ class NullInferenceEngine final : public IInferenceEngine
     void Init() override;
 
     /// @brief Execute Inference with Null Inference Engine
+    ///
     /// @param image [in] Image to be fed as input to Inference Engine
     void Execute(const Image& image) override;
 
@@ -37,6 +39,7 @@ class NullInferenceEngine final : public IInferenceEngine
     void Shutdown() override;
 
     /// @brief Provide results in terms of Matrix
+    ///
     /// @return List of results (aka cv::Mat) for requested outputs (will be in same order as output_node_names provided
     ///         in InferenceEngineParameters)
     std::vector<cv::Mat> GetResults() const override;

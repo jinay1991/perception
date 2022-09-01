@@ -1,6 +1,8 @@
 cc_library(
     name = "camera",
     srcs = [
+        "calibration.cpp",
+        "calibration.h",
         "camera.cpp",
     ],
     hdrs = [
@@ -15,9 +17,8 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//perception/common",
-        "//perception/datatypes",
-        "//perception/sensor/calibration/camera",
+        "//perception/common:logging",
+        "//perception/sensor/camera/datatype",
         "@opencv",
     ],
 )

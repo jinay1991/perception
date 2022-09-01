@@ -5,8 +5,8 @@
 #ifndef PERCEPTION_SENSOR_CAMERA_CAMERA_H
 #define PERCEPTION_SENSOR_CAMERA_CAMERA_H
 
-#include "perception/datatypes/camera.h"
-#include "perception/sensor/calibration/camera/calibration.h"
+#include "perception/sensor/camera/calibration.h"
+#include "perception/sensor/camera/datatype/camera.h"
 
 #include <opencv4/opencv2/core.hpp>
 #include <opencv4/opencv2/videoio.hpp>
@@ -20,6 +20,7 @@ class Camera final
 {
   public:
     /// @brief Constructor.
+    ///
     /// @param source  [in] Camera Source (Image/Video Path or 0 for Live Camera)
     explicit Camera(const std::string& source);
 
@@ -33,6 +34,7 @@ class Camera final
     void Shutdown();
 
     /// @brief Set Camera Source (Physical Camera/Video/Image Inputs)
+    ///
     /// @param source  [in] Camera Source (video/image path)
     void SetSource(const std::string source);
 

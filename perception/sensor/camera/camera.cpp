@@ -12,14 +12,16 @@
 
 namespace perception
 {
-/// @brief Default chessboard data for calibration
-static const std::string kDefaultChessboardData{"data/camera_calibration"};
+namespace
+{  /// @brief Default chessboard data for calibration
+const std::string kDefaultChessboardData{"data/camera_calibration"};
 
 /// @brief Default number of chessboard blocks in x axis
-static constexpr std::int32_t kDefaultNumberOfChessboardBlocksX{9};
+constexpr std::int32_t kDefaultNumberOfChessboardBlocksX{9};
 
 /// @brief Default number of chessboard blocks in y axis
-static constexpr std::int32_t kDefaultNumberOfChessboardBlocksY{6};
+constexpr std::int32_t kDefaultNumberOfChessboardBlocksY{6};
+}  // namespace
 
 Camera::Camera(const std::string& source)
     : source_{source},

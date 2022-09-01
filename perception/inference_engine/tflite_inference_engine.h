@@ -39,6 +39,7 @@ class TFLiteInferenceEngine final : public IInferenceEngine
 
   private:
     /// @brief Updates Input Tensor by copying image to input_tensor
+    ///
     /// @param image [in] Input image to be fed to Inference Engine
     void UpdateInput(const Image& image);
 

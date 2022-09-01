@@ -1,9 +1,11 @@
 cc_test(
     name = "unit_tests",
     srcs = [
+        "calibration_tests.cpp",
         "camera_tests.cpp",
     ],
     data = [
+        "//:calibration_data",
         "//:testdata",
     ],
     features = [

@@ -24,20 +24,26 @@ class InferenceEngineStrategy final
     void Init();
 
     /// @brief Execute Inference with Inference Engine
+    ///
+    /// @param image [in] Image to be fed as input to Inference Engine
     void Execute(const Image& image);
 
     /// @brief Release Inference Engine
     void Shutdown();
 
     /// @brief Select Inference Engine
+    ///
     /// @param inference_engine_type  [in] Inference Engine type (TF, TFLite)
     void SelectInferenceEngine(const InferenceEngineType& inference_engine_type,
                                const InferenceEngineParameters& inference_engine_parameters);
 
     /// @brief Provide results from Inference Engine
+    ///
+    /// @return Resultant Matries (list of matrix)
     std::vector<cv::Mat> GetResults() const;
 
     /// @brief Provide selected inference engine type
+    ///
     /// @return InferenceEngineType
     InferenceEngineType GetInferenceEngineType() const;
 

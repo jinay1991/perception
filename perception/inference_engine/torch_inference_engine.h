@@ -23,6 +23,7 @@ class TorchInferenceEngine final : public IInferenceEngine
 {
   public:
     /// @brief Constructor
+    ///
     /// @param params [in] Inference Engine Parameters such as model input/output node names
     explicit TorchInferenceEngine(const InferenceEngineParameters& params);
 
@@ -40,6 +41,7 @@ class TorchInferenceEngine final : public IInferenceEngine
 
   private:
     /// @brief Updates Input Tensor by copying image to input_tensor
+    ///
     /// @param image [in] Input image to be fed to Inference Engine
     void UpdateInput(const Image& image);
 

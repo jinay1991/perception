@@ -1,8 +1,8 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
-#include "perception/datatypes/camera.h"
+#include "perception/sensor/camera/datatype/camera.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

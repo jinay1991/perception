@@ -23,6 +23,7 @@ class TFInferenceEngine final : public IInferenceEngine
 {
   public:
     /// @brief Constructor
+    ///
     /// @param params [in] Inference Engine Parameters such as model input/output node names
     explicit TFInferenceEngine(const InferenceEngineParameters& params);
 
@@ -30,6 +31,7 @@ class TFInferenceEngine final : public IInferenceEngine
     void Init() override;
 
     /// @brief Execute Inference with TensorFlow Inference Engine
+    ///
     /// @param image [in] Image to be fed as input to Inference Engine
     void Execute(const Image& image) override;
 
@@ -37,12 +39,14 @@ class TFInferenceEngine final : public IInferenceEngine
     void Shutdown() override;
 
     /// @brief Provide results in terms of Matrix
+    ///
     /// @return List of results (aka cv::Mat) for requested outputs (will be in same order as output_node_names provided
     ///         in InferenceEngineParameters)
     std::vector<cv::Mat> GetResults() const override;
 
   private:
     /// @brief Updates Input Tensor by copying image to input_tensor
+    ///
     /// @param image [in] Input image to be fed to Inference Engine
     void UpdateInput(const Image& image);
 

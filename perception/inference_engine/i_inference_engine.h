@@ -29,6 +29,7 @@ class IInferenceEngine
     virtual void Init() = 0;
 
     /// @brief Execute Inference with Inference Engine
+    ///
     /// @param image [in] Image to be fed as input to Inference Engine
     virtual void Execute(const Image& image) = 0;
 
@@ -36,6 +37,7 @@ class IInferenceEngine
     virtual void Shutdown() = 0;
 
     /// @brief Provide results in terms of Matrix
+    ///
     /// @return List of results (aka cv::Mat) for requested outputs (will be in same order as output_node_names provided
     ///         in InferenceEngineParameters)
     virtual std::vector<cv::Mat> GetResults() const = 0;

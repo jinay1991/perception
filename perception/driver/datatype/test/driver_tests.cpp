@@ -16,6 +16,11 @@ using ::testing::Field;
 
 constexpr std::chrono::system_clock::time_point kTimePoint{10ms};
 
+template <typename T>
+class OperatorsFixtureT : public ::testing::TestWithParam<T>
+{
+};
+
 TEST(Driver, GlobalConstants)
 {
     // Then
@@ -31,11 +36,6 @@ TEST(Driver, GlobalConstants)
     EXPECT_EQ(kMaxHeadPoseRoll, 36.0_deg);
     EXPECT_EQ(kMaxEyeStateObservationDuration, 5min);
 }
-
-template <typename T>
-class OperatorsFixtureT : public ::testing::TestWithParam<T>
-{
-};
 
 template <typename T>
 struct TestEqualityParam

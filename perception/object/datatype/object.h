@@ -1,9 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Right Reserved.
+/// @copyright Copyright (c) 2022. All Right Reserved.
 ///
-#ifndef PERCEPTION_DATATYPES_OBJECT_H
-#define PERCEPTION_DATATYPES_OBJECT_H
+#ifndef PERCEPTION_OBJECT_DATATYPE_OBJECT_H
+#define PERCEPTION_OBJECT_DATATYPE_OBJECT_H
 
 #include "perception/datatypes/lane.h"
 
@@ -15,8 +15,10 @@
 
 namespace perception
 {
+namespace object
+{
 /// @brief Maximum Number of Objects
-constexpr std::int32_t kMaxNumberOfObjects{10};
+static constexpr std::int32_t kMaxNumberOfObjects{10};
 
 /// @brief Label Id (direct mapping for important classes of COCO)
 enum class LabelId : std::uint8_t
@@ -150,37 +152,79 @@ struct ObjectListMessage
     std::array<ObjectMessage, kMaxNumberOfObjects> objects{};
 };
 
-inline bool operator==(const BoundingBox& lhs, const BoundingBox& rhs) noexcept
+/// @brief Equality operator for elementwise comparision for BoundingBox
+///
+/// @param lhs [in] - lvalue (BoundingBox)
+/// @param rhs [in] - rvalue (BoundingBox)
+///
+/// @return True if (lhs == rhs), otherwise false.
+constexpr bool operator==(const BoundingBox& lhs, const BoundingBox& rhs) noexcept
 {
     return ((lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.width == rhs.width) && (lhs.height == rhs.height));
 }
 
-inline bool operator!=(const BoundingBox& lhs, const BoundingBox& rhs) noexcept
+/// @brief Inequality operator for elementwise comparision for BoundingBox
+///
+/// @param lhs [in] - lvalue (BoundingBox)
+/// @param rhs [in] - rvalue (BoundingBox)
+///
+/// @return True if (lhs != rhs), otherwise false.
+constexpr bool operator!=(const BoundingBox& lhs, const BoundingBox& rhs) noexcept
 {
     return (!(lhs == rhs));
 }
 
-inline bool operator==(const Position& lhs, const Position& rhs) noexcept
+/// @brief Equality operator for elementwise comparision for Position
+///
+/// @param lhs [in] - lvalue (Position)
+/// @param rhs [in] - rvalue (Position)
+///
+/// @return True if (lhs == rhs), otherwise false.
+constexpr bool operator==(const Position& lhs, const Position& rhs) noexcept
 {
     return ((lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z));
 }
 
-inline bool operator!=(const Position& lhs, const Position& rhs) noexcept
+/// @brief Inequality operator for elementwise comparision for Position
+///
+/// @param lhs [in] - lvalue (Position)
+/// @param rhs [in] - rvalue (Position)
+///
+/// @return True if (lhs != rhs), otherwise false.
+constexpr bool operator!=(const Position& lhs, const Position& rhs) noexcept
 {
     return (!(lhs == rhs));
 }
 
-inline bool operator==(const Pose& lhs, const Pose& rhs) noexcept
+/// @brief Equality operator for elementwise comparision for Pose
+///
+/// @param lhs [in] - lvalue (Pose)
+/// @param rhs [in] - rvalue (Pose)
+///
+/// @return True if (lhs == rhs), otherwise false.
+constexpr bool operator==(const Pose& lhs, const Pose& rhs) noexcept
 {
     return ((lhs.yaw == rhs.yaw) && (lhs.pitch == rhs.pitch) && (lhs.roll == rhs.roll));
 }
 
-inline bool operator!=(const Pose& lhs, const Pose& rhs) noexcept
+/// @brief Inequality operator for elementwise comparision for Pose
+///
+/// @param lhs [in] - lvalue (Pose)
+/// @param rhs [in] - rvalue (Pose)
+///
+/// @return True if (lhs != rhs), otherwise false.
+constexpr bool operator!=(const Pose& lhs, const Pose& rhs) noexcept
 {
     return (!(lhs == rhs));
 }
 
-inline bool operator==(const ObjectMessage& lhs, const ObjectMessage& rhs) noexcept
+/// @brief Equality operator for elementwise comparision for ObjectMessage
+///
+/// @param lhs [in] - lvalue (ObjectMessage)
+/// @param rhs [in] - rvalue (ObjectMessage)
+///
+/// @return True if (lhs == rhs), otherwise false.
+constexpr bool operator==(const ObjectMessage& lhs, const ObjectMessage& rhs) noexcept
 {
     return ((lhs.distance == rhs.distance) && (lhs.longitudinal_distance == rhs.longitudinal_distance) &&
             (lhs.lateral_distance == rhs.lateral_distance) && (lhs.time_to_collision == rhs.time_to_collision) &&
@@ -188,101 +232,41 @@ inline bool operator==(const ObjectMessage& lhs, const ObjectMessage& rhs) noexc
             (lhs.id == rhs.id) && (lhs.lane_id == rhs.lane_id));
 }
 
-inline bool operator!=(const ObjectMessage& lhs, const ObjectMessage& rhs) noexcept
+/// @brief Inequality operator for elementwise comparision for ObjectMessage
+///
+/// @param lhs [in] - lvalue (ObjectMessage)
+/// @param rhs [in] - rvalue (ObjectMessage)
+///
+/// @return True if (lhs != rhs), otherwise false.
+constexpr bool operator!=(const ObjectMessage& lhs, const ObjectMessage& rhs) noexcept
 {
     return (!(lhs == rhs));
 }
 
-inline bool operator==(const ObjectListMessage& lhs, const ObjectListMessage& rhs) noexcept
+/// @brief Equality operator for elementwise comparision for ObjectListMessage
+///
+/// @param lhs [in] - lvalue (ObjectListMessage)
+/// @param rhs [in] - rvalue (ObjectListMessage)
+///
+/// @return True if (lhs == rhs), otherwise false.
+constexpr bool operator==(const ObjectListMessage& lhs, const ObjectListMessage& rhs) noexcept
 {
     return ((lhs.number_of_valid_objects == rhs.number_of_valid_objects) && (lhs.time_point == rhs.time_point) &&
             (lhs.objects == rhs.objects));
 }
 
-inline bool operator!=(const ObjectListMessage& lhs, const ObjectListMessage& rhs) noexcept
+/// @brief Inequality operator for elementwise comparision for ObjectListMessage
+///
+/// @param lhs [in] - lvalue (ObjectListMessage)
+/// @param rhs [in] - rvalue (ObjectListMessage)
+///
+/// @return True if (lhs != rhs), otherwise false.
+constexpr bool operator!=(const ObjectListMessage& lhs, const ObjectListMessage& rhs) noexcept
 {
     return (!(lhs == rhs));
 }
 
-inline const char* to_string(const ObjectId& id)
-{
-    switch (id)
-    {
-        case ObjectId::kUnknown:
-            return "kUnknown";
-        case ObjectId::kCar:
-            return "kCar";
-        case ObjectId::kTruck:
-            return "kTruck";
-        case ObjectId::kMotorBike:
-            return "kMotorBike";
-        case ObjectId::kBicycle:
-            return "kBicycle";
-        case ObjectId::kPedestrian:
-            return "kPedestrian";
-        case ObjectId::kAnimal:
-            return "kAnimal";
-        case ObjectId::kTrafficSign_Stop:
-            return "kTrafficSign_Stop";
-        case ObjectId::kTrafficLight:
-            return "kTrafficLight";
-        case ObjectId::kObstacle:
-            return "kObstacle";
-        case ObjectId::kInvalid:
-            return "kInvalid";
-        default:
-            return "ERROR: Unknown ObjectId";
-    }
-    return "ERROR: Unknown ObjectId";
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const ObjectId& id)
-{
-    const char* name = to_string(id);
-    stream << name;
-    return stream;
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const Position& position)
-{
-    stream << "Position {x: " << position.x << ", y: " << position.y << ", z: " << position.z << "}";
-    return stream;
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const Pose& pose)
-{
-    stream << "Pose {yaw: " << pose.yaw << ", pitch: " << pose.pitch << ", roll: " << pose.roll << "}";
-    return stream;
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const BoundingBox& bounding_box)
-{
-    stream << "BoundingBox {x: " << bounding_box.x << ", y: " << bounding_box.y << ", w: " << bounding_box.width
-           << ", h: " << bounding_box.height << "}";
-    return stream;
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const ObjectMessage& object)
-{
-    stream << "Object {Id: " << object.id << ", " << object.bounding_box << ", distance: " << object.distance
-           << ", longitudinal_distance: " << object.longitudinal_distance
-           << ", lateral_distance: " << object.lateral_distance << ", ttc: " << object.time_to_collision
-           << ", lane_id: " << object.lane_id << ", " << object.position << ", " << object.pose << "}";
-    return stream;
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const ObjectListMessage& object_list)
-{
-    stream << "ObjectList {n: " << object_list.number_of_valid_objects << ", time_point: "
-           << std::chrono::time_point_cast<std::chrono::milliseconds>(object_list.time_point).time_since_epoch().count()
-           << "ms}" << std::endl;
-    for (auto idx = 0; idx < object_list.number_of_valid_objects; ++idx)
-    {
-        stream << " (+) " << object_list.objects.at(idx) << std::endl;
-    }
-    return stream;
-}
-
+}  // namespace object
 }  // namespace perception
 
-#endif  /// PERCEPTION_DATATYPES_OBJECT_H
+#endif  /// PERCEPTION_OBJECT_DATATYPE_OBJECT_H

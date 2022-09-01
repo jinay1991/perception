@@ -382,7 +382,7 @@ constexpr bool operator!=(const ActivityMessage& lhs, const ActivityMessage& rhs
     return !(lhs == rhs);
 }
 
-/// @brief Inequality operator for elementwise comparision for ResponsivenessMessage
+/// @brief Equality operator for elementwise comparision for ResponsivenessMessage
 ///
 /// @param lhs [in] - lvalue (ResponsivenessMessage)
 /// @param rhs [in] - rvalue (ResponsivenessMessage)
@@ -405,7 +405,7 @@ constexpr bool operator!=(const ResponsivenessMessage& lhs, const Responsiveness
     return !(lhs == rhs);
 }
 
-/// @brief Inequality operator for elementwise comparision for DriverMessage
+/// @brief Equality operator for elementwise comparision for DriverMessage
 ///
 /// @param lhs [in] - lvalue (DriverMessage)
 /// @param rhs [in] - rvalue (DriverMessage)
@@ -428,7 +428,7 @@ constexpr bool operator!=(const DriverMessage& lhs, const DriverMessage& rhs) no
 {
     return !(lhs == rhs);
 }
-/// @brief Inequality operator for elementwise comparision for DriverCameraMessage
+/// @brief Equality operator for elementwise comparision for DriverCameraMessage
 ///
 /// @param lhs [in] - lvalue (DriverCameraMessage)
 /// @param rhs [in] - rvalue (DriverCameraMessage)

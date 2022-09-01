@@ -1,12 +1,7 @@
 cc_library(
-    name = "datatypes",
-    srcs = [],
+    name = "datatype",
     hdrs = [
-        "inference_engine_type.h",
-        "lane.h",
-        "traffic_light.h",
-        "traffic_sign.h",
-        "vehicle_dynamics.h",
+        "object.h",
     ],
     features = [
         "treat_warnings_as_errors",
@@ -14,7 +9,7 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "//perception/datatypes",
         "@nholthaus//:units",
-        "@opencv//:core",
     ],
 )

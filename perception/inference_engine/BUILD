@@ -20,6 +20,7 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//perception/common",
+        "//perception/common:logging",
         "//perception/datatypes",
         "@opencv//:dnn",
         "@tensorflow",

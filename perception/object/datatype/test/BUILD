@@ -1,7 +1,7 @@
 cc_test(
     name = "unit_tests",
     srcs = [
-        # "object_tests.cpp",
+        "object_tests.cpp",
         "operators_tests.cpp",
     ],
     features = [

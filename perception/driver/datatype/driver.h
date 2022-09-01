@@ -291,7 +291,7 @@ constexpr bool operator!=(const GazeTracking& lhs, const GazeTracking& rhs) noex
     return !(lhs == rhs);
 }
 
-/// @brief Inequality operator for elementwise comparision for GazeTracking
+/// @brief Equality operator for elementwise comparision for GazeTracking
 ///
 /// @param lhs [in] - lvalue (HeadTracking)
 /// @param rhs [in] - rvalue (HeadTracking)
@@ -313,7 +313,7 @@ constexpr bool operator!=(const HeadTracking& lhs, const HeadTracking& rhs) noex
     return !(lhs == rhs);
 }
 
-/// @brief Inequality operator for elementwise comparision for FatigueMessage
+/// @brief Equality operator for elementwise comparision for FatigueMessage
 ///
 /// @param lhs [in] - lvalue (FatigueMessage)
 /// @param rhs [in] - rvalue (FatigueMessage)
@@ -336,7 +336,7 @@ constexpr bool operator!=(const FatigueMessage& lhs, const FatigueMessage& rhs) 
     return !(lhs == rhs);
 }
 
-/// @brief Inequality operator for elementwise comparision for DistractionMessage
+/// @brief Equality operator for elementwise comparision for DistractionMessage
 ///
 /// @param lhs [in] - lvalue (DistractionMessage)
 /// @param rhs [in] - rvalue (DistractionMessage)
@@ -359,7 +359,7 @@ constexpr bool operator!=(const DistractionMessage& lhs, const DistractionMessag
     return !(lhs == rhs);
 }
 
-/// @brief Inequality operator for elementwise comparision for ActivityMessage
+/// @brief Equality operator for elementwise comparision for ActivityMessage
 ///
 /// @param lhs [in] - lvalue (ActivityMessage)
 /// @param rhs [in] - rvalue (ActivityMessage)

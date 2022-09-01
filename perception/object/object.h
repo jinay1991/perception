@@ -5,15 +5,17 @@
 #ifndef PERCEPTION_OBJECT_OBJECT_H
 #define PERCEPTION_OBJECT_OBJECT_H
 
-#include "perception/datatypes/camera.h"
-#include "perception/datatypes/object.h"
 #include "perception/inference_engine/inference_engine_strategy.h"
+#include "perception/object/datatype/object.h"
+#include "perception/sensor/camera/datatype/camera.h"
 
 #include <opencv4/opencv2/core.hpp>
 
 #include <string>
 
 namespace perception
+{
+namespace object
 {
 /// @brief Performs Object Detection on received images
 class Object final
@@ -83,6 +85,7 @@ class Object final
     /// @brief Calculated Objects (List)
     ObjectListMessage object_list_message_;
 };
+}  // namespace object
 }  // namespace perception
 
 #endif  /// PERCEPTION_OBJECT_OBJECT_H

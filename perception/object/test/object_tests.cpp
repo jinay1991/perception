@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/object/object.h"
 
@@ -15,6 +15,8 @@
 #include <string>
 
 namespace perception
+{
+namespace object
 {
 namespace
 {
@@ -102,4 +104,5 @@ TEST_F(ObjectTest, GivenTypicalCameraMessage_ExpectObjectListMessageWithValidObj
                                   Property(&units::angle::radian_t::value, DoubleNear(-0.604467, 0.00001))))))))));
 }
 }  // namespace
+}  // namespace object
 }  // namespace perception

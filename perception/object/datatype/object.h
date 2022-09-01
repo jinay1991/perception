@@ -18,7 +18,7 @@ namespace perception
 namespace object
 {
 /// @brief Maximum Number of Objects
-static constexpr std::int32_t kMaxNumberOfObjects{10};
+static constexpr std::size_t kMaxNumberOfObjects{10UL};
 
 /// @brief Label Id (direct mapping for important classes of COCO)
 enum class LabelId : std::uint8_t

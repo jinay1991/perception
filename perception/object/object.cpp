@@ -4,8 +4,6 @@
 ///
 #include "perception/object/object.h"
 
-#include "perception/common/logging.h"
-
 #include <opencv4/opencv2/calib3d/calib3d.hpp>
 #include <opencv4/opencv2/core.hpp>
 #include <opencv4/opencv2/core/matx.hpp>
@@ -14,6 +12,8 @@
 #include <opencv4/opencv2/videoio.hpp>
 
 namespace perception
+{
+namespace object
 {
 namespace
 {
@@ -25,7 +25,7 @@ constexpr float kMinObjectDetectionScore{0.50F};
 /// @param label_id [in] Label Id (COCO Label Map)
 ///
 /// @return Object Id (classification label)
-constexpr ObjectId GetObjectId(const LabelId& label_id)
+constexpr ObjectId GetObjectId(const LabelId& label_id) noexcept
 {
     ObjectId object_id{ObjectId::kInvalid};
 
@@ -97,7 +97,7 @@ constexpr ObjectId GetObjectId(const LabelId& label_id)
 /// @param translation [in] Translation Matrix [3x1]
 ///
 /// @return Transformation matrix (4x4)
-cv::Mat GetTransformation(const cv::Mat& rotational, const cv::Mat& translation)
+cv::Mat GetTransformation(const cv::Mat& rotational, const cv::Mat& translation) noexcept
 {
     cv::Mat res{};
     cv::Rodrigues(rotational, res);
@@ -118,7 +118,7 @@ cv::Mat GetTransformation(const cv::Mat& rotational, const cv::Mat& translation)
 /// @param translation [in] Translation Matrix [3x1]
 ///
 /// @return Point in 3D Space
-cv::Point3d TransformTo3D(const cv::Point2d& point, const cv::Mat& rotational, const cv::Mat& translation)
+cv::Point3d TransformTo3D(const cv::Point2d& point, const cv::Mat& rotational, const cv::Mat& translation) noexcept
 {
     const cv::Mat transformation = GetTransformation(rotational, translation);
     const cv::Mat homogeneous_point{cv::Matx41d{point.x, point.y, 1.0, 1.0}};
@@ -134,7 +134,7 @@ cv::Point3d TransformTo3D(const cv::Point2d& point, const cv::Mat& rotational, c
 /// @param position [in] Position (aka 3D Point)
 ///
 /// @return Euclidean distance of given point from origin
-units::length::meter_t GetEuclideanDistance(const Position& position)
+units::length::meter_t GetEuclideanDistance(const Position& position) noexcept
 {
     return units::math::sqrt(units::math::pow<2>(position.x) + units::math::pow<2>(position.y) +
                              units::math::pow<2>(position.z));
@@ -147,7 +147,7 @@ units::length::meter_t GetEuclideanDistance(const Position& position)
 /// @param rotational [in] Rotation Matrix [3x3]
 ///
 /// @return Euler angles (pose) - Yaw, Pitch and Roll for the given rotation matrix
-Pose GetObjectPose(const cv::Mat& rotational)
+Pose GetObjectPose(const cv::Mat& rotational) noexcept
 {
     cv::Mat res{};
     cv::Rodrigues(rotational, res);
@@ -166,7 +166,7 @@ Pose GetObjectPose(const cv::Mat& rotational)
 /// @param position [in] Position (aka 3D Point)
 ///
 /// @return LaneId
-constexpr LaneId GetLaneId(const Position& position)
+constexpr LaneId GetLaneId(const Position& position) noexcept
 {
     LaneId lane_id{LaneId::kEgo};
     if (position.y > (kMaxLaneWidth / 2))
@@ -257,9 +257,6 @@ void Object::UpdateOutputs()
             object_list_message_.objects.at(idx) = GenerateObjectMessage(bounding_box, static_cast<LabelId>(label));
         }
     }
-
-    LOG(INFO) << "Observed {" << object_list_message_.number_of_valid_objects << "} detected valid objects!";
-    LOG(INFO) << object_list_message_;
 }
 
 ObjectMessage Object::GenerateObjectMessage(const BoundingBox& bounding_box, const LabelId& label_id)
@@ -315,5 +312,5 @@ void Object::UpdateSpatialMatrix(const BoundingBox& bounding_box,
                  rotational,
                  translation);
 }
-
+}  // namespace object
 }  // namespace perception

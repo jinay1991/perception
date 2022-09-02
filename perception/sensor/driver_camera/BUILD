@@ -17,8 +17,10 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//perception/common",
+        "//perception/common:logging",
         "//perception/datatypes",
         "//perception/driver/datatype",
+        "//perception/sensor/camera/datatype",
         "@opencv",
     ],
 )

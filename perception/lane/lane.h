@@ -5,8 +5,8 @@
 #ifndef PERCEPTION_LANE_LANE_H
 #define PERCEPTION_LANE_LANE_H
 
-#include "perception/datatypes/camera.h"
 #include "perception/datatypes/lane.h"
+#include "perception/sensor/camera/datatype/camera.h"
 
 namespace perception
 {

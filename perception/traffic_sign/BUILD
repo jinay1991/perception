@@ -15,5 +15,6 @@ cc_library(
         "//perception/common",
         "//perception/datatypes",
         "//perception/inference_engine",
+        "//perception/sensor/camera/datatype",
     ],
 )

@@ -2,10 +2,10 @@
 /// @file
 /// @copyright Copyright (c) 2020-2021. MIT License.
 ///
-#include "perception/datatypes/camera.h"
 #include "perception/datatypes/inference_engine_type.h"
 #include "perception/datatypes/traffic_sign.h"
 #include "perception/inference_engine/inference_engine_strategy.h"
+#include "perception/sensor/camera/datatype/camera.h"
 
 namespace perception
 {

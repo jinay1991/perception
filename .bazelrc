@@ -5,6 +5,7 @@ build --test_env="DISPLAY"
 build --test_output=errors
 build --cxxopt="-std=c++14"
 build --cxxopt="-Wall"
+build --cxxopt="-Werror"
 
 # LCOV Coverage
 coverage --coverage_report_generator=@bazel_tools//tools/test:coverage_report_generator

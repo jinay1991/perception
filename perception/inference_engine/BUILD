@@ -17,10 +17,13 @@ cc_library(
         "tflite_inference_engine.h",
         "torch_inference_engine.h",
     ],
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//perception/common",
-        "//perception/common:logging",
         "//perception/datatypes",
         "@opencv//:dnn",
         "@tensorflow",

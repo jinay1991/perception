@@ -18,7 +18,6 @@ cc_test(
     ],
     deps = [
         "//perception/common",
-        "//perception/common:logging",
         "@googletest//:gtest_main",
     ],
 )

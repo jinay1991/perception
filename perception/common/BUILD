@@ -7,6 +7,7 @@ cc_library(
         "filter.h",
         "finite_state_machine.h",
         "geometry.h",
+        "logging.h",
         "matrix.h",
         "toggle.h",
         "validity_range.h",
@@ -18,21 +19,6 @@ cc_library(
     visibility = ["//perception:__subpackages__"],
     deps = [
         "@eigen",
-        "@glog",
-    ],
-)
-
-cc_library(
-    name = "logging",
-    hdrs = [
-        "logging.h",
-    ],
-    features = [
-        "treat_warnings_as_errors",
-        "strict_warnings",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
         "@glog",
     ],
 )

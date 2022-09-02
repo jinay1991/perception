@@ -7,6 +7,8 @@ compile_commands.json
 
 # bazel build files
 bazel-*
+.cache/*
+.ssh/*
 
 # vscode files
 .vscode

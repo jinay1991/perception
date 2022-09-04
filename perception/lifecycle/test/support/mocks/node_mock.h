@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2022. NVIDIA Corporation. All Rights Reserved.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/lifecycle/i_node.h"
 

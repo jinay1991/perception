@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2022. NVIDIA Corporation. All Rights Reserved.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/lifecycle/node_runner.h"
 #include "perception/lifecycle/test/support/mocks/node_mock.h"

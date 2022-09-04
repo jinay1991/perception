@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2022. NVIDIA Corporation. All Right Reserved.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #include "perception/driver/data_source.h"
 #include "perception/driver/datatype/test/support/operators.h"

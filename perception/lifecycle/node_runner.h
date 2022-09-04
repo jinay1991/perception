@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2022. NVIDIA Corporation. All Rights Reserved.
+/// @copyright Copyright (c) 2022. MIT License.
 ///
 #ifndef PERCEPTION_LIFECYCLE_NODE_RUNNER_H
 #define PERCEPTION_LIFECYCLE_NODE_RUNNER_H

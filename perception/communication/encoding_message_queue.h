@@ -8,8 +8,10 @@
 #include "perception/communication/i_codec.h"
 #include "perception/communication/i_message_queue.h"
 #include "perception/communication/i_topic.h"
+#include "perception/communication/message.h"
 
 #include <map>
+#include <memory>
 #include <type_traits>
 
 namespace perception

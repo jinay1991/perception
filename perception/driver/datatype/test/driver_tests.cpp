@@ -9,6 +9,8 @@
 
 namespace perception
 {
+namespace driver
+{
 namespace
 {
 using ::testing::AllOf;
@@ -558,4 +560,5 @@ TEST(DriverCameraMessage, InitialValues)
 }
 
 }  // namespace
+}  // namespace driver
 }  // namespace perception

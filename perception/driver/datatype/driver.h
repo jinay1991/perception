@@ -11,6 +11,8 @@
 
 namespace perception
 {
+namespace driver
+{
 
 using namespace units::literals;
 using namespace std::chrono_literals;
@@ -450,6 +452,6 @@ constexpr bool operator!=(const DriverCameraMessage& lhs, const DriverCameraMess
 {
     return !(lhs == rhs);
 }
-
+}  // namespace driver
 }  // namespace perception
 #endif  /// PERCEPTION_DATATYPES_DRIVER_H

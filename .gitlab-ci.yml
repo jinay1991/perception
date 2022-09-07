@@ -116,6 +116,7 @@ code-coverage:
 # -------------
 pages:
   stage: deploy
+  image: ubuntu:22.04
   dependencies:
     - code-coverage
     - cppcheck

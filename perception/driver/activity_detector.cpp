@@ -35,6 +35,7 @@ double ActivityDetector::GetActivityConfidence() const
 
 void ActivityDetector::DetermineActivityState()
 {
+    /// @todo: Implement algorithm to determine Driver's Activity
     state_ = ActivityState::kHandsOnWheel;
 }
 

@@ -57,7 +57,7 @@ static constexpr std::chrono::milliseconds kMaxEyeStateObservationDuration{5min}
 static constexpr std::chrono::milliseconds kMaxCycleDuration{40UL};
 
 /// @brief Maximum allowed longterm storage size (i.e. max samples to store)
-static constexpr std::size_t kMaxLongtermStorageSize{kMaxEyeStateObservationDuration / kMaxCycleDuration};
+static constexpr std::size_t kObservationStorageSize{kMaxEyeStateObservationDuration / kMaxCycleDuration};
 
 /// @brief Minimum (ego) velocity required for active Driver Monitoring (NCAP Requirement)
 static constexpr units::velocity::meters_per_second_t kMinVelocity{10_kph};

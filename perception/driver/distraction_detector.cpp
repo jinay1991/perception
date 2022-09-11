@@ -60,6 +60,7 @@ double DistractionDetector::GetDistractionConfidence() const
 
 void DistractionDetector::DetermineDistractionState()
 {
+    /// @todo: Implement Algorithm to determin Distraction based on Gaze/Head Pose data
     state_ = DistractionState::kNotDistracted;
 }
 

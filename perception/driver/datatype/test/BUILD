@@ -1,6 +1,8 @@
 cc_test(
     name = "unit_tests",
     srcs = [
+        "driver_camera_message_tests.cpp",
+        "driver_message_tests.cpp",
         "driver_tests.cpp",
         "operators_tests.cpp",
     ],

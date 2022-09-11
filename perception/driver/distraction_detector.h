@@ -21,8 +21,8 @@ class DistractionDetector : public IDistractionDetector
     ///
     /// @param parameter_handler [in] - Instance of the Distraction Parameter Handler
     /// @param data_source [in] - Instance of the Distraction Data Source
-    explicit DistractionDetector(const IDistractionParameterHandler& /* parameter_handler */,
-                                 const IDistractionDataSource& /* data_source */);
+    explicit DistractionDetector(const IDistractionParameterHandler& parameter_handler,
+                                 const IDistractionDataSource& data_source);
 
     /// @brief Calculate Driver's Distraction based on the received data
     void Step() override;

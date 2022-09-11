@@ -5,11 +5,13 @@
 #ifndef PERCEPTION_DRIVER_RESPONSIVENESS_H
 #define PERCEPTION_DRIVER_RESPONSIVENESS_H
 
-#include "perception/driver/datatype/driver.h"
 #include "perception/driver/i_responsiveness_data_source.h"
+#include "perception/driver/i_responsiveness_detector.h"
 #include "perception/driver/i_responsiveness_feature.h"
 #include "perception/driver/i_responsiveness_parameter_handler.h"
 #include "perception/driver/responsiveness_message_builder.h"
+
+#include <memory>
 
 namespace perception
 {
@@ -37,6 +39,9 @@ class Responsiveness : public IResponsivenessFeature
   private:
     /// @brief Instance of Driver Responsiveness Builder
     ResponsivenessMessageBuilder builder_;
+
+    /// @brief Instance of Driver's Responsiveness Identification
+    std::unique_ptr<IResponsivenessDetector> detector_;
 };
 }  // namespace driver
 }  // namespace perception

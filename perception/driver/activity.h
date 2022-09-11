@@ -7,8 +7,11 @@
 
 #include "perception/driver/activity_message_builder.h"
 #include "perception/driver/i_activity_data_source.h"
+#include "perception/driver/i_activity_detector.h"
 #include "perception/driver/i_activity_feature.h"
 #include "perception/driver/i_activity_parameter_handler.h"
+
+#include <memory>
 
 namespace perception
 {
@@ -35,6 +38,9 @@ class Activity : public IActivityFeature
   private:
     /// @brief Instance to Activity Message Builder
     ActivityMessageBuilder builder_;
+
+    /// @brief Instance to Driver Activity Identifier
+    std::unique_ptr<IActivityDetector> detector_;
 };
 }  // namespace driver
 }  // namespace perception

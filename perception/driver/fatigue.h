@@ -5,11 +5,13 @@
 #ifndef PERCEPTION_DRIVER_FATIGUE_H
 #define PERCEPTION_DRIVER_FATIGUE_H
 
-#include "perception/driver/fatigue_detector.h"
 #include "perception/driver/fatigue_message_builder.h"
 #include "perception/driver/i_fatigue_data_source.h"
+#include "perception/driver/i_fatigue_detector.h"
 #include "perception/driver/i_fatigue_feature.h"
 #include "perception/driver/i_fatigue_parameter_handler.h"
+
+#include <memory>
 
 namespace perception
 {
@@ -38,7 +40,7 @@ class Fatigue final : public IFatigueFeature
     FatigueMessageBuilder builder_;
 
     /// @brief Instance to Fatigue Detector
-    FatigueDetector detector_;
+    std::unique_ptr<IFatigueDetector> detector_;
 };
 }  // namespace driver
 }  // namespace perception

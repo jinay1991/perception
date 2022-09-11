@@ -5,11 +5,13 @@
 #ifndef PERCEPTION_DRIVER_DISTRACTION_H
 #define PERCEPTION_DRIVER_DISTRACTION_H
 
-#include "perception/driver/distraction_detector.h"
 #include "perception/driver/distraction_message_builder.h"
 #include "perception/driver/i_distraction_data_source.h"
+#include "perception/driver/i_distraction_detector.h"
 #include "perception/driver/i_distraction_feature.h"
 #include "perception/driver/i_distraction_parameter_handler.h"
+
+#include <memory>
 
 namespace perception
 {
@@ -39,7 +41,7 @@ class Distraction : public IDistractionFeature
     DistractionMessageBuilder builder_;
 
     /// @brief Instance to Driver Distraction Identifier
-    DistractionDetector detector_;
+    std::unique_ptr<IDistractionDetector> detector_;
 };
 }  // namespace driver
 }  // namespace perception

@@ -30,7 +30,7 @@ class Driver final : public IDriver
     Driver();
 
     /// @brief Evaluate Driver's Fatigue and Visual Distraction
-    void Step();
+    void Step() override;
 
     /// @brief Process received input (driver camera message)
     ///

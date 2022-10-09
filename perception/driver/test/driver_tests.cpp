@@ -60,7 +60,7 @@ TEST_F(DriverFixture, Driver_GivenTypicalDriverCameraMessage_ExpectUpdatedMessag
         GetDriverMessage(),
         AllOf(Field(&DriverMessage::fatigue, Field(&FatigueMessage::state, FatigueState::kAwake)),
               Field(&DriverMessage::distraction, Field(&DistractionMessage::state, DistractionState::kNotDistracted)),
-              Field(&DriverMessage::activity, Field(&ActivityMessage::state, ActivityState::kNotAvailable)),
+              Field(&DriverMessage::activity, Field(&ActivityMessage::state, ActivityState::kHandsOnWheel)),
               Field(&DriverMessage::responsiveness,
                     Field(&ResponsivenessMessage::state, ResponsivenessState::kResponsive))));
 }

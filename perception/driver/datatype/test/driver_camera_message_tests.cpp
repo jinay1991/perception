@@ -6,6 +6,7 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <units.h>
 
 namespace perception
 {
@@ -15,6 +16,9 @@ namespace
 {
 using ::testing::AllOf;
 using ::testing::Field;
+
+using namespace units::literals;
+using namespace std::chrono_literals;
 
 constexpr std::chrono::system_clock::time_point kTimePoint{10ms};
 

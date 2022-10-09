@@ -6,6 +6,7 @@
 #define PERCEPTION_DRIVER_PARAMETERS_H
 
 #include "perception/common/validity_range.h"
+#include "perception/driver/datatype/driver.h"
 
 #include <units.h>
 

@@ -28,7 +28,7 @@ class NullNode : public INode
     /// @brief Provide Node Name
     ///
     /// @return name of the node
-    std::string GetName() const { return "null_node"; }
+    std::string GetName() const override { return "null_node"; }
 };
 
 }  // namespace lifecycle

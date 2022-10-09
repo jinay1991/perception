@@ -13,6 +13,7 @@ BraceWrapping:
   AfterControlStatement: true
   AfterEnum: true
   AfterFunction: true
+  AfterCaseLabel: true
   AfterNamespace: true
   AfterObjCDeclaration: true
   AfterStruct: true
@@ -20,7 +21,7 @@ BraceWrapping:
   BeforeCatch: true
   BeforeElse: true
   IndentBraces: false
-BreakBeforeBraces: Allman
+BreakBeforeBraces: Custom
 ColumnLimit: 120
 DerivePointerAlignment: false
 SortIncludes: true

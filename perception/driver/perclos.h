@@ -51,7 +51,7 @@ class Perclos final
 
   private:
     /// @brief Circular buffer for storing eye state for 5min. Used to calculate eye closure percentage
-    CircularBitset<kObservationStorageSize> observation_storage_;
+    CircularBitset<kObservationStorageSize> observation_;
 };
 }  // namespace driver
 }  // namespace perception

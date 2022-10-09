@@ -66,7 +66,7 @@ class Message final : public IMessage
 };
 
 template <typename IndependentType>
-constexpr MessagePtr CreateMessage(const IndependentType& data) noexcept
+inline MessagePtr CreateMessage(const IndependentType& data) noexcept
 {
     return std::make_unique<Message<IndependentType>>(data);
 }

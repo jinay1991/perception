@@ -46,7 +46,7 @@ TEST_F(ActivityFixture, Step_GivenTypicalDriverCameraMessage_ExpectActivityState
 
     // Then
     const auto activity_message = GetActivityMessage();
-    EXPECT_EQ(activity_message.state, ActivityState::kNotAvailable);
+    EXPECT_EQ(activity_message.state, ActivityState::kHandsOnWheel);
 }
 }  // namespace
 }  // namespace driver

@@ -20,7 +20,8 @@ RUN groupadd --gid $USER_GID $USERNAME \
 # Installation of dev environment dependencies
 RUN apt-get install -y \
     gcc g++ clang-format clang-tidy lcov \
-    wget git git-lfs \
+    clangd \
+    wget git git-lfs vim \
     openjdk-11-jdk openjdk-11-jre \
     libgtkglext1 libgtkglext1-dev libgtk-3-dev libgtk2.0-dev \
     libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \

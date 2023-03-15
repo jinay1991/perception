@@ -1,5 +1,6 @@
 cc_library(
     name = "common",
+    srcs = ["logging.cpp"],
     hdrs = [
         "circular_bitset.h",
         "current_previous.h",
@@ -19,7 +20,5 @@ cc_library(
     visibility = ["//perception:__subpackages__"],
     deps = [
         "@eigen",
-        "@glog",
-        "@logging//logging",
     ],
 )

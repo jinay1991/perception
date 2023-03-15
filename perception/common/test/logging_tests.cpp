@@ -15,22 +15,22 @@ namespace
 TEST(LoggingTest, BasicLoggingMacro_INFO)
 {
     const std::string test_log{"Sanity Test for LogSeverityLevel = INFO!!"};
-    ::testing::internal::CaptureStderr();
+    ::testing::internal::CaptureStdout();
 
     LOG(INFO) << test_log;
 
-    const std::string result = ::testing::internal::GetCapturedStderr();
+    const std::string result = ::testing::internal::GetCapturedStdout();
     EXPECT_THAT(result, ::testing::HasSubstr(test_log));
 }
 
 TEST(LoggingTest, BasicLoggingMacro_WARN)
 {
     const std::string test_log{"Sanity Test for LogSeverityLevel = WARNING!!"};
-    ::testing::internal::CaptureStderr();
+    ::testing::internal::CaptureStdout();
 
     LOG(WARNING) << test_log;
 
-    const std::string result = ::testing::internal::GetCapturedStderr();
+    const std::string result = ::testing::internal::GetCapturedStdout();
     EXPECT_THAT(result, ::testing::HasSubstr(test_log));
 }
 

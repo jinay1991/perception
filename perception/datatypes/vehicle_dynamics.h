@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Right Reserved.
+/// @copyright Copyright (c) 2023. All Right Reserved.
 ///
 #ifndef PERCEPTION_DATATYPES_VEHICLE_DYNAMICS_H
 #define PERCEPTION_DATATYPES_VEHICLE_DYNAMICS_H

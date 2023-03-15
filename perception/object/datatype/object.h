@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2022. All Right Reserved.
+/// @copyright Copyright (c) 2023. All Right Reserved.
 ///
 #ifndef PERCEPTION_OBJECT_DATATYPE_OBJECT_H
 #define PERCEPTION_OBJECT_DATATYPE_OBJECT_H

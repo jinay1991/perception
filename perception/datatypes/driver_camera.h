@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2021. MIT License.
+/// @copyright Copyright (c) 2023. MIT License.
 ///
 #ifndef PERCEPTION_DATATYPES_DRIVER_CAMERA_H
 #define PERCEPTION_DATATYPES_DRIVER_CAMERA_H

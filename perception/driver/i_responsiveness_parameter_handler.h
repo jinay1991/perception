@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2022. MIT License.
+/// @copyright Copyright (c) 2023. MIT License.
 ///
 #ifndef PERCEPTION_DRIVER_I_RESPONSIVENESS_PARAMETER_HANDLER_H
 #define PERCEPTION_DRIVER_I_RESPONSIVENESS_PARAMETER_HANDLER_H

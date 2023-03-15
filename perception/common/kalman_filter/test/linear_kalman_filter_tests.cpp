@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (C) 2021. MIT License.
+/// @copyright Copyright (C) 2023. MIT License.
 ///
 #include "perception/common/kalman_filter/linear_kalman_filter.h"
 

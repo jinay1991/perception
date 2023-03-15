@@ -33,12 +33,12 @@ cc_library(
         "src/uv-data-getter-setters.c",
         "src/version.c",
     ] + select({
-        "@perception//bazel/platforms:macos": [
+        "@platforms/os:macos": [
             "src/unix/darwin-proctitle.c",
             "src/unix/darwin.c",
             "src/unix/fsevents.c",
         ],
-        "@perception//bazel/platforms:linux": [
+        "@platforms/os:linux": [
             "src/unix/linux-core.c",
             "src/unix/linux-inotify.c",
             "src/unix/linux-syscalls.c",
@@ -59,7 +59,7 @@ cc_library(
             "_FILE_OFFSET_BITS=64",
             "_LARGEFILE_SOURCE",
         ] + select({
-            "@perception//bazel/platforms:macos": [
+            "@platforms/os:macos": [
                 "_DARWIN_UNLIMITED_SELECT=1",
                 "_DARWIN_USE_64_BIT_INODE=1",
             ],
@@ -76,7 +76,7 @@ cc_library(
     linkopts = [
         "-lpthread",
     ] + select({
-        "@perception//bazel/platforms:linux": [
+        "@platforms/os:linux": [
             "-ldl",
             "-lrt",
         ],

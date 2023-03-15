@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2023. MIT License.
 ///
 #ifndef PERCEPTION_OBJECT_OBJECT_H
 #define PERCEPTION_OBJECT_OBJECT_H

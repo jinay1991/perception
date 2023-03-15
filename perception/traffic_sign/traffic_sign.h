@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2023. MIT License.
 ///
 #include "perception/datatypes/inference_engine_type.h"
 #include "perception/datatypes/traffic_sign.h"

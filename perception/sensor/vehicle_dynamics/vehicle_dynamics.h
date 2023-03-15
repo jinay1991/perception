@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2023. All Rights Reserved.
 ///
 #ifndef PERCEPTION_SENSOR_VEHICLE_DYNAMICS_H
 #define PERCEPTION_SENSOR_VEHICLE_DYNAMICS_H

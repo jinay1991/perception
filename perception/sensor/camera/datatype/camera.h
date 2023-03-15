@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2022. MIT License.
+/// @copyright Copyright (c) 2023. MIT License.
 ///
 #ifndef PERCEPTION_SENSOR_CAMERA_DATATYPES_CAMERA_H
 #define PERCEPTION_SENSOR_CAMERA_DATATYPES_CAMERA_H

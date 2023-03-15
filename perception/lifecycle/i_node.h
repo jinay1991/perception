@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2022. MIT License.
+/// @copyright Copyright (c) 2023. MIT License.
 ///
 #ifndef PERCEPTION_LIFECYCLE_NODE_I_NODE_H
 #define PERCEPTION_LIFECYCLE_NODE_I_NODE_H

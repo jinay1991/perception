@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2023. MIT License.
 ///
 #include "perception/object/object.h"
 

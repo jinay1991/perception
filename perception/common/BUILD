@@ -20,5 +20,6 @@ cc_library(
     deps = [
         "@eigen",
         "@glog",
+        "@logging//logging",
     ],
 )

@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2023. All Rights Reserved.
 ///
 #include "perception/inference_engine/null_inference_engine.h"
 

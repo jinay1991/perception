@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (C) 2021. MIT License.
+/// @copyright Copyright (C) 2023. MIT License.
 ///
 #ifndef PERCEPTION_COMMON_KALMAN_FILTER_MULTIVARIATE_MOMENTS_H
 #define PERCEPTION_COMMON_KALMAN_FILTER_MULTIVARIATE_MOMENTS_H
